@@ -1,0 +1,9 @@
+{
+  "id": "monthly-02",
+  "revision": 1,
+  "kind": "monthly",
+  "title": "월평 2회",
+  "subtitle": "실수하기 쉬운 경계",
+  "practiceMinutes": 120,
+  "sourceScopeVersion": 1
+}

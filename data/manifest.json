@@ -1,0 +1,117 @@
+{
+  "exams": [
+    {
+      "id": "monthly-01",
+      "revision": 1,
+      "kind": "monthly",
+      "title": "월평 1회",
+      "subtitle": "개념을 단단하게",
+      "practiceMinutes": 120,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 0,
+        "short": 0,
+        "essay": 1,
+        "code": 3
+      },
+      "contentVersion": "d006b415071d705f"
+    },
+    {
+      "id": "monthly-02",
+      "revision": 1,
+      "kind": "monthly",
+      "title": "월평 2회",
+      "subtitle": "실수하기 쉬운 경계",
+      "practiceMinutes": 120,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 0,
+        "short": 0,
+        "essay": 1,
+        "code": 3
+      },
+      "contentVersion": "0a2f7860df1e70a1"
+    },
+    {
+      "id": "monthly-03",
+      "revision": 1,
+      "kind": "monthly",
+      "title": "월평 3회",
+      "subtitle": "한 단계 더 깊이",
+      "practiceMinutes": 120,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 0,
+        "short": 0,
+        "essay": 1,
+        "code": 3
+      },
+      "contentVersion": "77dc9cd86b2d0069"
+    },
+    {
+      "id": "subject-01",
+      "revision": 1,
+      "kind": "subject",
+      "title": "과평 1회",
+      "subtitle": "개념을 단단하게",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "25d74ed0ba086f51"
+    },
+    {
+      "id": "subject-02",
+      "revision": 1,
+      "kind": "subject",
+      "title": "과평 2회",
+      "subtitle": "실수하기 쉬운 경계",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "55248bf42c6030bc"
+    },
+    {
+      "id": "subject-03",
+      "revision": 1,
+      "kind": "subject",
+      "title": "과평 3회",
+      "subtitle": "한 단계 더 깊이",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "af1f314f675d56b9"
+    }
+  ],
+  "topics": {
+    "complexity": "시간 복잡도",
+    "queue": "큐",
+    "tree": "트리와 힙",
+    "recursion": "재귀",
+    "enumeration": "순열과 조합",
+    "graph": "그래프 표현",
+    "traversal": "BFS와 DFS",
+    "bitmask": "비트마스킹",
+    "unionfind": "서로소 집합",
+    "divide": "분할 정복",
+    "topology": "위상정렬",
+    "backtracking": "백트래킹",
+    "greedy": "탐욕",
+    "binary": "이진 탐색",
+    "twopointer": "투 포인터"
+  }
+}

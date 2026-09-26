@@ -1,0 +1,9 @@
+{
+  "id": "monthly-01",
+  "revision": 1,
+  "kind": "monthly",
+  "title": "월평 1회",
+  "subtitle": "개념을 단단하게",
+  "practiceMinutes": 120,
+  "sourceScopeVersion": 1
+}

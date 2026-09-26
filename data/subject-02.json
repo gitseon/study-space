@@ -1,0 +1,1327 @@
+{
+  "id": "subject-02",
+  "revision": 1,
+  "kind": "subject",
+  "title": "과평 2회",
+  "subtitle": "실수하기 쉬운 경계",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1,
+  "questions": [
+    {
+      "title": "빅오의 상한",
+      "topics": [
+        "complexity"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q01",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "cost",
+      "stem": "T(N)=3N+10이다. 옳은 설명은?",
+      "solution": "타이트한 차수는 Θ(N)이지만 O(N²)도 올바른 상한이다.",
+      "choices": [
+        {
+          "id": "c",
+          "text": "Ω(N²)가 하한으로 성립한다"
+        },
+        {
+          "id": "a",
+          "text": "O(N²)도 상한으로 성립한다"
+        },
+        {
+          "id": "d",
+          "text": "Θ(log N)이 타이트한 차수다"
+        },
+        {
+          "id": "b",
+          "text": "Θ(N²)가 타이트한 차수다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "느슨한 상한도 빅오에 해당한다.",
+        "b": "실제 차수는 선형이다.",
+        "c": "제곱은 선형 함수의 하한이 아니다.",
+        "d": "선형은 로그보다 빠르게 증가한다."
+      }
+    },
+    {
+      "title": "중첩된 배증",
+      "topics": [
+        "complexity"
+      ],
+      "correctChoiceId": "c",
+      "type": "mc",
+      "id": "subject-02-q02",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "cost",
+      "stem": "외부 루프는 N번 실행한다. 매번 내부 루프를 j=1에서 시작해 j<N 동안 j*=2로 진행한다. 오버플로가 없을 때 차수는?",
+      "solution": "내부 상태를 매번 초기화하므로 반복 횟수를 곱한다.",
+      "choices": [
+        {
+          "id": "c",
+          "text": "Θ(N log N)"
+        },
+        {
+          "id": "d",
+          "text": "Θ(N²)"
+        },
+        {
+          "id": "a",
+          "text": "Θ(N)"
+        },
+        {
+          "id": "b",
+          "text": "Θ(log N)"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "내부 비용을 누락했다.",
+        "b": "외부 비용을 누락했다.",
+        "c": "N번마다 로그 작업을 수행한다.",
+        "d": "내부는 선형이 아닌 로그 횟수다."
+      }
+    },
+    {
+      "title": "기저 조건",
+      "topics": [
+        "divide",
+        "recursion"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q03",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "cost",
+      "stem": "[lo, hi)를 절반씩 나누는 재귀에서 빈 구간과 원소 하나의 구간을 종료하는 조건은?",
+      "solution": "재귀가 더 작아지며 끝나려면 길이로 기저 조건을 판단해야 한다.",
+      "choices": [
+        {
+          "id": "c",
+          "text": "lo == 0"
+        },
+        {
+          "id": "a",
+          "text": "hi - lo <= 1"
+        },
+        {
+          "id": "b",
+          "text": "hi - lo == 2"
+        },
+        {
+          "id": "d",
+          "text": "hi == N"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "길이 0과 1을 모두 포함한다.",
+        "b": "빈 구간을 종료하지 못한다.",
+        "c": "구간 크기와 관계없는 조건이다.",
+        "d": "구간 크기를 알 수 없는 조건이다."
+      }
+    },
+    {
+      "title": "큐 연산 추적",
+      "topics": [
+        "queue"
+      ],
+      "correctChoiceId": "c",
+      "type": "mc",
+      "id": "subject-02-q04",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "structures",
+      "stem": "빈 큐에서 offer(4), offer(7), poll(), offer(2)를 실행했다. 다음 peek()의 반환값은?",
+      "solution": "FIFO에 따라 4가 먼저 빠지고 큐는 [7,2]가 된다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "4"
+        },
+        {
+          "id": "d",
+          "text": "null"
+        },
+        {
+          "id": "a",
+          "text": "2"
+        },
+        {
+          "id": "c",
+          "text": "7"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "맨 뒤에 추가된 값이다.",
+        "b": "poll에서 제거됐다.",
+        "c": "현재 맨 앞에 남은 값이다.",
+        "d": "큐에는 두 값이 남아 있다."
+      }
+    },
+    {
+      "title": "후위 순회",
+      "topics": [
+        "tree"
+      ],
+      "correctChoiceId": "c",
+      "type": "mc",
+      "id": "subject-02-q05",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "structures",
+      "stem": "루트 R의 왼쪽 L과 오른쪽 M은 모두 리프다. 후위 순회는?",
+      "solution": "후위는 왼쪽과 오른쪽 부분트리를 마친 다음 현재 노드를 기록한다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "L R M"
+        },
+        {
+          "id": "d",
+          "text": "M R L"
+        },
+        {
+          "id": "c",
+          "text": "L M R"
+        },
+        {
+          "id": "a",
+          "text": "R L M"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "전위 순회다.",
+        "b": "중위 순회다.",
+        "c": "두 자식 다음 루트를 방문한다.",
+        "d": "오른쪽을 먼저 방문했다."
+      }
+    },
+    {
+      "title": "형제 노드의 관계",
+      "topics": [
+        "tree"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q06",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "structures",
+      "stem": "최소 힙의 부모 값은 3이고 왼쪽 자식은 8, 오른쪽 자식은 5다. 이 세 노드의 힙 대소 조건에 대한 판단은?",
+      "solution": "전체 트리의 완전이진트리 형태는 별도로 확인해야 한다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "왼쪽이 더 크므로 조건 위반이다"
+        },
+        {
+          "id": "c",
+          "text": "자식의 차가 1이 아니라 위반이다"
+        },
+        {
+          "id": "a",
+          "text": "부모가 두 자식 이하라 유효하다"
+        },
+        {
+          "id": "d",
+          "text": "자식 두 값이 달라 조건 위반이다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "부모 자식 관계를 모두 만족한다.",
+        "b": "형제끼리의 정렬은 요구하지 않는다.",
+        "c": "값의 차이에 대한 규칙은 없다.",
+        "d": "형제 값이 같을 필요는 없다."
+      }
+    },
+    {
+      "title": "0번 기반 힙",
+      "topics": [
+        "tree"
+      ],
+      "correctChoiceId": "b",
+      "type": "mc",
+      "id": "subject-02-q07",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "structures",
+      "stem": "0번 인덱스 기반 이진 힙에서 인덱스 4의 왼쪽 자식 인덱스는? 자식은 존재한다.",
+      "solution": "0번 기반은 왼쪽 2i+1과 오른쪽 2i+2를 사용한다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "8"
+        },
+        {
+          "id": "c",
+          "text": "10"
+        },
+        {
+          "id": "d",
+          "text": "2"
+        },
+        {
+          "id": "b",
+          "text": "9"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "1번 기반 공식을 적용했다.",
+        "b": "왼쪽은 2i+1이다.",
+        "c": "오른쪽 자식의 위치다.",
+        "d": "부모 인덱스와 혼동했다."
+      }
+    },
+    {
+      "title": "부분집합 완성",
+      "topics": [
+        "recursion",
+        "enumeration"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q08",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "enumeration",
+      "stem": "원소마다 선택/미선택을 결정한다. 재귀 깊이 d는 결정한 원소 수다. 완성된 부분집합을 처리하는 시점은?",
+      "solution": "공집합까지 포함해 모든 깊이 N의 리프를 처리하면 2^N개가 된다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "d가 N에 도달했을 때"
+        },
+        {
+          "id": "b",
+          "text": "첫 원소를 선택했을 때"
+        },
+        {
+          "id": "c",
+          "text": "현재 합이 양수가 될 때"
+        },
+        {
+          "id": "d",
+          "text": "미선택 분기를 시작할 때"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "모든 포함 여부가 결정됐다.",
+        "b": "나머지 원소가 아직 미정이다.",
+        "c": "원소의 부호는 종료 조건이 아니다.",
+        "d": "분기 시작은 완성 상태가 아니다."
+      }
+    },
+    {
+      "title": "중복 값의 순열",
+      "topics": [
+        "enumeration"
+      ],
+      "correctChoiceId": "b",
+      "type": "mc",
+      "id": "subject-02-q09",
+      "revision": 2,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "enumeration",
+      "stem": "[1, 1, 2]를 오름차순에서 시작해 표준 next_permutation으로 순회한다. 서로 다른 배열 상태 수는?",
+      "solution": "상태는 `[1,1,2]`에서 `[1,2,1]`을 거쳐 `[2,1,1]`까지 세 가지다. 같은 값끼리의 교환은 새 배열을 만들지 않는다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "3개"
+        },
+        {
+          "id": "a",
+          "text": "2개"
+        },
+        {
+          "id": "d",
+          "text": "8개"
+        },
+        {
+          "id": "c",
+          "text": "6개"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "세 상태 중 하나를 놓쳤다.",
+        "b": "3!/2!개이다.",
+        "c": "같은 1의 교환도 새 상태로 셌다.",
+        "d": "부분집합 수와 혼동했다."
+      }
+    },
+    {
+      "title": "역할을 정하는 선택",
+      "topics": [
+        "enumeration"
+      ],
+      "correctChoiceId": "b",
+      "type": "mc",
+      "id": "subject-02-q10",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 1,
+      "group": "enumeration",
+      "stem": "서로 다른 5명 중 회장과 부회장을 한 명씩 정한다. 겸임할 수 없을 때 경우의 수는?",
+      "solution": "역할의 순서가 중요하므로 5P2=20이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "10가지"
+        },
+        {
+          "id": "c",
+          "text": "25가지"
+        },
+        {
+          "id": "b",
+          "text": "20가지"
+        },
+        {
+          "id": "d",
+          "text": "32가지"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "역할을 구분하지 않은 조합이다.",
+        "b": "5명 선택 후 나머지 4명이다.",
+        "c": "같은 사람이 두 역할을 맡는다.",
+        "d": "부분집합 개수다."
+      }
+    },
+    {
+      "title": "행렬의 단일 조회",
+      "topics": [
+        "graph"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q11",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "graph",
+      "stem": "인접 행렬에서 정점 u와 v 사이 간선 존재 여부 한 번을 확인하는 시간은?",
+      "solution": "단일 연결 조회와 한 정점의 모든 이웃 탐색은 다른 작업이다.",
+      "choices": [
+        {
+          "id": "d",
+          "text": "O(V²)"
+        },
+        {
+          "id": "c",
+          "text": "O(V)"
+        },
+        {
+          "id": "a",
+          "text": "O(1)"
+        },
+        {
+          "id": "b",
+          "text": "O(log V)"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "행렬 한 칸을 조회한다.",
+        "b": "이진 탐색이 필요하지 않다.",
+        "c": "이웃 전체를 나열할 때의 비용이다.",
+        "d": "행렬 전체를 검사하는 비용이다."
+      }
+    },
+    {
+      "title": "진입 차수 갱신",
+      "topics": [
+        "graph",
+        "topology"
+      ],
+      "correctChoiceId": "b",
+      "type": "mc",
+      "id": "subject-02-q12",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "graph",
+      "stem": "A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C의 진입 차수는?",
+      "solution": "C→D는 C의 진입 차수가 아니다. C의 차수가 0이 되려면 B도 먼저 처리해야 한다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "0"
+        },
+        {
+          "id": "b",
+          "text": "1"
+        },
+        {
+          "id": "d",
+          "text": "3"
+        },
+        {
+          "id": "c",
+          "text": "2"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "B에서 들어오는 간선이 남는다.",
+        "b": "처음 2에서 1개가 줄었다.",
+        "c": "A의 간선을 빼지 않았다.",
+        "d": "진출 간선까지 더했다."
+      }
+    },
+    {
+      "title": "BFS의 방문 표시",
+      "topics": [
+        "traversal"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q13",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "graph",
+      "stem": "같은 정점이 큐에 중복 삽입되는 일을 막는 표준 BFS 방문 표시 시점은?",
+      "solution": "같은 레벨의 여러 정점이 하나의 정점을 가리킬 때 삽입 시 방문 표시가 중복을 막는다.",
+      "choices": [
+        {
+          "id": "d",
+          "text": "간선을 입력할 때 표시한다"
+        },
+        {
+          "id": "a",
+          "text": "큐에 넣을 때 표시한다"
+        },
+        {
+          "id": "c",
+          "text": "탐색이 끝난 뒤 표시한다"
+        },
+        {
+          "id": "b",
+          "text": "큐에서 꺼낸 뒤 표시한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "발견과 동시에 표시한다.",
+        "b": "꺼내기 전에 중복 삽입될 수 있다.",
+        "c": "탐색 중 중복을 막지 못한다.",
+        "d": "탐색의 발견 여부와 다르다."
+      }
+    },
+    {
+      "title": "DFS의 복귀 순서",
+      "topics": [
+        "traversal",
+        "recursion"
+      ],
+      "correctChoiceId": "b",
+      "type": "mc",
+      "id": "subject-02-q14",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "graph",
+      "stem": "재귀 DFS에서 자식을 모두 방문한 다음 현재 정점을 기록한다. 이 기록은 무엇을 나타내는가?",
+      "solution": "발견 시점과 종료 시점의 기록을 구별해야 한다.",
+      "choices": [
+        {
+          "id": "d",
+          "text": "시작점 거리 오름차순"
+        },
+        {
+          "id": "a",
+          "text": "너비별 발견 순서"
+        },
+        {
+          "id": "c",
+          "text": "정점 번호 오름차순"
+        },
+        {
+          "id": "b",
+          "text": "재귀 호출 종료 순서"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "레벨 순서가 아니다.",
+        "b": "자식 호출이 끝난 후 기록한다.",
+        "c": "번호 정렬을 보장하지 않는다.",
+        "d": "DFS는 거리순을 보장하지 않는다."
+      }
+    },
+    {
+      "title": "XOR의 역할",
+      "topics": [
+        "bitmask"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q15",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "state",
+      "stem": "mask=0에서 mask XOR (1 << 2)를 계산했다. 결과는?",
+      "solution": "XOR는 Java의 ^ 연산이다. 켜진 비트에 적용하면 꺼지는 토글이다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "2번 비트가 꺼진다"
+        },
+        {
+          "id": "c",
+          "text": "모든 비트가 켜진다"
+        },
+        {
+          "id": "a",
+          "text": "2번 비트가 켜진다"
+        },
+        {
+          "id": "d",
+          "text": "1번 비트가 켜진다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "0이던 대상 비트를 1로 바꾼다.",
+        "b": "XOR는 무조건 제거가 아니다.",
+        "c": "대상 비트만 바꾼다.",
+        "d": "시프트 수는 2다."
+      }
+    },
+    {
+      "title": "상태 압축의 장점",
+      "topics": [
+        "bitmask"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q16",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "state",
+      "stem": "원소 20개의 포함 여부를 int 비트로 저장한다. 실제 장점은?",
+      "solution": "메모리 표현과 복사 연산이 간단해지는 것과 경우의 수가 줄어드는 것은 다르다.",
+      "choices": [
+        {
+          "id": "c",
+          "text": "탐색 순서가 자동 정렬된다"
+        },
+        {
+          "id": "a",
+          "text": "대입으로 상태 복사가 가능하다"
+        },
+        {
+          "id": "d",
+          "text": "전체 탐색이 선형으로 끝난다"
+        },
+        {
+          "id": "b",
+          "text": "부분집합이 20개로 줄어든다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "고정 크기 값 하나를 복사한다.",
+        "b": "가능한 상태는 여전히 2²⁰개다.",
+        "c": "표현 방식은 방문 순서를 정하지 않는다.",
+        "d": "상태 수가 지수적으로 남는다."
+      }
+    },
+    {
+      "title": "같은 집합 판정",
+      "topics": [
+        "unionfind"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q17",
+      "revision": 2,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "state",
+      "stem": "a와 b가 같은 집합인지 판단하는 올바른 검사는?",
+      "solution": "경로 압축 여부와 관계없이 find로 대표까지 찾아 비교한다.",
+      "choices": [
+        {
+          "id": "d",
+          "text": "두 노드의 트리 깊이 비교"
+        },
+        {
+          "id": "b",
+          "text": "a와 b의 노드 번호 비교"
+        },
+        {
+          "id": "c",
+          "text": "parent[a]와 parent[b] 비교"
+        },
+        {
+          "id": "a",
+          "text": "find(a)와 find(b) 비교"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "최종 대표가 같은지 확인한다.",
+        "b": "번호가 달라도 같은 집합일 수 있다.",
+        "c": "직접 부모가 대표라는 보장이 없다. 압축 전에는 부모가 달라도 대표가 같을 수 있다.",
+        "d": "깊이는 집합 소속을 말해주지 않는다."
+      }
+    },
+    {
+      "title": "위상정렬의 실패",
+      "topics": [
+        "topology"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q18",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "strategy",
+      "stem": "6개 정점을 모두 초기화한 Kahn 알고리즘이 4개만 꺼낸 뒤 멈췄다. 확실한 사실은?",
+      "solution": "비연결 DAG도 전체 정점을 초기화하면 모두 처리된다. 남은 정점은 사이클의 존재를 뜻한다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "방향 사이클이 존재한다"
+        },
+        {
+          "id": "b",
+          "text": "모든 정점의 차수가 0이다"
+        },
+        {
+          "id": "c",
+          "text": "위상정렬이 정상 완료됐다"
+        },
+        {
+          "id": "d",
+          "text": "그래프에 간선이 전혀 없다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "남은 정점들의 진입 차수를 줄일 수 없다.",
+        "b": "차수 0이면 큐에 들어갔어야 한다.",
+        "c": "두 정점을 아직 처리하지 못했다.",
+        "d": "간선이 없으면 모두 처리된다."
+      }
+    },
+    {
+      "title": "음수와 가지치기",
+      "topics": [
+        "backtracking",
+        "greedy"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q19",
+      "revision": 2,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "strategy",
+      "stem": "목표 합 5를 찾는다. 현재 합은 7이고 남은 원소에 -2가 있다. 현재 합이 목표를 넘으면 분기를 버리는 가지치기에 대한 판단으로 옳은 것은?",
+      "solution": "남은 값이 음수라면 합이 감소한다. 현재 합만 보고 탐욕적으로 중단하면 안전하지 않다.",
+      "choices": [
+        {
+          "id": "b",
+          "text": "이 입력에서도 안전한 판단이다"
+        },
+        {
+          "id": "a",
+          "text": "유효한 답을 버릴 수 있다"
+        },
+        {
+          "id": "d",
+          "text": "중복된 해를 만들어 낸다"
+        },
+        {
+          "id": "c",
+          "text": "탐색 순서만 달라진다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "7에 -2를 더하면 목표 5에 도달한다. 초과 시 중단하면 이 해를 놓친다.",
+        "b": "음수가 남아 있으면 합이 다시 줄어들 수 있어 안전하지 않다.",
+        "c": "분기를 버리면 방문하는 해의 집합 자체가 달라진다.",
+        "d": "분기를 버리는 것만으로 새로운 해가 생기지 않는다."
+      }
+    },
+    {
+      "title": "반열린 탐색 구간",
+      "topics": [
+        "binary"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q20",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "search",
+      "stem": "lower_bound의 구간은 [lo, hi)다. a[mid] < target이면 어떤 갱신을 하는가?",
+      "solution": "mid 이하의 값은 모두 target보다 작으므로 lo를 mid 다음으로 옮긴다.",
+      "choices": [
+        {
+          "id": "d",
+          "text": "hi = mid"
+        },
+        {
+          "id": "b",
+          "text": "lo = mid"
+        },
+        {
+          "id": "c",
+          "text": "hi = mid + 1"
+        },
+        {
+          "id": "a",
+          "text": "lo = mid + 1"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "mid를 후보에서 제외한다.",
+        "b": "같은 구간이 반복될 수 있다.",
+        "c": "답이 있는 오른쪽을 버린다.",
+        "d": "작은 값이 있는 쪽으로 이동한다."
+      }
+    },
+    {
+      "title": "음수 배열의 구간합",
+      "topics": [
+        "twopointer"
+      ],
+      "correctChoiceId": "a",
+      "type": "mc",
+      "id": "subject-02-q21",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "group": "search",
+      "stem": "양수 배열의 합을 위한 슬라이딩 윈도우를 음수 배열에 그대로 쓸 수 없는 이유는?",
+      "solution": "오른쪽 확장 시 합이 증가한다는 단조성이 깨진다. 다른 알고리즘의 전제가 필요하다.",
+      "choices": [
+        {
+          "id": "c",
+          "text": "원소 크기 비교가 불가능하다"
+        },
+        {
+          "id": "a",
+          "text": "확장하면 합이 줄 수 있다"
+        },
+        {
+          "id": "d",
+          "text": "배열 길이가 자동으로 늘어난다"
+        },
+        {
+          "id": "b",
+          "text": "인덱스가 자동으로 사라진다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "음수를 추가하면 합이 작아진다.",
+        "b": "인덱스 체계는 유지된다.",
+        "c": "정수 비교 자체는 가능하다.",
+        "d": "포인터 이동은 배열 길이를 바꾸지 않는다."
+      }
+    },
+    {
+      "title": "나눗셈 루프",
+      "topics": [
+        "complexity"
+      ],
+      "group": "cost",
+      "acceptedAnswers": [
+        "7"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q22",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "stem": "i=64에서 i>0 동안 i/=2를 하는 정수 루프의 실행 횟수는?",
+      "solution": "64부터 1까지 7개의 값에서 실행하고 1/2=0에서 끝난다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "큐의 제거",
+      "topics": [
+        "queue"
+      ],
+      "group": "structures",
+      "acceptedAnswers": [
+        "poll",
+        "poll()"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q23",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "stem": "Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서드는?",
+      "solution": "poll은 제거이고 peek는 조회다. remove는 빈 큐에서 예외다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "루트의 깊이",
+      "topics": [
+        "tree"
+      ],
+      "group": "structures",
+      "acceptedAnswers": [
+        "0"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q24",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "stem": "깊이를 루트에서부터의 간선 수로 정의할 때 루트 깊이는?",
+      "solution": "루트에서 루트까지 지나가는 간선은 없다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "역할 배정",
+      "topics": [
+        "enumeration"
+      ],
+      "group": "enumeration",
+      "acceptedAnswers": [
+        "12"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q25",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "stem": "서로 다른 4명 중 회장과 부회장을 겸임 없이 정한다. 경우의 수는?",
+      "solution": "회장 4명과 남은 부회장 3명을 곱하면 12다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "다음 순열의 피벗",
+      "topics": [
+        "enumeration"
+      ],
+      "group": "enumeration",
+      "acceptedAnswers": [
+        "1"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q26",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 2,
+      "stem": "[1, 4, 3, 2]의 다음 순열을 구할 때 오른쪽에서 찾는 상승 지점의 왼쪽 값은?",
+      "solution": "1<4가 유일한 상승 지점이다. 뒤의 4,3,2는 내림차순이다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "무방향 간선 수",
+      "topics": [
+        "graph"
+      ],
+      "group": "graph",
+      "acceptedAnswers": [
+        "7"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q27",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "자기 루프 없는 무방향 그래프의 차수 합이 14다. 간선 수는?",
+      "solution": "차수 합=2E이므로 E=7이다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "같은 집합의 대표",
+      "topics": [
+        "unionfind"
+      ],
+      "group": "state",
+      "acceptedAnswers": [
+        "예"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q28",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "find(a)=5이고 find(b)=5다. a와 b는 같은 집합인가? 예 또는 아니오로 쓰시오.",
+      "solution": "두 원소의 대표가 같으므로 같은 집합이다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "초기 진입 차수",
+      "topics": [
+        "topology"
+      ],
+      "group": "strategy",
+      "acceptedAnswers": [
+        "2"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q29",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "간선 A→B, A→C, B→C가 있을 때 C의 초기 진입 차수는?",
+      "solution": "A와 B에서 각각 하나씩 들어온다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "탐색 끝의 반환",
+      "topics": [
+        "binary"
+      ],
+      "group": "search",
+      "acceptedAnswers": [
+        "3"
+      ],
+      "normalization": "trim",
+      "type": "short",
+      "id": "subject-02-q30",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "[1, 2, 3]에서 target=4의 lower_bound 반환 인덱스는?",
+      "solution": "목표 이상인 원소가 없어 배열 길이를 반환한다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "비트 토글을 제거로 쓸 때",
+      "topics": [
+        "bitmask"
+      ],
+      "group": "essay",
+      "modelAnswer": "XOR는 비트를 반전하므로 꺼진 비트를 오히려 켠다. 제거에는 mask &= ~(1 << i)를 쓴다. 대상 비트만 0이고 다른 비트는 1인 값과 AND하므로 다른 방문 상태를 보존하며 두 번 제거해도 결과가 같다.",
+      "rubric": [
+        {
+          "id": "r0",
+          "criterion": "XOR가 반전임을 설명한다",
+          "points": 1
+        },
+        {
+          "id": "r1",
+          "criterion": "미방문 비트가 켜지는 반례를 든다",
+          "points": 1
+        },
+        {
+          "id": "r2",
+          "criterion": "AND와 NOT를 사용한 제거식을 제시한다",
+          "points": 1
+        },
+        {
+          "id": "r3",
+          "criterion": "다른 비트 보존 또는 반복 제거의 안전성을 설명한다",
+          "points": 1
+        }
+      ],
+      "type": "essay",
+      "id": "subject-02-q31",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "방문 해제를 mask ^= (1 << i)로 구현했다. i가 방문되지 않았을 때의 문제를 설명하고 안전한 제거식을 제시하시오.",
+      "solution": "XOR는 비트를 반전하므로 꺼진 비트를 오히려 켠다. 제거에는 mask &= ~(1 << i)를 쓴다. 대상 비트만 0이고 다른 비트는 1인 값과 AND하므로 다른 방문 상태를 보존하며 두 번 제거해도 결과가 같다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "대표 비교와 직접 부모 비교",
+      "topics": [
+        "unionfind"
+      ],
+      "group": "essay",
+      "modelAnswer": "직접 부모가 달라도 최종 대표는 같을 수 있다. a→x→r이고 b→r이면 parent는 다르지만 같은 집합이다. find(a)와 find(b)의 결과를 비교해야 한다. 경로 압축은 방문 노드를 대표에 연결해 이후 조회를 줄인다.",
+      "rubric": [
+        {
+          "id": "r0",
+          "criterion": "직접 부모와 대표가 다름을 구분한다",
+          "points": 1
+        },
+        {
+          "id": "r1",
+          "criterion": "같은 대표로 이어지는 반례를 제시한다",
+          "points": 1
+        },
+        {
+          "id": "r2",
+          "criterion": "find 결과를 비교한다",
+          "points": 1
+        },
+        {
+          "id": "r3",
+          "criterion": "경로 압축이 향후 탐색에 주는 효과를 설명한다",
+          "points": 1
+        }
+      ],
+      "type": "essay",
+      "id": "subject-02-q32",
+      "revision": 1,
+      "sourceRefs": [
+        "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
+      ],
+      "difficulty": 3,
+      "stem": "parent[a]와 parent[b]가 다르다는 이유만으로 서로 다른 집합이라고 판단했다. 왜 틀릴 수 있는지와 find의 역할을 설명하시오.",
+      "solution": "직접 부모가 달라도 최종 대표는 같을 수 있다. a→x→r이고 b→r이면 parent는 다르지만 같은 집합이다. find(a)와 find(b)의 결과를 비교해야 한다. 경로 압축은 방문 노드를 대표에 연결해 이후 조회를 줄인다.",
+      "choices": [],
+      "choiceExplanations": {}
+    }
+  ],
+  "questionIds": [
+    "subject-02-q01",
+    "subject-02-q02",
+    "subject-02-q03",
+    "subject-02-q04",
+    "subject-02-q05",
+    "subject-02-q06",
+    "subject-02-q07",
+    "subject-02-q08",
+    "subject-02-q09",
+    "subject-02-q10",
+    "subject-02-q11",
+    "subject-02-q12",
+    "subject-02-q13",
+    "subject-02-q14",
+    "subject-02-q15",
+    "subject-02-q16",
+    "subject-02-q17",
+    "subject-02-q18",
+    "subject-02-q19",
+    "subject-02-q20",
+    "subject-02-q21",
+    "subject-02-q22",
+    "subject-02-q23",
+    "subject-02-q24",
+    "subject-02-q25",
+    "subject-02-q26",
+    "subject-02-q27",
+    "subject-02-q28",
+    "subject-02-q29",
+    "subject-02-q30",
+    "subject-02-q31",
+    "subject-02-q32"
+  ],
+  "counts": {
+    "mc": 21,
+    "short": 9,
+    "essay": 2,
+    "code": 0
+  },
+  "defaultChoiceOrders": {
+    "subject-02-q01": [
+      "c",
+      "a",
+      "d",
+      "b"
+    ],
+    "subject-02-q02": [
+      "c",
+      "d",
+      "a",
+      "b"
+    ],
+    "subject-02-q03": [
+      "c",
+      "a",
+      "b",
+      "d"
+    ],
+    "subject-02-q04": [
+      "b",
+      "d",
+      "a",
+      "c"
+    ],
+    "subject-02-q05": [
+      "b",
+      "d",
+      "c",
+      "a"
+    ],
+    "subject-02-q06": [
+      "b",
+      "c",
+      "a",
+      "d"
+    ],
+    "subject-02-q07": [
+      "a",
+      "c",
+      "d",
+      "b"
+    ],
+    "subject-02-q08": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "subject-02-q09": [
+      "b",
+      "a",
+      "d",
+      "c"
+    ],
+    "subject-02-q10": [
+      "a",
+      "c",
+      "b",
+      "d"
+    ],
+    "subject-02-q11": [
+      "d",
+      "c",
+      "a",
+      "b"
+    ],
+    "subject-02-q12": [
+      "a",
+      "b",
+      "d",
+      "c"
+    ],
+    "subject-02-q13": [
+      "d",
+      "a",
+      "c",
+      "b"
+    ],
+    "subject-02-q14": [
+      "d",
+      "a",
+      "c",
+      "b"
+    ],
+    "subject-02-q15": [
+      "b",
+      "c",
+      "a",
+      "d"
+    ],
+    "subject-02-q16": [
+      "c",
+      "a",
+      "d",
+      "b"
+    ],
+    "subject-02-q17": [
+      "d",
+      "b",
+      "c",
+      "a"
+    ],
+    "subject-02-q18": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "subject-02-q19": [
+      "b",
+      "a",
+      "d",
+      "c"
+    ],
+    "subject-02-q20": [
+      "d",
+      "b",
+      "c",
+      "a"
+    ],
+    "subject-02-q21": [
+      "c",
+      "a",
+      "d",
+      "b"
+    ]
+  },
+  "contentVersion": "55248bf42c6030bc"
+}
