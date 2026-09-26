@@ -99,7 +99,7 @@ Attempt는 `attemptId`, `examId`, `contentVersion`, `mode`, `startedAt`, `deadli
 
 ## 7. 지속적인 문제 품질 관리
 
-새 레포 루트에 [AGENTS.md 초안](../../mock-exam-repo/AGENTS.md)과 [QUESTION_AUTHORING.md](../../mock-exam-repo/QUESTION_AUTHORING.md)를 그대로 옮긴다. 기준의 단일 원본은 QUESTION_AUTHORING.md이며 AGENTS.md·README·PR 템플릿에서 연결한다.
+새 레포 루트에 [AGENTS.md 초안](../../AGENTS.md)과 [QUESTION_AUTHORING.md](../../QUESTION_AUTHORING.md)를 그대로 옮긴다. 기준의 단일 원본은 QUESTION_AUTHORING.md이며 AGENTS.md·README·PR 템플릿에서 연결한다.
 
 4지선다 21문항의 정답 배치는 번호별 4~7개, 같은 번호 연속 최대 2회로 제한한다. 전체 3회 63문항의 기본 배치는 번호별 14~18개로 제한한다. 반복 순환 패턴도 검사한다. 섞기 기능에도 회차의 동일 규칙을 적용한다.
 

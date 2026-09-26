@@ -63,6 +63,7 @@
 python scripts/build_data.py
 python scripts/validate_questions.py
 python scripts/audit_bias.py --strict --report reports/bias.json
+python scripts/verify_code_answers.py
 python -m unittest discover -s tests/content
 npm test
 npm run test:e2e

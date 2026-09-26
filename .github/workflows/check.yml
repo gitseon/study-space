@@ -1,0 +1,52 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build data and fail on stale generated files
+        run: |
+          python scripts/build_data.py
+          git diff --exit-code -- data/
+      - run: python scripts/validate_questions.py
+      - run: python scripts/audit_bias.py --strict --report reports/bias.json
+      - run: python scripts/verify_code_answers.py --report reports/code-verification.json
+      - run: python -m unittest discover -s tests/content
+      - run: npm test
+      - run: python scripts/build_site.py
+      - name: End-to-end tests against dist under the Pages path
+        run: npm run test:e2e
+        env:
+          CI: "true"
+          SITE_DIR: dist
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reports
+          path: reports/
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
