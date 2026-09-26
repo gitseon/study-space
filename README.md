@@ -74,6 +74,10 @@ SITE_DIR=dist npm run test:e2e
 
 ## 배포와 되돌리기
 
-`main`에 push하면 `deploy` 워크플로가 `check`를 먼저 실행하고, 같은 커밋에서 검증된 `dist/`만 GitHub Pages에 올립니다. 저장소 설정의 Pages 소스는 GitHub Actions로 둡니다.
+`deploy` 워크플로는 `check`를 먼저 실행하고, 같은 커밋에서 검증된 `dist/`만 GitHub Pages에 올립니다. 저장소 설정의 Pages 소스는 GitHub Actions로 둡니다. 배포는 세 경로로 시작됩니다.
+
+- `npm run deploy`: `main`을 push하고 바로 배포 워크플로를 실행합니다. 평소에는 이 명령을 씁니다.
+- `main` push: push 트리거입니다. 이 저장소에서는 아직 push로 실행이 생성되지 않아 확인 중입니다.
+- 정기 실행: 매시 17분과 47분에 `main`의 최신 커밋이 배포된 커밋과 다르면 배포합니다. 같으면 검사 없이 끝납니다.
 
 이전 정상 버전으로 되돌릴 때는 문제 커밋을 `git revert`해 `main`에 push합니다. 급한 경우 Actions 탭에서 이전 정상 커밋의 `deploy` 실행을 골라 다시 실행할 수 있습니다.
