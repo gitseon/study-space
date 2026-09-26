@@ -1,0 +1,9 @@
+node_modules/
+dist/
+reports/
+test-results/
+playwright-report/
+__pycache__/
+*.pyc
+.superpowers/
+.venv/
