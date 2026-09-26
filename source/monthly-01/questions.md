@@ -8,7 +8,7 @@
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  static int n; static int[] a,b; static boolean[] used; static long wins;\n  static void dfs(int d,int score){\n    if(d==n){if(score>0)wins++;return;}\n    for(int i=0;i<n;i++)if(!used[i]){\n      used[i]=true;int gain=a[d]+b[i];\n      dfs(d+1,score+(b[i]>a[d]?gain:-gain));used[i]=false;\n    }\n  }\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);n=s.nextInt();a=new int[n];b=new int[n];used=new boolean[n];\n    for(int i=0;i<n;i++)a[i]=s.nextInt();\n    for(int i=0;i<n;i++)b[i]=s.nextInt();\n    dfs(0,0);System.out.println(wins);\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    static int n;\n    static int[] a;\n    static int[] b;\n    static boolean[] used;\n    static long wins;\n\n    static void dfs(int depth, int score) {\n        if (depth == n) {\n            if (score > 0) {\n                wins++;\n            }\n            return;\n        }\n        for (int i = 0; i < n; i++) {\n            if (used[i]) {\n                continue;\n            }\n            used[i] = true;\n            int gain = a[depth] + b[i];\n            if (b[i] > a[depth]) {\n                dfs(depth + 1, score + gain);\n            } else {\n                dfs(depth + 1, score - gain);\n            }\n            used[i] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        n = sc.nextInt();\n        a = new int[n];\n        b = new int[n];\n        used = new boolean[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = sc.nextInt();\n        }\n        for (int i = 0; i < n; i++) {\n            b[i] = sc.nextInt();\n        }\n        dfs(0, 0);\n        System.out.println(wins);\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -37,7 +37,7 @@
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ N ≤ 8. 카드 값은 1 이상 100 이하이며 2N개의 값은 모두 다르다.",
+  "constraints": "$1 \\le N \\le 8$. 카드 값은 1 이상 100 이하이며 2N개의 값은 모두 다르다.",
   "examples": [
     {
       "input": "2\n1 4\n2 3\n",
@@ -54,9 +54,9 @@
       "output": "2"
     }
   ],
-  "complexity": "시간 O(N×N!), 추가 공간 O(N)",
+  "complexity": "시간 $O(N \\times N!)$, 추가 공간 $O(N)$",
   "id": "monthly-01-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -73,7 +73,7 @@
 민호가 이기는 순열의 개수를 출력한다.
 
 제약
-1 ≤ N ≤ 8. 카드 값은 1 이상 100 이하이며 2N개의 값은 모두 다르다.
+$1 \le N \le 8$. 카드 값은 1 이상 100 이하이며 2N개의 값은 모두 다르다.
 
 
 ## question: monthly-01-q02
@@ -85,7 +85,7 @@
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);int R=s.nextInt(),C=s.nextInt(),r=0,c=0;char[][] g=new char[R][];\n    for(int i=0;i<R;i++){g[i]=s.next().toCharArray();for(int j=0;j<C;j++)if(g[i][j]=='S'){r=i;c=j;}}\n    int[] dr={-1,1,0,0},dc={0,0,-1,1};String dirs=\"UDLR\";int d=0;\n    for(char ch:s.next().toCharArray()){\n      d=dirs.indexOf(ch);int nr=r+dr[d],nc=c+dc[d];\n      if(nr>=0&&nr<R&&nc>=0&&nc<C&&g[nr][nc]!='#'){r=nr;c=nc;}\n    }\n    System.out.println(r+\" \"+c+\" \"+dirs.charAt(d));\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int rows = sc.nextInt();\n        int cols = sc.nextInt();\n        char[][] grid = new char[rows][];\n        int r = 0;\n        int c = 0;\n        for (int i = 0; i < rows; i++) {\n            grid[i] = sc.next().toCharArray();\n            for (int j = 0; j < cols; j++) {\n                if (grid[i][j] == 'S') {\n                    r = i;\n                    c = j;\n                }\n            }\n        }\n\n        int[] dr = {-1, 1, 0, 0};\n        int[] dc = {0, 0, -1, 1};\n        String dirs = \"UDLR\";\n        int d = 0;\n        for (char command : sc.next().toCharArray()) {\n            d = dirs.indexOf(command);\n            int nr = r + dr[d];\n            int nc = c + dc[d];\n            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] != '#') {\n                r = nr;\n                c = nc;\n            }\n        }\n        System.out.println(r + \" \" + c + \" \" + dirs.charAt(d));\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -114,7 +114,7 @@
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ R,C ≤ 30. S는 하나이며 명령 수는 1 이상 1000 이하이다.",
+  "constraints": "$1 \\le R, C \\le 30$. S는 하나이며 명령 수는 1 이상 1000 이하이다.",
   "examples": [
     {
       "input": "2 3\nS#.\n...\nRDD\n",
@@ -131,9 +131,9 @@
       "output": "0 0 U"
     }
   ],
-  "complexity": "시간 O(RC+M), 공간 O(RC)",
+  "complexity": "시간 $O(RC+M)$, 공간 $O(RC)$",
   "id": "monthly-01-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -150,7 +150,7 @@ R C 다음 R줄 지도를 입력한다. 마지막 줄은 공백 없는 명령 �
 최종 행과 열을 0번 기준으로 출력하고 방향 문자 U D L R을 공백으로 구분해 출력한다.
 
 제약
-1 ≤ R,C ≤ 30. S는 하나이며 명령 수는 1 이상 1000 이하이다.
+$1 \le R, C \le 30$. S는 하나이며 명령 수는 1 이상 1000 이하이다.
 
 
 ## question: monthly-01-q03
@@ -162,7 +162,7 @@ R C 다음 R줄 지도를 입력한다. 마지막 줄은 공백 없는 명령 �
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);int n=s.nextInt();int[] dx={0,0,-1,1},dy={1,-1,0,0};\n    Map<String,int[]> groups=new HashMap<>();\n    for(int i=0;i<n;i++){\n      int x=s.nextInt(),y=s.nextInt(),d=s.nextInt(),e=s.nextInt();\n      String key=(x+dx[d])+\":\"+(y+dy[d]);\n      int[] v=groups.computeIfAbsent(key,k->new int[2]);v[0]++;v[1]+=e;\n    }\n    int answer=0;for(int[] v:groups.values())if(v[0]>=2)answer+=v[1];\n    System.out.println(answer);\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] dx = {0, 0, -1, 1};\n        int[] dy = {1, -1, 0, 0};\n        Map<String, int[]> groups = new HashMap<>();\n\n        for (int i = 0; i < n; i++) {\n            int x = sc.nextInt();\n            int y = sc.nextInt();\n            int d = sc.nextInt();\n            int e = sc.nextInt();\n            String key = (x + dx[d]) + \":\" + (y + dy[d]);\n            int[] group = groups.computeIfAbsent(key, k -> new int[2]);\n            group[0]++;\n            group[1] += e;\n        }\n\n        int answer = 0;\n        for (int[] group : groups.values()) {\n            if (group[0] >= 2) {\n                answer += group[1];\n            }\n        }\n        System.out.println(answer);\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -191,7 +191,7 @@ R C 다음 R줄 지도를 입력한다. 마지막 줄은 공백 없는 명령 �
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ N ≤ 1000. 초기 좌표는 서로 다르다. |x|,|y| ≤ 1000이며 1 ≤ e ≤ 1000이다.",
+  "constraints": "$1 \\le N \\le 1000$. 초기 좌표는 서로 다르다. $|x|, |y| \\le 1000$이며 $1 \\le e \\le 1000$이다.",
   "examples": [
     {
       "input": "3\n-1 0 3 2\n1 0 2 3\n0 1 1 5\n",
@@ -208,9 +208,9 @@ R C 다음 R줄 지도를 입력한다. 마지막 줄은 공백 없는 명령 �
       "output": "0"
     }
   ],
-  "complexity": "평균 시간 O(N), 공간 O(N)",
+  "complexity": "평균 시간 $O(N)$, 공간 $O(N)$",
   "id": "monthly-01-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -227,7 +227,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
 소멸 에너지의 합을 출력한다.
 
 제약
-1 ≤ N ≤ 1000. 초기 좌표는 서로 다르다. |x|,|y| ≤ 1000이며 1 ≤ e ≤ 1000이다.
+$1 \le N \le 1000$. 초기 좌표는 서로 다르다. $|x|, |y| \le 1000$이며 $1 \le e \le 1000$이다.
 
 
 ## question: monthly-01-q04
@@ -240,7 +240,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
     "topology"
   ],
   "group": "essay",
-  "modelAnswer": "BFS는 큐로 먼저 발견한 정점부터 처리해 거리순으로 확장한다. DFS는 재귀 호출 스택이나 명시적 스택으로 한 경로를 깊게 방문한 뒤 돌아온다.\n\n인접 행렬은 정점마다 V개 칸을 확인해 전체 O(V²)이다. 인접 리스트는 정점과 실제 간선을 확인해 O(V+E)다.\n\n위상정렬 대상은 방향 그래프이고 사이클이 없어야 한다. 방향은 선후 관계를 나타내고 사이클은 먼저 수행해야 하는 조건을 모순되게 만든다.",
+  "modelAnswer": "BFS는 큐로 먼저 발견한 정점부터 처리해 거리순으로 확장한다. DFS는 재귀 호출 스택이나 명시적 스택으로 한 경로를 깊게 방문한 뒤 돌아온다.\n\n인접 행렬은 정점마다 V개 칸을 확인해 전체 $O(V^2)$이다. 인접 리스트는 정점과 실제 간선을 확인해 $O(V+E)$다.\n\n위상정렬 대상은 방향 그래프이고 사이클이 없어야 한다. 방향은 선후 관계를 나타내고 사이클은 먼저 수행해야 하는 조건을 모순되게 만든다.",
   "rubric": [
     {
       "id": "r0",
@@ -254,12 +254,12 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
     },
     {
       "id": "r2",
-      "criterion": "행렬의 O(V²) 근거를 설명한다",
+      "criterion": "행렬의 $O(V^2)$ 근거를 설명한다",
       "points": 1
     },
     {
       "id": "r3",
-      "criterion": "리스트의 O(V+E) 근거를 설명한다",
+      "criterion": "리스트의 $O(V+E)$ 근거를 설명한다",
       "points": 1
     },
     {
@@ -275,7 +275,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
   ],
   "type": "essay",
   "id": "monthly-01-q04",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

@@ -8,7 +8,7 @@
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  static int n,best=Integer.MAX_VALUE;static int[][] a;static boolean[] used;\n  static void dfs(int d,int sum){\n    if(sum>=best)return;\n    if(d==n){best=sum;return;}\n    for(int j=0;j<n;j++)if(!used[j]){\n      used[j]=true;dfs(d+1,sum+a[d][j]);used[j]=false;\n    }\n  }\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);n=s.nextInt();a=new int[n][n];used=new boolean[n];\n    for(int i=0;i<n;i++)for(int j=0;j<n;j++)a[i][j]=s.nextInt();\n    dfs(0,0);System.out.println(best);\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    static int n;\n    static int best = Integer.MAX_VALUE;\n    static int[][] cost;\n    static boolean[] used;\n\n    static void dfs(int worker, int sum) {\n        if (sum >= best) {\n            return;\n        }\n        if (worker == n) {\n            best = sum;\n            return;\n        }\n        for (int job = 0; job < n; job++) {\n            if (used[job]) {\n                continue;\n            }\n            used[job] = true;\n            dfs(worker + 1, sum + cost[worker][job]);\n            used[job] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        n = sc.nextInt();\n        cost = new int[n][n];\n        used = new boolean[n];\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < n; j++) {\n                cost[i][j] = sc.nextInt();\n            }\n        }\n        dfs(0, 0);\n        System.out.println(best);\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -37,7 +37,7 @@
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ N ≤ 8. 비용은 0 이상 1000 이하이다.",
+  "constraints": "$1 \\le N \\le 8$. 비용은 0 이상 1000 이하이다.",
   "examples": [
     {
       "input": "2\n1 9\n8 2\n",
@@ -54,9 +54,9 @@
       "output": "6"
     }
   ],
-  "complexity": "최악 시간 O(N×N!), 공간 O(N²)",
+  "complexity": "최악 시간 $O(N \\times N!)$, 공간 $O(N^2)$",
   "id": "monthly-02-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -73,7 +73,7 @@ N 다음 N줄에 비용 N개를 입력한다.
 최소 총비용을 출력한다.
 
 제약
-1 ≤ N ≤ 8. 비용은 0 이상 1000 이하이다.
+$1 \le N \le 8$. 비용은 0 이상 1000 이하이다.
 
 
 ## question: monthly-02-q02
@@ -85,7 +85,7 @@ N 다음 N줄에 비용 N개를 입력한다.
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);int R=s.nextInt(),C=s.nextInt(),r=0,c=0,d=3;char[][] g=new char[R][];\n    for(int i=0;i<R;i++){g[i]=s.next().toCharArray();for(int j=0;j<C;j++)if(g[i][j]=='S'){r=i;c=j;g[i][j]='.';}}\n    int[] dr={-1,1,0,0},dc={0,0,-1,1};String dirs=\"UDLR\";\n    for(char ch:s.next().toCharArray()){\n      if(ch=='F'){\n        int nr=r+dr[d],nc=c+dc[d];\n        while(nr>=0&&nr<R&&nc>=0&&nc<C){\n          if(g[nr][nc]=='#')break;\n          if(g[nr][nc]=='*'){g[nr][nc]='.';break;}\n          nr+=dr[d];nc+=dc[d];\n        }\n      }else{\n        d=dirs.indexOf(ch);int nr=r+dr[d],nc=c+dc[d];\n        if(nr>=0&&nr<R&&nc>=0&&nc<C&&g[nr][nc]=='.'){r=nr;c=nc;}\n      }\n    }\n    int count=0;for(char[] row:g)for(char ch:row)if(ch=='*')count++;\n    System.out.println(r+\" \"+c+\" \"+count);\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int rows = sc.nextInt();\n        int cols = sc.nextInt();\n        char[][] grid = new char[rows][];\n        int r = 0;\n        int c = 0;\n        int d = 3;\n        for (int i = 0; i < rows; i++) {\n            grid[i] = sc.next().toCharArray();\n            for (int j = 0; j < cols; j++) {\n                if (grid[i][j] == 'S') {\n                    r = i;\n                    c = j;\n                    grid[i][j] = '.';\n                }\n            }\n        }\n\n        int[] dr = {-1, 1, 0, 0};\n        int[] dc = {0, 0, -1, 1};\n        String dirs = \"UDLR\";\n        for (char command : sc.next().toCharArray()) {\n            if (command == 'F') {\n                int nr = r + dr[d];\n                int nc = c + dc[d];\n                while (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {\n                    if (grid[nr][nc] == '#') {\n                        break;\n                    }\n                    if (grid[nr][nc] == '*') {\n                        grid[nr][nc] = '.';\n                        break;\n                    }\n                    nr += dr[d];\n                    nc += dc[d];\n                }\n            } else {\n                d = dirs.indexOf(command);\n                int nr = r + dr[d];\n                int nc = c + dc[d];\n                if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == '.') {\n                    r = nr;\n                    c = nc;\n                }\n            }\n        }\n\n        int bricks = 0;\n        for (char[] row : grid) {\n            for (char cell : row) {\n                if (cell == '*') {\n                    bricks++;\n                }\n            }\n        }\n        System.out.println(r + \" \" + c + \" \" + bricks);\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -114,7 +114,7 @@ N 다음 N줄에 비용 N개를 입력한다.
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ R,C ≤ 30. S는 하나다. 명령 수는 1 이상 1000 이하이다.",
+  "constraints": "$1 \\le R, C \\le 30$. S는 하나다. 명령 수는 1 이상 1000 이하이다.",
   "examples": [
     {
       "input": "1 4\nS**#\nFRF\n",
@@ -131,9 +131,9 @@ N 다음 N줄에 비용 N개를 입력한다.
       "output": "0 0 0"
     }
   ],
-  "complexity": "시간 O(RC+M×max(R,C)), 공간 O(RC)",
+  "complexity": "시간 $O(RC+M \\times \\max(R,C))$, 공간 $O(RC)$",
   "id": "monthly-02-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -150,7 +150,7 @@ R C 다음 R줄 지도와 명령 문자열을 입력한다.
 최종 행과 열, 남은 벽돌 수를 공백으로 출력한다. 좌표는 0번 기준이다.
 
 제약
-1 ≤ R,C ≤ 30. S는 하나다. 명령 수는 1 이상 1000 이하이다.
+$1 \le R, C \le 30$. S는 하나다. 명령 수는 1 이상 1000 이하이다.
 
 
 ## question: monthly-02-q03
@@ -162,7 +162,7 @@ R C 다음 R줄 지도와 명령 문자열을 입력한다.
   ],
   "type": "code",
   "group": "code",
-  "modelAnswer": "```java\nimport java.util.*;\npublic class Main {\n  public static void main(String[] args){\n    Scanner s=new Scanner(System.in);int n=s.nextInt();List<int[]> live=new ArrayList<>();\n    for(int i=0;i<n;i++)live.add(new int[]{s.nextInt()*2,s.nextInt()*2,s.nextInt(),s.nextInt()});\n    int[] dx={0,0,-1,1},dy={1,-1,0,0};int total=0;\n    for(int step=1;step<=80&&!live.isEmpty();step++){\n      Map<String,List<int[]>> groups=new HashMap<>();\n      for(int[] a:live){\n        a[0]+=dx[a[2]];a[1]+=dy[a[2]];\n        if(Math.abs(a[0])>40||Math.abs(a[1])>40)continue;\n        groups.computeIfAbsent(a[0]+\":\"+a[1],k->new ArrayList<>()).add(a);\n      }\n      live=new ArrayList<>();\n      for(List<int[]> group:groups.values()){\n        if(group.size()==1)live.add(group.get(0));else for(int[] a:group)total+=a[3];\n      }\n    }\n    System.out.println(total);\n  }\n}\n```",
+  "modelAnswer": "```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        List<int[]> live = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            int x = sc.nextInt() * 2;\n            int y = sc.nextInt() * 2;\n            int d = sc.nextInt();\n            int e = sc.nextInt();\n            live.add(new int[] {x, y, d, e});\n        }\n\n        int[] dx = {0, 0, -1, 1};\n        int[] dy = {1, -1, 0, 0};\n        int total = 0;\n        for (int step = 1; step <= 80 && !live.isEmpty(); step++) {\n            Map<String, List<int[]>> groups = new HashMap<>();\n            for (int[] p : live) {\n                p[0] += dx[p[2]];\n                p[1] += dy[p[2]];\n                if (Math.abs(p[0]) > 40 || Math.abs(p[1]) > 40) {\n                    continue;\n                }\n                groups.computeIfAbsent(p[0] + \":\" + p[1], k -> new ArrayList<>()).add(p);\n            }\n\n            live = new ArrayList<>();\n            for (List<int[]> group : groups.values()) {\n                if (group.size() == 1) {\n                    live.add(group.get(0));\n                } else {\n                    for (int[] p : group) {\n                        total += p[3];\n                    }\n                }\n            }\n        }\n        System.out.println(total);\n    }\n}\n```",
   "rubric": [
     {
       "id": "r0",
@@ -191,7 +191,7 @@ R C 다음 R줄 지도와 명령 문자열을 입력한다.
     }
   ],
   "language": "java",
-  "constraints": "1 ≤ N ≤ 100. 초기 위치는 서로 다르다. |x|,|y| ≤ 20이고 1 ≤ e ≤ 1000이다.",
+  "constraints": "$1 \\le N \\le 100$. 초기 위치는 서로 다르다. $|x|, |y| \\le 20$이고 $1 \\le e \\le 1000$이다.",
   "examples": [
     {
       "input": "2\n0 0 3 4\n1 0 2 7\n",
@@ -212,9 +212,9 @@ R C 다음 R줄 지도와 명령 문자열을 입력한다.
       "output": "3"
     }
   ],
-  "complexity": "평균 시간 O(N×80), 공간 O(N)",
+  "complexity": "평균 시간 $O(N \\times 80)$, 공간 $O(N)$",
   "id": "monthly-02-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -231,7 +231,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
 소멸 에너지 총합을 출력한다.
 
 제약
-1 ≤ N ≤ 100. 초기 위치는 서로 다르다. |x|,|y| ≤ 20이고 1 ≤ e ≤ 1000이다.
+$1 \le N \le 100$. 초기 위치는 서로 다르다. $|x|, |y| \le 20$이고 $1 \le e \le 1000$이다.
 
 
 ## question: monthly-02-q04
@@ -244,7 +244,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
     "topology"
   ],
   "group": "essay",
-  "modelAnswer": "BFS는 큐로 먼저 발견한 정점부터 처리해 거리순으로 확장한다. DFS는 재귀 호출 스택이나 명시적 스택으로 한 경로를 깊게 방문한 뒤 돌아온다.\n\n인접 행렬은 정점마다 V개 칸을 확인해 전체 O(V²)이다. 인접 리스트는 정점과 실제 간선을 확인해 O(V+E)다.\n\n위상정렬 대상은 방향 그래프이고 사이클이 없어야 한다. 방향은 선후 관계를 나타내고 사이클은 먼저 수행해야 하는 조건을 모순되게 만든다.",
+  "modelAnswer": "BFS는 큐로 먼저 발견한 정점부터 처리해 거리순으로 확장한다. DFS는 재귀 호출 스택이나 명시적 스택으로 한 경로를 깊게 방문한 뒤 돌아온다.\n\n인접 행렬은 정점마다 V개 칸을 확인해 전체 $O(V^2)$이다. 인접 리스트는 정점과 실제 간선을 확인해 $O(V+E)$다.\n\n위상정렬 대상은 방향 그래프이고 사이클이 없어야 한다. 방향은 선후 관계를 나타내고 사이클은 먼저 수행해야 하는 조건을 모순되게 만든다.",
   "rubric": [
     {
       "id": "r0",
@@ -258,12 +258,12 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
     },
     {
       "id": "r2",
-      "criterion": "행렬의 O(V²) 근거를 설명한다",
+      "criterion": "행렬의 $O(V^2)$ 근거를 설명한다",
       "points": 1
     },
     {
       "id": "r3",
-      "criterion": "리스트의 O(V+E) 근거를 설명한다",
+      "criterion": "리스트의 $O(V+E)$ 근거를 설명한다",
       "points": 1
     },
     {
@@ -279,7 +279,7 @@ N 다음 N줄에 x y d e를 입력한다. d는 0 위, 1 아래, 2 왼쪽, 3 오�
   ],
   "type": "essay",
   "id": "monthly-02-q04",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

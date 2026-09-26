@@ -1,6 +1,6 @@
 ## question: subject-03-q01
 ### solution
-T(n)=2T(n-1)+Θ(1)이다. 마지막 레벨에만 2ⁿ개의 호출이 있다.
+$T(n) = 2T(n-1) + \Theta(1)$이다. 전체 호출 수는 $2^{n+1} - 1$이고 마지막 레벨에만 $2^n$개의 호출이 있다.
 ### choice-explanation: a
 재귀 깊이만 셌다.
 ### choice-explanation: b
@@ -60,7 +60,7 @@ BST의 대소 규칙이 있어야 한다. 일반 이진트리의 중위 순회�
 
 ## question: subject-03-q06
 ### solution
-자식 둘 중 더 작은 값과 비교해야 양쪽 자식 조건을 만족시킬 수 있다. 높이는 O(log N)이다.
+자식 둘 중 더 작은 값과 비교해야 양쪽 자식 조건을 만족시킬 수 있다. 높이는 $O(\log N)$이다.
 ### choice-explanation: a
 더 작은 자식과 교환해 힙 조건을 복구한다.
 ### choice-explanation: b
@@ -84,7 +84,7 @@ BST의 대소 규칙이 있어야 한다. 일반 이진트리의 중위 순회�
 
 ## question: subject-03-q08
 ### solution
-모든 순열에서 A와 B를 바꾸면 조건을 만족하는 순서와 위반하는 순서가 짝지어진다. 4!/2=12이다.
+모든 순열에서 A와 B를 바꾸면 조건을 만족하는 순서와 위반하는 순서가 짝지어진다. $\frac{4!}{2} = 12$이다.
 ### choice-explanation: a
 전체의 4분의 1이 아니다.
 ### choice-explanation: b
@@ -176,7 +176,7 @@ A와 B 순서 대칭으로 절반이다.
 ### choice-explanation: c
 각 비트의 두 상태를 곱한다.
 ### choice-explanation: d
-순열 6!과 혼동했다.
+순열 수 $6!$과 혼동했다.
 
 ## question: subject-03-q16
 ### solution
@@ -252,7 +252,7 @@ C가 마지막이어야 한다.
 
 ## question: subject-03-q22
 ### solution
-N²+N의 지배항은 N²이다.
+$N^2 + N$의 지배항은 $N^2$이다.
 
 
 ## question: subject-03-q23
@@ -267,7 +267,7 @@ FIFO로 8과 3이 제거된다.
 
 ## question: subject-03-q25
 ### solution
-5!=5×4×3×2×1=120이다.
+$5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$이다.
 
 
 ## question: subject-03-q26
@@ -297,7 +297,7 @@ FIFO로 8과 3이 제거된다.
 
 ## question: subject-03-q31
 ### solution
-고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 2^N개다. 모든 상태를 열거하면 적어도 Ω(2^N)의 작업이 필요하다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.
+고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 $2^N$개다. 모든 상태를 열거하면 적어도 $\Omega(2^N)$의 작업이 필요하다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.
 
 
 ## question: subject-03-q32

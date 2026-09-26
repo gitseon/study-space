@@ -4,7 +4,7 @@
 ### choice-explanation: a
 첫 작업을 누락했다.
 ### choice-explanation: b
-N+log N에서 N이 지배한다.
+$N + \log N$에서 N이 지배한다.
 ### choice-explanation: c
 중첩이 아닌 순차 실행이다.
 ### choice-explanation: d
@@ -12,7 +12,7 @@ N+log N에서 N이 지배한다.
 
 ## question: subject-01-q02
 ### solution
-내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 N(N+1)/2번으로 Θ(N²)이다.
+내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\frac{N(N+1)}{2}$번으로 $\Theta(N^2)$이다.
 ### choice-explanation: a
 1부터 4까지만 합친 값이다.
 ### choice-explanation: b
@@ -24,13 +24,13 @@ N+log N에서 N이 지배한다.
 
 ## question: subject-01-q03
 ### solution
-각 레벨의 문제 크기 합은 N이고 재귀 깊이는 log₂N이다.
+각 레벨의 문제 크기 합은 N이고 재귀 깊이는 $\log_2 N$이다.
 ### choice-explanation: a
 재귀 깊이만 셌다.
 ### choice-explanation: b
 레벨마다 발생하는 결합 비용을 누락했다.
 ### choice-explanation: c
-각 레벨 Θ(N)을 log N번 합한다.
+각 레벨 $\Theta(N)$을 $\log N$번 합한다.
 ### choice-explanation: d
 결합 작업이 제곱으로 늘지는 않는다.
 
@@ -267,7 +267,7 @@ peek는 조회만 한다. poll은 제거 후 반환한다.
 
 ## question: subject-01-q25
 ### solution
-6C2=6×5/2=15다. 두 원소의 선택 순서 중복을 나눈다.
+$_6C_2 = \frac{6 \times 5}{2} = 15$다. 두 원소의 선택 순서 중복을 나눈다.
 
 
 ## question: subject-01-q26
@@ -302,5 +302,5 @@ i 방문 검사는 (mask & (1 << i)) != 0이다. 추가는 mask |= (1 << i)다. 
 
 ## question: subject-01-q32
 ### solution
-4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 O(1)이라고 단정하지 않는다.
+4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.
 

@@ -9,7 +9,7 @@
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -18,15 +18,15 @@
 }
 ```
 ### stem
-f(n)은 n=0에서 끝나고 그 외에는 f(n-1)을 두 번 호출한다. 호출당 추가 작업은 O(1)이다. 총 시간의 타이트한 차수는?
+$f(n)$은 $n = 0$에서 끝나고 그 외에는 $f(n-1)$을 두 번 호출한다. 호출당 추가 작업은 $O(1)$이다. 총 실행 시간을 $\Theta$ 표기로 나타내면?
 ### choice: d
-Θ(n²)
+$\Theta(n^2)$
 ### choice: b
-Θ(n log n)
+$\Theta(n \log n)$
 ### choice: c
-Θ(2ⁿ)
+$\Theta(2^n)$
 ### choice: a
-Θ(n)
+$\Theta(n)$
 
 ## question: subject-03-q02
 ```json
@@ -38,7 +38,7 @@ f(n)은 n=0에서 끝나고 그 외에는 f(n-1)을 두 번 호출한다. 호출
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -49,18 +49,22 @@ f(n)은 n=0에서 끝나고 그 외에는 f(n-1)을 두 번 호출한다. 호출
 ### stem
 아래 코드에서 j는 외부 반복마다 초기화되지 않는다. 전체 work() 횟수의 차수는?
 ```java
-int j=0;
-for (int i=0; i<N; i++)
-    while (j<N) { work(); j++; }
+int j = 0;
+for (int i = 0; i < N; i++) {
+    while (j < N) {
+        work();
+        j++;
+    }
+}
 ```
 ### choice: b
-Θ(log N)
+$\Theta(\log N)$
 ### choice: d
-Θ(N²)
+$\Theta(N^2)$
 ### choice: a
-Θ(1)
+$\Theta(1)$
 ### choice: c
-Θ(N)
+$\Theta(N)$
 
 ## question: subject-03-q03
 ```json
@@ -73,7 +77,7 @@ for (int i=0; i<N; i++)
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -84,13 +88,13 @@ for (int i=0; i<N; i++)
 ### stem
 길이 N인 두 정렬 배열을 포인터 두 개로 병합한다. 결과 길이는 2N이다. 시간과 추가 결과 공간은?
 ### choice: a
-시간 Θ(N) 공간 Θ(N)
+시간 $\Theta(N)$ 공간 $\Theta(N)$
 ### choice: c
-시간 Θ(N) 공간 Θ(1)
+시간 $\Theta(N)$ 공간 $\Theta(1)$
 ### choice: b
-시간 Θ(N²) 공간 Θ(N)
+시간 $\Theta(N^2)$ 공간 $\Theta(N)$
 ### choice: d
-시간 Θ(log N) 공간 Θ(N)
+시간 $\Theta(\log N)$ 공간 $\Theta(N)$
 
 ## question: subject-03-q04
 ```json
@@ -160,7 +164,7 @@ for (int i=0; i<N; i++)
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q06",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -218,7 +222,7 @@ for (int i=0; i<N; i++)
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-03-q08",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -307,7 +311,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q11",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -318,13 +322,13 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
 ### stem
 모든 정점을 방문하는 표준 BFS에서 인접 행렬과 인접 리스트의 최악 시간 차수는?
 ### choice: a
-O(V²)와 O(V+E)
+$O(V^2)$와 $O(V+E)$
 ### choice: c
-O(V)와 O(E²)
+$O(V)$와 $O(E^2)$
 ### choice: d
-O(E)와 O(log V)
+$O(E)$와 $O(\log V)$
 ### choice: b
-O(V+E)와 O(V²)
+$O(V+E)$와 $O(V^2)$
 
 ## question: subject-03-q12
 ```json
@@ -424,7 +428,7 @@ BFS가 최초 발견 거리로 최단 경로의 비용을 보장하는 대표적
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q15",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -599,7 +603,7 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q21",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -610,13 +614,13 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 ### stem
 N개 양수 배열에서 left와 right가 각각 오른쪽으로만 이동하고 되돌아가지 않는다. 두 포인터의 총 이동 횟수 차수는?
 ### choice: c
-O(N)
+$O(N)$
 ### choice: d
-O(N²)
+$O(N^2)$
 ### choice: b
-O(log N)
+$O(\log N)$
 ### choice: a
-O(1)
+$O(1)$
 
 ## question: subject-03-q22
 ```json
@@ -632,7 +636,7 @@ O(1)
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q22",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -640,7 +644,7 @@ O(1)
 }
 ```
 ### stem
-O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 정리할 때 가장 작은 양의 정수 k는? 첫 작업은 실제로 Θ(N²)이다.
+$O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k)$로 정리할 때 가장 작은 양의 정수 k는? 첫 작업은 실제로 $\Theta(N^2)$이다.
 
 
 ## question: subject-03-q23
@@ -707,7 +711,7 @@ O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q25",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -852,7 +856,7 @@ O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 
     "bitmask"
   ],
   "group": "essay",
-  "modelAnswer": "고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 2^N개다. 모든 상태를 열거하면 적어도 Ω(2^N)의 작업이 필요하다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.",
+  "modelAnswer": "고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 $2^N$개다. 모든 상태를 열거하면 적어도 $\\Omega(2^N)$의 작업이 필요하다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.",
   "rubric": [
     {
       "id": "r0",
@@ -861,7 +865,7 @@ O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 
     },
     {
       "id": "r1",
-      "criterion": "상태 개수 2^N을 제시한다",
+      "criterion": "상태 개수 $2^N$을 제시한다",
       "points": 1
     },
     {
@@ -877,7 +881,7 @@ O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 
   ],
   "type": "essay",
   "id": "subject-03-q31",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -885,7 +889,7 @@ O(N²) 작업 뒤에 O(N) 작업을 실행한다. 전체의 상한을 O(N^k)로 
 }
 ```
 ### stem
-원소 N개의 부분집합을 비트마스크로 표현하면 전체 부분집합 탐색도 O(N)이 된다는 주장을 평가하시오. 표현의 장점과 한계를 함께 쓰시오.
+원소 N개의 부분집합을 비트마스크로 표현하면 전체 부분집합 탐색도 $O(N)$이 된다는 주장을 평가하시오. 표현의 장점과 한계를 함께 쓰시오.
 
 
 ## question: subject-03-q32

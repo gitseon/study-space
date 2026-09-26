@@ -1,37 +1,37 @@
 [
   {
     "unit": "subject-01-q01",
-    "revision": 1,
+    "revision": 2,
     "code": "answer-length",
-    "contentHash": "7ba6528215d63a8a",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다.",
+    "contentHash": "2c0e4558ba3fe9d5",
+    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q01",
-    "revision": 1,
+    "revision": 2,
     "code": "choice-spread",
-    "contentHash": "7ba6528215d63a8a",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다.",
+    "contentHash": "2c0e4558ba3fe9d5",
+    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
-    "revision": 1,
+    "revision": 2,
     "code": "answer-length",
-    "contentHash": "5c9cf989f25a784b",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다.",
+    "contentHash": "c789f3c75277fd2e",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
-    "revision": 1,
+    "revision": 2,
     "code": "choice-spread",
-    "contentHash": "5c9cf989f25a784b",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다.",
+    "contentHash": "c789f3c75277fd2e",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
@@ -55,28 +55,28 @@
   },
   {
     "unit": "subject-01-q11",
-    "revision": 1,
+    "revision": 2,
     "code": "choice-spread",
-    "contentHash": "39eeda77103a636e",
-    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 공간 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 무방향 인접 리스트가 V개 목록과 2E개 기록임을 재확인했다.",
+    "contentHash": "607ec36aeaaf718a",
+    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 공간 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 무방향 인접 리스트가 V개 목록과 2E개 기록임을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 1,
+    "revision": 2,
     "code": "answer-length",
-    "contentHash": "2eb6460a5e7e40dd",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다.",
+    "contentHash": "443af49ba6d99026",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 1,
+    "revision": 2,
     "code": "choice-spread",
-    "contentHash": "2eb6460a5e7e40dd",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다.",
+    "contentHash": "443af49ba6d99026",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
@@ -91,10 +91,10 @@
   },
   {
     "unit": "subject-03-q01",
-    "revision": 1,
+    "revision": 2,
     "code": "choice-spread",
-    "contentHash": "c49ff8c06411c23f",
-    "reason": "Θ(n) Θ(n²) Θ(2ⁿ) Θ(n log n)의 표기 구조 차이다. 정답 Θ(2ⁿ)은 중간 길이다. T(n)=2T(n-1)+Θ(1)의 호출 수 2ⁿ⁺¹-1로 재확인했다.",
+    "contentHash": "0b887f2f9e1f4bf4",
+    "reason": "Θ(n) Θ(n²) Θ(2ⁿ) Θ(n log n)의 표기 구조 차이다. 정답 Θ(2ⁿ)은 중간 길이다. T(n)=2T(n-1)+Θ(1)의 호출 수 2ⁿ⁺¹-1로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   }

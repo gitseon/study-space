@@ -8,7 +8,7 @@
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -17,15 +17,15 @@
 }
 ```
 ### stem
-T(N)=3N+10이다. 옳은 설명은?
+$T(N) = 3N + 10$일 때 옳은 설명은?
 ### choice: c
-Ω(N²)가 하한으로 성립한다
+$\Omega(N^2)$가 하한으로 성립한다
 ### choice: a
-O(N²)도 상한으로 성립한다
+$O(N^2)$도 상한으로 성립한다
 ### choice: d
-Θ(log N)이 타이트한 차수다
+$T(N) = \Theta(\log N)$이 성립한다
 ### choice: b
-Θ(N²)가 타이트한 차수다
+$T(N) = \Theta(N^2)$이 성립한다
 
 ## question: subject-02-q02
 ```json
@@ -37,7 +37,7 @@ O(N²)도 상한으로 성립한다
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-02-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -48,13 +48,13 @@ O(N²)도 상한으로 성립한다
 ### stem
 외부 루프는 N번 실행한다. 매번 내부 루프를 j=1에서 시작해 j<N 동안 j*=2로 진행한다. 오버플로가 없을 때 차수는?
 ### choice: c
-Θ(N log N)
+$\Theta(N \log N)$
 ### choice: d
-Θ(N²)
+$\Theta(N^2)$
 ### choice: a
-Θ(N)
+$\Theta(N)$
 ### choice: b
-Θ(log N)
+$\Theta(\log N)$
 
 ## question: subject-02-q03
 ```json
@@ -213,7 +213,7 @@ R L M
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q08",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -242,7 +242,7 @@ d가 N에 도달했을 때
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q09",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -300,7 +300,7 @@ d가 N에 도달했을 때
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q11",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -311,13 +311,13 @@ d가 N에 도달했을 때
 ### stem
 인접 행렬에서 정점 u와 v 사이 간선 존재 여부 한 번을 확인하는 시간은?
 ### choice: d
-O(V²)
+$O(V^2)$
 ### choice: c
-O(V)
+$O(V)$
 ### choice: a
-O(1)
+$O(1)$
 ### choice: b
-O(log V)
+$O(\log V)$
 
 ## question: subject-02-q12
 ```json
@@ -418,7 +418,7 @@ A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C�
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q15",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -447,7 +447,7 @@ mask=0에서 mask XOR (1 << 2)를 계산했다. 결과는?
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q16",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -777,7 +777,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q28",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -785,7 +785,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 }
 ```
 ### stem
-find(a)=5이고 find(b)=5다. a와 b는 같은 집합인가? 예 또는 아니오로 쓰시오.
+`find(a)`와 `find(b)`가 모두 5를 반환한다. a와 b는 같은 집합인가? 예 또는 아니오로 쓰시오.
 
 
 ## question: subject-02-q29
@@ -871,7 +871,7 @@ find(a)=5이고 find(b)=5다. a와 b는 같은 집합인가? 예 또는 아니�
   ],
   "type": "essay",
   "id": "subject-02-q31",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -879,7 +879,7 @@ find(a)=5이고 find(b)=5다. a와 b는 같은 집합인가? 예 또는 아니�
 }
 ```
 ### stem
-방문 해제를 mask ^= (1 << i)로 구현했다. i가 방문되지 않았을 때의 문제를 설명하고 안전한 제거식을 제시하시오.
+방문 해제를 `mask ^= (1 << i)`로 구현했다. i가 방문되지 않았을 때의 문제를 설명하고 안전한 제거식을 제시하시오.
 
 
 ## question: subject-02-q32

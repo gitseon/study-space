@@ -15,30 +15,30 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-02-q01",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "T(N)=3N+10이다. 옳은 설명은?",
-      "solution": "타이트한 차수는 Θ(N)이지만 O(N²)도 올바른 상한이다.",
+      "stem": "$T(N) = 3N + 10$일 때 옳은 설명은?",
+      "solution": "정확한 차수는 $\\Theta(N)$이지만 $O(N^2)$도 올바른 상한이다.",
       "choices": [
         {
           "id": "c",
-          "text": "Ω(N²)가 하한으로 성립한다"
+          "text": "$\\Omega(N^2)$가 하한으로 성립한다"
         },
         {
           "id": "a",
-          "text": "O(N²)도 상한으로 성립한다"
+          "text": "$O(N^2)$도 상한으로 성립한다"
         },
         {
           "id": "d",
-          "text": "Θ(log N)이 타이트한 차수다"
+          "text": "$T(N) = \\Theta(\\log N)$이 성립한다"
         },
         {
           "id": "b",
-          "text": "Θ(N²)가 타이트한 차수다"
+          "text": "$T(N) = \\Theta(N^2)$이 성립한다"
         }
       ],
       "choiceExplanations": {
@@ -56,7 +56,7 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-02-q02",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -67,19 +67,19 @@
       "choices": [
         {
           "id": "c",
-          "text": "Θ(N log N)"
+          "text": "$\\Theta(N \\log N)$"
         },
         {
           "id": "d",
-          "text": "Θ(N²)"
+          "text": "$\\Theta(N^2)$"
         },
         {
           "id": "a",
-          "text": "Θ(N)"
+          "text": "$\\Theta(N)$"
         },
         {
           "id": "b",
-          "text": "Θ(log N)"
+          "text": "$\\Theta(\\log N)$"
         }
       ],
       "choiceExplanations": {
@@ -304,14 +304,14 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-02-q08",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "enumeration",
       "stem": "원소마다 선택/미선택을 결정한다. 재귀 깊이 d는 결정한 원소 수다. 완성된 부분집합을 처리하는 시점은?",
-      "solution": "공집합까지 포함해 모든 깊이 N의 리프를 처리하면 2^N개가 된다.",
+      "solution": "공집합까지 포함해 모든 깊이 N의 리프를 처리하면 $2^N$개가 된다.",
       "choices": [
         {
           "id": "a",
@@ -345,7 +345,7 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-02-q09",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -373,7 +373,7 @@
       ],
       "choiceExplanations": {
         "a": "세 상태 중 하나를 놓쳤다.",
-        "b": "3!/2!개이다.",
+        "b": "$\\frac{3!}{2!}$개이다.",
         "c": "같은 1의 교환도 새 상태로 셌다.",
         "d": "부분집합 수와 혼동했다."
       }
@@ -427,7 +427,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-02-q11",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -438,19 +438,19 @@
       "choices": [
         {
           "id": "d",
-          "text": "O(V²)"
+          "text": "$O(V^2)$"
         },
         {
           "id": "c",
-          "text": "O(V)"
+          "text": "$O(V)$"
         },
         {
           "id": "a",
-          "text": "O(1)"
+          "text": "$O(1)$"
         },
         {
           "id": "b",
-          "text": "O(log V)"
+          "text": "$O(\\log V)$"
         }
       ],
       "choiceExplanations": {
@@ -593,14 +593,14 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-02-q15",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 2,
       "group": "state",
       "stem": "mask=0에서 mask XOR (1 << 2)를 계산했다. 결과는?",
-      "solution": "XOR는 Java의 ^ 연산이다. 켜진 비트에 적용하면 꺼지는 토글이다.",
+      "solution": "XOR는 Java의 `^` 연산이다. 켜진 비트에 적용하면 꺼지는 토글이다.",
       "choices": [
         {
           "id": "b",
@@ -634,7 +634,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-02-q16",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -662,7 +662,7 @@
       ],
       "choiceExplanations": {
         "a": "고정 크기 값 하나를 복사한다.",
-        "b": "가능한 상태는 여전히 2²⁰개다.",
+        "b": "가능한 상태는 여전히 $2^{20}$개다.",
         "c": "표현 방식은 방문 순서를 정하지 않는다.",
         "d": "상태 수가 지수적으로 남는다."
       }
@@ -1018,12 +1018,12 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-02-q28",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 3,
-      "stem": "find(a)=5이고 find(b)=5다. a와 b는 같은 집합인가? 예 또는 아니오로 쓰시오.",
+      "stem": "`find(a)`와 `find(b)`가 모두 5를 반환한다. a와 b는 같은 집합인가? 예 또는 아니오로 쓰시오.",
       "solution": "두 원소의 대표가 같으므로 같은 집합이다.",
       "choices": [],
       "choiceExplanations": {}
@@ -1103,12 +1103,12 @@
       ],
       "type": "essay",
       "id": "subject-02-q31",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 3,
-      "stem": "방문 해제를 mask ^= (1 << i)로 구현했다. i가 방문되지 않았을 때의 문제를 설명하고 안전한 제거식을 제시하시오.",
+      "stem": "방문 해제를 `mask ^= (1 << i)`로 구현했다. i가 방문되지 않았을 때의 문제를 설명하고 안전한 제거식을 제시하시오.",
       "solution": "XOR는 비트를 반전하므로 꺼진 비트를 오히려 켠다. 제거에는 mask &= ~(1 << i)를 쓴다. 대상 비트만 0이고 다른 비트는 1인 값과 AND하므로 다른 방문 상태를 보존하며 두 번 제거해도 결과가 같다.",
       "choices": [],
       "choiceExplanations": {}
@@ -1323,5 +1323,5 @@
       "b"
     ]
   },
-  "contentVersion": "55248bf42c6030bc"
+  "contentVersion": "3fda6bbd81c77ebd"
 }

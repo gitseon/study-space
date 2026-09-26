@@ -1,6 +1,6 @@
 ## question: subject-02-q01
 ### solution
-타이트한 차수는 Θ(N)이지만 O(N²)도 올바른 상한이다.
+정확한 차수는 $\Theta(N)$이지만 $O(N^2)$도 올바른 상한이다.
 ### choice-explanation: a
 느슨한 상한도 빅오에 해당한다.
 ### choice-explanation: b
@@ -84,7 +84,7 @@ poll에서 제거됐다.
 
 ## question: subject-02-q08
 ### solution
-공집합까지 포함해 모든 깊이 N의 리프를 처리하면 2^N개가 된다.
+공집합까지 포함해 모든 깊이 N의 리프를 처리하면 $2^N$개가 된다.
 ### choice-explanation: a
 모든 포함 여부가 결정됐다.
 ### choice-explanation: b
@@ -100,7 +100,7 @@ poll에서 제거됐다.
 ### choice-explanation: a
 세 상태 중 하나를 놓쳤다.
 ### choice-explanation: b
-3!/2!개이다.
+$\frac{3!}{2!}$개이다.
 ### choice-explanation: c
 같은 1의 교환도 새 상태로 셌다.
 ### choice-explanation: d
@@ -168,7 +168,7 @@ DFS는 거리순을 보장하지 않는다.
 
 ## question: subject-02-q15
 ### solution
-XOR는 Java의 ^ 연산이다. 켜진 비트에 적용하면 꺼지는 토글이다.
+XOR는 Java의 `^` 연산이다. 켜진 비트에 적용하면 꺼지는 토글이다.
 ### choice-explanation: a
 0이던 대상 비트를 1로 바꾼다.
 ### choice-explanation: b
@@ -184,7 +184,7 @@ XOR는 무조건 제거가 아니다.
 ### choice-explanation: a
 고정 크기 값 하나를 복사한다.
 ### choice-explanation: b
-가능한 상태는 여전히 2²⁰개다.
+가능한 상태는 여전히 $2^{20}$개다.
 ### choice-explanation: c
 표현 방식은 방문 순서를 정하지 않는다.
 ### choice-explanation: d

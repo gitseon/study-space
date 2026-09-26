@@ -8,7 +8,7 @@
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -17,15 +17,15 @@
 }
 ```
 ### stem
-N번의 O(1) 작업을 마친 다음 log₂N번의 O(1) 작업을 수행한다. 전체의 타이트한 점근적 차수는?
+상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\log_2 N$번 더 수행한다. 전체 실행 시간을 $\Theta$ 표기로 나타내면?
 ### choice: a
-Θ(log N)
+$\Theta(\log N)$
 ### choice: b
-Θ(N)
+$\Theta(N)$
 ### choice: c
-Θ(N log N)
+$\Theta(N \log N)$
 ### choice: d
-Θ(N²)
+$\Theta(N^2)$
 
 ## question: subject-01-q02
 ```json
@@ -37,7 +37,7 @@ N번의 O(1) 작업을 마친 다음 log₂N번의 O(1) 작업을 수행한다. 
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -48,8 +48,11 @@ N번의 O(1) 작업을 마친 다음 log₂N번의 O(1) 작업을 수행한다. 
 ### stem
 아래 코드에서 work() 호출 횟수는?
 ```java
-for (int i=1; i<=5; i++)
-    for (int j=0; j<i; j++) work();
+for (int i = 1; i <= 5; i++) {
+    for (int j = 0; j < i; j++) {
+        work();
+    }
+}
 ```
 ### choice: d
 25회
@@ -71,7 +74,7 @@ for (int i=1; i<=5; i++)
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -80,15 +83,15 @@ for (int i=1; i<=5; i++)
 }
 ```
 ### stem
-T(N)=2T(N/2)+Θ(N), T(1)=Θ(1)이다. N이 2의 거듭제곱일 때 T(N)의 차수는?
+$T(N) = 2T(N/2) + \Theta(N)$이고 $T(1) = \Theta(1)$이다. N이 2의 거듭제곱일 때 $T(N)$을 $\Theta$ 표기로 나타내면?
 ### choice: c
-Θ(N log N)
+$\Theta(N \log N)$
 ### choice: b
-Θ(N)
+$\Theta(N)$
 ### choice: d
-Θ(N²)
+$\Theta(N^2)$
 ### choice: a
-Θ(log N)
+$\Theta(\log N)$
 
 ## question: subject-01-q04
 ```json
@@ -304,7 +307,7 @@ i + 1
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q11",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -315,13 +318,13 @@ i + 1
 ### stem
 정점 V개와 간선 E개인 무방향 그래프의 인접 리스트 공간은? 고립 정점의 목록도 포함한다.
 ### choice: c
-O(V + E)
+$O(V + E)$
 ### choice: a
-O(V)
+$O(V)$
 ### choice: d
-O(V² + E²)
+$O(V^2 + E^2)$
 ### choice: b
-O(E)
+$O(E)$
 
 ## question: subject-01-q12
 ```json
@@ -420,7 +423,7 @@ A B C D E
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q15",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -437,7 +440,7 @@ i는 0 이상 30 이하이다. mask의 i번째 비트가 켜져 있는지 검사
 ### choice: d
 (mask >> i) == 0
 ### choice: c
-(mask ^ (1 << i)) == 0
+`(mask ^ (1 << i)) == 0`
 
 ## question: subject-01-q16
 ```json
@@ -704,7 +707,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q25",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -896,7 +899,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
     "unionfind"
   ],
   "group": "essay",
-  "modelAnswer": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 O(1)이라고 단정하지 않는다.",
+  "modelAnswer": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.",
   "rubric": [
     {
       "id": "r0",
@@ -921,7 +924,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
   ],
   "type": "essay",
   "id": "subject-01-q32",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

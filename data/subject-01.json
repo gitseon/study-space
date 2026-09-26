@@ -15,35 +15,35 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-01-q01",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "N번의 O(1) 작업을 마친 다음 log₂N번의 O(1) 작업을 수행한다. 전체의 타이트한 점근적 차수는?",
+      "stem": "상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\\log_2 N$번 더 수행한다. 전체 실행 시간을 $\\Theta$ 표기로 나타내면?",
       "solution": "독립 작업은 비용을 더한다. 가장 크게 증가하는 N이 전체 차수를 결정한다.",
       "choices": [
         {
           "id": "a",
-          "text": "Θ(log N)"
+          "text": "$\\Theta(\\log N)$"
         },
         {
           "id": "b",
-          "text": "Θ(N)"
+          "text": "$\\Theta(N)$"
         },
         {
           "id": "c",
-          "text": "Θ(N log N)"
+          "text": "$\\Theta(N \\log N)$"
         },
         {
           "id": "d",
-          "text": "Θ(N²)"
+          "text": "$\\Theta(N^2)$"
         }
       ],
       "choiceExplanations": {
         "a": "첫 작업을 누락했다.",
-        "b": "N+log N에서 N이 지배한다.",
+        "b": "$N + \\log N$에서 N이 지배한다.",
         "c": "중첩이 아닌 순차 실행이다.",
         "d": "반복 횟수를 제곱할 근거가 없다."
       }
@@ -56,14 +56,14 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-01-q02",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "아래 코드에서 work() 호출 횟수는?\n```java\nfor (int i=1; i<=5; i++)\n    for (int j=0; j<i; j++) work();\n```",
-      "solution": "내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 N(N+1)/2번으로 Θ(N²)이다.",
+      "stem": "아래 코드에서 work() 호출 횟수는?\n```java\nfor (int i = 1; i <= 5; i++) {\n    for (int j = 0; j < i; j++) {\n        work();\n    }\n}\n```",
+      "solution": "내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\\frac{N(N+1)}{2}$번으로 $\\Theta(N^2)$이다.",
       "choices": [
         {
           "id": "d",
@@ -98,36 +98,36 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-01-q03",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "T(N)=2T(N/2)+Θ(N), T(1)=Θ(1)이다. N이 2의 거듭제곱일 때 T(N)의 차수는?",
-      "solution": "각 레벨의 문제 크기 합은 N이고 재귀 깊이는 log₂N이다.",
+      "stem": "$T(N) = 2T(N/2) + \\Theta(N)$이고 $T(1) = \\Theta(1)$이다. N이 2의 거듭제곱일 때 $T(N)$을 $\\Theta$ 표기로 나타내면?",
+      "solution": "각 레벨의 문제 크기 합은 N이고 재귀 깊이는 $\\log_2 N$이다.",
       "choices": [
         {
           "id": "c",
-          "text": "Θ(N log N)"
+          "text": "$\\Theta(N \\log N)$"
         },
         {
           "id": "b",
-          "text": "Θ(N)"
+          "text": "$\\Theta(N)$"
         },
         {
           "id": "d",
-          "text": "Θ(N²)"
+          "text": "$\\Theta(N^2)$"
         },
         {
           "id": "a",
-          "text": "Θ(log N)"
+          "text": "$\\Theta(\\log N)$"
         }
       ],
       "choiceExplanations": {
         "a": "재귀 깊이만 셌다.",
         "b": "레벨마다 발생하는 결합 비용을 누락했다.",
-        "c": "각 레벨 Θ(N)을 log N번 합한다.",
+        "c": "각 레벨 $\\Theta(N)$을 $\\log N$번 합한다.",
         "d": "결합 작업이 제곱으로 늘지는 않는다."
       }
     },
@@ -427,7 +427,7 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-01-q11",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -438,19 +438,19 @@
       "choices": [
         {
           "id": "c",
-          "text": "O(V + E)"
+          "text": "$O(V + E)$"
         },
         {
           "id": "a",
-          "text": "O(V)"
+          "text": "$O(V)$"
         },
         {
           "id": "d",
-          "text": "O(V² + E²)"
+          "text": "$O(V^2 + E^2)$"
         },
         {
           "id": "b",
-          "text": "O(E)"
+          "text": "$O(E)$"
         }
       ],
       "choiceExplanations": {
@@ -591,7 +591,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-01-q15",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -614,7 +614,7 @@
         },
         {
           "id": "c",
-          "text": "(mask ^ (1 << i)) == 0"
+          "text": "`(mask ^ (1 << i)) == 0`"
         }
       ],
       "choiceExplanations": {
@@ -950,13 +950,13 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-01-q25",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 2,
       "stem": "서로 다른 6개 중 순서 없이 2개를 선택한다. 경우의 수는?",
-      "solution": "6C2=6×5/2=15다. 두 원소의 선택 순서 중복을 나눈다.",
+      "solution": "$_6C_2 = \\frac{6 \\times 5}{2} = 15$다. 두 원소의 선택 순서 중복을 나눈다.",
       "choices": [],
       "choiceExplanations": {}
     },
@@ -1121,7 +1121,7 @@
         "unionfind"
       ],
       "group": "essay",
-      "modelAnswer": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 O(1)이라고 단정하지 않는다.",
+      "modelAnswer": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.",
       "rubric": [
         {
           "id": "r0",
@@ -1146,13 +1146,13 @@
       ],
       "type": "essay",
       "id": "subject-01-q32",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 3,
       "stem": "Union-Find가 1→2→3→4의 긴 부모 경로를 갖는다. 경로 압축 find(1) 이후의 연결과 이후 find에 미치는 효과를 설명하시오.",
-      "solution": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 O(1)이라고 단정하지 않는다.",
+      "solution": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.",
       "choices": [],
       "choiceExplanations": {}
     }
@@ -1325,5 +1325,5 @@
       "b"
     ]
   },
-  "contentVersion": "25d74ed0ba086f51"
+  "contentVersion": "767f86beaf9ffe4c"
 }

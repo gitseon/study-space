@@ -6,6 +6,9 @@ from build_data import ROOT, build_data
 def text_issues(text):
     prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",text)
     issues=[]
+    if prose.count("$")%2 or "$$" in prose:
+        issues.append("math")
+    prose=re.sub(r"\$[^$]*\$","",prose)
     if "\ufffd" in text or re.search(r"[\ud800-\udfff]",text):
         issues.append("encoding")
     for line in prose.splitlines():

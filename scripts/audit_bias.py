@@ -21,7 +21,15 @@ def valid_sequence(seq, aggregate=False):
             if seq[i:i+size]*repeats==seq[i:i+size*repeats]: return False
     return True
 
+TEX_SYMBOLS={"Theta":"Θ","Omega":"Ω","times":"×","le":"≤","ge":"≥","cdot":"·","log":"log","max":"max","min":"min"}
+
+def tex_display(tex):
+    tex=re.sub(r"\\frac\{([^{}]*)\}\{([^{}]*)\}",r"\1/\2",tex)
+    tex=re.sub(r"\\([A-Za-z]+)",lambda m:TEX_SYMBOLS.get(m.group(1),""),tex)
+    return re.sub(r"[{}^_\\]","",tex)
+
 def visible_length(text):
+    text=re.sub(r"\$([^$]*)\$",lambda m:tex_display(m.group(1)),text)
     text=re.sub(r"```\w*\n?|`|\*\*|__","",text)
     return len(re.sub(r"\s+"," ",unicodedata.normalize("NFC",text)).strip())
 
