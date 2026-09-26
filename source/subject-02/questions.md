@@ -1,14 +1,14 @@
 ## question: subject-02-q01
 ```json
 {
-  "title": "점근 표기의 상한과 하한",
+  "title": "독립된 두 입력 크기의 시간 복잡도",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q01",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -17,15 +17,26 @@
 }
 ```
 ### stem
-$T(N) = 3N + 10$일 때 옳은 설명은?
+N과 M은 서로 독립인 입력 크기다. 아래 코드의 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
+
+```java
+for (int i = 0; i < N; i++) {
+    work();
+}
+for (int i = 0; i < M; i++) {
+    for (int j = 0; j < M; j++) {
+        work();
+    }
+}
+```
 ### choice: c
-$\Omega(N^2)$가 하한으로 성립한다
+$O(M^2)$
 ### choice: a
-$O(N^2)$도 상한으로 성립한다
+$O(N + M^2)$
 ### choice: d
-$T(N) = \Theta(\log N)$이 성립한다
+$O(N + M)$
 ### choice: b
-$T(N) = \Theta(N^2)$이 성립한다
+$O(N \times M^2)$
 
 ## question: subject-02-q02
 ```json
@@ -37,7 +48,7 @@ $T(N) = \Theta(N^2)$이 성립한다
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-02-q02",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -46,15 +57,23 @@ $T(N) = \Theta(N^2)$이 성립한다
 }
 ```
 ### stem
-외부 루프는 N번 실행한다. 매번 내부 루프를 j=1에서 시작해 j<N 동안 j*=2로 진행한다. 오버플로가 없을 때 차수는?
+아래 코드의 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
+
+```java
+for (int i = 0; i < N; i++) {
+    for (int j = 1; j < N; j *= 2) {
+        work();
+    }
+}
+```
 ### choice: c
-$\Theta(N \log N)$
+$O(N \log N)$
 ### choice: d
-$\Theta(N^2)$
+$O(N^2)$
 ### choice: a
-$\Theta(N)$
+$O(N)$
 ### choice: b
-$\Theta(\log N)$
+$O(\log N)$
 
 ## question: subject-02-q03
 ```json
@@ -308,7 +327,7 @@ d가 N에 도달했을 때
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q11",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -317,7 +336,7 @@ d가 N에 도달했을 때
 }
 ```
 ### stem
-인접 행렬에서 정점 u와 v 사이 간선 존재 여부 한 번을 확인하는 시간은?
+인접 행렬에서 정점 u와 v 사이 간선 존재 여부 한 번을 확인하는 시간은? 가능한 가장 작은 차수로 답한다.
 ### choice: d
 $O(V^2)$
 ### choice: c
@@ -705,18 +724,18 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q25
 ```json
 {
-  "title": "겸임 없는 역할 배정의 수",
+  "title": "중복 순열의 수",
   "topics": [
     "enumeration"
   ],
   "group": "enumeration",
   "acceptedAnswers": [
-    "12"
+    "9"
   ],
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q25",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -724,7 +743,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 }
 ```
 ### stem
-서로 다른 4명 중 회장과 부회장을 겸임 없이 정한다. 경우의 수는?
+서로 다른 숫자 3개로 길이 2인 수열을 만든다. 같은 숫자를 여러 번 써도 되고 순서가 다르면 다른 수열이다. 만들 수 있는 수열의 수는?
 
 
 ## question: subject-02-q26

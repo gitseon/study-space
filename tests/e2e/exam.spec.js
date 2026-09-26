@@ -65,6 +65,29 @@ test('per-question mode checks one answer at a time and locks it', async ({page}
   await expect(page.locator('.question-nav .is-wrong')).toHaveCount(1);
 });
 
+test('grading mode can be switched while solving without losing answers', async ({page}) => {
+  await startSubject(page, '모두 풀고 한 번에 채점');
+  await page.locator('.choice').first().click();
+  await expect(page.locator('#reveal')).toHaveCount(0);
+
+  await page.locator('#mode-switch').selectOption({label: '한 문제씩 정답 확인'});
+  await expect(page.locator('input[type=radio]:checked')).toHaveCount(1);
+  await page.getByRole('button', {name: '정답 확인', exact: true}).click();
+  await expect(page.locator('.explanation')).toBeVisible();
+
+  await page.locator('#mode-switch').selectOption({label: '모두 풀고 한 번에 채점'});
+  await expect(page.locator('#save-status')).toContainText('이미 확인한 1문제는 그대로 공개됩니다');
+  await expect(page.locator('.explanation')).toBeVisible();
+  await expect(page.locator('input[name=choice]:not([disabled])')).toHaveCount(0);
+  await page.getByRole('button', {name: '2번 문항', exact: true}).click();
+  await expect(page.locator('#reveal')).toHaveCount(0);
+  await expect(page.locator('.explanation')).toHaveCount(0);
+
+  await page.reload();
+  await expect(page.locator('#mode-switch')).toHaveValue('exam');
+  await expect(page.getByRole('button', {name: '제출하고 채점하기', exact: true})).toBeVisible();
+});
+
 test('formulas are typeset and code keeps standard braces', async ({page}) => {
   await startSubject(page, '한 문제씩 정답 확인');
   await expect(page.locator('.question-panel .katex').first()).toBeVisible();

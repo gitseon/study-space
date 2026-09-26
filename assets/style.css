@@ -38,3 +38,6 @@
 .diagram text{fill:var(--ink);font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
 .diagram text.index{fill:var(--muted);font-size:10px;font-weight:400}
 .prose p code,.choice code,.choice-reasons code{white-space:nowrap}
+.mode-switch{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.mode-switch select{font-size:12px;padding:5px 8px;color:var(--green);font-weight:600;border-color:#cfdcca;background:var(--soft)}
+@media(max-width:480px){.quiz-top{flex-wrap:wrap;row-gap:8px}.mode-switch{order:3;width:100%}.mode-switch select{flex:1}}

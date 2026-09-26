@@ -8,7 +8,7 @@
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q01",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -17,15 +17,15 @@
 }
 ```
 ### stem
-상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\log_2 N$번 더 수행한다. 전체 실행 시간을 $\Theta$ 표기로 나타내면?
+상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\log_2 N$번 더 수행한다. 전체 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
 ### choice: a
-$\Theta(\log N)$
+$O(\log N)$
 ### choice: b
-$\Theta(N)$
+$O(N)$
 ### choice: c
-$\Theta(N \log N)$
+$O(N \log N)$
 ### choice: d
-$\Theta(N^2)$
+$O(N^2)$
 
 ## question: subject-01-q02
 ```json
@@ -37,7 +37,7 @@ $\Theta(N^2)$
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q02",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -66,7 +66,7 @@ for (int i = 1; i <= 5; i++) {
 ## question: subject-01-q03
 ```json
 {
-  "title": "분할 정복 점화식",
+  "title": "분할 정복 재귀의 시간 복잡도",
   "topics": [
     "divide",
     "complexity"
@@ -74,7 +74,7 @@ for (int i = 1; i <= 5; i++) {
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q03",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -83,15 +83,29 @@ for (int i = 1; i <= 5; i++) {
 }
 ```
 ### stem
-$T(N) = 2T(N/2) + \Theta(N)$이고 $T(1) = \Theta(1)$이다. N이 2의 거듭제곱일 때 $T(N)$을 $\Theta$ 표기로 나타내면?
+N은 2의 거듭제곱이다. `solve(a, 0, N)`을 호출했을 때 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
+
+```java
+void solve(int[] a, int lo, int hi) {
+    if (hi - lo <= 1) {
+        return;
+    }
+    int mid = (lo + hi) / 2;
+    solve(a, lo, mid);
+    solve(a, mid, hi);
+    for (int i = lo; i < hi; i++) {
+        work();
+    }
+}
+```
 ### choice: c
-$\Theta(N \log N)$
+$O(N \log N)$
 ### choice: b
-$\Theta(N)$
+$O(N)$
 ### choice: d
-$\Theta(N^2)$
+$O(N^2)$
 ### choice: a
-$\Theta(\log N)$
+$O(\log N)$
 
 ## question: subject-01-q04
 ```json
@@ -316,7 +330,7 @@ i + 1
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q11",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -325,7 +339,7 @@ i + 1
 }
 ```
 ### stem
-정점 V개와 간선 E개인 무방향 그래프를 인접 리스트로 저장했다. 모든 정점의 인접 리스트를 처음부터 끝까지 한 번씩 훑는 데 걸리는 시간 복잡도는? 간선이 없는 정점의 빈 리스트도 확인한다.
+정점 V개와 간선 E개인 무방향 그래프를 인접 리스트로 저장했다. 모든 정점의 인접 리스트를 처음부터 끝까지 한 번씩 훑는 데 걸리는 시간 복잡도는? 간선이 없는 정점의 빈 리스트도 확인한다. 가능한 가장 작은 차수로 답한다.
 ### choice: c
 $O(V + E)$
 ### choice: a
@@ -674,19 +688,18 @@ i=1에서 시작해 i<32 동안 i*=2를 한다. 반복 횟수를 숫자로 쓰�
 ## question: subject-01-q23
 ```json
 {
-  "title": "Java Queue의 빈 큐 조회",
+  "title": "원형 큐의 인덱스 순환",
   "topics": [
     "queue"
   ],
   "group": "structures",
   "acceptedAnswers": [
-    "peek",
-    "peek()"
+    "0"
   ],
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q23",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -694,7 +707,7 @@ i=1에서 시작해 i<32 동안 i*=2를 한다. 반복 횟수를 숫자로 쓰�
 }
 ```
 ### stem
-Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메서드 이름은?
+길이 5인 배열 `arr`로 원형 큐를 구현했다. 원소를 넣을 때 `rear = (rear + 1) % 5`를 먼저 계산한 뒤 `arr[rear]`에 저장한다. 현재 `rear`가 3이고 큐는 가득 차지 않았다. 원소 두 개를 연속으로 넣을 때 두 번째 원소가 저장되는 인덱스는?
 
 
 ## question: subject-01-q24

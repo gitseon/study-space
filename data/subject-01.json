@@ -15,36 +15,36 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-01-q01",
-      "revision": 3,
+      "revision": 4,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\\log_2 N$번 더 수행한다. 전체 실행 시간을 $\\Theta$ 표기로 나타내면?",
-      "solution": "독립 작업은 비용을 더한다. 가장 크게 증가하는 N이 전체 차수를 결정한다.",
+      "stem": "상수 시간 작업을 N번 수행한 뒤 이어서 상수 시간 작업을 $\\log_2 N$번 더 수행한다. 전체 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.",
+      "solution": "두 작업은 차례로 실행되므로 횟수를 더해 $N + \\log_2 N$번이다. 빅오 표기에서는 가장 크게 증가하는 항만 남기고 계수와 로그의 밑은 버리므로 $O(N)$이다.",
       "choices": [
         {
           "id": "a",
-          "text": "$\\Theta(\\log N)$"
+          "text": "$O(\\log N)$"
         },
         {
           "id": "b",
-          "text": "$\\Theta(N)$"
+          "text": "$O(N)$"
         },
         {
           "id": "c",
-          "text": "$\\Theta(N \\log N)$"
+          "text": "$O(N \\log N)$"
         },
         {
           "id": "d",
-          "text": "$\\Theta(N^2)$"
+          "text": "$O(N^2)$"
         }
       ],
       "choiceExplanations": {
         "a": "첫 작업을 누락했다.",
-        "b": "$N + \\log N$에서 N이 지배한다.",
-        "c": "중첩이 아닌 순차 실행이다.",
+        "b": "$N + \\log N$에서 가장 크게 증가하는 항은 N이다.",
+        "c": "중첩이 아닌 순차 실행이므로 곱하지 않는다.",
         "d": "반복 횟수를 제곱할 근거가 없다."
       }
     },
@@ -56,14 +56,14 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-01-q02",
-      "revision": 3,
+      "revision": 4,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
       "stem": "아래 코드에서 work() 호출 횟수는?\n```java\nfor (int i = 1; i <= 5; i++) {\n    for (int j = 0; j < i; j++) {\n        work();\n    }\n}\n```",
-      "solution": "내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\\frac{N(N+1)}{2}$번으로 $\\Theta(N^2)$이다.",
+      "solution": "내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\\frac{N(N+1)}{2}$번으로 $O(N^2)$이다.",
       "choices": [
         {
           "id": "d",
@@ -90,7 +90,7 @@
       }
     },
     {
-      "title": "분할 정복 점화식",
+      "title": "분할 정복 재귀의 시간 복잡도",
       "topics": [
         "divide",
         "complexity"
@@ -98,37 +98,37 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-01-q03",
-      "revision": 3,
+      "revision": 4,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "cost",
-      "stem": "$T(N) = 2T(N/2) + \\Theta(N)$이고 $T(1) = \\Theta(1)$이다. N이 2의 거듭제곱일 때 $T(N)$을 $\\Theta$ 표기로 나타내면?",
-      "solution": "각 레벨의 문제 크기 합은 N이고 재귀 깊이는 $\\log_2 N$이다.",
+      "stem": "N은 2의 거듭제곱이다. `solve(a, 0, N)`을 호출했을 때 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.\n\n```java\nvoid solve(int[] a, int lo, int hi) {\n    if (hi - lo <= 1) {\n        return;\n    }\n    int mid = (lo + hi) / 2;\n    solve(a, lo, mid);\n    solve(a, mid, hi);\n    for (int i = lo; i < hi; i++) {\n        work();\n    }\n}\n```",
+      "solution": "solve는 구간을 절반으로 나눠 두 번 호출한 뒤 현재 구간 길이만큼 `work()`를 호출한다. 재귀 깊이는 $\\log_2 N$이고 같은 깊이의 구간 길이를 모두 더하면 N이다. 따라서 `work()`는 $N \\log_2 N$번 호출되어 $O(N \\log N)$이다.",
       "choices": [
         {
           "id": "c",
-          "text": "$\\Theta(N \\log N)$"
+          "text": "$O(N \\log N)$"
         },
         {
           "id": "b",
-          "text": "$\\Theta(N)$"
+          "text": "$O(N)$"
         },
         {
           "id": "d",
-          "text": "$\\Theta(N^2)$"
+          "text": "$O(N^2)$"
         },
         {
           "id": "a",
-          "text": "$\\Theta(\\log N)$"
+          "text": "$O(\\log N)$"
         }
       ],
       "choiceExplanations": {
         "a": "재귀 깊이만 셌다.",
-        "b": "레벨마다 발생하는 결합 비용을 누락했다.",
-        "c": "각 레벨 $\\Theta(N)$을 $\\log N$번 합한다.",
-        "d": "결합 작업이 제곱으로 늘지는 않는다."
+        "b": "깊이마다 생기는 N번의 반복을 한 번만 셌다.",
+        "c": "깊이마다 N번씩 $\\log N$개의 깊이를 더한다.",
+        "d": "구간이 절반씩 줄어 반복이 제곱으로 늘지 않는다."
       }
     },
     {
@@ -427,13 +427,13 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-01-q11",
-      "revision": 3,
+      "revision": 4,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 2,
       "group": "graph",
-      "stem": "정점 V개와 간선 E개인 무방향 그래프를 인접 리스트로 저장했다. 모든 정점의 인접 리스트를 처음부터 끝까지 한 번씩 훑는 데 걸리는 시간 복잡도는? 간선이 없는 정점의 빈 리스트도 확인한다.",
+      "stem": "정점 V개와 간선 E개인 무방향 그래프를 인접 리스트로 저장했다. 모든 정점의 인접 리스트를 처음부터 끝까지 한 번씩 훑는 데 걸리는 시간 복잡도는? 간선이 없는 정점의 빈 리스트도 확인한다. 가능한 가장 작은 차수로 답한다.",
       "solution": "무방향 간선 하나는 양쪽 정점의 리스트에 한 번씩 기록되어 기록은 모두 2E개다. 정점 V개의 리스트를 모두 열어 보므로 $O(V + E)$이고 상수 2는 차수에 영향을 주지 않는다.",
       "choices": [
         {
@@ -894,25 +894,24 @@
       "choiceExplanations": {}
     },
     {
-      "title": "Java Queue의 빈 큐 조회",
+      "title": "원형 큐의 인덱스 순환",
       "topics": [
         "queue"
       ],
       "group": "structures",
       "acceptedAnswers": [
-        "peek",
-        "peek()"
+        "0"
       ],
       "normalization": "trim",
       "type": "short",
       "id": "subject-01-q23",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 2,
-      "stem": "Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메서드 이름은?",
-      "solution": "peek는 조회만 한다. poll은 제거 후 반환한다.",
+      "stem": "길이 5인 배열 `arr`로 원형 큐를 구현했다. 원소를 넣을 때 `rear = (rear + 1) % 5`를 먼저 계산한 뒤 `arr[rear]`에 저장한다. 현재 `rear`가 3이고 큐는 가득 차지 않았다. 원소 두 개를 연속으로 넣을 때 두 번째 원소가 저장되는 인덱스는?",
+      "solution": "모범답안은 0이다. 첫 번째 원소는 $(3 + 1) \\bmod 5 = 4$에, 두 번째 원소는 $(4 + 1) \\bmod 5 = 0$에 저장된다. 원형 큐는 배열 끝 다음에 다시 0번으로 돌아가 앞쪽의 빈 칸을 재사용한다. 5라고 답하면 나머지 연산을 빠뜨린 것이다.",
       "choices": [],
       "choiceExplanations": {}
     },
@@ -1325,5 +1324,5 @@
       "b"
     ]
   },
-  "contentVersion": "50ed8ffcb15ed410"
+  "contentVersion": "f4f16dfea9d11489"
 }

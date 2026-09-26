@@ -9,7 +9,7 @@
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q01",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -18,15 +18,25 @@
 }
 ```
 ### stem
-$f(n)$은 $n = 0$에서 끝나고 그 외에는 $f(n-1)$을 두 번 호출한다. 호출당 추가 작업은 $O(1)$이다. 총 실행 시간을 $\Theta$ 표기로 나타내면?
+아래 `f(n)`을 호출했을 때 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
+
+```java
+void f(int n) {
+    if (n == 0) {
+        return;
+    }
+    f(n - 1);
+    f(n - 1);
+}
+```
 ### choice: d
-$\Theta(n^2)$
+$O(n^2)$
 ### choice: b
-$\Theta(n \log n)$
+$O(n \log n)$
 ### choice: c
-$\Theta(2^n)$
+$O(2^n)$
 ### choice: a
-$\Theta(n)$
+$O(n)$
 
 ## question: subject-03-q02
 ```json
@@ -38,7 +48,7 @@ $\Theta(n)$
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q02",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -47,7 +57,7 @@ $\Theta(n)$
 }
 ```
 ### stem
-아래 코드에서 j는 외부 반복마다 초기화되지 않는다. 전체 work() 횟수의 차수는?
+아래 코드에서 j는 외부 반복마다 초기화되지 않는다. 전체 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
 ```java
 int j = 0;
 for (int i = 0; i < N; i++) {
@@ -58,13 +68,13 @@ for (int i = 0; i < N; i++) {
 }
 ```
 ### choice: b
-$\Theta(\log N)$
+$O(\log N)$
 ### choice: d
-$\Theta(N^2)$
+$O(N^2)$
 ### choice: a
-$\Theta(1)$
+$O(1)$
 ### choice: c
-$\Theta(N)$
+$O(N)$
 
 ## question: subject-03-q03
 ```json
@@ -77,7 +87,7 @@ $\Theta(N)$
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q03",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -86,15 +96,15 @@ $\Theta(N)$
 }
 ```
 ### stem
-길이 N인 두 정렬 배열을 포인터 두 개로 병합한다. 결과 길이는 2N이다. 시간과 추가 결과 공간은?
+길이 N인 두 정렬 배열을 포인터 두 개로 병합한다. 결과 길이는 2N이다. 병합의 시간 복잡도와 결과 배열을 포함한 추가 공간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
 ### choice: a
-시간 $\Theta(N)$ 공간 $\Theta(N)$
+시간 $O(N)$ 공간 $O(N)$
 ### choice: c
-시간 $\Theta(N)$ 공간 $\Theta(1)$
+시간 $O(N)$ 공간 $O(1)$
 ### choice: b
-시간 $\Theta(N^2)$ 공간 $\Theta(N)$
+시간 $O(N^2)$ 공간 $O(N)$
 ### choice: d
-시간 $\Theta(\log N)$ 공간 $\Theta(N)$
+시간 $O(\log N)$ 공간 $O(N)$
 
 ## question: subject-03-q04
 ```json
@@ -311,7 +321,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q11",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -320,7 +330,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
 }
 ```
 ### stem
-모든 정점을 방문하는 표준 BFS에서 인접 행렬과 인접 리스트의 최악 시간 차수는?
+모든 정점을 방문하는 표준 BFS에서 인접 행렬과 인접 리스트의 최악 시간 복잡도를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
 ### choice: a
 $O(V^2)$와 $O(V+E)$
 ### choice: c
@@ -608,7 +618,7 @@ B -> C
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q21",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -617,7 +627,7 @@ B -> C
 }
 ```
 ### stem
-N개 양수 배열에서 left와 right가 각각 오른쪽으로만 이동하고 되돌아가지 않는다. 두 포인터의 총 이동 횟수 차수는?
+N개 양수 배열에서 left와 right가 각각 오른쪽으로만 이동하고 되돌아가지 않는다. 두 포인터의 총 이동 횟수를 빅오 표기법으로 나타내면? 가능한 가장 작은 차수로 답한다.
 ### choice: c
 $O(N)$
 ### choice: d
@@ -630,7 +640,7 @@ $O(1)$
 ## question: subject-03-q22
 ```json
 {
-  "title": "순차 실행의 지배항",
+  "title": "중첩 반복과 순차 반복의 시간 복잡도",
   "topics": [
     "complexity"
   ],
@@ -641,7 +651,7 @@ $O(1)$
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q22",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -649,7 +659,18 @@ $O(1)$
 }
 ```
 ### stem
-$O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k)$로 정리할 때 가장 작은 양의 정수 k는? 첫 작업은 실제로 $\Theta(N^2)$이다.
+아래 코드의 시간 복잡도를 $O(N^k)$로 나타낼 때 가능한 가장 작은 정수 k는?
+
+```java
+for (int i = 0; i < N; i++) {
+    for (int j = 0; j < N; j++) {
+        work();
+    }
+}
+for (int i = 0; i < N; i++) {
+    work();
+}
+```
 
 
 ## question: subject-03-q23
@@ -756,18 +777,18 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q27
 ```json
 {
-  "title": "방향 그래프 진출 차수의 합",
+  "title": "무방향 그래프 인접 행렬의 1의 개수",
   "topics": [
     "graph"
   ],
   "group": "graph",
   "acceptedAnswers": [
-    "11"
+    "12"
   ],
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q27",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -775,7 +796,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 }
 ```
 ### stem
-방향 간선이 11개다. 모든 정점의 진출 차수 합은?
+정점 5개와 간선 6개인 무방향 그래프를 인접 행렬로 저장한다. 간선이 있으면 1, 없으면 0을 넣는다. 자기 루프와 중복 간선은 없다. 행렬에서 값이 1인 칸의 수는?
 
 
 ## question: subject-03-q28
@@ -806,18 +827,18 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q29
 ```json
 {
-  "title": "동전 문제의 최적해",
+  "title": "회의실 배정의 탐욕 선택",
   "topics": [
     "greedy"
   ],
   "group": "strategy",
   "acceptedAnswers": [
-    "2"
+    "3"
   ],
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q29",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -825,7 +846,11 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 }
 ```
 ### stem
-동전 1, 4, 6으로 금액 8을 만들 때 필요한 최소 동전 개수는?
+회의실 하나에 아래 회의를 배정한다. 각 쌍은 시작 시각과 끝 시각이고 한 회의가 끝난 시각에 바로 다음 회의를 시작할 수 있다. 끝나는 시각이 빠른 회의부터 겹치지 않으면 고르는 탐욕으로 배정한 회의 수는?
+
+```text
+(1, 4) (3, 5) (0, 6) (5, 7) (8, 9) (5, 9)
+```
 
 
 ## question: subject-03-q30
@@ -861,7 +886,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
     "bitmask"
   ],
   "group": "essay",
-  "modelAnswer": "고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 $2^N$개다. 모든 상태를 열거하면 적어도 $\\Omega(2^N)$의 작업이 필요하다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.",
+  "modelAnswer": "고정 폭 정수 범위에서 원소 검사와 상태 복사는 간단해진다. 그러나 각 원소의 포함 여부가 독립적이므로 상태 수는 $2^N$개다. 모든 상태를 열거하면 상태마다 한 번씩 $2^N$번 이상 처리해야 하므로 $O(N)$이 될 수 없다. N이 정수 비트 폭보다 크면 추가 표현도 필요하다.",
   "rubric": [
     {
       "id": "r0",
@@ -886,7 +911,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   ],
   "type": "essay",
   "id": "subject-03-q31",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

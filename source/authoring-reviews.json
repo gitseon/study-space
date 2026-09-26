@@ -1,37 +1,37 @@
 [
   {
     "unit": "subject-01-q01",
-    "revision": 3,
+    "revision": 4,
     "code": "answer-length",
-    "contentHash": "642e4d30cc059e4a",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "d0bf6b498227bbb9",
+    "reason": "복잡도 표기 O(log N) O(N) O(N log N) O(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 O(N)은 오히려 짧은 편이다. N + log N에서 가장 작은 차수가 O(N)임을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q01",
-    "revision": 3,
+    "revision": 4,
     "code": "choice-spread",
-    "contentHash": "642e4d30cc059e4a",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "d0bf6b498227bbb9",
+    "reason": "복잡도 표기 O(log N) O(N) O(N log N) O(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 O(N)은 오히려 짧은 편이다. N + log N에서 가장 작은 차수가 O(N)임을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
-    "revision": 3,
+    "revision": 4,
     "code": "answer-length",
-    "contentHash": "ca33ea9a9e520abd",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "bf15c33d70e5a1ed",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 O(N log N)이 길어 보이는 것은 표기 구조 때문이다. 코드의 work() 호출 수가 N log₂N임을 실행으로 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
-    "revision": 3,
+    "revision": 4,
     "code": "choice-spread",
-    "contentHash": "ca33ea9a9e520abd",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "bf15c33d70e5a1ed",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 O(N log N)이 길어 보이는 것은 표기 구조 때문이다. 코드의 work() 호출 수가 N log₂N임을 실행으로 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
@@ -55,28 +55,28 @@
   },
   {
     "unit": "subject-01-q11",
-    "revision": 3,
+    "revision": 4,
     "code": "choice-spread",
-    "contentHash": "09360b34971bd7f0",
-    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 인접 리스트 전체 순회가 정점 V개의 리스트와 2E개의 기록을 한 번씩 확인해 O(V + E)임을 재확인했다.",
+    "contentHash": "6629e2c107ae6600",
+    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 인접 리스트 전체 순회가 정점 V개의 리스트와 2E개의 기록을 한 번씩 확인해 O(V + E)임을 재확인했다. 가장 작은 차수로 답하라는 조건을 추가해 정답이 하나로 정해진다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 3,
+    "revision": 4,
     "code": "answer-length",
-    "contentHash": "a46e481b6dc12ff0",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "16c6372cbf67d9ba",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 O(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 3,
+    "revision": 4,
     "code": "choice-spread",
-    "contentHash": "a46e481b6dc12ff0",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "16c6372cbf67d9ba",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 O(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
@@ -91,10 +91,10 @@
   },
   {
     "unit": "subject-03-q01",
-    "revision": 3,
+    "revision": 4,
     "code": "choice-spread",
-    "contentHash": "6b5d979b76223cc3",
-    "reason": "Θ(n) Θ(n²) Θ(2ⁿ) Θ(n log n)의 표기 구조 차이다. 정답 Θ(2ⁿ)은 중간 길이다. T(n)=2T(n-1)+Θ(1)의 호출 수 2ⁿ⁺¹-1로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "858e7ba5ee1d6d70",
+    "reason": "O(n) O(n²) O(2ⁿ) O(n log n)의 표기 구조 차이다. 정답 O(2ⁿ)은 중간 길이다. 호출 수 2ⁿ⁺¹-1을 실행으로 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   }

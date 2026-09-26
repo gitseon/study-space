@@ -167,7 +167,7 @@ function choiceOrder(q) {
 }
 
 function renderAnswer(q) {
-  const locked = isViewing() || (perQuestion() && attempt.revealed.includes(q.id));
+  const locked = isViewing() || attempt.revealed.includes(q.id);
   if (q.type === 'mc') {
     const revealed = isRevealed(q);
     const choices = choiceOrder(q)
@@ -290,9 +290,13 @@ function render() {
   const qs = visibleQuestions();
   attempt.currentIndex = Math.min(attempt.currentIndex || 0, Math.max(0, qs.length - 1));
   const q = qs[attempt.currentIndex];
-  const badge = viewing ? '결과와 복습' : gradingNames[attempt.mode];
+  const modeControl = viewing
+    ? '<span class="pill">결과와 복습</span>'
+    : '<label class="mode-switch">채점 방식 <select id="mode-switch">'
+      + Object.entries(gradingNames).map(([value, label]) => '<option value="' + value + '"' + (value === attempt.mode ? ' selected' : '') + '>' + label + '</option>').join('')
+      + '</select></label>';
 
-  root.innerHTML = '<div class="quiz-top"><a class="back" href="index.html">← 문제집으로</a><span class="pill">' + badge + '</span><span id="timer" class="timer"></span></div>'
+  root.innerHTML = '<div class="quiz-top"><a class="back" href="index.html">← 문제집으로</a>' + modeControl + '<span id="timer" class="timer"></span></div>'
     + '<div class="quiz-title"><div><span class="eyebrow">' + e(exam.subtitle || '주제별 연습') + '</span><h1>' + e(exam.title) + '</h1></div>'
     + '<p id="save-status" class="muted" role="status">' + e(saveMessage || '답안은 자동으로 저장됩니다') + '</p></div>'
     + (versionNotice ? '<p class="notice">개정 전 응시 기록입니다. 당시 문제와 답안으로 복습합니다.</p>' : '')
@@ -310,7 +314,22 @@ function go(index) {
   document.querySelector('#question-title')?.scrollIntoView({block: 'start'});
 }
 
+// Switching keeps every answer. Questions already checked stay revealed and locked,
+// because an answer that has been seen cannot be graded again as unseen.
+function switchMode(mode) {
+  attempt.mode = mode;
+  save();
+  const checked = attempt.revealed.length;
+  if (saveMessage === '자동 저장됨') {
+    saveMessage = mode === 'study'
+      ? '이제 한 문제씩 정답을 확인할 수 있습니다'
+      : '남은 문제는 제출할 때 한 번에 채점됩니다' + (checked ? '. 이미 확인한 ' + checked + '문제는 그대로 공개됩니다' : '');
+  }
+  render();
+}
+
 function bindEvents(q, qs) {
+  document.querySelector('#mode-switch')?.addEventListener('change', (ev) => switchMode(ev.target.value));
   root.querySelectorAll('[data-nav]').forEach((b) => {
     b.onclick = () => go(Number(b.dataset.nav));
   });

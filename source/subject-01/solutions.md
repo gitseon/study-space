@@ -1,18 +1,18 @@
 ## question: subject-01-q01
 ### solution
-독립 작업은 비용을 더한다. 가장 크게 증가하는 N이 전체 차수를 결정한다.
+두 작업은 차례로 실행되므로 횟수를 더해 $N + \log_2 N$번이다. 빅오 표기에서는 가장 크게 증가하는 항만 남기고 계수와 로그의 밑은 버리므로 $O(N)$이다.
 ### choice-explanation: a
 첫 작업을 누락했다.
 ### choice-explanation: b
-$N + \log N$에서 N이 지배한다.
+$N + \log N$에서 가장 크게 증가하는 항은 N이다.
 ### choice-explanation: c
-중첩이 아닌 순차 실행이다.
+중첩이 아닌 순차 실행이므로 곱하지 않는다.
 ### choice-explanation: d
 반복 횟수를 제곱할 근거가 없다.
 
 ## question: subject-01-q02
 ### solution
-내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\frac{N(N+1)}{2}$번으로 $\Theta(N^2)$이다.
+내부 반복은 차례로 1번부터 5번 실행된다. 일반 N에서는 $\frac{N(N+1)}{2}$번으로 $O(N^2)$이다.
 ### choice-explanation: a
 1부터 4까지만 합친 값이다.
 ### choice-explanation: b
@@ -24,15 +24,15 @@ $N + \log N$에서 N이 지배한다.
 
 ## question: subject-01-q03
 ### solution
-각 레벨의 문제 크기 합은 N이고 재귀 깊이는 $\log_2 N$이다.
+solve는 구간을 절반으로 나눠 두 번 호출한 뒤 현재 구간 길이만큼 `work()`를 호출한다. 재귀 깊이는 $\log_2 N$이고 같은 깊이의 구간 길이를 모두 더하면 N이다. 따라서 `work()`는 $N \log_2 N$번 호출되어 $O(N \log N)$이다.
 ### choice-explanation: a
 재귀 깊이만 셌다.
 ### choice-explanation: b
-레벨마다 발생하는 결합 비용을 누락했다.
+깊이마다 생기는 N번의 반복을 한 번만 셌다.
 ### choice-explanation: c
-각 레벨 $\Theta(N)$을 $\log N$번 합한다.
+깊이마다 N번씩 $\log N$개의 깊이를 더한다.
 ### choice-explanation: d
-결합 작업이 제곱으로 늘지는 않는다.
+구간이 절반씩 줄어 반복이 제곱으로 늘지 않는다.
 
 ## question: subject-01-q04
 ### solution
@@ -257,7 +257,7 @@ i는 1, 2, 4, 8, 16에서 반복한다. 32가 되면 종료하므로 5번이다.
 
 ## question: subject-01-q23
 ### solution
-peek는 조회만 한다. poll은 제거 후 반환한다.
+모범답안은 0이다. 첫 번째 원소는 $(3 + 1) \bmod 5 = 4$에, 두 번째 원소는 $(4 + 1) \bmod 5 = 0$에 저장된다. 원형 큐는 배열 끝 다음에 다시 0번으로 돌아가 앞쪽의 빈 칸을 재사용한다. 5라고 답하면 나머지 연산을 빠뜨린 것이다.
 
 
 ## question: subject-01-q24

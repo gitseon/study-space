@@ -1,18 +1,18 @@
 ## question: subject-02-q01
 ### solution
-정확한 차수는 $\Theta(N)$이지만 $O(N^2)$도 올바른 상한이다.
+첫 반복문은 `work()`를 N번, 두 번째 중첩 반복문은 $M^2$번 호출한다. 두 부분은 차례로 실행되므로 더해서 $O(N + M^2)$이다. N과 M은 서로 독립이라 어느 쪽이 더 크다고 정할 수 없으므로 두 항을 모두 남긴다.
 ### choice-explanation: a
-느슨한 상한도 빅오에 해당한다.
+N번 반복과 $M^2$번 반복을 차례로 실행하므로 더한다.
 ### choice-explanation: b
-실제 차수는 선형이다.
+차례로 실행되는 두 부분을 중첩처럼 곱했다.
 ### choice-explanation: c
-제곱은 선형 함수의 하한이 아니다.
+N과 M은 독립이라 N 항을 버릴 수 없다.
 ### choice-explanation: d
-선형은 로그보다 빠르게 증가한다.
+두 번째 부분의 중첩 반복을 한 겹으로 셌다.
 
 ## question: subject-02-q02
 ### solution
-내부 상태를 매번 초기화하므로 반복 횟수를 곱한다.
+내부 반복은 j가 1에서 시작해 두 배씩 커지므로 약 $\log_2 N$번 실행된다. 외부 반복마다 j를 다시 1로 초기화하므로 반복 횟수를 곱해 $O(N \log N)$이다.
 ### choice-explanation: a
 내부 비용을 누락했다.
 ### choice-explanation: b
@@ -267,7 +267,7 @@ poll은 제거이고 peek는 조회다. remove는 빈 큐에서 예외다.
 
 ## question: subject-02-q25
 ### solution
-회장 4명과 남은 부회장 3명을 곱하면 12다.
+모범답안은 9다. 자리마다 3가지를 독립적으로 고를 수 있으므로 $3^2 = 9$이다. 같은 숫자를 다시 쓸 수 없다고 보면 $3 \times 2 = 6$이 되어 틀린다.
 
 
 ## question: subject-02-q26
