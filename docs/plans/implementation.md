@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 별도 저장소 이름 제안: `gitseon/ssafy-algorithm-mock`. 현재 AI Challenge 저장소의 제품 코드를 변경하지 않는다.
+- 별도 저장소 이름 제안: `gitseon/study-space`. 현재 AI Challenge 저장소의 제품 코드를 변경하지 않는다.
 - 과평 1회는 객관식 21·단답 9·서술 2. 월평 1회는 구현 3·서술 1.
 - 최초 공개는 각각 3회, 총 108문항. 첫 검증 단위는 각각 1회, 총 36문항.
 - 4지선다 정답은 회차별 번호당 4~7개, 전체 63개에서는 번호당 14~18개. 동일 정답 연속 최대 2개.
@@ -117,7 +117,7 @@
 
 **Interfaces:** `build_site(output_dir: Path) -> None`은 검증된 html/assets/data만 dist에 복사한다. Pages는 검증된 동일 커밋의 dist artifact를 배포한다.
 
-- [ ] 로컬 서버를 `/ssafy-algorithm-mock/` 하위 경로로 열어 홈·회차 JSON·리뷰 화면·새로고침을 테스트한다. `/assets/...` 같은 루트 절대경로 의존을 제거한다.
+- [ ] 로컬 서버를 `/study-space/` 하위 경로로 열어 홈·회차 JSON·리뷰 화면·새로고침을 테스트한다. `/assets/...` 같은 루트 절대경로 의존을 제거한다.
 - [ ] check workflow에 `build_data`, `validate_questions`, `audit_bias --strict`, Python/Node 테스트, Playwright, `build_site`를 연결한다. 오류가 있는 시험 fixture로 검증 실패를 확인한다.
 - [ ] main 통과 이후에만 실행되는 deploy workflow를 만든다. 공식 Pages 문서를 기준으로 action 버전을 확인하고 검증/배포 의존성·환경·권한을 설정한다.
 - [ ] 구현과 로컬 검증 완료 후 새 GitHub 저장소 생성/push 및 Pages 설정을 수행한다. 실행 세션에서 원격 생성·공개 배포 권한을 확인하고 필요한 플랫폼 승인을 처리한다.

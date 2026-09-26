@@ -5,7 +5,7 @@ const root=path.resolve(process.env.SITE_DIR||'.'),port=Number(process.env.PORT|
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml'};
 http.createServer(async(req,res)=>{
   try{
-    let rel=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/ssafy-algorithm-mock\//,'/').replace(/^\/+/, '');
+    let rel=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/study-space\//,'/').replace(/^\/+/, '');
     const file=path.resolve(root,rel||'index.html');
     if(!file.startsWith(root+path.sep)&&file!==root)throw Error();
     const target=(await stat(file)).isDirectory()?path.join(file,'index.html'):file;

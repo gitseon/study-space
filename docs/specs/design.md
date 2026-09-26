@@ -12,7 +12,7 @@
 - 정답 번호 쏠림·긴 연속 정답·선지 길이와 표현에 따른 정답 단서를 지속적으로 검사한다.
 - 실제 시험 출제와 배점이 확정된 것으로 표현하지 않는다. 노션의 주제를 바탕으로 만든 연습 문제임을 표시한다.
 
-계획의 제안값: 저장소 이름 `ssafy-algorithm-mock`, 객관식 4지선다, Java 17 기준 예제, 최초 공개 과평 3회·월평 3회. 구현 시 이 값을 기본으로 사용하되 사용자 수정이 우선한다.
+계획의 제안값: 저장소 이름 `study-space`, 객관식 4지선다, Java 17 기준 예제, 최초 공개 과평 3회·월평 3회. 구현 시 이 값을 기본으로 사용하되 사용자 수정이 우선한다.
 
 ## 2. 참고 자료에서 확인한 내용
 
@@ -150,7 +150,7 @@ dist/                    # 공개할 정적 파일만 포함
 
 ## 9. 배포와 완료 기준
 
-새 독립 저장소 `gitseon/ssafy-algorithm-mock`을 제안한다. GitHub Pages의 프로젝트 사이트 주소는 `https://gitseon.github.io/ssafy-algorithm-mock/`이며, 실제 URL은 배포 결과로 확인한다.
+새 독립 저장소 `gitseon/study-space`을 제안한다. GitHub Pages의 프로젝트 사이트 주소는 `https://gitseon.github.io/study-space/`이며, 실제 URL은 배포 결과로 확인한다.
 
 PR에서 검증하고 main의 동일 검증 통과 후 dist만 Pages artifact로 배포한다. 모든 자산/데이터 URL은 프로젝트 하위 경로를 지원해야 한다. 저장소 설정에서 Pages Source를 GitHub Actions로 지정한다. 배포 job은 검증/빌드 job에 의존하고 `github-pages` 환경, `pages: write`, `id-token: write`를 사용한다. [공식 배포 지침](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)을 구현 시 다시 확인한다.
 

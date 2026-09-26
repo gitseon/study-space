@@ -4,7 +4,7 @@
 
 - 과평 3회: 회차마다 객관식 21문항, 단답형 9문항, 서술형 2문항
 - 월평 3회: 회차마다 구현형 3문항, 서술형 1문항
-- 배포 주소: https://gitseon.github.io/ssafy-algorithm-mock/ (Pages 설정 후 활성화)
+- 배포 주소: https://gitseon.github.io/study-space/ (Pages 설정 후 활성화)
 
 ## 로컬 실행
 
@@ -17,7 +17,7 @@ python scripts/build_data.py
 npm run serve
 ```
 
-브라우저에서 `http://127.0.0.1:4173/ssafy-algorithm-mock/`을 엽니다. GitHub Pages와 같은 하위 경로로 동작을 확인하기 위해서입니다.
+브라우저에서 `http://127.0.0.1:4173/study-space/`을 엽니다. GitHub Pages와 같은 하위 경로로 동작을 확인하기 위해서입니다.
 
 ## 검증 명령
 
