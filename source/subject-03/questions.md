@@ -1,7 +1,7 @@
 ## question: subject-03-q01
 ```json
 {
-  "title": "재귀 호출 수",
+  "title": "두 번 호출하는 재귀의 시간 복잡도",
   "topics": [
     "complexity",
     "recursion"
@@ -9,7 +9,7 @@
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q01",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -31,14 +31,14 @@ $\Theta(n)$
 ## question: subject-03-q02
 ```json
 {
-  "title": "부분 구간의 합",
+  "title": "초기화되지 않는 내부 반복의 시간 복잡도",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q02",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -69,7 +69,7 @@ $\Theta(N)$
 ## question: subject-03-q03
 ```json
 {
-  "title": "병합 단계 추론",
+  "title": "정렬 배열 병합의 시간과 공간",
   "topics": [
     "divide",
     "complexity"
@@ -77,7 +77,7 @@ $\Theta(N)$
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q03",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -99,14 +99,14 @@ $\Theta(N)$
 ## question: subject-03-q04
 ```json
 {
-  "title": "큐와 스택의 차이",
+  "title": "큐와 스택의 출력 순서",
   "topics": [
     "queue"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q04",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -128,14 +128,14 @@ $\Theta(N)$
 ## question: subject-03-q05
 ```json
 {
-  "title": "BST의 순회",
+  "title": "이진 탐색 트리의 중위 순회",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q05",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -157,14 +157,14 @@ $\Theta(N)$
 ## question: subject-03-q06
 ```json
 {
-  "title": "힙의 최솟값 삭제",
+  "title": "최소 힙의 삭제 후 복구",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q06",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -186,14 +186,14 @@ $\Theta(N)$
 ## question: subject-03-q07
 ```json
 {
-  "title": "완전 이진 트리 판단",
+  "title": "완전 이진 트리의 정의",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q07",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -215,14 +215,14 @@ $\Theta(N)$
 ## question: subject-03-q08
 ```json
 {
-  "title": "선택 순서의 수",
+  "title": "조건이 있는 순열의 수",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-03-q08",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -244,7 +244,7 @@ $\Theta(N)$
 ## question: subject-03-q09
 ```json
 {
-  "title": "재귀의 인수 변화",
+  "title": "부분집합 재귀의 인수 변화",
   "topics": [
     "recursion",
     "enumeration"
@@ -252,7 +252,7 @@ $\Theta(N)$
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q09",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -274,14 +274,14 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
 ## question: subject-03-q10
 ```json
 {
-  "title": "마지막 순열",
+  "title": "마지막 순열의 사전순 다음 순열",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q10",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -290,7 +290,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
 }
 ```
 ### stem
-[4, 3, 2, 1]에 next_permutation을 적용한다. 사전순으로 더 큰 순열의 존재 여부는?
+[4, 3, 2, 1]의 사전순 다음 순열(Next Permutation)을 구하려 한다. 사전순으로 더 큰 순열의 존재 여부는?
 ### choice: d
 정확히 네 개 있다
 ### choice: b
@@ -303,7 +303,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
 ## question: subject-03-q11
 ```json
 {
-  "title": "전체 탐색의 비용",
+  "title": "그래프 표현에 따른 BFS 시간 복잡도",
   "topics": [
     "graph",
     "traversal"
@@ -311,7 +311,7 @@ N개 원소의 부분집합을 생성할 때 다음 깊이로 가는 선택과 �
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q11",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -333,14 +333,14 @@ $O(V+E)$와 $O(V^2)$
 ## question: subject-03-q12
 ```json
 {
-  "title": "방향 그래프의 차수",
+  "title": "방향 그래프 차수의 합",
   "topics": [
     "graph"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q12",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -362,14 +362,14 @@ $O(V+E)$와 $O(V^2)$
 ## question: subject-03-q13
 ```json
 {
-  "title": "BFS 최단 거리 조건",
+  "title": "BFS 최단 거리의 조건",
   "topics": [
     "traversal"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q13",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -391,7 +391,7 @@ BFS가 최초 발견 거리로 최단 경로의 비용을 보장하는 대표적
 ## question: subject-03-q14
 ```json
 {
-  "title": "비연결 그래프 탐색",
+  "title": "연결 요소를 찾는 DFS",
   "topics": [
     "traversal",
     "graph"
@@ -399,7 +399,7 @@ BFS가 최초 발견 거리로 최단 경로의 비용을 보장하는 대표적
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q14",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -421,14 +421,14 @@ BFS가 최초 발견 거리로 최단 경로의 비용을 보장하는 대표적
 ## question: subject-03-q15
 ```json
 {
-  "title": "부분집합 상태 수",
+  "title": "비트마스크 상태의 개수",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q15",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -450,14 +450,14 @@ BFS가 최초 발견 거리로 최단 경로의 비용을 보장하는 대표적
 ## question: subject-03-q16
 ```json
 {
-  "title": "비트 연산 추적",
+  "title": "비트 추가와 제거 추적",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-03-q16",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -479,14 +479,14 @@ mask의 이진 표현은 0101이다. 1번 비트를 추가한 뒤 2번 비트를
 ## question: subject-03-q17
 ```json
 {
-  "title": "압축 후 집합 의미",
+  "title": "경로 압축이 바꾸는 것",
   "topics": [
     "unionfind"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q17",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -508,14 +508,14 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 ## question: subject-03-q18
 ```json
 {
-  "title": "여러 위상정렬",
+  "title": "위상정렬 결과의 개수",
   "topics": [
     "topology"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-03-q18",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -524,7 +524,12 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 }
 ```
 ### stem
-간선이 A→C, B→C뿐이다. 가능한 위상정렬 순서의 수는?
+다음 방향 그래프의 간선은 그림의 두 개뿐이다. 가능한 위상정렬 순서의 수는?
+
+```graph
+A -> C
+B -> C
+```
 ### choice: c
 3가지
 ### choice: a
@@ -537,7 +542,7 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 ## question: subject-03-q19
 ```json
 {
-  "title": "탐욕의 반례",
+  "title": "동전 문제의 탐욕 반례",
   "topics": [
     "greedy",
     "backtracking"
@@ -545,7 +550,7 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-03-q19",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -567,14 +572,14 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 ## question: subject-03-q20
 ```json
 {
-  "title": "목표가 없는 이진 탐색",
+  "title": "목표가 배열 끝 뒤에 있는 lower bound",
   "topics": [
     "binary"
   ],
   "correctChoiceId": "d",
   "type": "mc",
   "id": "subject-03-q20",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -596,14 +601,14 @@ Union-Find의 경로 압축으로 바뀌는 것과 유지되는 것을 올바르
 ## question: subject-03-q21
 ```json
 {
-  "title": "포인터의 총 이동",
+  "title": "투 포인터의 총 이동 횟수",
   "topics": [
     "twopointer"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-03-q21",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -625,7 +630,7 @@ $O(1)$
 ## question: subject-03-q22
 ```json
 {
-  "title": "순차 비용의 지배항",
+  "title": "순차 실행의 지배항",
   "topics": [
     "complexity"
   ],
@@ -636,7 +641,7 @@ $O(1)$
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q22",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -650,7 +655,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q23
 ```json
 {
-  "title": "큐의 추적 결과",
+  "title": "큐의 꺼내기 추적",
   "topics": [
     "queue"
   ],
@@ -661,7 +666,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q23",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -675,7 +680,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q24
 ```json
 {
-  "title": "트리 간선 수",
+  "title": "트리의 노드 수와 간선 수",
   "topics": [
     "tree"
   ],
@@ -686,7 +691,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q24",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -700,7 +705,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q25
 ```json
 {
-  "title": "순열 수",
+  "title": "순열의 수",
   "topics": [
     "enumeration"
   ],
@@ -711,7 +716,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q25",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -725,7 +730,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q26
 ```json
 {
-  "title": "정확히 두 비트",
+  "title": "정확히 두 비트가 켜진 상태 수",
   "topics": [
     "enumeration",
     "bitmask"
@@ -737,7 +742,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q26",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -751,7 +756,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q27
 ```json
 {
-  "title": "방향 차수 합",
+  "title": "방향 그래프 진출 차수의 합",
   "topics": [
     "graph"
   ],
@@ -762,7 +767,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q27",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -801,7 +806,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q29
 ```json
 {
-  "title": "동전 반례",
+  "title": "동전 문제의 최적해",
   "topics": [
     "greedy"
   ],
@@ -812,7 +817,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q29",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -826,7 +831,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q30
 ```json
 {
-  "title": "합이 클 때 이동",
+  "title": "투 포인터에서 합이 클 때의 이동",
   "topics": [
     "twopointer"
   ],
@@ -837,7 +842,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   "normalization": "trim",
   "type": "short",
   "id": "subject-03-q30",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -851,7 +856,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q31
 ```json
 {
-  "title": "집합 상태 압축의 한계",
+  "title": "비트마스크 상태 압축의 한계",
   "topics": [
     "bitmask"
   ],
@@ -881,7 +886,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   ],
   "type": "essay",
   "id": "subject-03-q31",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -895,7 +900,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
 ## question: subject-03-q32
 ```json
 {
-  "title": "경로 압축과 합치기 기준",
+  "title": "경로 압축과 크기 기준 합치기",
   "topics": [
     "unionfind"
   ],
@@ -925,7 +930,7 @@ $O(N^2)$ 작업 뒤에 $O(N)$ 작업을 실행한다. 전체의 상한을 $O(N^k
   ],
   "type": "essay",
   "id": "subject-03-q32",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

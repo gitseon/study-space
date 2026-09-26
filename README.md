@@ -53,6 +53,8 @@ SITE_DIR=dist npm run test:e2e
 - 정답과 해설은 `choiceId`로 연결합니다. 선택지 순서를 바꿔도 해설에 번호가 남지 않게 합니다.
 - 수식은 `$...$` 안에 LaTeX로 씁니다. 화면에서는 저장소에 포함된 KaTeX(`assets/vendor/katex`)로 렌더링하며 `npm test`가 모든 수식을 엄격 모드로 검사합니다.
 - 코드 블록은 4칸 들여쓰기와 중괄호를 갖춘 표준 Java 형식으로 씁니다.
+- 트리와 그래프 도식은 ` ```tree `와 ` ```graph ` 블록으로 씁니다. 형식은 QUESTION_AUTHORING.md 6절에 있으며 잘못된 도식은 `validate_questions.py`가 오류로 잡습니다.
+- 개념 문항의 제목은 풀이 중에는 숨겨지고 해설에서 "주제"로 표시됩니다.
 - 길이 편향 경고를 수식 구조 등의 이유로 유지할 때는 `source/authoring-reviews.json`에 문항 ID, revision, 검사 코드, contentHash, 이유, 검토자, 검토일을 기록합니다. 문항이 바뀌면 기록이 만료되어 다시 검토해야 합니다.
 
 ### 새 회차 추가

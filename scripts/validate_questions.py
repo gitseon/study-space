@@ -16,6 +16,22 @@ def text_issues(text):
             issues.append("punctuation")
     return issues
 
+def diagram_issues(text):
+    """Mirror of assets/diagram.js parsing rules so broken diagrams fail the build."""
+    issues=[]
+    for kind,body in re.findall(r"```(tree|graph)\n([\s\S]*?)```",text):
+        lines=[l.strip() for l in body.strip().splitlines() if l.strip()]
+        if kind=="tree":
+            tokens=" ".join(lines[1:] if lines and lines[0]=="indexed" else lines).split()
+            if not tokens or tokens[0]=="-" or any(t!="-" and i>0 and tokens[(i+1)//2-1]=="-" for i,t in enumerate(tokens)):
+                issues.append("diagram")
+        else:
+            edges=[re.fullmatch(r"(\S+)\s*(->|-)\s*(\S+)",l) for l in (lines[1:] if lines and lines[0]=="direction: up" else lines)]
+            kinds={m.group(2) for m in edges if m}
+            if not lines or len(kinds)>1 or any(m is None and " " in l for m,l in zip(edges,lines)):
+                issues.append("diagram")
+    return issues
+
 def validate_bank(exams, scope):
     issues=[]; seen=set()
     def add(code,qid,message): issues.append({"code":code,"questionId":qid,"message":message,"severity":"error"})
@@ -37,6 +53,7 @@ def validate_bank(exams, scope):
             prose += [c["text"] for c in q.get("choices",[])] + list(q.get("choiceExplanations",{}).values())
             for text in prose:
                 for issue in text_issues(text): add(issue,qid,"Invalid text quality")
+            for issue in diagram_issues(q.get("stem","")): add(issue,qid,"Invalid tree or graph diagram")
             if q["type"]=="short" and (not q.get("acceptedAnswers") or q.get("normalization") not in ("none","trim","caseFold")):
                 add("short",qid,"answer normalization missing")
             if q["type"] in ("essay","code"):

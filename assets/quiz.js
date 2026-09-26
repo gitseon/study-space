@@ -200,6 +200,10 @@ function renderAnswer(q) {
   return html;
 }
 
+// Concept titles name the topic and would hint at the answer, so they appear only with the explanation.
+// Implementation problems keep their title because it names the task rather than the technique.
+const showsTitleWhileSolving = (q) => q.type === 'code';
+
 function feedbackHeading(q, result) {
   if (result.gradingMethod !== 'auto' && q.type !== 'short') {
     return '<div class="explanation-heading">모범답안과 비교해 직접 채점해 보세요</div>';
@@ -216,6 +220,9 @@ function feedbackHeading(q, result) {
 function explanation(q) {
   const result = resultFor(q, attempt);
   let html = '<section class="explanation">' + feedbackHeading(q, result);
+  if (!showsTitleWhileSolving(q)) {
+    html += '<p class="topic-line"><span>주제</span>' + e(q.title) + '</p>';
+  }
   if (q.type === 'mc') {
     const order = choiceOrder(q);
     const mine = order.indexOf(attempt.answers[q.id]);
@@ -267,7 +274,7 @@ function questionPanel(q, qs) {
     + '<div class="question-heading"><span class="question-index">QUESTION ' + String(attempt.currentIndex + 1).padStart(2, '0') + '</span>'
     + '<div><span class="pill neutral">' + typeNames[q.type] + '</span><button class="bookmark" id="mark" aria-pressed="' + store.isMarked(q.id) + '" aria-label="북마크">'
     + (store.isMarked(q.id) ? '★' : '☆') + '</button></div></div>'
-    + '<h2 id="question-title">' + e(q.title) + '</h2>'
+    + (showsTitleWhileSolving(q) ? '<h2 id="question-title">' + e(q.title) + '</h2>' : '<h2 id="question-title" class="sr-only">' + (attempt.currentIndex + 1) + '번 문제</h2>')
     + '<div class="prose">' + markdown(q.stem) + '</div>'
     + renderExamples(q.examples, '입출력 예시')
     + renderAnswer(q)

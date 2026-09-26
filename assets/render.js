@@ -1,3 +1,5 @@
+import {diagram} from './diagram.js';
+
 export const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 
@@ -30,7 +32,15 @@ export function markdown(text) {
     .split(/(```[\s\S]*?```)/g)
     .map((part) => {
       if (part.startsWith('```')) {
+        const lang = part.match(/^```(\w*)/)[1];
         const body = part.replace(/^```[^\n]*\n?/, '').replace(/```$/, '');
+        if (lang === 'tree' || lang === 'graph') {
+          try {
+            return diagram(lang, body);
+          } catch {
+            // An invalid diagram still shows its text form; the build validator reports it.
+          }
+        }
         return '<pre tabindex="0"><code>' + escapeHtml(body.trimEnd()) + '</code></pre>';
       }
       return part

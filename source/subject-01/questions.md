@@ -1,14 +1,14 @@
 ## question: subject-01-q01
 ```json
 {
-  "title": "독립된 반복문",
+  "title": "순차 실행의 시간 복잡도",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q01",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -30,14 +30,14 @@ $\Theta(N^2)$
 ## question: subject-01-q02
 ```json
 {
-  "title": "삼각형 반복",
+  "title": "중첩 반복문의 실행 횟수",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q02",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -66,7 +66,7 @@ for (int i = 1; i <= 5; i++) {
 ## question: subject-01-q03
 ```json
 {
-  "title": "분할과 결합",
+  "title": "분할 정복 점화식",
   "topics": [
     "divide",
     "complexity"
@@ -74,7 +74,7 @@ for (int i = 1; i <= 5; i++) {
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q03",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -96,14 +96,14 @@ $\Theta(\log N)$
 ## question: subject-01-q04
 ```json
 {
-  "title": "빈 큐의 조회",
+  "title": "Java Queue의 조회 메서드",
   "topics": [
     "queue"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q04",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -125,14 +125,14 @@ element()
 ## question: subject-01-q05
 ```json
 {
-  "title": "이진트리 중위 순회",
+  "title": "이진 트리의 중위 순회",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q05",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -141,7 +141,11 @@ element()
 }
 ```
 ### stem
-루트 A의 왼쪽은 B이고 오른쪽은 C다. B의 왼쪽 자식 D 외에 다른 자식은 없다. 중위 순회는?
+다음 이진 트리를 중위 순회한 방문 순서는?
+
+```tree
+A B C D
+```
 ### choice: d
 B D A C
 ### choice: a
@@ -154,14 +158,14 @@ D B C A
 ## question: subject-01-q06
 ```json
 {
-  "title": "최소 힙의 조건",
+  "title": "배열로 저장한 최소 힙의 조건",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q06",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -183,14 +187,14 @@ D B C A
 ## question: subject-01-q07
 ```json
 {
-  "title": "깊이와 높이",
+  "title": "트리 노드의 깊이와 높이",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q07",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -199,7 +203,12 @@ D B C A
 }
 ```
 ### stem
-A가 루트인 A→B→C→D 트리에서 B의 깊이와 높이는? 둘 다 간선 수로 센다.
+이진 트리를 1번 인덱스부터 레벨 순서로 배열 `[A, B, C, D, E, -, -, F]`에 저장했다. `-`는 빈 자리이고 인덱스 $i$의 자식은 $2i$와 $2i+1$이다. B의 깊이와 높이는? 둘 다 간선 수로 센다.
+
+```tree
+indexed
+A B C D E - - F
+```
 ### choice: d
 깊이 2 높이 2
 ### choice: a
@@ -212,7 +221,7 @@ A가 루트인 A→B→C→D 트리에서 B의 깊이와 높이는? 둘 다 간�
 ## question: subject-01-q08
 ```json
 {
-  "title": "순열의 상태 복원",
+  "title": "순열 재귀의 방문 상태 복원",
   "topics": [
     "recursion",
     "enumeration"
@@ -220,7 +229,7 @@ A가 루트인 A→B→C→D 트리에서 B의 깊이와 높이는? 둘 다 간�
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q08",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -242,14 +251,14 @@ visited 전체를 true로 변경
 ## question: subject-01-q09
 ```json
 {
-  "title": "조합의 다음 후보",
+  "title": "조합 재귀의 다음 시작 인덱스",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q09",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -271,14 +280,14 @@ i + 1
 ## question: subject-01-q10
 ```json
 {
-  "title": "사전순 다음 순열",
+  "title": "사전순 다음 순열(Next Permutation)",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q10",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -287,7 +296,7 @@ i + 1
 }
 ```
 ### stem
-서로 다른 값 [1, 3, 2]의 사전순 다음 순열은?
+서로 다른 값 [1, 3, 2]의 사전순 다음 순열(Next Permutation)은?
 ### choice: c
 [2, 3, 1]
 ### choice: a
@@ -300,14 +309,14 @@ i + 1
 ## question: subject-01-q11
 ```json
 {
-  "title": "인접 리스트 공간",
+  "title": "인접 리스트 순회의 시간 복잡도",
   "topics": [
     "graph"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q11",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -316,7 +325,7 @@ i + 1
 }
 ```
 ### stem
-정점 V개와 간선 E개인 무방향 그래프의 인접 리스트 공간은? 고립 정점의 목록도 포함한다.
+정점 V개와 간선 E개인 무방향 그래프를 인접 리스트로 저장했다. 모든 정점의 인접 리스트를 처음부터 끝까지 한 번씩 훑는 데 걸리는 시간 복잡도는? 간선이 없는 정점의 빈 리스트도 확인한다.
 ### choice: c
 $O(V + E)$
 ### choice: a
@@ -329,14 +338,14 @@ $O(E)$
 ## question: subject-01-q12
 ```json
 {
-  "title": "무방향 차수 합",
+  "title": "무방향 그래프 차수의 합",
   "topics": [
     "graph"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q12",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -358,14 +367,14 @@ $O(E)$
 ## question: subject-01-q13
 ```json
 {
-  "title": "BFS 방문 순서",
+  "title": "너비 우선 탐색(BFS)의 방문 순서",
   "topics": [
     "traversal"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-01-q13",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -374,7 +383,14 @@ $O(E)$
 }
 ```
 ### stem
-무방향 간선 A-B, A-C, B-D, C-E가 있다. A에서 BFS를 시작한다. 이웃은 알파벳순으로 넣고 삽입 시 방문 표시한다. 방문 순서는?
+다음 무방향 그래프에서 A부터 BFS를 시작한다. 이웃은 알파벳순으로 큐에 넣고 넣을 때 방문 표시한다. 방문 순서는?
+
+```graph
+A - B
+A - C
+B - D
+C - E
+```
 ### choice: b
 A C E B D
 ### choice: a
@@ -387,14 +403,14 @@ A B C D E
 ## question: subject-01-q14
 ```json
 {
-  "title": "DFS 방문 순서",
+  "title": "깊이 우선 탐색(DFS)의 방문 순서",
   "topics": [
     "traversal"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q14",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -403,7 +419,14 @@ A B C D E
 }
 ```
 ### stem
-무방향 간선 A-B, A-C, B-D, C-E가 있다. A에서 재귀 DFS를 시작하고 이웃은 알파벳순으로 방문한다. 최초 방문 순서는?
+다음 무방향 그래프에서 A부터 재귀 DFS를 시작한다. 이웃은 알파벳순으로 방문한다. 처음 방문하는 순서는?
+
+```graph
+A - B
+A - C
+B - D
+C - E
+```
 ### choice: d
 A D B C E
 ### choice: b
@@ -416,14 +439,14 @@ A B C D E
 ## question: subject-01-q15
 ```json
 {
-  "title": "비트 포함 검사",
+  "title": "비트마스크의 원소 포함 검사",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q15",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -445,14 +468,14 @@ i는 0 이상 30 이하이다. mask의 i번째 비트가 켜져 있는지 검사
 ## question: subject-01-q16
 ```json
 {
-  "title": "비트 제거",
+  "title": "비트마스크의 원소 제거",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q16",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -474,14 +497,14 @@ mask AND ~(1 << i)
 ## question: subject-01-q17
 ```json
 {
-  "title": "경로 압축 결과",
+  "title": "서로소 집합의 경로 압축",
   "topics": [
     "unionfind"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q17",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -490,7 +513,13 @@ mask AND ~(1 << i)
 }
 ```
 ### stem
-parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]과 parent[2]는?
+서로소 집합(Union-Find)의 부모 배열이 `parent[1] = 2`, `parent[2] = 3`, `parent[3] = 3`이다. 화살표는 부모를 가리킨다. 경로 압축을 적용한 `find(1)` 후 `parent[1]`과 `parent[2]`는?
+
+```graph
+direction: up
+1 -> 2
+2 -> 3
+```
 ### choice: b
 3과 3
 ### choice: c
@@ -503,14 +532,14 @@ parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]
 ## question: subject-01-q18
 ```json
 {
-  "title": "위상정렬의 전제",
+  "title": "위상정렬이 가능한 그래프",
   "topics": [
     "topology"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q18",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -532,7 +561,7 @@ parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]
 ## question: subject-01-q19
 ```json
 {
-  "title": "선택과 되돌아가기",
+  "title": "탐욕과 백트래킹의 구분",
   "topics": [
     "greedy",
     "backtracking"
@@ -540,7 +569,7 @@ parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q19",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -562,14 +591,14 @@ parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]
 ## question: subject-01-q20
 ```json
 {
-  "title": "lower bound",
+  "title": "이진 탐색 lower bound",
   "topics": [
     "binary"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q20",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -591,14 +620,14 @@ parent[1]=2, parent[2]=3, parent[3]=3이다. 경로 압축 find(1) 후 parent[1]
 ## question: subject-01-q21
 ```json
 {
-  "title": "두 포인터의 이동",
+  "title": "투 포인터의 이동 규칙",
   "topics": [
     "twopointer"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q21",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -620,7 +649,7 @@ left를 1 감소
 ## question: subject-01-q22
 ```json
 {
-  "title": "배증 횟수",
+  "title": "배로 증가하는 반복의 횟수",
   "topics": [
     "complexity"
   ],
@@ -631,7 +660,7 @@ left를 1 감소
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q22",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -645,7 +674,7 @@ i=1에서 시작해 i<32 동안 i*=2를 한다. 반복 횟수를 숫자로 쓰�
 ## question: subject-01-q23
 ```json
 {
-  "title": "조회 메서드",
+  "title": "Java Queue의 빈 큐 조회",
   "topics": [
     "queue"
   ],
@@ -657,7 +686,7 @@ i=1에서 시작해 i<32 동안 i*=2를 한다. 반복 횟수를 숫자로 쓰�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q23",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -671,7 +700,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
 ## question: subject-01-q24
 ```json
 {
-  "title": "힙의 왼쪽 자식",
+  "title": "배열 힙의 자식 인덱스",
   "topics": [
     "tree"
   ],
@@ -682,7 +711,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q24",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -696,7 +725,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
 ## question: subject-01-q25
 ```json
 {
-  "title": "조합 개수",
+  "title": "조합의 수",
   "topics": [
     "enumeration"
   ],
@@ -707,7 +736,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q25",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -721,7 +750,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
 ## question: subject-01-q26
 ```json
 {
-  "title": "부분집합 개수",
+  "title": "부분집합의 개수",
   "topics": [
     "enumeration",
     "recursion"
@@ -733,7 +762,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q26",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -747,7 +776,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
 ## question: subject-01-q27
 ```json
 {
-  "title": "BFS의 자료구조",
+  "title": "BFS에 쓰는 자료구조",
   "topics": [
     "traversal"
   ],
@@ -760,7 +789,7 @@ Java Queue에서 제거 없이 조회하고 빈 큐면 null을 반환하는 메�
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q27",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -774,7 +803,7 @@ BFS에서 발견한 정점을 선입선출로 처리하기 위해 사용하는 �
 ## question: subject-01-q28
 ```json
 {
-  "title": "비트값 계산",
+  "title": "왼쪽 시프트 연산 결과",
   "topics": [
     "bitmask"
   ],
@@ -785,7 +814,7 @@ BFS에서 발견한 정점을 선입선출로 처리하기 위해 사용하는 �
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q28",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -799,7 +828,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
 ## question: subject-01-q29
 ```json
 {
-  "title": "위상정렬 약어",
+  "title": "방향 비순환 그래프의 약어",
   "topics": [
     "topology"
   ],
@@ -811,7 +840,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q29",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -825,7 +854,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
 ## question: subject-01-q30
 ```json
 {
-  "title": "lower bound 결과",
+  "title": "찾는 값이 없을 때의 lower bound",
   "topics": [
     "binary"
   ],
@@ -836,7 +865,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
   "normalization": "trim",
   "type": "short",
   "id": "subject-01-q30",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -894,12 +923,12 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
 ## question: subject-01-q32
 ```json
 {
-  "title": "경로 압축의 필요성",
+  "title": "서로소 집합 경로 압축의 효과",
   "topics": [
     "unionfind"
   ],
   "group": "essay",
-  "modelAnswer": "4가 대표라면 방문한 1, 2, 3의 부모를 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.",
+  "modelAnswer": "대표는 4다. `find(1)`은 1에서 4까지 올라간 뒤 돌아오며 방문한 1, 2, 3의 부모를 모두 4로 바꾼다. 이후 이 노드의 find는 짧은 경로를 따라간다. 집합 소속은 변하지 않는다. 경로 압축만으로 모든 단일 연산이 $O(1)$이라고 단정하지 않는다.",
   "rubric": [
     {
       "id": "r0",
@@ -924,7 +953,7 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
   ],
   "type": "essay",
   "id": "subject-01-q32",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -932,5 +961,12 @@ Java의 1 << 5 결과를 십진수로 쓰시오.
 }
 ```
 ### stem
-Union-Find가 1→2→3→4의 긴 부모 경로를 갖는다. 경로 압축 find(1) 이후의 연결과 이후 find에 미치는 효과를 설명하시오.
+서로소 집합(Union-Find)의 부모 배열이 `parent[1] = 2`, `parent[2] = 3`, `parent[3] = 4`, `parent[4] = 4`인 긴 경로를 이룬다. 화살표는 부모를 가리킨다. 경로 압축을 적용한 `find(1)` 이후의 연결 상태와 이후 find 연산에 미치는 효과를 설명하시오.
+
+```graph
+direction: up
+1 -> 2
+2 -> 3
+3 -> 4
+```
 

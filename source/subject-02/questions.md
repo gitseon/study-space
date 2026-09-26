@@ -1,14 +1,14 @@
 ## question: subject-02-q01
 ```json
 {
-  "title": "빅오의 상한",
+  "title": "점근 표기의 상한과 하한",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q01",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -30,14 +30,14 @@ $T(N) = \Theta(N^2)$이 성립한다
 ## question: subject-02-q02
 ```json
 {
-  "title": "중첩된 배증",
+  "title": "로그 반복이 중첩된 시간 복잡도",
   "topics": [
     "complexity"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-02-q02",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -59,7 +59,7 @@ $\Theta(\log N)$
 ## question: subject-02-q03
 ```json
 {
-  "title": "기저 조건",
+  "title": "분할 재귀의 기저 조건",
   "topics": [
     "divide",
     "recursion"
@@ -67,7 +67,7 @@ $\Theta(\log N)$
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -118,14 +118,14 @@ null
 ## question: subject-02-q05
 ```json
 {
-  "title": "후위 순회",
+  "title": "이진 트리의 후위 순회",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "c",
   "type": "mc",
   "id": "subject-02-q05",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -134,7 +134,11 @@ null
 }
 ```
 ### stem
-루트 R의 왼쪽 L과 오른쪽 M은 모두 리프다. 후위 순회는?
+다음 이진 트리를 후위 순회한 방문 순서는?
+
+```tree
+R L M
+```
 ### choice: b
 L R M
 ### choice: d
@@ -147,14 +151,14 @@ R L M
 ## question: subject-02-q06
 ```json
 {
-  "title": "형제 노드의 관계",
+  "title": "최소 힙의 부모와 자식 조건",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q06",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -163,7 +167,11 @@ R L M
 }
 ```
 ### stem
-최소 힙의 부모 값은 3이고 왼쪽 자식은 8, 오른쪽 자식은 5다. 이 세 노드의 힙 대소 조건에 대한 판단은?
+다음은 최소 힙의 일부인 부모와 두 자식이다. 이 세 노드의 힙 대소 조건에 대한 판단은?
+
+```tree
+3 8 5
+```
 ### choice: b
 왼쪽이 더 크므로 조건 위반이다
 ### choice: c
@@ -176,14 +184,14 @@ R L M
 ## question: subject-02-q07
 ```json
 {
-  "title": "0번 기반 힙",
+  "title": "0번 인덱스 기반 힙의 자식 인덱스",
   "topics": [
     "tree"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q07",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -205,7 +213,7 @@ R L M
 ## question: subject-02-q08
 ```json
 {
-  "title": "부분집합 완성",
+  "title": "부분집합 재귀의 완성 시점",
   "topics": [
     "recursion",
     "enumeration"
@@ -213,7 +221,7 @@ R L M
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q08",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -235,14 +243,14 @@ d가 N에 도달했을 때
 ## question: subject-02-q09
 ```json
 {
-  "title": "중복 값의 순열",
+  "title": "중복 값이 있는 사전순 다음 순열",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q09",
-  "revision": 3,
+  "revision": 4,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -251,7 +259,7 @@ d가 N에 도달했을 때
 }
 ```
 ### stem
-[1, 1, 2]를 오름차순에서 시작해 표준 next_permutation으로 순회한다. 서로 다른 배열 상태 수는?
+[1, 1, 2]에서 시작해 사전순 다음 순열(Next Permutation)을 더 없을 때까지 반복해 구한다. 시작 배열을 포함한 서로 다른 배열 상태 수는?
 ### choice: b
 3개
 ### choice: a
@@ -264,14 +272,14 @@ d가 N에 도달했을 때
 ## question: subject-02-q10
 ```json
 {
-  "title": "역할을 정하는 선택",
+  "title": "순서가 있는 선택의 수",
   "topics": [
     "enumeration"
   ],
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q10",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -293,14 +301,14 @@ d가 N에 도달했을 때
 ## question: subject-02-q11
 ```json
 {
-  "title": "행렬의 단일 조회",
+  "title": "인접 행렬의 간선 조회 시간",
   "topics": [
     "graph"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q11",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -322,7 +330,7 @@ $O(\log V)$
 ## question: subject-02-q12
 ```json
 {
-  "title": "진입 차수 갱신",
+  "title": "Kahn 위상정렬의 진입 차수 갱신",
   "topics": [
     "graph",
     "topology"
@@ -330,7 +338,7 @@ $O(\log V)$
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q12",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -339,7 +347,13 @@ $O(\log V)$
 }
 ```
 ### stem
-A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C의 진입 차수는?
+다음 방향 그래프에 Kahn 위상정렬을 적용한다. A만 제거한 직후 C의 진입 차수는?
+
+```graph
+A -> C
+B -> C
+C -> D
+```
 ### choice: a
 0
 ### choice: b
@@ -352,14 +366,14 @@ A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C�
 ## question: subject-02-q13
 ```json
 {
-  "title": "BFS의 방문 표시",
+  "title": "BFS의 방문 표시 시점",
   "topics": [
     "traversal"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q13",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -381,7 +395,7 @@ A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C�
 ## question: subject-02-q14
 ```json
 {
-  "title": "DFS의 복귀 순서",
+  "title": "DFS 후위 기록의 의미",
   "topics": [
     "traversal",
     "recursion"
@@ -389,7 +403,7 @@ A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C�
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-02-q14",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -411,14 +425,14 @@ A→C, B→C, C→D가 있다. Kahn 위상정렬에서 A만 제거한 직후 C�
 ## question: subject-02-q15
 ```json
 {
-  "title": "XOR의 역할",
+  "title": "비트 XOR 연산",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q15",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -440,14 +454,14 @@ mask=0에서 mask XOR (1 << 2)를 계산했다. 결과는?
 ## question: subject-02-q16
 ```json
 {
-  "title": "상태 압축의 장점",
+  "title": "비트마스크 상태 압축의 장점",
   "topics": [
     "bitmask"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q16",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -469,14 +483,14 @@ mask=0에서 mask XOR (1 << 2)를 계산했다. 결과는?
 ## question: subject-02-q17
 ```json
 {
-  "title": "같은 집합 판정",
+  "title": "서로소 집합의 같은 집합 판정",
   "topics": [
     "unionfind"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q17",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -498,14 +512,14 @@ find(a)와 find(b) 비교
 ## question: subject-02-q18
 ```json
 {
-  "title": "위상정렬의 실패",
+  "title": "위상정렬 실패의 의미",
   "topics": [
     "topology"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q18",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -527,7 +541,7 @@ find(a)와 find(b) 비교
 ## question: subject-02-q19
 ```json
 {
-  "title": "음수와 가지치기",
+  "title": "음수가 있을 때의 가지치기",
   "topics": [
     "backtracking",
     "greedy"
@@ -535,7 +549,7 @@ find(a)와 find(b) 비교
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q19",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -557,14 +571,14 @@ find(a)와 find(b) 비교
 ## question: subject-02-q20
 ```json
 {
-  "title": "반열린 탐색 구간",
+  "title": "반열린 구간 lower bound의 갱신",
   "topics": [
     "binary"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q20",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -586,14 +600,14 @@ lo = mid + 1
 ## question: subject-02-q21
 ```json
 {
-  "title": "음수 배열의 구간합",
+  "title": "음수가 있는 배열과 슬라이딩 윈도우",
   "topics": [
     "twopointer"
   ],
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-02-q21",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -615,7 +629,7 @@ lo = mid + 1
 ## question: subject-02-q22
 ```json
 {
-  "title": "나눗셈 루프",
+  "title": "절반으로 줄어드는 반복의 횟수",
   "topics": [
     "complexity"
   ],
@@ -626,7 +640,7 @@ lo = mid + 1
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q22",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -640,7 +654,7 @@ i=64에서 i>0 동안 i/=2를 하는 정수 루프의 실행 횟수는?
 ## question: subject-02-q23
 ```json
 {
-  "title": "큐의 제거",
+  "title": "Java Queue의 제거 메서드",
   "topics": [
     "queue"
   ],
@@ -652,7 +666,7 @@ i=64에서 i>0 동안 i/=2를 하는 정수 루프의 실행 횟수는?
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q23",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -666,7 +680,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q24
 ```json
 {
-  "title": "루트의 깊이",
+  "title": "트리 루트의 깊이",
   "topics": [
     "tree"
   ],
@@ -677,7 +691,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q24",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -691,7 +705,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q25
 ```json
 {
-  "title": "역할 배정",
+  "title": "겸임 없는 역할 배정의 수",
   "topics": [
     "enumeration"
   ],
@@ -702,7 +716,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q25",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -716,7 +730,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q26
 ```json
 {
-  "title": "다음 순열의 피벗",
+  "title": "사전순 다음 순열의 피벗",
   "topics": [
     "enumeration"
   ],
@@ -727,7 +741,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q26",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -735,13 +749,13 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 }
 ```
 ### stem
-[1, 4, 3, 2]의 다음 순열을 구할 때 오른쪽에서 찾는 상승 지점의 왼쪽 값은?
+[1, 4, 3, 2]의 사전순 다음 순열(Next Permutation)을 구할 때 오른쪽에서 찾는 상승 지점의 왼쪽 값은?
 
 
 ## question: subject-02-q27
 ```json
 {
-  "title": "무방향 간선 수",
+  "title": "무방향 그래프 차수 합과 간선 수",
   "topics": [
     "graph"
   ],
@@ -752,7 +766,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q27",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -766,7 +780,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q28
 ```json
 {
-  "title": "같은 집합의 대표",
+  "title": "서로소 집합의 대표 비교",
   "topics": [
     "unionfind"
   ],
@@ -777,7 +791,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q28",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -791,7 +805,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q29
 ```json
 {
-  "title": "초기 진입 차수",
+  "title": "위상정렬의 초기 진입 차수",
   "topics": [
     "topology"
   ],
@@ -802,7 +816,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q29",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -810,13 +824,19 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 }
 ```
 ### stem
-간선 A→B, A→C, B→C가 있을 때 C의 초기 진입 차수는?
+다음 방향 그래프에서 C의 초기 진입 차수는?
+
+```graph
+A -> B
+A -> C
+B -> C
+```
 
 
 ## question: subject-02-q30
 ```json
 {
-  "title": "탐색 끝의 반환",
+  "title": "모든 값보다 큰 목표의 lower bound",
   "topics": [
     "binary"
   ],
@@ -827,7 +847,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   "normalization": "trim",
   "type": "short",
   "id": "subject-02-q30",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -841,7 +861,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q31
 ```json
 {
-  "title": "비트 토글을 제거로 쓸 때",
+  "title": "비트 토글을 제거로 쓸 때의 문제",
   "topics": [
     "bitmask"
   ],
@@ -871,7 +891,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   ],
   "type": "essay",
   "id": "subject-02-q31",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -885,7 +905,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
 ## question: subject-02-q32
 ```json
 {
-  "title": "대표 비교와 직접 부모 비교",
+  "title": "서로소 집합의 대표 비교와 부모 비교",
   "topics": [
     "unionfind"
   ],
@@ -915,7 +935,7 @@ Java Queue에서 원소를 제거해 반환하며 빈 큐일 때 null인 메서�
   ],
   "type": "essay",
   "id": "subject-02-q32",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],

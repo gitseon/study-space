@@ -8,7 +8,7 @@
   "sourceScopeVersion": 1,
   "questions": [
     {
-      "title": "재귀 호출 수",
+      "title": "두 번 호출하는 재귀의 시간 복잡도",
       "topics": [
         "complexity",
         "recursion"
@@ -16,7 +16,7 @@
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-03-q01",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -50,14 +50,14 @@
       }
     },
     {
-      "title": "부분 구간의 합",
+      "title": "초기화되지 않는 내부 반복의 시간 복잡도",
       "topics": [
         "complexity"
       ],
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-03-q02",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -91,7 +91,7 @@
       }
     },
     {
-      "title": "병합 단계 추론",
+      "title": "정렬 배열 병합의 시간과 공간",
       "topics": [
         "divide",
         "complexity"
@@ -99,7 +99,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q03",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -133,14 +133,14 @@
       }
     },
     {
-      "title": "큐와 스택의 차이",
+      "title": "큐와 스택의 출력 순서",
       "topics": [
         "queue"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q04",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -174,14 +174,14 @@
       }
     },
     {
-      "title": "BST의 순회",
+      "title": "이진 탐색 트리의 중위 순회",
       "topics": [
         "tree"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q05",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -215,14 +215,14 @@
       }
     },
     {
-      "title": "힙의 최솟값 삭제",
+      "title": "최소 힙의 삭제 후 복구",
       "topics": [
         "tree"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q06",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -256,14 +256,14 @@
       }
     },
     {
-      "title": "완전 이진 트리 판단",
+      "title": "완전 이진 트리의 정의",
       "topics": [
         "tree"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q07",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -297,14 +297,14 @@
       }
     },
     {
-      "title": "선택 순서의 수",
+      "title": "조건이 있는 순열의 수",
       "topics": [
         "enumeration"
       ],
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-03-q08",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -338,7 +338,7 @@
       }
     },
     {
-      "title": "재귀의 인수 변화",
+      "title": "부분집합 재귀의 인수 변화",
       "topics": [
         "recursion",
         "enumeration"
@@ -346,7 +346,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q09",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -380,20 +380,20 @@
       }
     },
     {
-      "title": "마지막 순열",
+      "title": "마지막 순열의 사전순 다음 순열",
       "topics": [
         "enumeration"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q10",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 1,
       "group": "enumeration",
-      "stem": "[4, 3, 2, 1]에 next_permutation을 적용한다. 사전순으로 더 큰 순열의 존재 여부는?",
+      "stem": "[4, 3, 2, 1]의 사전순 다음 순열(Next Permutation)을 구하려 한다. 사전순으로 더 큰 순열의 존재 여부는?",
       "solution": "오른쪽에서 a[i-1] < a[i]인 지점을 찾을 수 없으면 마지막 순열이다. 초기화 동작은 구현 규약에 따라 별도다.",
       "choices": [
         {
@@ -421,7 +421,7 @@
       }
     },
     {
-      "title": "전체 탐색의 비용",
+      "title": "그래프 표현에 따른 BFS 시간 복잡도",
       "topics": [
         "graph",
         "traversal"
@@ -429,7 +429,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q11",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -463,14 +463,14 @@
       }
     },
     {
-      "title": "방향 그래프의 차수",
+      "title": "방향 그래프 차수의 합",
       "topics": [
         "graph"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q12",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -504,14 +504,14 @@
       }
     },
     {
-      "title": "BFS 최단 거리 조건",
+      "title": "BFS 최단 거리의 조건",
       "topics": [
         "traversal"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q13",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -545,7 +545,7 @@
       }
     },
     {
-      "title": "비연결 그래프 탐색",
+      "title": "연결 요소를 찾는 DFS",
       "topics": [
         "traversal",
         "graph"
@@ -553,7 +553,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q14",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -587,14 +587,14 @@
       }
     },
     {
-      "title": "부분집합 상태 수",
+      "title": "비트마스크 상태의 개수",
       "topics": [
         "bitmask"
       ],
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-03-q15",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -628,14 +628,14 @@
       }
     },
     {
-      "title": "비트 연산 추적",
+      "title": "비트 추가와 제거 추적",
       "topics": [
         "bitmask"
       ],
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-03-q16",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -669,14 +669,14 @@
       }
     },
     {
-      "title": "압축 후 집합 의미",
+      "title": "경로 압축이 바꾸는 것",
       "topics": [
         "unionfind"
       ],
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q17",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -710,20 +710,20 @@
       }
     },
     {
-      "title": "여러 위상정렬",
+      "title": "위상정렬 결과의 개수",
       "topics": [
         "topology"
       ],
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-03-q18",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
       "difficulty": 2,
       "group": "strategy",
-      "stem": "간선이 A→C, B→C뿐이다. 가능한 위상정렬 순서의 수는?",
+      "stem": "다음 방향 그래프의 간선은 그림의 두 개뿐이다. 가능한 위상정렬 순서의 수는?\n\n```graph\nA -> C\nB -> C\n```",
       "solution": "위상정렬 결과는 유일하지 않을 수 있다. 동시에 진입 차수 0인 정점의 선택 순서에 따라 달라진다.",
       "choices": [
         {
@@ -751,7 +751,7 @@
       }
     },
     {
-      "title": "탐욕의 반례",
+      "title": "동전 문제의 탐욕 반례",
       "topics": [
         "greedy",
         "backtracking"
@@ -759,7 +759,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-03-q19",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -793,14 +793,14 @@
       }
     },
     {
-      "title": "목표가 없는 이진 탐색",
+      "title": "목표가 배열 끝 뒤에 있는 lower bound",
       "topics": [
         "binary"
       ],
       "correctChoiceId": "d",
       "type": "mc",
       "id": "subject-03-q20",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -834,14 +834,14 @@
       }
     },
     {
-      "title": "포인터의 총 이동",
+      "title": "투 포인터의 총 이동 횟수",
       "topics": [
         "twopointer"
       ],
       "correctChoiceId": "c",
       "type": "mc",
       "id": "subject-03-q21",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -875,7 +875,7 @@
       }
     },
     {
-      "title": "순차 비용의 지배항",
+      "title": "순차 실행의 지배항",
       "topics": [
         "complexity"
       ],
@@ -886,7 +886,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q22",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -897,7 +897,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "큐의 추적 결과",
+      "title": "큐의 꺼내기 추적",
       "topics": [
         "queue"
       ],
@@ -908,7 +908,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q23",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -919,7 +919,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "트리 간선 수",
+      "title": "트리의 노드 수와 간선 수",
       "topics": [
         "tree"
       ],
@@ -930,7 +930,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q24",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -941,7 +941,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "순열 수",
+      "title": "순열의 수",
       "topics": [
         "enumeration"
       ],
@@ -952,7 +952,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q25",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -963,7 +963,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "정확히 두 비트",
+      "title": "정확히 두 비트가 켜진 상태 수",
       "topics": [
         "enumeration",
         "bitmask"
@@ -975,7 +975,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q26",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -986,7 +986,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "방향 차수 합",
+      "title": "방향 그래프 진출 차수의 합",
       "topics": [
         "graph"
       ],
@@ -997,7 +997,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q27",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -1030,7 +1030,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "동전 반례",
+      "title": "동전 문제의 최적해",
       "topics": [
         "greedy"
       ],
@@ -1041,7 +1041,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q29",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -1052,7 +1052,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "합이 클 때 이동",
+      "title": "투 포인터에서 합이 클 때의 이동",
       "topics": [
         "twopointer"
       ],
@@ -1063,7 +1063,7 @@
       "normalization": "trim",
       "type": "short",
       "id": "subject-03-q30",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -1074,7 +1074,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "집합 상태 압축의 한계",
+      "title": "비트마스크 상태 압축의 한계",
       "topics": [
         "bitmask"
       ],
@@ -1104,7 +1104,7 @@
       ],
       "type": "essay",
       "id": "subject-03-q31",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -1115,7 +1115,7 @@
       "choiceExplanations": {}
     },
     {
-      "title": "경로 압축과 합치기 기준",
+      "title": "경로 압축과 크기 기준 합치기",
       "topics": [
         "unionfind"
       ],
@@ -1145,7 +1145,7 @@
       ],
       "type": "essay",
       "id": "subject-03-q32",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -1324,5 +1324,5 @@
       "a"
     ]
   },
-  "contentVersion": "4a3d6f8eb6405a41"
+  "contentVersion": "949c6b13d673637c"
 }

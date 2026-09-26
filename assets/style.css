@@ -28,3 +28,13 @@
 .history-score{font-size:12px;color:var(--muted);white-space:nowrap}.history-score b{font-size:15px;color:var(--ink)}
 .history-wrong{display:inline-block;margin:6px 0 0 4px;font-size:12px;color:var(--orange)}
 @media(max-width:480px){.counts{gap:18px}.history-item>a:first-child{padding:14px}.history small span{display:block;margin:0}}
+.topic-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:0 0 12px;font-size:14px;font-weight:600}
+.topic-line span{font-size:11px;font-weight:700;color:var(--green);background:var(--soft);border-radius:6px;padding:2px 8px}
+.diagram{margin:18px 0;padding:16px;border:1px solid var(--line);border-radius:10px;background:#fbfbf8;text-align:center;overflow-x:auto}
+.diagram svg{max-width:100%;height:auto}
+.diagram line{stroke:#8a938d;stroke-width:1.6}
+.diagram .arrowhead{fill:#8a938d}
+.diagram circle{fill:#fff;stroke:var(--green);stroke-width:1.6}
+.diagram text{fill:var(--ink);font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+.diagram text.index{fill:var(--muted);font-size:10px;font-weight:400}
+.prose p code,.choice code,.choice-reasons code{white-space:nowrap}

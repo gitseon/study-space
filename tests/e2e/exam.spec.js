@@ -73,6 +73,24 @@ test('formulas are typeset and code keeps standard braces', async ({page}) => {
   await expect(page.locator('.prose pre')).toContainText('for (int j = 0; j < i; j++) {');
 });
 
+test('topic titles stay hidden until the explanation and diagrams are drawn', async ({page}) => {
+  await startSubject(page, '한 문제씩 정답 확인');
+  await page.getByRole('button', {name: '12번 문항', exact: true}).click();
+  await expect(page.locator('.question-panel')).not.toContainText('무방향 그래프 차수의 합');
+  await page.locator('.choice').first().click();
+  await page.getByRole('button', {name: '정답 확인', exact: true}).click();
+  await expect(page.locator('.topic-line')).toContainText('주제무방향 그래프 차수의 합');
+
+  await page.getByRole('button', {name: '13번 문항', exact: true}).click();
+  const graph = page.getByRole('img', {name: /무방향 그래프/});
+  await expect(graph).toBeVisible();
+  await expect(graph.locator('circle')).toHaveCount(5);
+
+  await page.getByRole('button', {name: '7번 문항', exact: true}).click();
+  await expect(page.locator('.prose code').first()).toHaveText('[A, B, C, D, E, -, -, F]');
+  await expect(page.getByRole('img', {name: /D의 왼쪽 자식 F/})).toBeVisible();
+});
+
 test('monthly text is restored and revealing a solution is not a grade', async ({page}) => {
   await page.goto('quiz.html?exam=monthly-01&mode=study');
   await page.locator('textarea').fill('public class Solution {}');

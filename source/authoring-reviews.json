@@ -1,82 +1,82 @@
 [
   {
     "unit": "subject-01-q01",
-    "revision": 2,
+    "revision": 3,
     "code": "answer-length",
-    "contentHash": "2c0e4558ba3fe9d5",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "642e4d30cc059e4a",
+    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q01",
-    "revision": 2,
+    "revision": 3,
     "code": "choice-spread",
-    "contentHash": "2c0e4558ba3fe9d5",
-    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "642e4d30cc059e4a",
+    "reason": "복잡도 표기 Θ(log N) Θ(N) Θ(N log N) Θ(N²)의 표준 선택지 구성이다. 길이 차이는 수식 구조에서 나오며 정답 Θ(N)은 오히려 짧은 편이다. N+log N에서 N이 지배함을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
-    "revision": 2,
+    "revision": 3,
     "code": "answer-length",
-    "contentHash": "c789f3c75277fd2e",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "ca33ea9a9e520abd",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q03",
+    "revision": 3,
+    "code": "choice-spread",
+    "contentHash": "ca33ea9a9e520abd",
+    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "reviewer": "claude-opus-5-5",
+    "reviewedAt": "2026-09-26"
+  },
+  {
+    "unit": "subject-01-q09",
+    "revision": 2,
+    "code": "answer-length",
+    "contentHash": "e2c13f41357c0c89",
+    "reason": "선지가 인덱스 식 0 i i - 1 i + 1이다. 정답 i + 1은 오답 i - 1과 길이가 같아 유일 최장이 아니다. 조합에서 다음 시작점이 i + 1임을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "reviewer": "claude-opus-5-5",
+    "reviewedAt": "2026-09-26"
+  },
+  {
+    "unit": "subject-01-q09",
     "revision": 2,
     "code": "choice-spread",
-    "contentHash": "c789f3c75277fd2e",
-    "reason": "같은 네 복잡도 표기를 쓰는 문항이다. 정답 Θ(N log N)이 길어 보이는 것은 표기 구조 때문이고 다른 표현으로 줄일 수 없다. 마스터 정리 2T(N/2)+Θ(N)으로 정답을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
-    "reviewer": "claude-opus-5-5",
-    "reviewedAt": "2026-09-26"
-  },
-  {
-    "unit": "subject-01-q09",
-    "revision": 1,
-    "code": "answer-length",
-    "contentHash": "406ed503e37c4ee4",
-    "reason": "선지가 인덱스 식 0 i i - 1 i + 1이다. 정답 i + 1은 오답 i - 1과 길이가 같아 유일 최장이 아니다. 조합에서 다음 시작점이 i + 1임을 재확인했다.",
-    "reviewer": "claude-opus-5-5",
-    "reviewedAt": "2026-09-26"
-  },
-  {
-    "unit": "subject-01-q09",
-    "revision": 1,
-    "code": "choice-spread",
-    "contentHash": "406ed503e37c4ee4",
-    "reason": "선지가 인덱스 식 0 i i - 1 i + 1이다. 정답 i + 1은 오답 i - 1과 길이가 같아 유일 최장이 아니다. 조합에서 다음 시작점이 i + 1임을 재확인했다.",
+    "contentHash": "e2c13f41357c0c89",
+    "reason": "선지가 인덱스 식 0 i i - 1 i + 1이다. 정답 i + 1은 오답 i - 1과 길이가 같아 유일 최장이 아니다. 조합에서 다음 시작점이 i + 1임을 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-01-q11",
-    "revision": 2,
+    "revision": 3,
     "code": "choice-spread",
-    "contentHash": "607ec36aeaaf718a",
-    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 공간 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 무방향 인접 리스트가 V개 목록과 2E개 기록임을 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "09360b34971bd7f0",
+    "reason": "O(V) O(E) O(V + E) O(V² + E²)의 복잡도 표기다. 최장 선지는 오답이며 차이는 수식 항 개수에서 나온다. 인접 리스트 전체 순회가 정점 V개의 리스트와 2E개의 기록을 한 번씩 확인해 O(V + E)임을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 2,
+    "revision": 3,
     "code": "answer-length",
-    "contentHash": "443af49ba6d99026",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "a46e481b6dc12ff0",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
   {
     "unit": "subject-02-q02",
-    "revision": 2,
+    "revision": 3,
     "code": "choice-spread",
-    "contentHash": "443af49ba6d99026",
-    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "a46e481b6dc12ff0",
+    "reason": "네 복잡도 표기의 구조적 길이 차이다. 정답 Θ(N log N)은 외부 N번과 내부 log N번의 곱으로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   },
@@ -91,10 +91,10 @@
   },
   {
     "unit": "subject-03-q01",
-    "revision": 2,
+    "revision": 3,
     "code": "choice-spread",
-    "contentHash": "0b887f2f9e1f4bf4",
-    "reason": "Θ(n) Θ(n²) Θ(2ⁿ) Θ(n log n)의 표기 구조 차이다. 정답 Θ(2ⁿ)은 중간 길이다. T(n)=2T(n-1)+Θ(1)의 호출 수 2ⁿ⁺¹-1로 재확인했다. LaTeX 표기로 바꾼 뒤에도 선지 값과 정답이 같음을 재확인했다.",
+    "contentHash": "6b5d979b76223cc3",
+    "reason": "Θ(n) Θ(n²) Θ(2ⁿ) Θ(n log n)의 표기 구조 차이다. 정답 Θ(2ⁿ)은 중간 길이다. T(n)=2T(n-1)+Θ(1)의 호출 수 2ⁿ⁺¹-1로 재확인했다. 제목 변경과 표기 수정 뒤에도 선지 값과 정답이 같음을 재확인했다.",
     "reviewer": "claude-opus-5-5",
     "reviewedAt": "2026-09-26"
   }
