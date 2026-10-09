@@ -714,7 +714,7 @@
       "correctChoiceId": "a",
       "type": "mc",
       "id": "subject-01-q18",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -728,16 +728,16 @@
           "text": "사이클 없는 무방향 그래프"
         },
         {
-          "id": "a",
-          "text": "사이클 없는 방향 그래프"
+          "id": "b",
+          "text": "사이클 있는 방향 그래프"
         },
         {
           "id": "d",
           "text": "사이클 있는 무방향 그래프"
         },
         {
-          "id": "b",
-          "text": "사이클 있는 방향 그래프"
+          "id": "a",
+          "text": "사이클 없는 방향 그래프"
         }
       ],
       "choiceExplanations": {
@@ -797,7 +797,7 @@
       "correctChoiceId": "b",
       "type": "mc",
       "id": "subject-01-q20",
-      "revision": 2,
+      "revision": 3,
       "sourceRefs": [
         "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
       ],
@@ -807,8 +807,8 @@
       "solution": "lower_bound는 목표 이상인 첫 위치다. 값이 없으면 삽입될 위치나 배열 길이를 반환할 수 있다.",
       "choices": [
         {
-          "id": "d",
-          "text": "3"
+          "id": "b",
+          "text": "1"
         },
         {
           "id": "c",
@@ -819,8 +819,8 @@
           "text": "0"
         },
         {
-          "id": "b",
-          "text": "1"
+          "id": "d",
+          "text": "3"
         }
       ],
       "choiceExplanations": {
@@ -1301,9 +1301,9 @@
     ],
     "subject-01-q18": [
       "c",
-      "a",
+      "b",
       "d",
-      "b"
+      "a"
     ],
     "subject-01-q19": [
       "d",
@@ -1312,10 +1312,10 @@
       "b"
     ],
     "subject-01-q20": [
-      "d",
+      "b",
       "c",
       "a",
-      "b"
+      "d"
     ],
     "subject-01-q21": [
       "c",
@@ -1324,5 +1324,5 @@
       "b"
     ]
   },
-  "contentVersion": "f4f16dfea9d11489"
+  "contentVersion": "9e0a1c6a213f3fd3"
 }

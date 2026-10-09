@@ -430,7 +430,13 @@ function tick() {
 }
 
 async function topicExam(base, topic) {
-  const all = await Promise.all([1, 2, 3].map((i) => loadExam('subject-0' + i)));
+  const manifest = await (await fetch('data/manifest.json')).json();
+  const track = base.track || 'algorithm';
+  const ids = manifest.exams
+    .filter((x) => (x.track || 'algorithm') === track && x.kind === 'subject')
+    .map((x) => x.id)
+    .sort();
+  const all = await Promise.all(ids.map(loadExam));
   const questions = all.flatMap((x) => x.questions).filter((q) => q.topics.includes(topic));
   if (!questions.length) {
     throw Error('해당 주제의 문제가 없습니다');

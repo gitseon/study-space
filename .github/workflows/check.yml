@@ -34,6 +34,7 @@ jobs:
       - run: python scripts/validate_questions.py
       - run: python scripts/audit_bias.py --strict --report reports/bias.json
       - run: python scripts/verify_code_answers.py --report reports/code-verification.json
+      - run: node scripts/verify_frontend_answers.mjs --report reports/frontend-verification.json
       - run: python -m unittest discover -s tests/content
       - run: npm test
       - run: python scripts/build_site.py

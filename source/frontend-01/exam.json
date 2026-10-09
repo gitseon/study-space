@@ -1,0 +1,10 @@
+{
+  "id": "frontend-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "frontend",
+  "title": "프론트엔드 1회",
+  "subtitle": "개념을 단단하게",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1
+}

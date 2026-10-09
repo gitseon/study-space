@@ -10,6 +10,7 @@
 | 주제 | 구성 |
 | --- | --- |
 | 자료구조와 알고리즘 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2)와 월말평가 3회(회차마다 구현형 3, 서술형 1) |
+| 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2). HTML, CSS, JavaScript, DOM, 비동기, 웹 스토리지를 7개 주제로 나눠 연습 |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
 
@@ -35,6 +36,7 @@ python scripts/build_data.py
 python scripts/validate_questions.py
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
+node scripts/verify_frontend_answers.mjs
 python -m unittest discover -s tests/content
 npm test
 python scripts/build_site.py
@@ -42,6 +44,8 @@ SITE_DIR=dist npm run test:e2e
 ```
 
 `verify_code_answers.py`는 월평 구현형의 Java 모범답안을 컴파일한 뒤 예제와 검수 케이스로 실행합니다. 결과는 `reports/code-verification.json`에 남습니다.
+
+`verify_frontend_answers.mjs`는 프론트엔드 문항에 나온 코드를 실제로 실행해 정답과 비교합니다. JavaScript는 Node로, DOM과 CSS는 Chromium으로 실행합니다. 실행할 수 없는 개념 문항은 `source/frontend-reviews.json`의 재풀이 기록으로 대신하며 문항 revision이 바뀌면 기록이 만료됩니다. 결과는 `reports/frontend-verification.json`에 남습니다.
 
 ## 문제 작성과 수정
 
@@ -57,10 +61,10 @@ SITE_DIR=dist npm run test:e2e
 - 개념 문항의 제목은 풀이 중에는 숨겨지고 해설에서 "주제"로 표시됩니다.
 - 길이 편향 경고를 수식 구조 등의 이유로 유지할 때는 `source/authoring-reviews.json`에 문항 ID, revision, 검사 코드, contentHash, 이유, 검토자, 검토일을 기록합니다. 문항이 바뀌면 기록이 만료되어 다시 검토해야 합니다.
 
-### 새 회차 추가
+### 새 트랙과 회차 추가
 
-1. `source/scope.json`의 주제 배분을 확인합니다.
-2. 기존 회차 폴더를 참고해 `source/subject-04/` 같은 새 폴더를 만듭니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
+1. 트랙의 범위 파일을 확인합니다. 자료구조와 알고리즘은 `source/scope.json`이고 프론트엔드는 `source/scope-frontend.json`입니다.
+2. 기존 회차 폴더를 참고해 `source/subject-04/`나 `source/frontend-04/` 같은 새 폴더를 만듭니다. 프론트엔드 회차는 `exam.json`에 `"track": "frontend"`를 씁니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
 3. 위의 검증 명령을 실행하고 PR 템플릿의 콘텐츠 기록 항목을 채웁니다.
 
 ## 풀이 방식

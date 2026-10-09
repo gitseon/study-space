@@ -6,6 +6,7 @@
 - [ ] `python scripts/validate_questions.py` 오류 0건
 - [ ] `python scripts/audit_bias.py --strict` 미검토 경고 0건
 - [ ] `python scripts/verify_code_answers.py` 전체 통과
+- [ ] `node scripts/verify_frontend_answers.mjs` 전체 통과 (프론트엔드 문항 변경 시)
 - [ ] `python -m unittest discover -s tests/content`와 `npm test` 통과
 - [ ] `npm run test:e2e` 통과
 

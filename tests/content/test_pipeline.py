@@ -71,5 +71,37 @@ class PipelineTests(unittest.TestCase):
         self.assertTrue(m.text_issues("큐 · 스택 · 힙 · 트리"))
         self.assertFalse(m.text_issues("\x60\x60\x60java\nint[] a = {1,2,3,4,5};\n\x60\x60\x60"))
 
+    def test_frontend_snippets_need_two_space_indent_and_short_lines(self):
+        m=self.load("validate_questions")
+        fence="\x60\x60\x60"
+        def block(lang,body): return f"{fence}{lang}\n{body}\n{fence}"
+        self.assertEqual(m.frontend_code_issues(block("js","if (a) {\n  run();\n}")),[])
+        self.assertIn("indent",m.frontend_code_issues(block("js","if (a) {\n   run();\n}")))
+        self.assertIn("indent",m.frontend_code_issues(block("js","if (a) {\n\trun();\n}")))
+        self.assertIn("line-length",m.frontend_code_issues(block("css","a"*(m.MAX_FRONTEND_LINE+1))))
+        self.assertEqual(m.frontend_code_issues(block("java","a"*80)),[])
+
+    def audit_exam(self,exam_id,position,track=None,topic="same"):
+        q={"id":exam_id+"-q1","revision":1,"type":"mc","topics":[topic],"correctChoiceId":"abcd"[position],
+           "choices":[{"id":c,"text":"선택지 "+c} for c in "abcd"]}
+        exam={"id":exam_id,"kind":"subject","questions":[q]}
+        if track: exam["track"]=track
+        return exam
+
+    def test_topic_practice_sequence_is_audited(self):
+        m=self.load("audit_bias")
+        report=m.audit_bias([self.audit_exam(f"e{i}",1) for i in (1,2,3)],[])
+        self.assertIn("topic-sequence",[i["code"] for i in report["issues"] if i["severity"]=="error"])
+        report=m.audit_bias([self.audit_exam("e1",1),self.audit_exam("e2",2),self.audit_exam("e3",1)],[])
+        self.assertNotIn("topic-sequence",[i["code"] for i in report["issues"]])
+
+    def test_tracks_are_audited_separately(self):
+        m=self.load("audit_bias")
+        report=m.audit_bias([self.audit_exam("a",0),self.audit_exam("f",1,"frontend")],[])
+        self.assertIn("bank",report["metrics"])
+        self.assertIn("bank:frontend",report["metrics"])
+        self.assertEqual(report["metrics"]["bank"]["n"],1)
+        self.assertEqual(report["metrics"]["bank:frontend"]["n"],1)
+
 if __name__ == "__main__":
     unittest.main()

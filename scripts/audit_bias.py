@@ -6,7 +6,7 @@ import re
 import statistics
 import unicodedata
 from collections import Counter
-from build_data import ROOT, build_data
+from build_data import ROOT, build_data, track_of, load_scope, TRACKS
 
 def valid_sequence(seq, aggregate=False):
     n=len(seq)
@@ -67,6 +67,7 @@ def audit_bias(exams,reviews):
             for key in ("longest","shortest"):
                 if not .15<=m[key]<=.35: issue(key,unit,qs)
             if not .85<=m["lengthRatio"]<=1.15: issue("lengthRatio",unit,qs)
+    banks={}
     for exam in exams:
         qs=[q for q in exam["questions"] if q["type"]=="mc"]
         if not qs: continue
@@ -78,10 +79,19 @@ def audit_bias(exams,reviews):
             m=length_metrics(q)
             if not .65<=m["ratio"]<=1.35: issue("answer-length",q["id"],q)
             if m["spread"]>2: issue("choice-spread",q["id"],q)
-        allqs.extend(qs); allseq.extend(seq)
-    if allqs:
-        group("bank",allqs); metrics["bank"]["counts"]=[allseq.count(i) for i in range(4)]
-        if not valid_sequence(allseq,True): issue("bank-distribution","bank",allqs,"error")
+        bank=banks.setdefault(track_of(exam),{"qs":[],"seq":[],"sets":{}})
+        bank["qs"].extend(qs); bank["seq"].extend(seq)
+        if exam["kind"]=="subject":
+            for q,pos in zip(qs,seq):
+                for topic in q.get("topics",[]): bank["sets"].setdefault(topic,[]).append((q,pos))
+    for track,bank in banks.items():
+        unit="bank" if track=="algorithm" else f"bank:{track}"
+        group(unit,bank["qs"]); metrics[unit]["counts"]=[bank["seq"].count(i) for i in range(4)]
+        if not valid_sequence(bank["seq"],True): issue("bank-distribution",unit,bank["qs"],"error")
+        # Topic practice replays the same questions in exam order, so its answer sequence follows the same rules.
+        for topic,items in bank["sets"].items():
+            if not valid_sequence([pos for _,pos in items]):
+                issue("topic-sequence",f"topic:{track}:{topic}",[q for q,_ in items],"error")
     return {"metrics":metrics,"issues":issues,"unresolvedCount":sum(not i["reviewed"] for i in issues)}
 
 if __name__=="__main__":
