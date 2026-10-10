@@ -99,7 +99,9 @@ def validate_bank(exams, scope, scopes=None):
 def validate_notes(source_root=ROOT/"source"):
     """Concept notes must be readable UTF-8 prose with a title, headings and no stray punctuation runs."""
     issues=[]
-    for note_id,_,filename in NOTES:
+    for note_id,_,filename,_ in NOTES:
+        if filename is None:
+            continue
         text=(source_root/filename).read_text(encoding="utf-8-sig")
         prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",text)
         if not text.startswith("# "): issues.append({"code":"note-title","questionId":note_id,"message":"missing title","severity":"error"})

@@ -67,7 +67,7 @@ test('snippets show a language label and escape markup', async ({page}) => {
 });
 
 test('the Web concept button opens the note and the contents link jumps to a section', async ({page}) => {
-  await page.goto('index.html');
+  await page.goto('index.html?track=frontend');
   await page.getByRole('link', {name: /^Web 개념/}).click();
   await expect(page).toHaveURL(/concepts\.html/);
   await expect(page.getByRole('heading', {level: 1})).toContainText('Web 개념 요약 노트');
@@ -87,4 +87,34 @@ test('the concept note fits a 360px screen', async ({page}) => {
   const overflow = await page.locator('.note pre').evaluateAll((list) => list.filter((el) => el.scrollWidth > el.clientWidth + 1).length);
   expect(overflow).toBe(0);
   expect(await page.locator('body').innerText()).not.toContain('�');
+});
+
+test('both tracks are separate buttons on the main screen and the choice is remembered', async ({page}) => {
+  await page.goto('index.html');
+  const group = page.getByRole('group', {name: '과목'});
+  await expect(group.getByRole('button')).toHaveCount(2);
+  await expect(group.getByRole('button', {name: /^자료구조와 알고리즘/})).toHaveAttribute('aria-pressed', 'true');
+  await expect(group.getByRole('button', {name: /프론트엔드 3회차 96문항/})).toHaveAttribute('aria-pressed', 'false');
+
+  await group.getByRole('button', {name: /^프론트엔드/}).click();
+  await expect(page).toHaveURL(/track=frontend/);
+  await page.reload();
+  await expect(page.locator('#mode-frontend-01')).toBeVisible();
+  await page.goto('index.html?track=algorithm');
+  await expect(page.locator('#mode-subject-01')).toBeVisible();
+  await page.goto('index.html?track=nope');
+  await expect(page.locator('#mode-subject-01')).toBeVisible();
+});
+
+test('the concept button follows the selected track and the algorithm one is a placeholder', async ({page}) => {
+  await page.goto('index.html?track=algorithm');
+  const group = page.getByRole('group', {name: '과목'});
+  await expect(page.getByRole('link', {name: /^Web 개념/})).toHaveCount(0);
+  const placeholder = page.getByRole('button', {name: /^자료구조 알고리즘 개념/});
+  await expect(placeholder).toBeVisible();
+  await expect(placeholder).toBeDisabled();
+
+  await group.getByRole('button', {name: /^프론트엔드/}).click();
+  await expect(page.getByRole('link', {name: /^Web 개념/})).toBeVisible();
+  await expect(page.getByRole('button', {name: /^자료구조 알고리즘 개념/})).toHaveCount(0);
 });

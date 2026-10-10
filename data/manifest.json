@@ -235,7 +235,14 @@
     {
       "id": "web-concepts",
       "title": "Web 개념",
+      "track": "frontend",
       "file": "web-concepts.md"
+    },
+    {
+      "id": "algorithm-concepts",
+      "title": "자료구조 알고리즘 개념",
+      "track": "algorithm",
+      "file": null
     }
   ]
 }
