@@ -13,7 +13,7 @@
   "id": "frontend-03-q01",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "a"
@@ -45,7 +45,7 @@ width와 height가 무시된다
   "id": "frontend-03-q02",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -86,7 +86,7 @@ console.log(n.value + 1);
   "id": "frontend-03-q03",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
@@ -125,7 +125,7 @@ header와 main과 footer
   "id": "frontend-03-q04",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
@@ -164,7 +164,7 @@ header와 main과 footer
   "id": "frontend-03-q05",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -204,7 +204,7 @@ header와 main과 footer
   "id": "frontend-03-q06",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -242,7 +242,7 @@ header와 main과 footer
   "id": "frontend-03-q07",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자",
+    "source/frontend.md 2. CSS 레이아웃 및 선택자",
     "source/Web_복습노트.md Part 3 14. Bootstrap 5"
   ],
   "difficulty": 2,
@@ -281,7 +281,7 @@ A만 보이고 B는 숨겨진다
   "id": "frontend-03-q08",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -322,7 +322,7 @@ console.log(
   "id": "frontend-03-q09",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -360,7 +360,7 @@ console.log(a, b, c);
   "id": "frontend-03-q10",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -399,7 +399,7 @@ console.log(a.length, a[0].length);
   "id": "frontend-03-q11",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -436,7 +436,7 @@ console.log(nums.join());
   "id": "frontend-03-q12",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 3,
   "correctChoiceId": "d"
@@ -479,7 +479,7 @@ b.click();
   "id": "frontend-03-q13",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -511,7 +511,7 @@ this가 객체가 아니라 바깥 스코프의 this가 되기 때문이다
   "id": "frontend-03-q14",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -554,7 +554,7 @@ console.log(t);
   "id": "frontend-03-q15",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/frontend.md 5. DOM 및 BOM 제어",
     "source/Web_복습노트.md Part 3 5. BookCafe 기능별 구현 포인트"
   ],
   "difficulty": 1,
@@ -591,7 +591,7 @@ console.log(id);
   "id": "frontend-03-q16",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 3,
   "correctChoiceId": "b"
@@ -633,7 +633,7 @@ TypeError가 발생한다
   "id": "frontend-03-q17",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -674,7 +674,7 @@ new Promise((resolve) => {
   "id": "frontend-03-q18",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -714,7 +714,7 @@ Promise.reject('e1')
   "id": "frontend-03-q19",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "correctChoiceId": "d"
@@ -758,7 +758,7 @@ f 하나를 출력
   "id": "frontend-03-q20",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -801,7 +801,7 @@ console.log(
   "id": "frontend-03-q21",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송",
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송",
     "source/Web_복습노트.md Part 3 11. 투표 기능"
   ],
   "difficulty": 3,
@@ -841,7 +841,7 @@ done 뒤에 changed를 출력한다
   "id": "frontend-03-q22",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹",
     "source/Web_복습노트.md Part 1 8. 폼(투표)"
   ],
   "difficulty": 1,
@@ -869,7 +869,7 @@ done 뒤에 changed를 출력한다
   "id": "frontend-03-q23",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 3,
   "acceptedAnswers": [
@@ -907,7 +907,7 @@ done 뒤에 changed를 출력한다
   "id": "frontend-03-q24",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -934,7 +934,7 @@ done 뒤에 changed를 출력한다
   "id": "frontend-03-q25",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -967,7 +967,7 @@ console.log(a, b);
   "id": "frontend-03-q26",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1000,7 +1000,7 @@ console.log(
   "id": "frontend-03-q27",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -1041,7 +1041,7 @@ try {
   "id": "frontend-03-q28",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/frontend.md 5. DOM 및 BOM 제어",
     "source/Web_복습노트.md Part 3 2. 요소 선택"
   ],
   "difficulty": 2,
@@ -1069,7 +1069,7 @@ try {
   "id": "frontend-03-q29",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise",
+    "source/frontend.md 6. 비동기 통신과 Promise",
     "source/Web_복습노트.md Part 3 13. 공통 AJAX 함수"
   ],
   "difficulty": 2,
@@ -1097,7 +1097,7 @@ try {
   "id": "frontend-03-q30",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1126,7 +1126,7 @@ try {
   "id": "frontend-03-q31",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 3,
   "rubric": [
@@ -1180,7 +1180,7 @@ console.log(a.n, a.list.length);
   "id": "frontend-03-q32",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "rubric": [

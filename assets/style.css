@@ -48,3 +48,29 @@
 @media(max-width:480px){.snippet pre{padding:12px;font-size:11px}}
 .track-tabs{margin-bottom:18px;display:flex}
 
+.note-buttons{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.note-button{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border:1px solid var(--green);border-radius:999px;background:var(--surface);color:var(--green);font-size:13px;font-weight:700}
+.note-button:hover{background:var(--green);color:#fff}
+.note-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;align-items:start;padding-top:30px}
+.note-toc{position:sticky;top:20px;background:#f0f1e9;border:1px solid var(--line);border-radius:14px;padding:14px 16px;max-height:calc(100vh - 40px);overflow:auto}
+.note-toc summary{font-size:13px}
+.note-toc ul{list-style:none;margin:10px 0 0;padding:0;font-size:12px}
+.note-toc li{margin:2px 0}.note-toc li.level-3{padding-left:12px;color:var(--muted)}
+.note-toc a{display:block;padding:3px 0;word-break:keep-all}.note-toc a:hover{color:var(--green)}
+.note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px;min-width:0;font-size:14px;line-height:1.9}
+.note h1{font-size:28px;margin-bottom:12px}
+.note h2{font-size:23px;margin:46px 0 14px;padding-top:26px;border-top:2px solid var(--green);scroll-margin-top:16px}
+.note h1+p+h2{margin-top:30px}
+.note h3{font-size:17px;margin:30px 0 10px;scroll-margin-top:16px}
+.note p{margin:10px 0}
+.note ul,.note ol{margin:10px 0;padding-left:22px}.note li{margin:3px 0}
+.note li.task{list-style:none;margin-left:-20px}.note li.task input{margin-right:6px;accent-color:var(--green)}
+.note code:not(pre code){font-family:Consolas,monospace;background:#f0f2ec;padding:1px 5px;border-radius:3px;font-size:.92em}
+.note .snippet{margin:14px 0}
+.note-table{margin:14px 0;overflow-x:auto;max-width:100%}
+.note table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px;line-height:1.7}
+.note th,.note td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top;word-break:keep-all;overflow-wrap:anywhere}
+.note th{background:#eef1e8;white-space:nowrap}
+.note td code{white-space:nowrap}.note li code,.note p code{overflow-wrap:anywhere}
+@media(max-width:900px){.note-layout{grid-template-columns:minmax(0,1fr)}.note-toc{position:static;max-height:none}.note{padding:22px 18px}}
+@media(max-width:480px){.note h1{font-size:23px}.note h2{font-size:20px}}

@@ -65,3 +65,26 @@ test('snippets show a language label and escape markup', async ({page}) => {
   await expect(snippet.locator('pre')).toContainText('<h1>제목</h1>');
   await expect(snippet.locator('h1')).toHaveCount(0);
 });
+
+test('the Web concept button opens the note and the contents link jumps to a section', async ({page}) => {
+  await page.goto('index.html');
+  await page.getByRole('link', {name: /^Web 개념/}).click();
+  await expect(page).toHaveURL(/concepts\.html/);
+  await expect(page.getByRole('heading', {level: 1})).toContainText('Web 개념 요약 노트');
+  await expect(page.locator('.note h2')).toHaveCount(8);
+  await expect(page.locator('.note table').first()).toBeVisible();
+  await page.getByRole('navigation', {name: '목차'}).getByRole('link', {name: /Part 6/}).click();
+  await expect(page.getByRole('heading', {name: /Part 6/})).toBeInViewport();
+  await page.getByRole('link', {name: '← 문제집'}).click();
+  await expect(page).toHaveURL(/index\.html|study-space\/$/);
+});
+
+test('the concept note fits a 360px screen', async ({page}) => {
+  await page.setViewportSize({width: 360, height: 800});
+  await page.goto('concepts.html');
+  await expect(page.locator('.note h2').first()).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const overflow = await page.locator('.note pre').evaluateAll((list) => list.filter((el) => el.scrollWidth > el.clientWidth + 1).length);
+  expect(overflow).toBe(0);
+  expect(await page.locator('body').innerText()).not.toContain('�');
+});

@@ -13,7 +13,7 @@
   "id": "frontend-02-q01",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹",
     "source/Web_복습노트.md 8. 폼(투표)"
   ],
   "difficulty": 1,
@@ -51,7 +51,7 @@
   "id": "frontend-02-q02",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "c"
@@ -89,7 +89,7 @@ false 값으로 포함되어 전송된다
   "id": "frontend-02-q03",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹",
     "source/Web_복습노트.md 7. 접기/펼치기"
   ],
   "difficulty": 2,
@@ -128,7 +128,7 @@ false 값으로 포함되어 전송된다
   "id": "frontend-02-q04",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -171,7 +171,7 @@ A만 빨간색이다
   "id": "frontend-02-q05",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 3,
   "correctChoiceId": "c"
@@ -217,7 +217,7 @@ A만 빨간색이다
   "id": "frontend-02-q06",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자",
+    "source/frontend.md 2. CSS 레이아웃 및 선택자",
     "source/Web_복습노트.md Part 2 5. position"
   ],
   "difficulty": 2,
@@ -266,7 +266,7 @@ button {
   "id": "frontend-02-q07",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 3,
   "correctChoiceId": "a"
@@ -310,7 +310,7 @@ button {
   "id": "frontend-02-q08",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
@@ -348,7 +348,7 @@ B를 출력한 뒤 TypeError가 발생한다
   "id": "frontend-02-q09",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -388,7 +388,7 @@ console.log(
   "id": "frontend-02-q10",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -427,7 +427,7 @@ console.log(
   "id": "frontend-02-q11",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "c"
@@ -465,7 +465,7 @@ console.log(part.join(), arr.join());
   "id": "frontend-02-q12",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -509,7 +509,7 @@ console.log(team.list().join());
   "id": "frontend-02-q13",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩",
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩",
     "source/Web_복습노트.md Part 3 13. 공통 AJAX 함수"
   ],
   "difficulty": 3,
@@ -550,7 +550,7 @@ xhr.send();
   "id": "frontend-02-q14",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -592,7 +592,7 @@ console.log(u.textContent);
   "id": "frontend-02-q15",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 3,
   "correctChoiceId": "c"
@@ -630,7 +630,7 @@ console.log(el.className);
   "id": "frontend-02-q16",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/frontend.md 5. DOM 및 BOM 제어",
     "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
   ],
   "difficulty": 3,
@@ -676,7 +676,7 @@ TypeError가 발생한다
   "id": "frontend-02-q17",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "correctChoiceId": "b"
@@ -717,7 +717,7 @@ A C B D
   "id": "frontend-02-q18",
   "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise",
+    "source/frontend.md 6. 비동기 통신과 Promise",
     "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
   ],
   "difficulty": 2,
@@ -759,7 +759,7 @@ load만 출력
   "id": "frontend-02-q19",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "correctChoiceId": "c"
@@ -800,7 +800,7 @@ console.log(3);
   "id": "frontend-02-q20",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 2,
   "correctChoiceId": "c"
@@ -840,7 +840,7 @@ try {
   "id": "frontend-02-q21",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -877,7 +877,7 @@ console.log(typeof v, v + 1);
   "id": "frontend-02-q22",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -905,7 +905,7 @@ console.log(typeof v, v + 1);
   "id": "frontend-02-q23",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -934,7 +934,7 @@ console.log(typeof v, v + 1);
   "id": "frontend-02-q24",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -968,7 +968,7 @@ console.log(typeof v, v + 1);
   "id": "frontend-02-q25",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -1000,7 +1000,7 @@ console.log(
   "id": "frontend-02-q26",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 3,
   "acceptedAnswers": [
@@ -1032,7 +1032,7 @@ console.log(a + b + c);
   "id": "frontend-02-q27",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -1070,7 +1070,7 @@ new A().start();
   "id": "frontend-02-q28",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -1100,7 +1100,7 @@ new A().start();
   "id": "frontend-02-q29",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1127,7 +1127,7 @@ new A().start();
   "id": "frontend-02-q30",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1157,7 +1157,7 @@ POST 방식에서 폼 데이터가 담겨 전송되는 요청의 부분을 한 �
   "id": "frontend-02-q31",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 3,
   "rubric": [
@@ -1214,7 +1214,7 @@ user.printLater();
   "id": "frontend-02-q32",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 3,
   "rubric": [

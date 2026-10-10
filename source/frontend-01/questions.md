@@ -13,7 +13,7 @@
   "id": "frontend-01-q01",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "a"
@@ -45,7 +45,7 @@
   "id": "frontend-01-q02",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "a"
@@ -77,7 +77,7 @@
   "id": "frontend-01-q03",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "correctChoiceId": "a"
@@ -109,7 +109,7 @@
   "id": "frontend-01-q04",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
@@ -146,7 +146,7 @@ h1의 직계 자식인 첫 번째 p
   "id": "frontend-01-q05",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -192,7 +192,7 @@ p.b {
   "id": "frontend-01-q06",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -232,7 +232,7 @@ p.b {
   "id": "frontend-01-q07",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -272,7 +272,7 @@ p.b {
   "id": "frontend-01-q08",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -310,7 +310,7 @@ undefined 다음에 값 2를 출력
   "id": "frontend-01-q09",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
@@ -342,7 +342,7 @@ undefined 다음에 값 2를 출력
   "id": "frontend-01-q10",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -381,7 +381,7 @@ console.log(a.n, a.list.length);
   "id": "frontend-01-q11",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
@@ -418,7 +418,7 @@ console.log(arr.join('-'));
   "id": "frontend-01-q12",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 3,
   "correctChoiceId": "b"
@@ -462,7 +462,7 @@ ReferenceError가 발생한다
   "id": "frontend-01-q13",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -494,7 +494,7 @@ call의 첫 번째 인자가 this가 된다
   "id": "frontend-01-q14",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -536,7 +536,7 @@ console.log(box.textContent);
   "id": "frontend-01-q15",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 2,
   "correctChoiceId": "c"
@@ -575,7 +575,7 @@ console.log(r1, r2, el.className);
   "id": "frontend-01-q16",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
@@ -607,7 +607,7 @@ setInterval은 반복되고 setTimeout은 한 번 실행된다
   "id": "frontend-01-q17",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 2,
   "correctChoiceId": "a"
@@ -649,7 +649,7 @@ new Promise((resolve, reject) => {
   "id": "frontend-01-q18",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "correctChoiceId": "c"
@@ -689,7 +689,7 @@ Promise.resolve('start')
   "id": "frontend-01-q19",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 1,
   "correctChoiceId": "d"
@@ -727,7 +727,7 @@ console.log(typeof f());
   "id": "frontend-01-q20",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 3,
   "correctChoiceId": "c"
@@ -768,7 +768,7 @@ console.log(JSON.stringify(data));
   "id": "frontend-01-q21",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 1,
   "correctChoiceId": "c"
@@ -800,7 +800,7 @@ localStorage는 남고 sessionStorage는 탭을 닫으면 사라진다
   "id": "frontend-01-q22",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.md 1. HTML 기본 및 시맨틱 웹"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -828,7 +828,7 @@ localStorage는 남고 sessionStorage는 탭을 닫으면 사라진다
   "id": "frontend-01-q23",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -855,7 +855,7 @@ Flexbox에서 주축(main axis) 방향으로 항목을 정렬하는 CSS 속성�
   "id": "frontend-01-q24",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -882,7 +882,7 @@ Flexbox에서 주축(main axis) 방향으로 항목을 정렬하는 CSS 속성�
   "id": "frontend-01-q25",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -914,7 +914,7 @@ console.log(x + y + rest.length);
   "id": "frontend-01-q26",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 3. JavaScript 핵심 문법 및 데이터 타입"
+    "source/frontend.md 3. JavaScript 핵심 문법 및 데이터 타입"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -948,7 +948,7 @@ console.log(
   "id": "frontend-01-q27",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.md 4. JavaScript의 함수와 this 바인딩"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -985,7 +985,7 @@ new Counter();
   "id": "frontend-01-q28",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.md 5. DOM 및 BOM 제어"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1013,7 +1013,7 @@ DOM 요소에 이벤트 핸들러를 등록하는 표준 메서드의 이름을 
   "id": "frontend-01-q29",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
@@ -1041,7 +1041,7 @@ fetch로 `JSON.stringify`한 문자열을 body에 담아 보낼 때 headers에 �
   "id": "frontend-01-q30",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.md 7. 웹 스토리지 및 네트워크 데이터 전송"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -1068,7 +1068,7 @@ fetch로 `JSON.stringify`한 문자열을 body에 담아 보낼 때 headers에 �
   "id": "frontend-01-q31",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.md 2. CSS 레이아웃 및 선택자"
   ],
   "difficulty": 3,
   "rubric": [
@@ -1115,7 +1115,7 @@ fetch로 `JSON.stringify`한 문자열을 body에 담아 보낼 때 headers에 �
   "id": "frontend-01-q32",
   "revision": 1,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.md 6. 비동기 통신과 Promise"
   ],
   "difficulty": 3,
   "rubric": [

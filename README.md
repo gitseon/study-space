@@ -67,6 +67,10 @@ SITE_DIR=dist npm run test:e2e
 2. 기존 회차 폴더를 참고해 `source/subject-04/`나 `source/frontend-04/` 같은 새 폴더를 만듭니다. 프론트엔드 회차는 `exam.json`에 `"track": "frontend"`를 씁니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
 3. 위의 검증 명령을 실행하고 PR 템플릿의 콘텐츠 기록 항목을 채웁니다.
 
+## 개념 노트
+
+홈 화면의 `Web 개념` 버튼은 개념 요약 노트(`concepts.html`)를 엽니다. 원고는 `source/web개념 요약노트.md`이고 `python scripts/build_data.py`가 `data/web-concepts.md`로 복사합니다. 노트 목록은 `scripts/build_data.py`의 `NOTES`에 있으며 새 노트는 한 줄을 더하면 홈에 버튼이 생깁니다. 제목과 구획 수와 깨진 글자와 코드 형식은 `validate_questions.py`가 검사합니다.
+
 ## 풀이 방식
 
 - 회차 카드에서 채점 방식과 제한 시간을 고른 뒤 시작합니다. 채점 방식은 풀이 화면 위쪽에서 언제든 바꿀 수 있으며 답은 그대로 유지됩니다. 이미 정답을 확인한 문제는 방식을 바꿔도 공개된 채로 잠겨 있습니다.

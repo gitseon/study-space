@@ -1,7 +1,7 @@
 import json
 import re
 from collections import Counter
-from build_data import ROOT, build_data, track_of, load_scope, TRACKS
+from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES
 
 MAX_FRONTEND_LINE=38
 FRONTEND_LANGS=("html","css","js")
@@ -96,9 +96,24 @@ def validate_bank(exams, scope, scopes=None):
         if needed-found: add("tag-coverage",track,str(sorted(needed-found)))
     return issues
 
+def validate_notes(source_root=ROOT/"source"):
+    """Concept notes must be readable UTF-8 prose with a title, headings and no stray punctuation runs."""
+    issues=[]
+    for note_id,_,filename in NOTES:
+        text=(source_root/filename).read_text(encoding="utf-8-sig")
+        prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",text)
+        if not text.startswith("# "): issues.append({"code":"note-title","questionId":note_id,"message":"missing title","severity":"error"})
+        if len(re.findall(r"(?m)^## ",text))<3: issues.append({"code":"note-structure","questionId":note_id,"message":"too few sections","severity":"error"})
+        if chr(0xFFFD) in text: issues.append({"code":"encoding","questionId":note_id,"message":"broken characters","severity":"error"})
+        if re.search(r"[·,]{2,}|\.{3,}",prose): issues.append({"code":"punctuation","questionId":note_id,"message":"punctuation run","severity":"error"})
+        for code in set(frontend_code_issues(text)): issues.append({"code":code,"questionId":note_id,"message":"note code format","severity":"error"})
+        fences=re.findall(r"(?m)^```",text)
+        if len(fences)%2: issues.append({"code":"fence","questionId":note_id,"message":"unclosed code fence","severity":"error"})
+    return issues
+
 if __name__=="__main__":
     exams=build_data(); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
-    issues=validate_bank(exams,scopes["algorithm"],scopes)
+    issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()
     for item in issues: print(json.dumps(item,ensure_ascii=True))
     print(f"Content validation: {len(issues)} errors")
     raise SystemExit(bool(issues))

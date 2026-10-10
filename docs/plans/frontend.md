@@ -7,7 +7,7 @@
 - 회차: 프론트엔드 3회. 회차마다 객관식 21, 단답형 9, 서술형 2로 동일하게 구성한다. 월평형 구현 회차는 만들지 않는다.
 - 코드 들여쓰기: HTML, CSS, JavaScript 모두 2칸. 기존 Java의 4칸 기준과 다르므로 QUESTION_AUTHORING.md에 예외로 적는다.
 - 홈 화면 트랙 이름: 프론트엔드.
-- 출제 범위 원본: `source/frontend.txt`의 7개 대주제와 세부 주제.
+- 출제 범위 원본: `source/frontend.md`의 7개 대주제와 세부 주제.
 - 제작 지침 원본: `requirements.md`와 QUESTION_AUTHORING.md.
 
 ## 2. requirements.md 반영 현황

@@ -34,6 +34,13 @@ const kindDescriptions = {
   monthly: '직접 구현하고 풀이 과정을 설명합니다.',
 };
 
+function noteButtons() {
+  const links = (manifest.notes || [])
+    .map((n) => '<a class="note-button" href="concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>')
+    .join('');
+  return links ? '<div class="note-buttons">' + links + '</div>' : '';
+}
+
 function heroSection() {
   const mine = manifest.exams.filter((x) => (x.track || 'algorithm') === track);
   const questionCount = mine.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
@@ -46,6 +53,7 @@ function heroSection() {
     + '<span><strong>' + mine.length + '</strong>회차</span>'
     + '<span><strong>' + Object.keys(trackTopics()).length + '</strong>핵심 주제</span>'
     + '</div>'
+    + noteButtons()
     + '<div class="hero-art" aria-hidden="true"><div class="art-label">THINK. TRACE. SOLVE.</div>'
     + '<div class="nodes"><span>01</span><i></i><span>02</span><i></i><span>03</span></div>'
     + '<div class="code-note">while (curiosity) {<br><b>　practice();</b><br>}</div></div>'

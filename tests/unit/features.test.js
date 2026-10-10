@@ -36,7 +36,7 @@ test('inline renderer typesets math, keeps code literal and escapes HTML', () =>
 });
 
 test('every formula in the published data renders without KaTeX errors', () => {
-  const files = readdirSync(new URL('../../data/', import.meta.url)).filter((f) => f !== 'manifest.json');
+  const files = readdirSync(new URL('../../data/', import.meta.url)).filter((f) => f !== 'manifest.json' && f.endsWith('.json'));
   let count = 0;
   const visit = (value) => {
     if (typeof value === 'string') {
@@ -98,4 +98,34 @@ test('every frontend question in the published data stays inside the snippet rul
       }
     }
   }
+});
+
+const {renderNote} = await import('../../assets/note-render.js');
+
+test('concept notes render headings, tables, lists, task items and code without raw HTML', () => {
+  const md = [
+    '# 제목', '', '## 부분 <1>', '', '| 구분 | 설명 |', '|---|---|', '| `a` | **굵게** <b>x</b> |', '',
+    '- 항목', '- [ ] 확인', '', '1. 하나', '2. 둘', '', '```js', "const a = '<i>';", '```', '', '문단 `코드` 입니다.',
+  ].join('\n');
+  const {title, toc, html} = renderNote(md);
+  assert.equal(title, '제목');
+  assert.deepEqual(toc, [{id: 'n0', level: 2, text: '부분 <1>'}]);
+  assert.match(html, /<h2 id="n0">부분 &lt;1&gt;<\/h2>/);
+  assert.match(html, /<div class="note-table"><table><thead><tr><th scope="col">구분<\/th>/);
+  assert.match(html, /<td><code>a<\/code><\/td><td><strong>굵게<\/strong> &lt;b&gt;x&lt;\/b&gt;<\/td>/);
+  assert.match(html, /<li class="task"><input type="checkbox" disabled>/);
+  assert.match(html, /<ol><li>하나<\/li><li>둘<\/li><\/ol>/);
+  assert.match(html, /<figure class="snippet" data-lang="js">/);
+  assert.doesNotMatch(html, /<b>|<i>/);
+  assert.match(html, /<p>문단 <code>코드<\/code> 입니다.<\/p>/);
+});
+
+test('the published web concept note renders every section and table', () => {
+  const md = readFileSync(new URL('../../data/web-concepts.md', import.meta.url), 'utf8');
+  const {title, toc, html} = renderNote(md);
+  assert.match(title, /^Web 개념/);
+  assert.equal(toc.filter((t) => t.level === 2).length, 8);
+  assert.ok((html.match(/<table>/g) || []).length >= 15);
+  assert.doesNotMatch(html, /\|---|\ufffd/);
+  assert.equal((html.match(/<pre/g) || []).length, (md.match(/^```\w*$/gm) || []).length / 2);
 });

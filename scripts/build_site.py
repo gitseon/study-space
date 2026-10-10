@@ -4,14 +4,15 @@ import tempfile
 from pathlib import Path
 from build_data import ROOT, build_data
 
-PAGES=["index.html","quiz.html","review.html"]
+PAGES=["index.html","quiz.html","review.html","concepts.html"]
 
 def build_site(output_dir: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:
         fresh=Path(tmp); build_data(ROOT/"source",fresh)
-        for generated in sorted(fresh.glob("*.json")):
+        for generated in sorted(fresh.glob("*.json"))+sorted(fresh.glob("*.md")):
             current=ROOT/"data"/generated.name
-            if not current.exists() or json.loads(current.read_text(encoding="utf-8"))!=json.loads(generated.read_text(encoding="utf-8")):
+            read=(lambda p:json.loads(p.read_text(encoding="utf-8"))) if generated.suffix==".json" else (lambda p:p.read_text(encoding="utf-8"))
+            if not current.exists() or read(current)!=read(generated):
                 raise SystemExit(f"data/{generated.name} is stale. Run python scripts/build_data.py first.")
     if output_dir.exists(): shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
