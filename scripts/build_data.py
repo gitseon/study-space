@@ -9,7 +9,9 @@ ROOT = Path(__file__).resolve().parents[1]
 TRACKS={"algorithm":{"label":"자료구조와 알고리즘","scope":"scope.json"},"frontend":{"label":"프론트엔드","scope":"scope-frontend.json"}}
 
 # Concept notes shown on the site: (id, button label, manuscript file in source/)
-NOTES=[("web-concepts","Web 개념","web개념 요약노트.md")]
+# A note without a manuscript file (None) shows a disabled placeholder button until its link is added.
+NOTES=[("web-concepts","Web 개념","web개념 요약노트.md","frontend"),
+       ("algorithm-concepts","자료구조 알고리즘 개념",None,"algorithm")]
 
 class ContentError(ValueError):
     pass
@@ -78,10 +80,13 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
     for exam in exams:
         (output_root/f"{exam['id']}.json").write_text(json.dumps(exam,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     notes=[]
-    for note_id,title,filename in NOTES:
+    for note_id,title,filename,note_track in NOTES:
+        if filename is None:
+            notes.append({"id":note_id,"title":title,"track":note_track,"file":None})
+            continue
         text=(source_root/filename).read_text(encoding="utf-8-sig")
         (output_root/f"{note_id}.md").write_text(text,encoding="utf-8",newline="\n")
-        notes.append({"id":note_id,"title":title,"file":f"{note_id}.md"})
+        notes.append({"id":note_id,"title":title,"track":note_track,"file":f"{note_id}.md"})
     for e in exams:
         if track_of(e) not in TRACKS: raise ContentError(f"{e['id']}: unknown track {track_of(e)}")
     summary=[{**{k:v for k,v in e.items() if k not in ("questions","defaultChoiceOrders","questionIds")},"track":track_of(e)} for e in exams]

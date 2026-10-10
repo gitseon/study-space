@@ -55,9 +55,13 @@ const kindDescriptions = {
   monthly: '직접 구현하고 풀이 과정을 설명합니다.',
 };
 
+// Only the notes of the selected track are offered. A note without a file is a placeholder until its link exists.
 function noteButtons() {
   const links = (manifest.notes || [])
-    .map((n) => '<a class="note-button" href="concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>')
+    .filter((n) => n.track === track)
+    .map((n) => (n.file
+      ? '<a class="note-button" href="concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>'
+      : '<button class="note-button" type="button" disabled title="준비 중입니다">' + e(n.title) + ' <small>준비 중</small></button>'))
     .join('');
   return links ? '<div class="note-buttons">' + links + '</div>' : '';
 }
@@ -74,7 +78,6 @@ function heroSection() {
     + '<span><strong>' + mine.length + '</strong>회차</span>'
     + '<span><strong>' + Object.keys(trackTopics()).length + '</strong>핵심 주제</span>'
     + '</div>'
-    + noteButtons()
     + '<div class="hero-art" aria-hidden="true"><div class="art-label">THINK. TRACE. SOLVE.</div>'
     + '<div class="nodes"><span>01</span><i></i><span>02</span><i></i><span>03</span></div>'
     + '<div class="code-note">while (curiosity) {<br><b>　practice();</b><br>}</div></div>'
@@ -122,7 +125,8 @@ function trackSection() {
     })
     .join('');
   return '<section class="track-picker"><span class="eyebrow">무엇을 풀어볼까요</span>'
-    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + '</div></section>';
+    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + '</div>'
+    + noteButtons() + '</section>';
 }
 
 function librarySection(attempts) {
