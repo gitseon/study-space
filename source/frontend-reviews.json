@@ -1,0 +1,58 @@
+[
+  {
+    "questionId": "frontend-01-q03",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "main 요소는 화면에 보이는 것을 문서에 하나만 둔다는 규칙으로 정답을 가리고 다시 풀어 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-01-q22",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "독립적으로 배포할 수 있는 콘텐츠 단위는 article이라는 정의로 정답을 가리고 다시 풀어 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-01-q29",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "JSON 본문의 미디어 타입은 application/json이라는 점으로 정답을 가리고 다시 풀어 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-01-q31",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "채점 기준 4개가 모범답안의 서술과 일치하는지 대조했다. 명시도 비교와 important 우선은 q05 실행으로도 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-02-q22",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "figure 안의 설명 태그는 figcaption이라는 정의로 정답을 가리고 다시 풀어 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-02-q32",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "채점 기준 4개가 모범답안의 서술과 일치하는지 대조했다. GET은 쿼리 문자열이라는 점은 frontend-01-q30 실행으로도 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  },
+  {
+    "questionId": "frontend-03-q03",
+    "revision": 1,
+    "method": "독립 재풀이",
+    "note": "로고와 메뉴는 header이고 핵심 내용은 main이며 저작권 안내는 footer라는 역할 구분으로 정답을 가리고 다시 풀어 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-09"
+  }
+]

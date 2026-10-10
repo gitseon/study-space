@@ -38,7 +38,7 @@ test('markdown turns diagram fences into labelled figures and escapes labels', (
 });
 
 test('every diagram in the published data renders', () => {
-  const files = readdirSync(new URL('../../data/', import.meta.url)).filter((f) => f !== 'manifest.json');
+  const files = readdirSync(new URL('../../data/', import.meta.url)).filter((f) => f !== 'manifest.json' && f.endsWith('.json'));
   let count = 0;
   for (const file of files) {
     const text = readFileSync(new URL('../../data/' + file, import.meta.url), 'utf8');

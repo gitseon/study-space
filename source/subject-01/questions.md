@@ -553,7 +553,7 @@ direction: up
   "correctChoiceId": "a",
   "type": "mc",
   "id": "subject-01-q18",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -565,12 +565,12 @@ direction: up
 일반적인 위상정렬로 모든 선후 관계를 만족하는 순서를 구할 수 있는 그래프는?
 ### choice: c
 사이클 없는 무방향 그래프
-### choice: a
-사이클 없는 방향 그래프
-### choice: d
-사이클 있는 무방향 그래프
 ### choice: b
 사이클 있는 방향 그래프
+### choice: d
+사이클 있는 무방향 그래프
+### choice: a
+사이클 없는 방향 그래프
 
 ## question: subject-01-q19
 ```json
@@ -612,7 +612,7 @@ direction: up
   "correctChoiceId": "b",
   "type": "mc",
   "id": "subject-01-q20",
-  "revision": 2,
+  "revision": 3,
   "sourceRefs": [
     "https://app.notion.com/p/3e6db04aea0e80fab638fd097767ffa2"
   ],
@@ -622,14 +622,14 @@ direction: up
 ```
 ### stem
 정렬 배열 [1, 3, 3, 5]에서 3의 lower_bound 인덱스는? 인덱스는 0부터 시작한다.
-### choice: d
-3
+### choice: b
+1
 ### choice: c
 2
 ### choice: a
 0
-### choice: b
-1
+### choice: d
+3
 
 ## question: subject-01-q21
 ```json

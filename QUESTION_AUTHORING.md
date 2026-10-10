@@ -66,6 +66,7 @@ python scripts/build_data.py
 python scripts/validate_questions.py
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
+node scripts/verify_frontend_answers.mjs
 python -m unittest discover -s tests/content
 npm test
 npm run test:e2e
@@ -87,3 +88,15 @@ python scripts/build_site.py
 - 문항 제목은 해설에서 "주제"로만 보이므로 무엇을 다루는 문제인지 드러나게 쓴다. 예: "무방향 차수 합"이 아니라 "무방향 그래프 차수의 합". 구현형 제목은 풀이 중에도 보인다.
 - 사전순 다음 순열은 처음 등장할 때 "사전순 다음 순열(Next Permutation)"로 쓴다.
 - 문제는 채점 기준이 분명한 표현으로 쓴다. "타이트한 차수"처럼 풀이자마다 해석이 달라질 수 있는 용어 대신 "$\Theta$ 표기로 나타내면"처럼 표기법을 지정한다.
+
+## 7. 프론트엔드 트랙
+
+프론트엔드 문항은 `exam.json`에 `"track": "frontend"`를 쓰고 `source/scope-frontend.json`의 범위를 따른다. 1~6절은 그대로 적용하며 아래 내용만 다르다.
+
+- 코드 블록은 `html`, `css`, `js` 언어 표시를 쓴다. 들여쓰기는 2칸이고 세미콜론과 작은따옴표를 쓰며 `if`, `for`의 본문이 한 줄이어도 중괄호를 쓴다. Java의 4칸 규칙은 프론트엔드에 적용하지 않는다.
+- 코드의 한 줄은 공백 포함 38자 이하로 쓴다. 360px 모바일 화면에서 코드 상자 안쪽 폭은 약 252px이고 기본 글꼴이 없는 환경의 고정폭 글꼴(글자당 약 6.6px)에서도 가로 스크롤 없이 보여야 하며 긴 줄은 줄바꿈해서 쓴다. `validate_questions.py`가 길이를 검사한다.
+- 문항 메타데이터의 `topics`에는 대주제 ID 하나를 쓰고 `group`도 같은 값으로 쓴다. 세부 주제는 `tags`에 쓴다. 3회를 합쳐 모든 세부 주제가 한 번 이상 나와야 한다. 복습 노트에서 가져온 문항은 `sourceRefs`에 노트의 절을 함께 적고 문구를 그대로 옮기지 않는다. Bootstrap 문항은 `package.json`에 고정한 버전(5.3.3)의 CSS로 실행해 확인한다.
+- 브라우저나 버전에 따라 결과가 달라지는 동작은 출제하지 않는다. 출력과 계산 문제는 실제 실행해 확인하며 방법은 `scripts/verify_frontend_answers.mjs`에 기록한다. 이 검증은 해당 스크립트의 케이스 파일이 문항 ID와 revision을 가리켜야 한다.
+- 정답이 둘이 되는 표현을 피한다. Falsy 값은 명세상 8가지(`0n`과 `-0` 포함)이므로 개수가 아니라 개별 값의 판별을 묻는다.
+- 주제별 연습 세트(같은 대주제의 문항을 회차 순서로 모은 세트)도 2절의 일반 N 규칙으로 검사한다.
+

@@ -9,7 +9,8 @@
 
 | 주제 | 구성 |
 | --- | --- |
-| 자료구조·알고리즘 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2)와 월말평가 3회(회차마다 구현형 3, 서술형 1) |
+| 자료구조와 알고리즘 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2)와 월말평가 3회(회차마다 구현형 3, 서술형 1) |
+| 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2). HTML, CSS, JavaScript, DOM, 비동기, 웹 스토리지를 7개 주제로 나눠 연습 |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
 
@@ -35,6 +36,7 @@ python scripts/build_data.py
 python scripts/validate_questions.py
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
+node scripts/verify_frontend_answers.mjs
 python -m unittest discover -s tests/content
 npm test
 python scripts/build_site.py
@@ -42,6 +44,8 @@ SITE_DIR=dist npm run test:e2e
 ```
 
 `verify_code_answers.py`는 월평 구현형의 Java 모범답안을 컴파일한 뒤 예제와 검수 케이스로 실행합니다. 결과는 `reports/code-verification.json`에 남습니다.
+
+`verify_frontend_answers.mjs`는 프론트엔드 문항에 나온 코드를 실제로 실행해 정답과 비교합니다. JavaScript는 Node로, DOM과 CSS는 Chromium으로 실행합니다. 실행할 수 없는 개념 문항은 `source/frontend-reviews.json`의 재풀이 기록으로 대신하며 문항 revision이 바뀌면 기록이 만료됩니다. 결과는 `reports/frontend-verification.json`에 남습니다.
 
 ## 문제 작성과 수정
 
@@ -57,11 +61,15 @@ SITE_DIR=dist npm run test:e2e
 - 개념 문항의 제목은 풀이 중에는 숨겨지고 해설에서 "주제"로 표시됩니다.
 - 길이 편향 경고를 수식 구조 등의 이유로 유지할 때는 `source/authoring-reviews.json`에 문항 ID, revision, 검사 코드, contentHash, 이유, 검토자, 검토일을 기록합니다. 문항이 바뀌면 기록이 만료되어 다시 검토해야 합니다.
 
-### 새 회차 추가
+### 새 트랙과 회차 추가
 
-1. `source/scope.json`의 주제 배분을 확인합니다.
-2. 기존 회차 폴더를 참고해 `source/subject-04/` 같은 새 폴더를 만듭니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
+1. 트랙의 범위 파일을 확인합니다. 자료구조와 알고리즘은 `source/scope.json`이고 프론트엔드는 `source/scope-frontend.json`입니다.
+2. 기존 회차 폴더를 참고해 `source/subject-04/`나 `source/frontend-04/` 같은 새 폴더를 만듭니다. 프론트엔드 회차는 `exam.json`에 `"track": "frontend"`를 씁니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
 3. 위의 검증 명령을 실행하고 PR 템플릿의 콘텐츠 기록 항목을 채웁니다.
+
+## 개념 노트
+
+홈 화면의 `Web 개념` 버튼은 개념 요약 노트(`concepts.html`)를 엽니다. 원고는 `source/web개념 요약노트.md`이고 `python scripts/build_data.py`가 `data/web-concepts.md`로 복사합니다. 노트 목록은 `scripts/build_data.py`의 `NOTES`에 있으며 새 노트는 한 줄을 더하면 홈에 버튼이 생깁니다. 제목과 구획 수와 깨진 글자와 코드 형식은 `validate_questions.py`가 검사합니다.
 
 ## 풀이 방식
 
@@ -73,6 +81,10 @@ SITE_DIR=dist npm run test:e2e
 ## 학습 기록 백업
 
 답안과 진행 기록은 사용하는 브라우저에만 저장됩니다. 홈 화면의 `내려받기`로 JSON 백업을 받고 다른 브라우저에서 `가져오기`로 복원합니다. 가져오기 전에 파일 형식을 검사하며 잘못된 파일은 기존 기록을 바꾸지 않습니다.
+
+## 풀 리퀘스트 만들기
+
+이 저장소는 push로 워크플로 실행이 만들어지지 않습니다. GitHub의 Actions 탭에서 `open-pr`을 고르고 `Run workflow`로 브랜치를 선택해 실행합니다. 전체 검사를 돌린 뒤 보고서의 수치로 PR 본문을 만들어 PR을 엽니다. 이미 열린 PR이 있으면 본문만 갱신합니다. 저장소 설정의 Actions 권한에서 `Allow GitHub Actions to create and approve pull requests`를 켜 두어야 합니다. `check`도 같은 방식으로 단독 실행할 수 있습니다.
 
 ## 배포와 되돌리기
 

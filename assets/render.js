@@ -1,4 +1,5 @@
 import {diagram} from './diagram.js';
+import {highlight, languageNames} from './highlight.js';
 
 export const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -41,7 +42,12 @@ export function markdown(text) {
             // An invalid diagram still shows its text form; the build validator reports it.
           }
         }
-        return '<pre tabindex="0"><code>' + escapeHtml(body.trimEnd()) + '</code></pre>';
+        const code = body.trimEnd();
+        if (languageNames[lang]) {
+          return '<figure class="snippet" data-lang="' + lang + '"><figcaption>' + languageNames[lang] + '</figcaption>'
+            + '<pre tabindex="0"><code>' + highlight(lang, code) + '</code></pre></figure>';
+        }
+        return '<pre tabindex="0"><code>' + escapeHtml(code) + '</code></pre>';
       }
       return part
         .trim()

@@ -6,6 +6,7 @@ const root = document.querySelector('#app');
 const PREF_KEY = 'mock-exam:grading-mode';
 let manifest;
 let kind = 'all';
+let track = 'algorithm';
 
 function readPreference() {
   try {
@@ -24,23 +25,35 @@ function writePreference(value) {
   }
 }
 
+const trackExams = () => manifest.exams.filter((x) => (x.track || 'algorithm') === track);
+const trackTopics = () => manifest.tracks?.[track]?.topics || manifest.topics;
+
 const kindNames = {subject: '과목평가', monthly: '월말평가'};
 const kindDescriptions = {
   subject: '개념부터 코드 추적까지 차근차근 점검합니다.',
   monthly: '직접 구현하고 풀이 과정을 설명합니다.',
 };
 
+function noteButtons() {
+  const links = (manifest.notes || [])
+    .map((n) => '<a class="note-button" href="concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>')
+    .join('');
+  return links ? '<div class="note-buttons">' + links + '</div>' : '';
+}
+
 function heroSection() {
-  const questionCount = manifest.exams.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
+  const mine = manifest.exams.filter((x) => (x.track || 'algorithm') === track);
+  const questionCount = mine.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
   return '<section class="hero">'
     + '<div class="eyebrow"><span class="dot"></span> 모의고사 연습실</div>'
     + '<h1>이해한 만큼, 풀어보기</h1>'
     + '<p class="hero-copy">개념을 확인하고 직접 풀어보세요.<br class="desktop-break">틀린 문제는 다시 살펴보며 내 것으로 만듭니다.</p>'
     + '<div class="hero-stats">'
     + '<span><strong>' + questionCount + '</strong>문항</span>'
-    + '<span><strong>' + manifest.exams.length + '</strong>회차</span>'
-    + '<span><strong>' + Object.keys(manifest.topics).length + '</strong>핵심 주제</span>'
+    + '<span><strong>' + mine.length + '</strong>회차</span>'
+    + '<span><strong>' + Object.keys(trackTopics()).length + '</strong>핵심 주제</span>'
     + '</div>'
+    + noteButtons()
     + '<div class="hero-art" aria-hidden="true"><div class="art-label">THINK. TRACE. SOLVE.</div>'
     + '<div class="nodes"><span>01</span><i></i><span>02</span><i></i><span>03</span></div>'
     + '<div class="code-note">while (curiosity) {<br><b>　practice();</b><br>}</div></div>'
@@ -73,18 +86,30 @@ function examCard(exam, attempts, preference) {
     + '</article>';
 }
 
+function trackTabs() {
+  const entries = Object.entries(manifest.tracks || {});
+  if (entries.length < 2) {
+    return '';
+  }
+  const buttons = entries
+    .map(([id, info]) => '<button data-track="' + e(id) + '" aria-pressed="' + (id === track) + '" class="' + (id === track ? 'active' : '') + '">' + e(info.label) + '</button>')
+    .join('');
+  return '<div class="tabs track-tabs" role="group" aria-label="과목">' + buttons + '</div>';
+}
+
 function librarySection(attempts) {
   const preference = readPreference();
-  const kinds = [['all', '전체'], ...Object.entries(kindNames).filter(([id]) => manifest.exams.some((x) => x.kind === id))];
+  const kinds = [['all', '전체'], ...Object.entries(kindNames).filter(([id]) => trackExams().some((x) => x.kind === id))];
   const tabs = kinds
     .map(([id, label]) => '<button data-kind="' + id + '" aria-pressed="' + (id === kind) + '" class="' + (id === kind ? 'active' : '') + '">' + label + '</button>')
     .join('');
-  const cards = manifest.exams
+  const cards = trackExams()
     .filter((x) => kind === 'all' || x.kind === kind)
     .sort((a, b) => (a.kind === b.kind ? a.id.localeCompare(b.id) : a.kind === 'subject' ? -1 : 1))
     .map((exam) => examCard(exam, attempts, preference))
     .join('');
   return '<section class="library">'
+    + trackTabs()
     + '<div class="section-heading"><div><span class="eyebrow">내 속도로 준비하기</span><h2>오늘의 문제집</h2></div>'
     + '<div class="tabs" role="group" aria-label="평가 유형">' + tabs + '</div></div>'
     + '<div class="exam-grid">' + cards + '</div>'
@@ -92,11 +117,14 @@ function librarySection(attempts) {
 }
 
 function practiceSection() {
-  const links = Object.entries(manifest.topics)
-    .map(([id, label]) => '<a href="quiz.html?exam=subject-01&mode=study&topic=' + e(id) + '">' + e(label) + '</a>')
+  const first = trackExams().filter((x) => x.kind === 'subject').sort((a, b) => a.id.localeCompare(b.id))[0];
+  const counts = manifest.tracks?.[track]?.topicCounts || {};
+  const links = Object.entries(trackTopics())
+    .map(([id, label]) => '<a href="quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
+      + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
   return '<section class="practice-strip">'
-    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 연습하기</h2><p>과평 세 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 풀어보세요.</p></div>'
+    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 연습하기</h2><p>과목평가 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 풀어보세요.</p></div>'
     + '<div class="topic-links">' + links + '</div>'
     + '</section>';
 }
@@ -159,6 +187,13 @@ function render() {
   const attempts = store.listAttempts();
   root.innerHTML = heroSection() + librarySection(attempts) + practiceSection() + recordsSection(attempts);
 
+  root.querySelectorAll('[data-track]').forEach((b) => {
+    b.onclick = () => {
+      track = b.dataset.track;
+      kind = 'all';
+      render();
+    };
+  });
   root.querySelectorAll('[data-kind]').forEach((b) => {
     b.onclick = () => {
       kind = b.dataset.kind;
