@@ -78,6 +78,10 @@ SITE_DIR=dist npm run test:e2e
 
 답안과 진행 기록은 사용하는 브라우저에만 저장됩니다. 홈 화면의 `내려받기`로 JSON 백업을 받고 다른 브라우저에서 `가져오기`로 복원합니다. 가져오기 전에 파일 형식을 검사하며 잘못된 파일은 기존 기록을 바꾸지 않습니다.
 
+## 풀 리퀘스트 만들기
+
+이 저장소는 push로 워크플로 실행이 만들어지지 않습니다. GitHub의 Actions 탭에서 `open-pr`을 고르고 `Run workflow`로 브랜치를 선택해 실행합니다. 전체 검사를 돌린 뒤 보고서의 수치로 PR 본문을 만들어 PR을 엽니다. 이미 열린 PR이 있으면 본문만 갱신합니다. 저장소 설정의 Actions 권한에서 `Allow GitHub Actions to create and approve pull requests`를 켜 두어야 합니다. `check`도 같은 방식으로 단독 실행할 수 있습니다.
+
 ## 배포와 되돌리기
 
 `deploy` 워크플로는 `check`를 먼저 실행하고, 같은 커밋에서 검증된 `dist/`만 GitHub Pages에 올립니다. 저장소 설정의 Pages 소스는 GitHub Actions로 둡니다. 배포는 세 경로로 시작됩니다.

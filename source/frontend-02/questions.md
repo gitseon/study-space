@@ -1,42 +1,40 @@
 ## question: frontend-02-q01
 ```json
 {
-  "title": "span에 지정한 width의 결과",
+  "title": "label과 input의 연결",
   "topics": [
     "html"
   ],
   "tags": [
-    "block-inline"
+    "form-label"
   ],
   "group": "html",
   "type": "mc",
   "id": "frontend-02-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/Web_복습노트.md 8. 폼(투표)"
   ],
-  "difficulty": 2,
+  "difficulty": 1,
   "correctChoiceId": "b"
 }
 ```
 ### stem
-다음 `span`에 지정한 `width`의 결과로 옳은 것은?
+`Python` 글자를 눌렀을 때 라디오 버튼이 선택되도록 `label`에 추가해야 하는 속성은?
 ```html
-<span class="w">Hi</span>
-```
-```css
-.w {
-  width: 100px;
-}
+<input type="radio" id="py"
+  name="lang" value="python">
+<label>Python</label>
 ```
 ### choice: c
-폭이 100px인 상자가 한 줄 안에 만들어진다
+`form="py"`
 ### choice: d
-부모 폭을 채우는 블록으로 바뀐다
+`target="py"`
 ### choice: b
-width가 적용되지 않아 글자 폭만큼만 차지한다
+`for="py"`
 ### choice: a
-글자가 100px보다 길면 잘려서 보인다
+`href="#py"`
 
 ## question: frontend-02-q02
 ```json
@@ -79,34 +77,41 @@ false 값으로 포함되어 전송된다
 ## question: frontend-02-q03
 ```json
 {
-  "title": "주요 이동 링크를 묶는 태그",
+  "title": "details의 open 속성",
   "topics": [
     "html"
   ],
   "tags": [
-    "semantic-tags"
+    "table-details"
   ],
   "group": "html",
   "type": "mc",
   "id": "frontend-02-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/Web_복습노트.md 7. 접기/펼치기"
   ],
-  "difficulty": 1,
+  "difficulty": 2,
   "correctChoiceId": "c"
 }
 ```
 ### stem
-웹 페이지의 주요 이동 링크 묶음을 나타내는 시맨틱 태그는?
-### choice: c
-`<nav>`
+다음 코드에서 `open` 속성의 효과는?
+```html
+<details open>
+  <summary>전국 매장</summary>
+  서울 역삼점
+</details>
+```
 ### choice: b
-`<aside>`
+처음부터 펼쳐져 있고 다시 접을 수 없다
+### choice: c
+처음에는 펼쳐져 있고 summary를 누르면 접힌다
 ### choice: d
-`<main>`
+처음에는 접혀 있고 summary를 누르면 펼쳐진다
 ### choice: a
-`<footer>`
+스크립트로만 접고 펼 수 있게 된다
 
 ## question: frontend-02-q04
 ```json
@@ -200,42 +205,51 @@ A만 빨간색이다
 ## question: frontend-02-q06
 ```json
 {
-  "title": "border-box에서 콘텐츠 영역 폭",
+  "title": "absolute 위치의 기준",
   "topics": [
     "css"
   ],
   "tags": [
-    "box-model"
+    "position"
   ],
   "group": "css",
   "type": "mc",
   "id": "frontend-02-q06",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.txt 2. CSS 레이아웃 및 선택자",
+    "source/Web_복습노트.md Part 2 5. position"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
 }
 ```
 ### stem
-다음 요소의 콘텐츠 영역 폭은?
+다음 버튼은 어디에 놓이는가? 어떤 조상 요소에도 `position`을 지정하지 않았다.
+```html
+<div class="card">
+  <button>찜</button>
+</div>
+```
 ```css
-.box {
-  box-sizing: border-box;
+.card {
   width: 200px;
-  padding: 20px;
-  border: 5px solid;
+  height: 100px;
+}
+button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 ```
-### choice: c
-200px
 ### choice: b
-150px
+화면의 오른쪽 아래 모서리
+### choice: c
+카드 안쪽의 오른쪽 아래
 ### choice: a
-250px
+카드 바깥의 오른쪽 옆
 ### choice: d
-160px
+문서 흐름 속 원래 자리
 
 ## question: frontend-02-q07
 ```json
@@ -483,7 +497,7 @@ console.log(team.list().join());
 ## question: frontend-02-q13
 ```json
 {
-  "title": "일반 함수의 this가 정해지는 기준",
+  "title": "XHR 콜백에서 this",
   "topics": [
     "this"
   ],
@@ -493,24 +507,33 @@ console.log(team.list().join());
   "group": "this",
   "type": "mc",
   "id": "frontend-02-q13",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+    "source/frontend.txt 4. JavaScript의 함수와 this 바인딩",
+    "source/Web_복습노트.md Part 3 13. 공통 AJAX 함수"
   ],
-  "difficulty": 1,
+  "difficulty": 3,
   "correctChoiceId": "d"
 }
 ```
 ### stem
-일반 함수의 `this`는 무엇을 기준으로 정해지는가?
+다음 코드에서 요청이 끝났을 때의 출력은?
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/data.json');
+xhr.onload = () => {
+  console.log(this === xhr);
+};
+xhr.send();
+```
 ### choice: c
-함수가 선언된 위치
+출력은 `true`
 ### choice: d
-함수가 호출된 방식
+출력은 `false`
 ### choice: b
-함수의 이름
+출력은 `undefined`
 ### choice: a
-함수를 처음 만든 객체
+출력은 `TypeError`
 
 ## question: frontend-02-q14
 ```json
@@ -595,39 +618,48 @@ console.log(el.className);
 ## question: frontend-02-q16
 ```json
 {
-  "title": "setTimeout 0과 동기 코드의 순서",
+  "title": "부모에 등록한 클릭 리스너",
   "topics": [
     "dom"
   ],
   "tags": [
-    "timers"
+    "event-delegation"
   ],
   "group": "dom",
   "type": "mc",
   "id": "frontend-02-q16",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
   ],
-  "difficulty": 1,
+  "difficulty": 3,
   "correctChoiceId": "c"
 }
 ```
 ### stem
-다음 코드의 출력 순서는?
+다음 코드의 출력은?
 ```js
-console.log('A');
-setTimeout(() => console.log('B'), 0);
-console.log('C');
+const ul =
+  document.querySelector('ul');
+ul.addEventListener('click', (e) => {
+  if (e.target.matches('button')) {
+    console.log('찜');
+  }
+});
+ul.innerHTML =
+  '<button><i>♥</i></button>';
+ul.querySelector('i').click();
+ul.querySelector('button').click();
 ```
 ### choice: a
-A B C
+찜이 두 번 출력된다
 ### choice: b
-B A C
+아무것도 출력되지 않는다
 ### choice: c
-A C B
+찜이 한 번 출력된다
 ### choice: d
-C A B
+TypeError가 발생한다
 
 ## question: frontend-02-q17
 ```json
@@ -673,42 +705,44 @@ A C B D
 ## question: frontend-02-q18
 ```json
 {
-  "title": "then이 반환값 없이 끝난 뒤의 값",
+  "title": "XHR의 비동기 실행 순서",
   "topics": [
     "async"
   ],
   "tags": [
-    "promise-chain"
+    "xhr"
   ],
   "group": "async",
   "type": "mc",
   "id": "frontend-02-q18",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.txt 6. 비동기 통신과 Promise",
+    "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
   ],
   "difficulty": 2,
   "correctChoiceId": "d"
 }
 ```
 ### stem
-다음 코드의 출력은?
+다음 코드의 출력 순서는?
 ```js
-Promise.resolve(1)
-  .then((v) => v + 1)
-  .then((v) => {
-    console.log(v);
-  })
-  .then((v) => console.log(v));
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/data.json');
+xhr.onload = () => {
+  console.log('load');
+};
+xhr.send();
+console.log('sent');
 ```
-### choice: a
-2와 2를 차례로 출력
-### choice: c
-2를 출력하고 끝난다
-### choice: b
-1과 2를 차례로 출력
 ### choice: d
-2와 undefined를 출력
+sent load
+### choice: a
+load sent
+### choice: c
+sent만 출력
+### choice: b
+load만 출력
 
 ## question: frontend-02-q19
 ```json

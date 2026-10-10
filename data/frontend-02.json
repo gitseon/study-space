@@ -9,47 +9,48 @@
   "sourceScopeVersion": 1,
   "questions": [
     {
-      "title": "span에 지정한 width의 결과",
+      "title": "label과 input의 연결",
       "topics": [
         "html"
       ],
       "tags": [
-        "block-inline"
+        "form-label"
       ],
       "group": "html",
       "type": "mc",
       "id": "frontend-02-q01",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+        "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+        "source/Web_복습노트.md 8. 폼(투표)"
       ],
-      "difficulty": 2,
+      "difficulty": 1,
       "correctChoiceId": "b",
-      "stem": "다음 `span`에 지정한 `width`의 결과로 옳은 것은?\n```html\n<span class=\"w\">Hi</span>\n```\n```css\n.w {\n  width: 100px;\n}\n```",
-      "solution": "정답 근거: 인라인 요소는 콘텐츠 크기로 폭이 정해지며 width와 height를 무시한다. 풀이: span의 기본 display가 inline이므로 100px은 반영되지 않고 Hi 두 글자 폭만 차지한다. 흔한 실수: width를 쓰면 모든 요소의 폭이 바뀐다고 보는 것이다.",
+      "stem": "`Python` 글자를 눌렀을 때 라디오 버튼이 선택되도록 `label`에 추가해야 하는 속성은?\n```html\n<input type=\"radio\" id=\"py\"\n  name=\"lang\" value=\"python\">\n<label>Python</label>\n```",
+      "solution": "정답 근거: label의 `for` 속성값을 input의 `id`와 같게 쓰면 두 요소가 연결된다. 풀이: id가 py인 input에 label의 for를 py로 맞추면 Python 글자를 눌러도 라디오 버튼이 선택된다. 흔한 실수: name 값으로 연결된다고 보는 것이다. name은 같은 그룹을 묶는 용도다.",
       "choices": [
         {
           "id": "c",
-          "text": "폭이 100px인 상자가 한 줄 안에 만들어진다"
+          "text": "`form=\"py\"`"
         },
         {
           "id": "d",
-          "text": "부모 폭을 채우는 블록으로 바뀐다"
+          "text": "`target=\"py\"`"
         },
         {
           "id": "b",
-          "text": "width가 적용되지 않아 글자 폭만큼만 차지한다"
+          "text": "`for=\"py\"`"
         },
         {
           "id": "a",
-          "text": "글자가 100px보다 길면 잘려서 보인다"
+          "text": "`href=\"#py\"`"
         }
       ],
       "choiceExplanations": {
-        "c": "그렇게 동작하는 것은 inline-block 요소다.",
-        "d": "width를 지정해도 display 값은 바뀌지 않는다.",
-        "b": "인라인 요소에는 width와 height가 적용되지 않는다.",
-        "a": "width가 적용되지 않으므로 글자 길이에 맞춰 늘어난다."
+        "c": "form 속성은 입력 요소가 속할 폼의 id를 지정하는 속성이다.",
+        "d": "target은 링크나 폼이 열릴 위치를 정하는 속성이며 label에서 연결 역할을 하지 않는다.",
+        "b": "label의 for 값이 input의 id와 같으면 두 요소가 연결되어 글자를 눌러도 선택된다.",
+        "a": "label은 링크가 아니라서 href로 요소를 연결하지 않는다."
       }
     },
     {
@@ -97,47 +98,48 @@
       }
     },
     {
-      "title": "주요 이동 링크를 묶는 태그",
+      "title": "details의 open 속성",
       "topics": [
         "html"
       ],
       "tags": [
-        "semantic-tags"
+        "table-details"
       ],
       "group": "html",
       "type": "mc",
       "id": "frontend-02-q03",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+        "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+        "source/Web_복습노트.md 7. 접기/펼치기"
       ],
-      "difficulty": 1,
+      "difficulty": 2,
       "correctChoiceId": "c",
-      "stem": "웹 페이지의 주요 이동 링크 묶음을 나타내는 시맨틱 태그는?",
-      "solution": "정답 근거: 이동 링크를 묶는 의미를 가진 태그는 `nav`다. 풀이: 나머지 태그는 각각 부가 정보와 핵심 콘텐츠와 마무리 정보를 뜻해 링크 모음의 역할과 다르다. 흔한 실수: 링크가 들어 있는 모든 영역에 nav를 쓰는 것이다.",
+      "stem": "다음 코드에서 `open` 속성의 효과는?\n```html\n<details open>\n  <summary>전국 매장</summary>\n  서울 역삼점\n</details>\n```",
+      "solution": "정답 근거: `details`는 summary를 눌러 내용을 접고 펼치는 요소이며 `open`은 처음에 펼쳐진 상태로 시작하게 한다. 풀이: open이 있어도 토글 기능은 그대로라서 summary를 누르면 접힌다. 흔한 실수: open을 붙이면 항상 펼쳐진 상태로 고정된다고 보는 것이다.",
       "choices": [
         {
-          "id": "c",
-          "text": "`<nav>`"
+          "id": "b",
+          "text": "처음부터 펼쳐져 있고 다시 접을 수 없다"
         },
         {
-          "id": "b",
-          "text": "`<aside>`"
+          "id": "c",
+          "text": "처음에는 펼쳐져 있고 summary를 누르면 접힌다"
         },
         {
           "id": "d",
-          "text": "`<main>`"
+          "text": "처음에는 접혀 있고 summary를 누르면 펼쳐진다"
         },
         {
           "id": "a",
-          "text": "`<footer>`"
+          "text": "스크립트로만 접고 펼 수 있게 된다"
         }
       ],
       "choiceExplanations": {
-        "c": "주요 내비게이션 링크의 묶음을 나타내는 태그다.",
-        "b": "본문과 간접적으로 관련된 부가 정보를 담는 태그다.",
-        "d": "문서의 핵심 콘텐츠 영역이며 이동 링크 묶음이라는 뜻은 아니다.",
-        "a": "문서나 구획의 마무리 정보를 담는 태그다."
+        "b": "open이 있어도 summary를 누르면 접힌다.",
+        "c": "open은 처음 상태만 펼침으로 정하며 이후에는 summary로 접고 펼 수 있다.",
+        "d": "이것은 open 속성이 없을 때의 기본 동작이다.",
+        "a": "자바스크립트 없이도 summary로 토글할 수 있다."
       }
     },
     {
@@ -229,47 +231,48 @@
       }
     },
     {
-      "title": "border-box에서 콘텐츠 영역 폭",
+      "title": "absolute 위치의 기준",
       "topics": [
         "css"
       ],
       "tags": [
-        "box-model"
+        "position"
       ],
       "group": "css",
       "type": "mc",
       "id": "frontend-02-q06",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+        "source/frontend.txt 2. CSS 레이아웃 및 선택자",
+        "source/Web_복습노트.md Part 2 5. position"
       ],
       "difficulty": 2,
       "correctChoiceId": "b",
-      "stem": "다음 요소의 콘텐츠 영역 폭은?\n```css\n.box {\n  box-sizing: border-box;\n  width: 200px;\n  padding: 20px;\n  border: 5px solid;\n}\n```",
-      "solution": "정답 근거: border-box의 width는 콘텐츠와 padding과 border를 모두 포함한다. 풀이: 좌우 padding 40px과 좌우 border 10px을 빼면 150px이다. 흔한 실수: width가 콘텐츠 폭만 뜻한다고 보는 것이다.",
+      "stem": "다음 버튼은 어디에 놓이는가? 어떤 조상 요소에도 `position`을 지정하지 않았다.\n```html\n<div class=\"card\">\n  <button>찜</button>\n</div>\n```\n```css\n.card {\n  width: 200px;\n  height: 100px;\n}\nbutton {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n}\n```",
+      "solution": "정답 근거: absolute는 position 값이 static이 아닌 가장 가까운 조상을 기준으로 배치한다. 풀이: 카드는 position이 기본값이라 기준이 되지 못하고 조상 중에도 없으므로 화면의 오른쪽 아래에 붙는다. 흔한 실수: 부모이기만 하면 기준이 된다고 보는 것이다. 카드에 `position: relative`를 주면 의도한 위치가 된다.",
       "choices": [
         {
-          "id": "c",
-          "text": "200px"
+          "id": "b",
+          "text": "화면의 오른쪽 아래 모서리"
         },
         {
-          "id": "b",
-          "text": "150px"
+          "id": "c",
+          "text": "카드 안쪽의 오른쪽 아래"
         },
         {
           "id": "a",
-          "text": "250px"
+          "text": "카드 바깥의 오른쪽 옆"
         },
         {
           "id": "d",
-          "text": "160px"
+          "text": "문서 흐름 속 원래 자리"
         }
       ],
       "choiceExplanations": {
-        "c": "width 전체가 콘텐츠 폭이라고 본 값이다.",
-        "b": "border-box에서는 width에 padding과 border가 포함되므로 200 - 40 - 10으로 구한다.",
-        "a": "content-box처럼 padding과 border를 바깥에 더한 값이다.",
-        "d": "좌우 border 10px을 빼지 않은 값이다."
+        "b": "position이 지정된 조상이 없으면 화면(초기 포함 블록)이 기준이 된다.",
+        "c": "카드가 기준이 되려면 카드에 position: relative가 필요하다.",
+        "a": "right: 0은 기준 상자의 오른쪽 끝에 맞추며 바깥으로 밀어내지 않는다.",
+        "d": "absolute는 문서 흐름에서 빠져 원래 자리에 남지 않는다."
       }
     },
     {
@@ -537,7 +540,7 @@
       }
     },
     {
-      "title": "일반 함수의 this가 정해지는 기준",
+      "title": "XHR 콜백에서 this",
       "topics": [
         "this"
       ],
@@ -547,37 +550,38 @@
       "group": "this",
       "type": "mc",
       "id": "frontend-02-q13",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 4. JavaScript의 함수와 this 바인딩"
+        "source/frontend.txt 4. JavaScript의 함수와 this 바인딩",
+        "source/Web_복습노트.md Part 3 13. 공통 AJAX 함수"
       ],
-      "difficulty": 1,
+      "difficulty": 3,
       "correctChoiceId": "d",
-      "stem": "일반 함수의 `this`는 무엇을 기준으로 정해지는가?",
-      "solution": "정답 근거: 일반 함수의 this는 호출될 때 결정된다. 풀이: 같은 함수라도 obj.f()로 부르면 obj이고 단독으로 부르면 달라진다. 흔한 실수: 화살표 함수의 규칙을 일반 함수에도 적용하는 것이다.",
+      "stem": "다음 코드에서 요청이 끝났을 때의 출력은?\n```js\nconst xhr = new XMLHttpRequest();\nxhr.open('GET', '/data.json');\nxhr.onload = () => {\n  console.log(this === xhr);\n};\nxhr.send();\n```",
+      "solution": "정답 근거: 화살표 함수는 자기 this가 없고 정의된 위치의 this를 사용한다. 풀이: onload를 일반 함수로 쓰면 this가 xhr이지만 화살표 함수는 바깥의 this를 써서 xhr과 같지 않다. 흔한 실수: 콜백이 어떤 객체의 속성에 달렸으면 항상 그 객체가 this라고 보는 것이다.",
       "choices": [
         {
           "id": "c",
-          "text": "함수가 선언된 위치"
+          "text": "출력은 `true`"
         },
         {
           "id": "d",
-          "text": "함수가 호출된 방식"
+          "text": "출력은 `false`"
         },
         {
           "id": "b",
-          "text": "함수의 이름"
+          "text": "출력은 `undefined`"
         },
         {
           "id": "a",
-          "text": "함수를 처음 만든 객체"
+          "text": "출력은 `TypeError`"
         }
       ],
       "choiceExplanations": {
-        "c": "선언 위치로 정해지는 것은 화살표 함수의 규칙이다.",
-        "d": "obj.f()처럼 점으로 호출했는지와 단독으로 호출했는지 등에 따라 정해진다.",
-        "b": "함수 이름은 this와 관계가 없다.",
-        "a": "함수를 만든 객체가 아니라 호출 시점의 방식이 기준이다."
+        "c": "일반 함수로 썼다면 this가 xhr이라 참이 되지만 화살표 함수는 다르다.",
+        "d": "화살표 함수는 xhr이 아니라 정의된 위치의 this를 쓰므로 비교 결과가 거짓이다.",
+        "b": "비교 연산의 결과는 불리언이라서 undefined가 아니다.",
+        "a": "this를 비교만 하므로 오류가 나지 않는다."
       }
     },
     {
@@ -669,47 +673,48 @@
       }
     },
     {
-      "title": "setTimeout 0과 동기 코드의 순서",
+      "title": "부모에 등록한 클릭 리스너",
       "topics": [
         "dom"
       ],
       "tags": [
-        "timers"
+        "event-delegation"
       ],
       "group": "dom",
       "type": "mc",
       "id": "frontend-02-q16",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 5. DOM 및 BOM 제어"
+        "source/frontend.txt 5. DOM 및 BOM 제어",
+        "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
       ],
-      "difficulty": 1,
+      "difficulty": 3,
       "correctChoiceId": "c",
-      "stem": "다음 코드의 출력 순서는?\n```js\nconsole.log('A');\nsetTimeout(() => console.log('B'), 0);\nconsole.log('C');\n```",
-      "solution": "정답 근거: 타이머 콜백은 호출 스택이 비어야 실행된다. 풀이: A와 C가 동기적으로 먼저 출력되고 지연 0의 콜백인 B가 마지막에 출력된다. 흔한 실수: 지연 0을 즉시 실행으로 보는 것이다.",
+      "stem": "다음 코드의 출력은?\n```js\nconst ul =\n  document.querySelector('ul');\nul.addEventListener('click', (e) => {\n  if (e.target.matches('button')) {\n    console.log('찜');\n  }\n});\nul.innerHTML =\n  '<button><i>♥</i></button>';\nul.querySelector('i').click();\nul.querySelector('button').click();\n```",
+      "solution": "정답 근거: 클릭은 자식에서 부모로 버블링되므로 부모에 한 번 등록한 리스너가 나중에 추가된 자식에도 동작한다. 풀이: 아이콘을 누르면 target이 i라서 matches에 걸리지 않고 버튼을 직접 누르면 target이 button이라 한 번 출력된다. 흔한 실수: 아이콘 클릭도 버튼으로 처리된다고 보는 것이다. 이때는 `closest('button')`을 쓴다.",
       "choices": [
         {
           "id": "a",
-          "text": "A B C"
+          "text": "찜이 두 번 출력된다"
         },
         {
           "id": "b",
-          "text": "B A C"
+          "text": "아무것도 출력되지 않는다"
         },
         {
           "id": "c",
-          "text": "A C B"
+          "text": "찜이 한 번 출력된다"
         },
         {
           "id": "d",
-          "text": "C A B"
+          "text": "TypeError가 발생한다"
         }
       ],
       "choiceExplanations": {
-        "a": "지연이 0이면 바로 실행된다고 본 순서다.",
-        "b": "타이머가 가장 먼저 실행된다고 본 순서다.",
-        "c": "지연이 0이어도 콜백은 현재 동기 코드가 끝난 뒤에 실행된다.",
-        "d": "코드를 아래에서 위로 실행한다고 본 순서다."
+        "a": "아이콘 클릭의 target은 button이 아니라 i라서 matches가 거짓이다.",
+        "b": "버블링으로 부모의 리스너가 실행되므로 버튼 클릭은 처리된다.",
+        "c": "부모의 리스너가 나중에 만든 버튼에도 적용되지만 아이콘 클릭은 target이 i라서 조건을 통과하지 못한다.",
+        "d": "나중에 만든 요소를 찾는 코드는 모두 생성 뒤에 실행되어 오류가 없다."
       }
     },
     {
@@ -757,47 +762,48 @@
       }
     },
     {
-      "title": "then이 반환값 없이 끝난 뒤의 값",
+      "title": "XHR의 비동기 실행 순서",
       "topics": [
         "async"
       ],
       "tags": [
-        "promise-chain"
+        "xhr"
       ],
       "group": "async",
       "type": "mc",
       "id": "frontend-02-q18",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
-        "source/frontend.txt 6. 비동기 통신과 Promise"
+        "source/frontend.txt 6. 비동기 통신과 Promise",
+        "source/Web_복습노트.md Part 3 12. AJAX와 이벤트 위임"
       ],
       "difficulty": 2,
       "correctChoiceId": "d",
-      "stem": "다음 코드의 출력은?\n```js\nPromise.resolve(1)\n  .then((v) => v + 1)\n  .then((v) => {\n    console.log(v);\n  })\n  .then((v) => console.log(v));\n```",
-      "solution": "정답 근거: then의 반환값이 다음 then의 인자가 된다. 풀이: 1에 1을 더한 2가 첫 출력이 되고 그 then이 반환하지 않으므로 마지막 then은 undefined를 받는다. 흔한 실수: 반환이 없어도 이전 값이 계속 전달된다고 보는 것이다.",
+      "stem": "다음 코드의 출력 순서는?\n```js\nconst xhr = new XMLHttpRequest();\nxhr.open('GET', '/data.json');\nxhr.onload = () => {\n  console.log('load');\n};\nxhr.send();\nconsole.log('sent');\n```",
+      "solution": "정답 근거: XMLHttpRequest의 기본 요청은 비동기다. 풀이: send 뒤의 console.log가 바로 실행되어 sent가 먼저 찍히고 응답이 도착하면 onload 콜백이 실행되어 load가 찍힌다. 흔한 실수: 응답 처리 코드를 send 바로 아래에 써서 데이터가 아직 없는 상태로 쓰는 것이다.",
       "choices": [
         {
+          "id": "d",
+          "text": "sent load"
+        },
+        {
           "id": "a",
-          "text": "2와 2를 차례로 출력"
+          "text": "load sent"
         },
         {
           "id": "c",
-          "text": "2를 출력하고 끝난다"
+          "text": "sent만 출력"
         },
         {
           "id": "b",
-          "text": "1과 2를 차례로 출력"
-        },
-        {
-          "id": "d",
-          "text": "2와 undefined를 출력"
+          "text": "load만 출력"
         }
       ],
       "choiceExplanations": {
-        "a": "앞 then이 반환하지 않은 값은 다음으로 이어지지 않는다.",
-        "c": "마지막 then도 실행되어 undefined를 출력한다.",
-        "b": "첫 then이 v + 1을 반환하므로 1은 출력되지 않는다.",
-        "d": "값을 반환하지 않은 then 뒤에는 undefined가 전달된다."
+        "d": "send는 응답을 기다리지 않으므로 뒤의 코드가 먼저 실행되고 응답이 오면 onload가 실행된다.",
+        "a": "send가 응답이 올 때까지 코드를 멈춘다고 본 순서다.",
+        "c": "응답이 도착하면 onload도 실행되어 load가 출력된다.",
+        "b": "send 다음 줄은 응답과 관계없이 실행되어 sent가 출력된다."
       }
     },
     {
@@ -1310,8 +1316,8 @@
       "b"
     ],
     "frontend-02-q03": [
-      "c",
       "b",
+      "c",
       "d",
       "a"
     ],
@@ -1328,8 +1334,8 @@
       "b"
     ],
     "frontend-02-q06": [
-      "c",
       "b",
+      "c",
       "a",
       "d"
     ],
@@ -1400,10 +1406,10 @@
       "a"
     ],
     "frontend-02-q18": [
+      "d",
       "a",
       "c",
-      "b",
-      "d"
+      "b"
     ],
     "frontend-02-q19": [
       "b",
@@ -1424,5 +1430,5 @@
       "a"
     ]
   },
-  "contentVersion": "f4d1e7121363336e"
+  "contentVersion": "e1ee9420b2762696"
 }

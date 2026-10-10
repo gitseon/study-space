@@ -46,13 +46,6 @@ const gap = (ctx, html) => async () => {
 
 export const checks = {
   // ---- frontend-02 ----
-  'frontend-02-q01': {
-    revision: 1, choice: 'width가 적용되지 않아 글자 폭만큼만 차지한다', value: 'ignored',
-    async run(ctx) {
-      await open(ctx, withCss(ctx, htmlOf(ctx)));
-      return ctx.page.evaluate(() => (document.querySelector('.w').offsetWidth < 100 ? 'ignored' : 'applied'));
-    },
-  },
   'frontend-02-q02': {
     revision: 1, choice: '전송 데이터에 포함되지 않는다', value: 'omitted',
     async run(ctx) {
@@ -71,17 +64,6 @@ export const checks = {
     },
   },
   'frontend-02-q05': colorCheck('blue', 'rgb(0, 0, 255)'),
-  'frontend-02-q06': {
-    revision: 1, choice: '150px', value: '150px',
-    async run(ctx) {
-      await open(ctx, withCss(ctx, '<div class="box"></div>'));
-      return ctx.page.evaluate(() => {
-        const el = document.querySelector('.box');
-        const s = getComputedStyle(el);
-        return (el.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingRight)) + 'px';
-      });
-    },
-  },
   'frontend-02-q07': {
     revision: 1, choice: '50px', value: '50px',
     run: (ctx) => gap(ctx, withCss(ctx, '<div class="row"><div class="a">A</div><div class="b">B</div></div>'))(),
@@ -105,9 +87,7 @@ export const checks = {
       return (await ctx.runInPage(jsOf(ctx)))[0];
     },
   },
-  'frontend-02-q16': vmCheck('A C B', 'A C B', ' '),
   'frontend-02-q17': vmCheck('A C D B', 'A C D B', ' '),
-  'frontend-02-q18': vmCheck('2와 undefined를 출력', '2 undefined', ' '),
   'frontend-02-q19': vmCheck('1 3 2', '1 3 2', ' '),
   'frontend-02-q20': vmCheck('SyntaxError', 'SyntaxError'),
   'frontend-02-q21': {
@@ -162,16 +142,6 @@ export const checks = {
       return ctx.page.evaluate(() => document.querySelector('.c').offsetWidth + 'px');
     },
   },
-  'frontend-03-q07': {
-    revision: 1, choice: '부모 상자 전체가 아래로 20px 밀린다', value: 'parent-moved',
-    async run(ctx) {
-      await open(ctx, withCss(ctx, `<style>body{margin:0}</style><div style="height:10px"></div>${htmlOf(ctx)}`));
-      return ctx.page.evaluate(() => {
-        const top = document.querySelector('.parent').getBoundingClientRect().top;
-        return top === 30 ? 'parent-moved' : 'inside:' + top;
-      });
-    },
-  },
   'frontend-03-q08': vmCheck('3,3,3', '3,3,3'),
   'frontend-03-q09': vmCheck('x 0 null', 'x 0 null'),
   'frontend-03-q10': vmCheck('2 2', '2 2'),
@@ -184,13 +154,6 @@ export const checks = {
     },
   },
   'frontend-03-q14': pageCheck('BA', 'BA'),
-  'frontend-03-q15': {
-    revision: 1, choice: 'false true b', value: 'false true b',
-    async run(ctx) {
-      await open(ctx, '');
-      return (await ctx.runInPage(jsOf(ctx)))[0];
-    },
-  },
   'frontend-03-q16': {
     revision: 1, choice: 'A가 한 번 출력된다', value: 'A',
     async run(ctx) {

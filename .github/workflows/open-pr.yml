@@ -1,0 +1,52 @@
+name: open-pr
+
+# Push-triggered runs are not created in this repository, so start this workflow by hand
+# (Actions tab > open-pr > Run workflow, then choose the branch). It runs the full check and
+# opens a pull request into the base branch with a description built from the reports.
+# The repository setting "Allow GitHub Actions to create and approve pull requests" must be on.
+
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: Branch the pull request targets
+        default: main
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml
+
+  open-pr:
+    needs: check
+    if: github.ref_name != inputs.base
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v7
+        with:
+          name: reports
+          path: reports
+      - name: Build the description from the reports
+        run: python scripts/pr_body.py > pr-body.md
+      - name: Open or update the pull request
+        run: |
+          existing=$(gh pr list --head "$GITHUB_REF_NAME" --base "${{ inputs.base }}" --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --body-file pr-body.md
+            echo "Updated pull request #$existing"
+          else
+            title=$(git log -1 --format=%s)
+            gh pr create --base "${{ inputs.base }}" --head "$GITHUB_REF_NAME" --title "$title" --body-file pr-body.md
+          fi

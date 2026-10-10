@@ -8,8 +8,9 @@ import {format} from 'node:util';
 import {chromium} from '@playwright/test';
 import {checks as firstChecks} from './frontend_checks.mjs';
 import {checks as laterChecks} from './frontend_checks_02_03.mjs';
+import {checks as noteChecks} from './frontend_checks_notes.mjs';
 
-const checks = {...firstChecks, ...laterChecks};
+const checks = {...firstChecks, ...laterChecks, ...noteChecks};
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const reportPath = process.argv.includes('--report') ? process.argv[process.argv.indexOf('--report') + 1] : 'reports/frontend-verification.json';
@@ -78,11 +79,11 @@ for (const exam of exams) {
     const page = await context.newPage();
     const ctx = {
       page, context, question: q, blocks: codeBlocks(q.stem), runJs,
-      async runInPage(code) {
+      async runInPage(code, wait = 50) {
         const logs = [];
         page.on('console', (msg) => logs.push(msg.text()));
         await page.addScriptTag({content: code});
-        await page.waitForTimeout(50);
+        await page.waitForTimeout(wait);
         page.removeAllListeners('console');
         return logs;
       },

@@ -1,14 +1,14 @@
 ## question: frontend-02-q01
 ### solution
-정답 근거: 인라인 요소는 콘텐츠 크기로 폭이 정해지며 width와 height를 무시한다. 풀이: span의 기본 display가 inline이므로 100px은 반영되지 않고 Hi 두 글자 폭만 차지한다. 흔한 실수: width를 쓰면 모든 요소의 폭이 바뀐다고 보는 것이다.
+정답 근거: label의 `for` 속성값을 input의 `id`와 같게 쓰면 두 요소가 연결된다. 풀이: id가 py인 input에 label의 for를 py로 맞추면 Python 글자를 눌러도 라디오 버튼이 선택된다. 흔한 실수: name 값으로 연결된다고 보는 것이다. name은 같은 그룹을 묶는 용도다.
 ### choice-explanation: c
-그렇게 동작하는 것은 inline-block 요소다.
+form 속성은 입력 요소가 속할 폼의 id를 지정하는 속성이다.
 ### choice-explanation: d
-width를 지정해도 display 값은 바뀌지 않는다.
+target은 링크나 폼이 열릴 위치를 정하는 속성이며 label에서 연결 역할을 하지 않는다.
 ### choice-explanation: b
-인라인 요소에는 width와 height가 적용되지 않는다.
+label의 for 값이 input의 id와 같으면 두 요소가 연결되어 글자를 눌러도 선택된다.
 ### choice-explanation: a
-width가 적용되지 않으므로 글자 길이에 맞춰 늘어난다.
+label은 링크가 아니라서 href로 요소를 연결하지 않는다.
 
 ## question: frontend-02-q02
 ### solution
@@ -24,15 +24,15 @@ off라는 값은 자동으로 만들어지지 않는다.
 
 ## question: frontend-02-q03
 ### solution
-정답 근거: 이동 링크를 묶는 의미를 가진 태그는 `nav`다. 풀이: 나머지 태그는 각각 부가 정보와 핵심 콘텐츠와 마무리 정보를 뜻해 링크 모음의 역할과 다르다. 흔한 실수: 링크가 들어 있는 모든 영역에 nav를 쓰는 것이다.
-### choice-explanation: c
-주요 내비게이션 링크의 묶음을 나타내는 태그다.
+정답 근거: `details`는 summary를 눌러 내용을 접고 펼치는 요소이며 `open`은 처음에 펼쳐진 상태로 시작하게 한다. 풀이: open이 있어도 토글 기능은 그대로라서 summary를 누르면 접힌다. 흔한 실수: open을 붙이면 항상 펼쳐진 상태로 고정된다고 보는 것이다.
 ### choice-explanation: b
-본문과 간접적으로 관련된 부가 정보를 담는 태그다.
+open이 있어도 summary를 누르면 접힌다.
+### choice-explanation: c
+open은 처음 상태만 펼침으로 정하며 이후에는 summary로 접고 펼 수 있다.
 ### choice-explanation: d
-문서의 핵심 콘텐츠 영역이며 이동 링크 묶음이라는 뜻은 아니다.
+이것은 open 속성이 없을 때의 기본 동작이다.
 ### choice-explanation: a
-문서나 구획의 마무리 정보를 담는 태그다.
+자바스크립트 없이도 summary로 토글할 수 있다.
 
 ## question: frontend-02-q04
 ### solution
@@ -60,15 +60,15 @@ id 선택자 하나가 클래스 선택자 네 개보다 높은 단계라서 이
 
 ## question: frontend-02-q06
 ### solution
-정답 근거: border-box의 width는 콘텐츠와 padding과 border를 모두 포함한다. 풀이: 좌우 padding 40px과 좌우 border 10px을 빼면 150px이다. 흔한 실수: width가 콘텐츠 폭만 뜻한다고 보는 것이다.
-### choice-explanation: c
-width 전체가 콘텐츠 폭이라고 본 값이다.
+정답 근거: absolute는 position 값이 static이 아닌 가장 가까운 조상을 기준으로 배치한다. 풀이: 카드는 position이 기본값이라 기준이 되지 못하고 조상 중에도 없으므로 화면의 오른쪽 아래에 붙는다. 흔한 실수: 부모이기만 하면 기준이 된다고 보는 것이다. 카드에 `position: relative`를 주면 의도한 위치가 된다.
 ### choice-explanation: b
-border-box에서는 width에 padding과 border가 포함되므로 200 - 40 - 10으로 구한다.
+position이 지정된 조상이 없으면 화면(초기 포함 블록)이 기준이 된다.
+### choice-explanation: c
+카드가 기준이 되려면 카드에 position: relative가 필요하다.
 ### choice-explanation: a
-content-box처럼 padding과 border를 바깥에 더한 값이다.
+right: 0은 기준 상자의 오른쪽 끝에 맞추며 바깥으로 밀어내지 않는다.
 ### choice-explanation: d
-좌우 border 10px을 빼지 않은 값이다.
+absolute는 문서 흐름에서 빠져 원래 자리에 남지 않는다.
 
 ## question: frontend-02-q07
 ### solution
@@ -144,15 +144,15 @@ join()은 구분자를 생략하면 쉼표로 이어 붙인다.
 
 ## question: frontend-02-q13
 ### solution
-정답 근거: 일반 함수의 this는 호출될 때 결정된다. 풀이: 같은 함수라도 obj.f()로 부르면 obj이고 단독으로 부르면 달라진다. 흔한 실수: 화살표 함수의 규칙을 일반 함수에도 적용하는 것이다.
+정답 근거: 화살표 함수는 자기 this가 없고 정의된 위치의 this를 사용한다. 풀이: onload를 일반 함수로 쓰면 this가 xhr이지만 화살표 함수는 바깥의 this를 써서 xhr과 같지 않다. 흔한 실수: 콜백이 어떤 객체의 속성에 달렸으면 항상 그 객체가 this라고 보는 것이다.
 ### choice-explanation: c
-선언 위치로 정해지는 것은 화살표 함수의 규칙이다.
+일반 함수로 썼다면 this가 xhr이라 참이 되지만 화살표 함수는 다르다.
 ### choice-explanation: d
-obj.f()처럼 점으로 호출했는지와 단독으로 호출했는지 등에 따라 정해진다.
+화살표 함수는 xhr이 아니라 정의된 위치의 this를 쓰므로 비교 결과가 거짓이다.
 ### choice-explanation: b
-함수 이름은 this와 관계가 없다.
+비교 연산의 결과는 불리언이라서 undefined가 아니다.
 ### choice-explanation: a
-함수를 만든 객체가 아니라 호출 시점의 방식이 기준이다.
+this를 비교만 하므로 오류가 나지 않는다.
 
 ## question: frontend-02-q14
 ### solution
@@ -180,15 +180,15 @@ remove가 아무 일도 하지 않는다고 본 값이다.
 
 ## question: frontend-02-q16
 ### solution
-정답 근거: 타이머 콜백은 호출 스택이 비어야 실행된다. 풀이: A와 C가 동기적으로 먼저 출력되고 지연 0의 콜백인 B가 마지막에 출력된다. 흔한 실수: 지연 0을 즉시 실행으로 보는 것이다.
+정답 근거: 클릭은 자식에서 부모로 버블링되므로 부모에 한 번 등록한 리스너가 나중에 추가된 자식에도 동작한다. 풀이: 아이콘을 누르면 target이 i라서 matches에 걸리지 않고 버튼을 직접 누르면 target이 button이라 한 번 출력된다. 흔한 실수: 아이콘 클릭도 버튼으로 처리된다고 보는 것이다. 이때는 `closest('button')`을 쓴다.
 ### choice-explanation: a
-지연이 0이면 바로 실행된다고 본 순서다.
+아이콘 클릭의 target은 button이 아니라 i라서 matches가 거짓이다.
 ### choice-explanation: b
-타이머가 가장 먼저 실행된다고 본 순서다.
+버블링으로 부모의 리스너가 실행되므로 버튼 클릭은 처리된다.
 ### choice-explanation: c
-지연이 0이어도 콜백은 현재 동기 코드가 끝난 뒤에 실행된다.
+부모의 리스너가 나중에 만든 버튼에도 적용되지만 아이콘 클릭은 target이 i라서 조건을 통과하지 못한다.
 ### choice-explanation: d
-코드를 아래에서 위로 실행한다고 본 순서다.
+나중에 만든 요소를 찾는 코드는 모두 생성 뒤에 실행되어 오류가 없다.
 
 ## question: frontend-02-q17
 ### solution
@@ -204,15 +204,15 @@ then 콜백이 다음 동기 코드보다 먼저 실행된다고 본 순서다.
 
 ## question: frontend-02-q18
 ### solution
-정답 근거: then의 반환값이 다음 then의 인자가 된다. 풀이: 1에 1을 더한 2가 첫 출력이 되고 그 then이 반환하지 않으므로 마지막 then은 undefined를 받는다. 흔한 실수: 반환이 없어도 이전 값이 계속 전달된다고 보는 것이다.
-### choice-explanation: a
-앞 then이 반환하지 않은 값은 다음으로 이어지지 않는다.
-### choice-explanation: c
-마지막 then도 실행되어 undefined를 출력한다.
-### choice-explanation: b
-첫 then이 v + 1을 반환하므로 1은 출력되지 않는다.
+정답 근거: XMLHttpRequest의 기본 요청은 비동기다. 풀이: send 뒤의 console.log가 바로 실행되어 sent가 먼저 찍히고 응답이 도착하면 onload 콜백이 실행되어 load가 찍힌다. 흔한 실수: 응답 처리 코드를 send 바로 아래에 써서 데이터가 아직 없는 상태로 쓰는 것이다.
 ### choice-explanation: d
-값을 반환하지 않은 then 뒤에는 undefined가 전달된다.
+send는 응답을 기다리지 않으므로 뒤의 코드가 먼저 실행되고 응답이 오면 onload가 실행된다.
+### choice-explanation: a
+send가 응답이 올 때까지 코드를 멈춘다고 본 순서다.
+### choice-explanation: c
+응답이 도착하면 onload도 실행되어 load가 출력된다.
+### choice-explanation: b
+send 다음 줄은 응답과 관계없이 실행되어 sent가 출력된다.
 
 ## question: frontend-02-q19
 ### solution

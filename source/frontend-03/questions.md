@@ -230,44 +230,41 @@ header와 main과 footer
 ## question: frontend-03-q07
 ```json
 {
-  "title": "부모와 첫 자식의 마진 병합",
+  "title": "Bootstrap 그리드와 breakpoint",
   "topics": [
     "css"
   ],
   "tags": [
-    "margin-collapse"
+    "bootstrap-grid"
   ],
   "group": "css",
   "type": "mc",
   "id": "frontend-03-q07",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 2. CSS 레이아웃 및 선택자"
+    "source/frontend.txt 2. CSS 레이아웃 및 선택자",
+    "source/Web_복습노트.md Part 3 14. Bootstrap 5"
   ],
-  "difficulty": 3,
+  "difficulty": 2,
   "correctChoiceId": "c"
 }
 ```
 ### stem
-부모에 padding과 border가 없을 때 첫 자식의 `margin-top: 20px`가 만드는 결과는?
+Bootstrap 5의 기본 breakpoint에서 화면 폭이 600px일 때 A와 B의 배치는?
 ```html
-<div class="parent">
-  <div class="child">C</div>
+<div class="row">
+  <div class="col-12 col-md-9">A</div>
+  <div class="col-12 col-md-3">B</div>
 </div>
 ```
-```css
-.child {
-  margin-top: 20px;
-}
-```
 ### choice: c
-부모 상자 전체가 아래로 20px 밀린다
+각각 한 줄을 차지해 위아래로 쌓인다
 ### choice: b
-자식은 부모 안에서 20px 내려가고 부모는 그대로다
+9칸과 3칸으로 한 줄에 나란히 놓인다
 ### choice: a
-마진이 무시되어 위치가 바뀌지 않는다
+6칸씩 한 줄에 나란히 놓인다
 ### choice: d
-부모 높이가 20px 늘어난다
+A만 보이고 B는 숨겨진다
 
 ## question: frontend-03-q08
 ```json
@@ -545,42 +542,39 @@ console.log(t);
 ## question: frontend-03-q15
 ```json
 {
-  "title": "toggle의 force 인자",
+  "title": "prompt 취소의 반환값",
   "topics": [
     "dom"
   ],
   "tags": [
-    "classlist"
+    "dialogs"
   ],
   "group": "dom",
   "type": "mc",
   "id": "frontend-03-q15",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/Web_복습노트.md Part 3 5. BookCafe 기능별 구현 포인트"
   ],
-  "difficulty": 2,
+  "difficulty": 1,
   "correctChoiceId": "d"
 }
 ```
 ### stem
-다음 코드의 출력은?
+사용자가 입력창에서 취소를 눌렀을 때의 출력은?
 ```js
-const el = document.body;
-const c = el.classList;
-el.className = 'a';
-const r1 = c.toggle('a', false);
-const r2 = c.toggle('b', true);
-console.log(r1, r2, el.className);
+const id = prompt('아이디');
+console.log(id);
 ```
 ### choice: d
-`false true b`
+출력은 `null`
 ### choice: a
-`true true a b`
+출력은 `''`
 ### choice: b
-`false false a`
+출력은 `NaN`
 ### choice: c
-`true false b`
+출력은 `false`
 
 ## question: frontend-03-q16
 ```json
@@ -795,61 +789,70 @@ console.log(
 ## question: frontend-03-q21
 ```json
 {
-  "title": "POST를 쓰는 것이 적절한 요청",
+  "title": "같은 창에서의 storage 이벤트",
   "topics": [
     "storage"
   ],
   "tags": [
-    "get-post"
+    "storage-event"
   ],
   "group": "storage",
   "type": "mc",
   "id": "frontend-03-q21",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송"
+    "source/frontend.txt 7. 웹 스토리지 및 네트워크 데이터 전송",
+    "source/Web_복습노트.md Part 3 11. 투표 기능"
   ],
-  "difficulty": 1,
+  "difficulty": 3,
   "correctChoiceId": "d"
 }
 ```
 ### stem
-GET 대신 POST로 보내는 것이 적절한 요청은?
+다음 코드를 한 창에서 실행했을 때 출력은?
+```js
+addEventListener('storage', () => {
+  console.log('changed');
+});
+localStorage.setItem('k', '1');
+console.log('done');
+```
 ### choice: b
-주소를 북마크해 다시 열 검색어 조회
-### choice: c
-공유 링크로 열리는 상품 목록 필터
-### choice: a
-캐시해도 되는 게시글 목록 조회
+changed 뒤에 done을 출력한다
 ### choice: d
-서버에 새 회원 정보를 저장하는 가입 제출
+done 하나를 출력한다
+### choice: c
+done 뒤에 changed를 출력한다
+### choice: a
+출력 없이 오류가 발생한다
 
 ## question: frontend-03-q22
 ```json
 {
-  "title": "여러 개를 선택하는 입력 타입",
+  "title": "전송하지 않는 버튼 타입",
   "topics": [
     "html"
   ],
   "tags": [
-    "input-types"
+    "form-label"
   ],
   "group": "html",
   "type": "short",
   "id": "frontend-03-q22",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹"
+    "source/frontend.txt 1. HTML 기본 및 시맨틱 웹",
+    "source/Web_복습노트.md Part 1 8. 폼(투표)"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
-    "checkbox"
+    "button"
   ],
   "normalization": "caseFold"
 }
 ```
 ### stem
-여러 항목을 동시에 선택할 수 있도록 하는 `input`의 `type` 값을 쓰시오.
+폼 안에 있어도 폼을 전송하지 않는 일반 버튼을 만들 때 `button`의 `type` 값을 쓰시오.
 
 ## question: frontend-03-q23
 ```json
@@ -1026,60 +1029,58 @@ try {
 ## question: frontend-03-q28
 ```json
 {
-  "title": "타이머를 중지하는 메서드",
+  "title": "querySelectorAll의 반환 객체",
   "topics": [
     "dom"
   ],
   "tags": [
-    "timers"
+    "node-list"
   ],
   "group": "dom",
   "type": "short",
   "id": "frontend-03-q28",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 5. DOM 및 BOM 제어"
+    "source/frontend.txt 5. DOM 및 BOM 제어",
+    "source/Web_복습노트.md Part 3 2. 요소 선택"
   ],
-  "difficulty": 1,
+  "difficulty": 2,
   "acceptedAnswers": [
-    "clearInterval",
-    "clearInterval()"
+    "NodeList"
   ],
   "normalization": "caseFold"
 }
 ```
 ### stem
-`setInterval`이 반환한 ID로 반복 타이머를 중지하는 메서드의 이름을 쓰시오. 소괄호는 있어도 없어도 된다.
+`document.querySelectorAll`이 반환하는 객체의 이름을 쓰시오.
 
 ## question: frontend-03-q29
 ```json
 {
-  "title": "응답 본문을 JSON으로 읽는 메서드",
+  "title": "XHR 응답 완료 상태",
   "topics": [
     "async"
   ],
   "tags": [
-    "fetch-options"
+    "xhr"
   ],
   "group": "async",
   "type": "short",
   "id": "frontend-03-q29",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "source/frontend.txt 6. 비동기 통신과 Promise"
+    "source/frontend.txt 6. 비동기 통신과 Promise",
+    "source/Web_복습노트.md Part 3 13. 공통 AJAX 함수"
   ],
-  "difficulty": 1,
+  "difficulty": 2,
   "acceptedAnswers": [
-    "json",
-    "json()",
-    "res.json()",
-    "response.json()"
+    "4"
   ],
-  "normalization": "caseFold"
+  "normalization": "trim"
 }
 ```
 ### stem
-fetch의 응답 `Response` 객체에서 본문을 JSON으로 파싱해 Promise로 돌려주는 메서드의 이름을 쓰시오.
+`XMLHttpRequest`에서 응답 수신이 모두 끝났음을 뜻하는 `readyState` 값을 숫자로 쓰시오.
 
 ## question: frontend-03-q30
 ```json

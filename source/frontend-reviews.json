@@ -8,34 +8,10 @@
     "reviewedAt": "2026-10-09"
   },
   {
-    "questionId": "frontend-01-q13",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "화살표 함수는 자기 this가 없고 call로 바꿀 수 없다는 규칙으로 정답을 가리고 다시 풀어 확인했다. 같은 성질을 q12와 q27의 실행으로도 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
     "questionId": "frontend-01-q22",
     "revision": 1,
     "method": "독립 재풀이",
     "note": "독립적으로 배포할 수 있는 콘텐츠 단위는 article이라는 정의로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-01-q23",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "주축 정렬은 justify-content이고 교차축은 align-items라는 구분으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-01-q28",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "표준 이벤트 등록 메서드는 addEventListener라는 점으로 정답을 가리고 다시 풀어 확인했다.",
     "reviewer": "claude-sonnet-5-5",
     "reviewedAt": "2026-10-09"
   },
@@ -56,58 +32,10 @@
     "reviewedAt": "2026-10-09"
   },
   {
-    "questionId": "frontend-02-q03",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "nav가 주요 이동 링크 묶음이고 aside와 main과 footer는 다른 역할이라는 구분으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-02-q13",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "일반 함수의 this는 호출 방식으로 정해지고 선언 위치로 정해지는 것은 화살표 함수라는 구분으로 정답을 가리고 다시 풀어 확인했다. frontend-02-q12와 frontend-02-q27 실행으로도 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
     "questionId": "frontend-02-q22",
     "revision": 1,
     "method": "독립 재풀이",
     "note": "figure 안의 설명 태그는 figcaption이라는 정의로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-02-q23",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "column에서는 주축이 세로가 되고 justify-content는 주축을 정렬한다는 규칙으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-02-q28",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "location.replace는 기록을 교체하고 assign은 항목을 추가한다는 구분으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-02-q29",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "fetch의 두 번째 인자에서 메서드를 지정하는 속성은 method라는 점으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-02-q30",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "POST는 데이터를 요청 본문에 담는다는 정의로 정답을 가리고 다시 풀어 확인했다.",
     "reviewer": "claude-sonnet-5-5",
     "reviewedAt": "2026-10-09"
   },
@@ -124,62 +52,6 @@
     "revision": 1,
     "method": "독립 재풀이",
     "note": "로고와 메뉴는 header이고 핵심 내용은 main이며 저작권 안내는 footer라는 역할 구분으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q13",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "화살표 함수의 this는 정의 위치의 바깥 스코프에서 정해진다는 규칙으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q21",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "서버 상태를 바꾸는 요청에는 POST를 쓰고 북마크나 공유가 필요한 조회에는 GET을 쓴다는 구분으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q22",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "여러 항목을 동시에 선택하는 type은 checkbox라는 점으로 정답을 가리고 다시 풀어 확인했다. 같은 name의 동작은 frontend-01-q02 실행으로도 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q24",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "sticky는 임계 위치 전까지 relative처럼 일반 흐름에 놓인다는 정의로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q28",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "setInterval의 반환 ID를 clearInterval에 넘겨 중지한다는 점으로 정답을 가리고 다시 풀어 확인했다. 반복 동작은 frontend-01-q16 실행으로도 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q29",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "Response 객체의 json 메서드가 본문을 파싱한다는 점으로 정답을 가리고 다시 풀어 확인했다.",
-    "reviewer": "claude-sonnet-5-5",
-    "reviewedAt": "2026-10-09"
-  },
-  {
-    "questionId": "frontend-03-q30",
-    "revision": 1,
-    "method": "독립 재풀이",
-    "note": "localStorage에 저장하는 메서드는 setItem이라는 점으로 정답을 가리고 다시 풀어 확인했다. 문자열 보관은 frontend-02-q21 실행으로도 확인했다.",
     "reviewer": "claude-sonnet-5-5",
     "reviewedAt": "2026-10-09"
   }

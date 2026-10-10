@@ -72,15 +72,15 @@ padding을 부모 폭에 더한 뒤 퍼센트를 적용한 값이다.
 
 ## question: frontend-03-q07
 ### solution
-정답 근거: 부모의 위쪽에 padding과 border가 없으면 부모와 첫 자식의 위쪽 마진이 병합된다. 풀이: 자식의 20px이 부모의 바깥 마진처럼 작용해 부모 상자 전체가 내려간다. 흔한 실수: 자식의 마진이 항상 부모 안쪽 간격이 된다고 보는 것이다.
+정답 근거: Bootstrap의 접두어 없는 값은 모든 화면에 적용되고 md 접두어 값은 768px 이상에서 적용된다. 풀이: 600px에서는 col-12만 적용되어 두 요소가 12칸씩 차지하므로 위아래로 쌓인다. 흔한 실수: md를 쓰면 작은 화면에서도 같은 비율이 유지된다고 보는 것이다. 768px 이상이면 9칸과 3칸을 합친 12칸이 한 줄에 놓인다.
 ### choice-explanation: c
-부모와 첫 자식의 위쪽 마진이 병합되어 부모 바깥으로 전달된다.
+접두어 없는 col-12가 기본이고 md는 768px 이상에서만 적용된다.
 ### choice-explanation: b
-병합이 일어나면 부모 안쪽 간격이 생기지 않는다.
+md 규칙은 768px 이상에서만 적용되므로 600px에서는 쓰이지 않는다.
 ### choice-explanation: a
-마진은 사라지지 않고 부모 바깥 간격이 된다.
+6칸을 지정한 클래스가 없다.
 ### choice-explanation: d
-병합된 마진은 부모 높이에 포함되지 않는다.
+col 클래스는 요소를 숨기지 않는다.
 
 ## question: frontend-03-q08
 ### solution
@@ -168,15 +168,15 @@ before가 복사본을 앞에 만든다고 본 값이다.
 
 ## question: frontend-03-q15
 ### solution
-정답 근거: toggle의 두 번째 인자 force는 클래스를 있게 할지 없게 할지를 강제한다. 풀이: a는 제거되어 false를 반환하고 b는 추가되어 true를 반환하며 className은 b가 된다. 흔한 실수: force가 있으면 토글하지 않는다고 보는 것이다.
+정답 근거: prompt는 취소하면 null을 반환한다. 풀이: 확인을 누르면 입력한 문자열이 되고 빈 입력이면 빈 문자열이므로 취소와 구분된다. 흔한 실수: null 확인 없이 trim 같은 문자열 메서드를 호출해 오류를 내는 것이다.
 ### choice-explanation: d
-force가 false면 제거하고 true면 추가하며 결과 상태를 반환한다.
+취소하면 prompt는 입력값이 아니라 null을 반환한다.
 ### choice-explanation: a
-a는 force false로 제거되므로 반환값이 false다.
+확인을 누르고 아무것도 입력하지 않았을 때의 반환값이다.
 ### choice-explanation: b
-b는 force true로 추가되므로 반환값이 true다.
+prompt는 문자열이나 null만 반환하며 숫자로 바꾸지 않는다.
 ### choice-explanation: c
-두 반환값이 모두 반대로 본 값이다.
+취소를 불리언으로 반환하는 것은 confirm이다.
 
 ## question: frontend-03-q16
 ### solution
@@ -240,19 +240,19 @@ Map이 생략된다고 본 값이다.
 
 ## question: frontend-03-q21
 ### solution
-정답 근거: POST는 서버의 상태를 바꾸는 요청에 쓰고 GET은 읽기 전용 조회에 쓴다. 풀이: 가입 제출은 새 데이터를 만드는 요청이라 POST가 적절하고 나머지는 주소로 다시 열거나 공유하는 조회라 GET이 어울린다. 흔한 실수: 값이 URL에 보이는 것이 싫다는 이유만으로 모든 요청에 POST를 쓰는 것이다.
+정답 근거: storage 이벤트는 같은 출처의 다른 탭이나 창에서 값이 바뀔 때만 발생한다. 풀이: 같은 창에서 setItem을 호출해도 이벤트가 오지 않아 done만 출력된다. 흔한 실수: 저장한 창에서도 이벤트가 발생한다고 보는 것이다. 그래서 팝업에서 저장하면 메인 창이 이를 감지한다.
 ### choice-explanation: b
-다시 열 수 있어야 하는 조회는 URL에 값이 남는 GET이 맞다.
-### choice-explanation: c
-링크로 공유하는 필터는 URL에 담기는 GET이 맞다.
-### choice-explanation: a
-읽기만 하는 조회는 GET이 맞다.
+자기 창에서는 이벤트가 발생하지 않아 changed가 출력되지 않는다.
 ### choice-explanation: d
-서버의 데이터를 만들거나 바꾸는 요청에는 POST를 쓴다.
+storage 이벤트는 값을 바꾼 창이 아니라 같은 출처의 다른 창에서 발생한다.
+### choice-explanation: c
+나중에 비동기로 발생하는 이벤트도 자기 창에는 오지 않는다.
+### choice-explanation: a
+localStorage는 일반적인 환경에서 오류 없이 저장된다.
 
 ## question: frontend-03-q22
 ### solution
-모범답안: checkbox. 허용 표기: 대소문자는 구분하지 않는다. 근거: checkbox는 항목마다 독립적으로 선택할 수 있고 radio는 같은 name 중 하나만 선택된다.
+모범답안: button. 허용 표기: 대소문자는 구분하지 않는다. 근거: type을 생략하거나 submit으로 쓰면 폼을 전송하고 button은 전송 없이 자바스크립트 동작에만 쓴다.
 
 ## question: frontend-03-q23
 ### solution
@@ -276,11 +276,11 @@ Map이 생략된다고 본 값이다.
 
 ## question: frontend-03-q28
 ### solution
-모범답안: clearInterval. 허용 표기: 소괄호를 붙인 clearInterval()도 허용하며 대소문자는 구분하지 않는다. 근거: setInterval의 반환값을 clearInterval에 전달하면 반복이 멈춘다.
+모범답안: NodeList. 허용 표기: 대소문자는 구분하지 않는다. 근거: 선택된 요소의 목록이며 forEach로 순회할 수 있고 map과 filter를 쓰려면 배열로 바꿔야 한다.
 
 ## question: frontend-03-q29
 ### solution
-모범답안: json. 허용 표기: json과 json()과 res.json()과 response.json()이며 대소문자는 구분하지 않는다. 근거: await res.json()처럼 호출하면 본문이 파싱된 값을 얻는다.
+모범답안: 4. 허용 표기: 앞뒤 공백은 무시한다. 근거: readyState는 0에서 4까지 변하며 4가 완료다. 성공 여부는 status가 200인지로 따로 확인한다.
 
 ## question: frontend-03-q30
 ### solution
