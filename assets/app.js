@@ -7,6 +7,27 @@ const PREF_KEY = 'mock-exam:grading-mode';
 let manifest;
 let kind = 'all';
 let track = 'algorithm';
+const TRACK_KEY = 'mock-exam:track';
+
+function rememberTrack() {
+  history.replaceState(null, '', '?track=' + encodeURIComponent(track));
+  try {
+    localStorage.setItem(TRACK_KEY, track);
+  } catch {
+    // The choice still applies to this visit when storage is blocked.
+  }
+}
+
+function initialTrack() {
+  let saved = null;
+  try {
+    saved = localStorage.getItem(TRACK_KEY);
+  } catch {
+    saved = null;
+  }
+  const wanted = new URLSearchParams(location.search).get('track') || saved;
+  return manifest.tracks?.[wanted] ? wanted : 'algorithm';
+}
 
 function readPreference() {
   try {
@@ -86,15 +107,22 @@ function examCard(exam, attempts, preference) {
     + '</article>';
 }
 
-function trackTabs() {
+function trackSection() {
   const entries = Object.entries(manifest.tracks || {});
   if (entries.length < 2) {
     return '';
   }
   const buttons = entries
-    .map(([id, info]) => '<button data-track="' + e(id) + '" aria-pressed="' + (id === track) + '" class="' + (id === track ? 'active' : '') + '">' + e(info.label) + '</button>')
+    .map(([id, info]) => {
+      const mine = manifest.exams.filter((x) => (x.track || 'algorithm') === id);
+      const questions = mine.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
+      return '<button class="track-button' + (id === track ? ' active' : '') + '" data-track="' + e(id) + '" aria-pressed="' + (id === track) + '">'
+        + '<strong>' + e(info.label) + '</strong>'
+        + '<span>' + mine.length + '회차 ' + questions + '문항</span></button>';
+    })
     .join('');
-  return '<div class="tabs track-tabs" role="group" aria-label="과목">' + buttons + '</div>';
+  return '<section class="track-picker"><span class="eyebrow">무엇을 풀어볼까요</span>'
+    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + '</div></section>';
 }
 
 function librarySection(attempts) {
@@ -109,7 +137,6 @@ function librarySection(attempts) {
     .map((exam) => examCard(exam, attempts, preference))
     .join('');
   return '<section class="library">'
-    + trackTabs()
     + '<div class="section-heading"><div><span class="eyebrow">내 속도로 준비하기</span><h2>오늘의 문제집</h2></div>'
     + '<div class="tabs" role="group" aria-label="평가 유형">' + tabs + '</div></div>'
     + '<div class="exam-grid">' + cards + '</div>'
@@ -185,12 +212,13 @@ async function importBackup(ev, attempts) {
 
 function render() {
   const attempts = store.listAttempts();
-  root.innerHTML = heroSection() + librarySection(attempts) + practiceSection() + recordsSection(attempts);
+  root.innerHTML = heroSection() + trackSection() + librarySection(attempts) + practiceSection() + recordsSection(attempts);
 
   root.querySelectorAll('[data-track]').forEach((b) => {
     b.onclick = () => {
       track = b.dataset.track;
       kind = 'all';
+      rememberTrack();
       render();
     };
   });
@@ -219,6 +247,7 @@ try {
     throw Error();
   }
   manifest = await res.json();
+  track = initialTrack();
   render();
 } catch {
   root.innerHTML = '<div class="empty"><h1>문제집을 불러오지 못했습니다</h1><p>연결을 확인하고 다시 시도해 주세요.</p><button onclick="location.reload()">다시 시도</button></div>';

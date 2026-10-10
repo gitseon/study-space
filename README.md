@@ -2,7 +2,7 @@
 
 여러 주제의 모의고사를 풀고 복습하는 정적 사이트입니다. 공개 범위 목록을 바탕으로 직접 만든 연습 문제이며 실제 시험의 출제나 배점을 보장하지 않습니다.
 
-- 배포 주소: https://gitseon.github.io/study-space/
+- 주소: <a href="https://gitseon.github.io/study-space/" target="_blank" rel="noopener noreferrer">https://gitseon.github.io/study-space/</a>
 - 답안과 진행 기록은 사용하는 브라우저에만 저장됩니다.
 
 ## 수록 주제

@@ -88,3 +88,20 @@ test('the concept note fits a 360px screen', async ({page}) => {
   expect(overflow).toBe(0);
   expect(await page.locator('body').innerText()).not.toContain('�');
 });
+
+test('both tracks are separate buttons on the main screen and the choice is remembered', async ({page}) => {
+  await page.goto('index.html');
+  const group = page.getByRole('group', {name: '과목'});
+  await expect(group.getByRole('button')).toHaveCount(2);
+  await expect(group.getByRole('button', {name: /^자료구조와 알고리즘/})).toHaveAttribute('aria-pressed', 'true');
+  await expect(group.getByRole('button', {name: /프론트엔드 3회차 96문항/})).toHaveAttribute('aria-pressed', 'false');
+
+  await group.getByRole('button', {name: /^프론트엔드/}).click();
+  await expect(page).toHaveURL(/track=frontend/);
+  await page.reload();
+  await expect(page.locator('#mode-frontend-01')).toBeVisible();
+  await page.goto('index.html?track=algorithm');
+  await expect(page.locator('#mode-subject-01')).toBeVisible();
+  await page.goto('index.html?track=nope');
+  await expect(page.locator('#mode-subject-01')).toBeVisible();
+});
