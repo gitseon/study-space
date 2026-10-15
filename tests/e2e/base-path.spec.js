@@ -10,7 +10,7 @@ test('all requests stay under the Pages project path and review survives reload'
   await expect(page).toHaveURL(/review\.html\?attempt=/);
   await page.reload();
   await expect(page.locator('.explanation').first()).toBeVisible();
-  await page.goto('quiz.html?exam=missing&mode=exam');
+  await page.goto('pages/quiz.html?exam=missing&mode=exam');
   await expect(page.getByRole('link',{name:'문제집으로 돌아가기'})).toBeVisible();
   expect(outside).toEqual([]);
 });

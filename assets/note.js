@@ -12,13 +12,13 @@ function tocHtml(toc) {
 }
 
 async function start() {
-  const manifest = await (await fetch('data/manifest.json')).json();
+  const manifest = await (await fetch(new URL('../data/manifest.json', import.meta.url))).json();
   const notes = manifest.notes || [];
   const note = notes.find((n) => n.id === params.get('note')) || notes[0];
   if (!note) {
     throw Error('볼 수 있는 개념 노트가 없습니다');
   }
-  const res = await fetch('data/' + note.file);
+  const res = await fetch(new URL('../data/' + note.file, import.meta.url));
   if (!res.ok) {
     throw Error('개념 노트를 불러오지 못했습니다');
   }
@@ -33,5 +33,5 @@ async function start() {
 try {
   await start();
 } catch (err) {
-  root.innerHTML = '<div class="empty"><h1>개념 노트를 열지 못했습니다</h1><p>' + e(err.message) + '</p><a href="index.html">문제집으로 돌아가기</a></div>';
+  root.innerHTML = '<div class="empty"><h1>개념 노트를 열지 못했습니다</h1><p>' + e(err.message) + '</p><a href="../index.html">문제집으로 돌아가기</a></div>';
 }

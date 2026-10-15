@@ -63,7 +63,7 @@ export async function loadExam(id) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id || '')) {
     throw Error('선택한 회차를 찾지 못했습니다');
   }
-  const res = await fetch('data/' + id + '.json');
+  const res = await fetch(new URL('../data/' + id + '.json', import.meta.url));
   if (!res.ok) {
     throw Error('선택한 회차를 찾지 못했습니다');
   }

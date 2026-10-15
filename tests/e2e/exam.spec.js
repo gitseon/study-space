@@ -115,7 +115,7 @@ test('topic titles stay hidden until the explanation and diagrams are drawn', as
 });
 
 test('monthly text is restored and revealing a solution is not a grade', async ({page}) => {
-  await page.goto('quiz.html?exam=monthly-01&mode=study');
+  await page.goto('pages/quiz.html?exam=monthly-01&mode=study');
   await page.locator('textarea').fill('public class Solution {}');
   await page.reload();
   await expect(page.locator('textarea')).toHaveValue('public class Solution {}');
@@ -131,7 +131,7 @@ test('mobile layout and UTF-8 prose do not overflow', async ({page}) => {
   await expect(page.getByRole('heading', {name: '이해한 만큼, 풀어보기'})).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(await page.locator('body').innerText()).not.toContain('�');
-  for (const url of ['quiz.html?exam=monthly-01&mode=study', 'quiz.html?exam=subject-01&mode=study']) {
+  for (const url of ['pages/quiz.html?exam=monthly-01&mode=study', 'pages/quiz.html?exam=subject-01&mode=study']) {
     await page.goto(url);
     await expect(page.locator('.question-panel')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

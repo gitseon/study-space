@@ -297,7 +297,7 @@ function render() {
       + Object.entries(gradingNames).map(([value, label]) => '<option value="' + value + '"' + (value === attempt.mode ? ' selected' : '') + '>' + label + '</option>').join('')
       + '</select></label>';
 
-  root.innerHTML = '<div class="quiz-top"><a class="back" href="index.html">← 문제집으로</a>' + modeControl + '<span id="timer" class="timer"></span></div>'
+  root.innerHTML = '<div class="quiz-top"><a class="back" href="../index.html">← 문제집으로</a>' + modeControl + '<span id="timer" class="timer"></span></div>'
     + '<div class="quiz-title"><div><span class="eyebrow">' + e(exam.subtitle || '주제별 연습') + '</span><h1>' + e(exam.title) + '</h1></div>'
     + '<p id="save-status" class="muted" role="status">' + e(saveMessage || '답안은 자동으로 저장됩니다') + '</p></div>'
     + (versionNotice ? '<p class="notice">개정 전 응시 기록입니다. 당시 문제와 답안으로 복습합니다.</p>' : '')
@@ -431,7 +431,7 @@ function tick() {
 }
 
 async function topicExam(base, topic) {
-  const manifest = await (await fetch('data/manifest.json')).json();
+  const manifest = await (await fetch(new URL('../data/manifest.json', import.meta.url))).json();
   const track = base.track || 'algorithm';
   const ids = manifest.exams
     .filter((x) => (x.track || 'algorithm') === track && ['subject', 'written'].includes(x.kind))
@@ -493,5 +493,5 @@ async function start() {
 try {
   await start();
 } catch (err) {
-  root.innerHTML = '<div class="empty"><h1>문제를 열지 못했습니다</h1><p>' + e(err.message) + '</p><a href="index.html">문제집으로 돌아가기</a></div>';
+  root.innerHTML = '<div class="empty"><h1>문제를 열지 못했습니다</h1><p>' + e(err.message) + '</p><a href="../index.html">문제집으로 돌아가기</a></div>';
 }

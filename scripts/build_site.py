@@ -4,7 +4,7 @@ import tempfile
 from pathlib import Path
 from build_data import ROOT, build_data
 
-PAGES=["index.html","quiz.html","review.html","concepts.html"]
+PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html"]
 
 def build_site(output_dir: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:
@@ -16,7 +16,8 @@ def build_site(output_dir: Path) -> None:
                 raise SystemExit(f"data/{generated.name} is stale. Run python scripts/build_data.py first.")
     if output_dir.exists(): shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
-    for page in PAGES: shutil.copy2(ROOT/page,output_dir/page)
+    for page in PAGES:
+        (output_dir/page).parent.mkdir(parents=True,exist_ok=True); shutil.copy2(ROOT/page,output_dir/page)
     shutil.copytree(ROOT/"assets",output_dir/"assets")
     shutil.copytree(ROOT/"data",output_dir/"data")
     (output_dir/".nojekyll").write_text("",encoding="utf-8")

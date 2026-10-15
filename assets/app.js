@@ -65,7 +65,7 @@ function noteButtons() {
   const links = (manifest.notes || [])
     .filter((n) => n.track === track)
     .map((n) => (n.file
-      ? '<a class="note-button" href="concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>'
+      ? '<a class="note-button" href="pages/concepts.html?note=' + e(n.id) + '">' + e(n.title) + ' <span aria-hidden="true">↗</span></a>'
       : '<button class="note-button" type="button" disabled title="준비 중입니다">' + e(n.title) + ' <small>준비 중</small></button>'))
     .join('');
   return links ? '<div class="note-buttons">' + links + '</div>' : '';
@@ -111,7 +111,7 @@ function examCard(exam, attempts, preference) {
     + '<label class="card-setting">채점 방식 <select id="mode-' + e(exam.id) + '">' + modes + '</select></label>'
     + '<label class="card-setting">제한 시간 <select id="time-' + e(exam.id) + '">' + times + '</select></label>'
     + '<div class="card-actions"><button class="primary" data-start="' + e(exam.id) + '" aria-label="' + e(exam.title) + ' 시작">풀기 시작 <span aria-hidden="true">↗</span></button></div>'
-    + (resume ? '<a class="resume" href="quiz.html?attempt=' + e(resume.attemptId) + '">이어서 풀기 →</a>' : '')
+    + (resume ? '<a class="resume" href="pages/quiz.html?attempt=' + e(resume.attemptId) + '">이어서 풀기 →</a>' : '')
     + '</article>';
 }
 
@@ -156,7 +156,7 @@ function practiceSection() {
   const first = trackExams().filter((x) => CHOICE_KINDS.includes(x.kind)).sort((a, b) => a.id.localeCompare(b.id))[0];
   const counts = manifest.tracks?.[track]?.topicCounts || {};
   const links = Object.entries(trackTopics())
-    .map(([id, label]) => '<a href="quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
+    .map(([id, label]) => '<a href="pages/quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
       + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
   return '<section class="practice-strip">'
@@ -168,14 +168,14 @@ function practiceSection() {
 function historyItem(a) {
   const title = '<span><b>' + e(a.snapshot.title) + '</b><small>' + new Date(a.startedAt).toLocaleString('ko-KR') + '<span>' + gradingNames[a.mode] + '</span></small></span>';
   if (!a.submittedAt) {
-    return '<div class="history-item"><a href="quiz.html?attempt=' + e(a.attemptId) + '">' + title + '<span class="pill neutral">진행 중</span></a></div>';
+    return '<div class="history-item"><a href="pages/quiz.html?attempt=' + e(a.attemptId) + '">' + title + '<span class="pill neutral">진행 중</span></a></div>';
   }
   const questions = a.snapshot.questions.filter((q) => a.questionOrder.includes(q.id));
   const s = summarize(questions, a);
   const wrong = s.incorrect + s.unanswered;
-  return '<div class="history-item"><a href="review.html?attempt=' + e(a.attemptId) + '">' + title
+  return '<div class="history-item"><a href="pages/review.html?attempt=' + e(a.attemptId) + '">' + title
     + '<span class="history-score">정답 <b>' + s.correct + '</b> / ' + s.total + '</span></a>'
-    + (wrong ? '<a class="history-wrong" href="review.html?attempt=' + e(a.attemptId) + '&filter=wrong">틀린 문제 ' + wrong + '개 보기</a>' : '')
+    + (wrong ? '<a class="history-wrong" href="pages/review.html?attempt=' + e(a.attemptId) + '&filter=wrong">틀린 문제 ' + wrong + '개 보기</a>' : '')
     + '</div>';
 }
 
@@ -243,7 +243,7 @@ function render() {
       const mode = document.getElementById('mode-' + id).value;
       const minutes = document.getElementById('time-' + id).value;
       writePreference(mode);
-      location.href = 'quiz.html?exam=' + encodeURIComponent(id) + '&mode=' + mode + '&minutes=' + minutes + '&new=1';
+      location.href = 'pages/quiz.html?exam=' + encodeURIComponent(id) + '&mode=' + mode + '&minutes=' + minutes + '&new=1';
     };
   });
   document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
@@ -251,7 +251,7 @@ function render() {
 }
 
 try {
-  const res = await fetch('data/manifest.json');
+  const res = await fetch(new URL('../data/manifest.json', import.meta.url));
   if (!res.ok) {
     throw Error();
   }

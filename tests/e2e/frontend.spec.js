@@ -41,7 +41,7 @@ test('algorithm topic practice keeps working', async ({page}) => {
 for (const examId of ['frontend-01', 'frontend-02', 'frontend-03']) {
   test(`${examId} snippets fit a 360px screen`, async ({page}) => {
     await page.setViewportSize({width: 360, height: 800});
-    const response = await page.goto(`quiz.html?exam=${examId}&mode=study`);
+    const response = await page.goto(`pages/quiz.html?exam=${examId}&mode=study`);
     expect(response.ok()).toBe(true);
     const total = await page.locator('.question-nav button').count();
     expect(total).toBe(32);
@@ -58,7 +58,7 @@ for (const examId of ['frontend-01', 'frontend-02', 'frontend-03']) {
 }
 
 test('snippets show a language label and escape markup', async ({page}) => {
-  await page.goto('quiz.html?exam=frontend-01&mode=study');
+  await page.goto('pages/quiz.html?exam=frontend-01&mode=study');
   await page.getByRole('button', {name: '4번 문항', exact: true}).click();
   const snippet = page.locator('.snippet').first();
   await expect(snippet.locator('figcaption')).toHaveText('HTML');
@@ -81,7 +81,7 @@ test('the Web concept button opens the note and the contents link jumps to a sec
 
 test('the concept note fits a 360px screen', async ({page}) => {
   await page.setViewportSize({width: 360, height: 800});
-  await page.goto('concepts.html');
+  await page.goto('pages/concepts.html');
   await expect(page.locator('.note h2').first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   const overflow = await page.locator('.note pre').evaluateAll((list) => list.filter((el) => el.scrollWidth > el.clientWidth + 1).length);

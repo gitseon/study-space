@@ -51,7 +51,7 @@ SITE_DIR=dist npm run test:e2e
 
 ## 문제 작성과 수정
 
-문제를 추가하거나 고치기 전에 [AGENTS.md](AGENTS.md)와 [QUESTION_AUTHORING.md](QUESTION_AUTHORING.md)를 읽습니다. 편향 기준의 단일 원본은 QUESTION_AUTHORING.md입니다.
+문제를 추가하거나 고치기 전에 [AGENTS.md](AGENTS.md)와 [QUESTION_AUTHORING.md](docs/QUESTION_AUTHORING.md)를 읽습니다. 편향 기준의 단일 원본은 QUESTION_AUTHORING.md입니다.
 
 - 원고는 `source/<트랙 폴더>/<회차 ID>/`의 `exam.json`, `questions.md`, `solutions.md`입니다. 트랙 폴더는 자료구조와 알고리즘이 `dsAlgo`, 프론트엔드가 `frontend`, AI 역량검사가 `AI역량검사`입니다.
 - `data/`는 생성물입니다. 직접 고치지 않고 원고를 수정한 뒤 `python scripts/build_data.py`로 다시 만듭니다.
@@ -71,7 +71,7 @@ SITE_DIR=dist npm run test:e2e
 
 ## 개념 노트
 
-홈 화면의 `Web 개념` 버튼은 개념 요약 노트(`concepts.html`)를 엽니다. 원고는 `source/frontend/web개념 요약노트.md`이고 `python scripts/build_data.py`가 `data/web-concepts.md`로 복사합니다. 노트 목록은 `scripts/build_data.py`의 `NOTES`에 있으며 새 노트는 한 줄을 더하면 홈에 버튼이 생깁니다. 제목과 구획 수와 깨진 글자와 코드 형식은 `validate_questions.py`가 검사합니다.
+홈 화면의 `Web 개념` 버튼은 개념 요약 노트(`pages/concepts.html`)를 엽니다. 원고는 `source/frontend/web개념 요약노트.md`이고 `python scripts/build_data.py`가 `data/web-concepts.md`로 복사합니다. 노트 목록은 `scripts/build_data.py`의 `NOTES`에 있으며 새 노트는 한 줄을 더하면 홈에 버튼이 생깁니다. 제목과 구획 수와 깨진 글자와 코드 형식은 `validate_questions.py`가 검사합니다.
 
 `AI 개념` 버튼은 AI 역량검사의 개념 요약 노트를 엽니다. 원고는 `source/AI역량검사/AI역량 개념 요약노트.md`입니다. AI 역량검사의 강의 원본(PDF, 슬라이드 이미지, 전사본)은 용량과 저작권 때문에 저장소에서 제외하며 `.gitignore`에 들어 있습니다.
 
