@@ -49,10 +49,15 @@ function writePreference(value) {
 const trackExams = () => manifest.exams.filter((x) => (x.track || 'algorithm') === track);
 const trackTopics = () => manifest.tracks?.[track]?.topics || manifest.topics;
 
-const kindNames = {subject: '과목평가', monthly: '월말평가'};
+const kindNames = {subject: '과목평가', monthly: '월말평가', written: '필기 검정', practical: '실기 검정'};
+// Exams whose multiple choice questions feed the topic practice sets, and the order of the kind tabs.
+const CHOICE_KINDS = ['subject', 'written'];
+const KIND_ORDER = ['subject', 'written', 'monthly', 'practical'];
 const kindDescriptions = {
   subject: '개념부터 코드 추적까지 차근차근 점검합니다.',
   monthly: '직접 구현하고 풀이 과정을 설명합니다.',
+  written: '강의 개념을 연결해 객관식으로 점검합니다.',
+  practical: '코드를 직접 작성하고 기준에 맞춰 자기채점합니다.',
 };
 
 // Only the notes of the selected track are offered. A note without a file is a placeholder until its link exists.
@@ -137,7 +142,7 @@ function librarySection(attempts) {
     .join('');
   const cards = trackExams()
     .filter((x) => kind === 'all' || x.kind === kind)
-    .sort((a, b) => (a.kind === b.kind ? a.id.localeCompare(b.id) : a.kind === 'subject' ? -1 : 1))
+    .sort((a, b) => (a.kind === b.kind ? a.id.localeCompare(b.id) : KIND_ORDER.indexOf(a.kind) - KIND_ORDER.indexOf(b.kind)))
     .map((exam) => examCard(exam, attempts, preference))
     .join('');
   return '<section class="library">'
@@ -148,14 +153,14 @@ function librarySection(attempts) {
 }
 
 function practiceSection() {
-  const first = trackExams().filter((x) => x.kind === 'subject').sort((a, b) => a.id.localeCompare(b.id))[0];
+  const first = trackExams().filter((x) => CHOICE_KINDS.includes(x.kind)).sort((a, b) => a.id.localeCompare(b.id))[0];
   const counts = manifest.tracks?.[track]?.topicCounts || {};
   const links = Object.entries(trackTopics())
     .map(([id, label]) => '<a href="quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
       + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
   return '<section class="practice-strip">'
-    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 연습하기</h2><p>과목평가 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 풀어보세요.</p></div>'
+    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 연습하기</h2><p>객관식 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 풀어보세요.</p></div>'
     + '<div class="topic-links">' + links + '</div>'
     + '</section>';
 }

@@ -1,0 +1,10 @@
+{
+  "id": "ai-practical-01",
+  "revision": 1,
+  "kind": "practical",
+  "track": "ai",
+  "title": "AI 실기 1회",
+  "subtitle": "표 데이터 분류 실습",
+  "practiceMinutes": 120,
+  "sourceScopeVersion": 1
+}

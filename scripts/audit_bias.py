@@ -6,7 +6,7 @@ import re
 import statistics
 import unicodedata
 from collections import Counter
-from build_data import ROOT, build_data, track_of, load_scope, TRACKS
+from build_data import ROOT, build_data, track_of, load_scope, TRACKS, CHOICE_KINDS
 
 def valid_sequence(seq, aggregate=False):
     n=len(seq)
@@ -81,7 +81,7 @@ def audit_bias(exams,reviews):
             if m["spread"]>2: issue("choice-spread",q["id"],q)
         bank=banks.setdefault(track_of(exam),{"qs":[],"seq":[],"sets":{}})
         bank["qs"].extend(qs); bank["seq"].extend(seq)
-        if exam["kind"]=="subject":
+        if exam["kind"] in CHOICE_KINDS:
             for q,pos in zip(qs,seq):
                 for topic in q.get("topics",[]): bank["sets"].setdefault(topic,[]).append((q,pos))
     for track,bank in banks.items():
@@ -96,7 +96,7 @@ def audit_bias(exams,reviews):
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(); parser.add_argument("--strict",action="store_true"); parser.add_argument("--report",default="reports/bias.json"); args=parser.parse_args()
-    reviews=json.loads((ROOT/"source/authoring-reviews.json").read_text(encoding="utf-8"))
+    reviews=[r for info in TRACKS.values() for f in [ROOT/"source"/info["dir"]/"authoring-reviews.json"] if f.exists() for r in json.loads(f.read_text(encoding="utf-8"))]
     report=audit_bias(build_data(),reviews)
     target=ROOT/args.report; target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")

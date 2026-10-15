@@ -31,7 +31,7 @@ def verify_question(q, timeout=10):
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser(); parser.add_argument("--report",default="reports/code-verification.json"); args=parser.parse_args()
-    results=[r for exam in build_data() for q in exam["questions"] if q["type"]=="code" for r in verify_question(q)]
+    results=[r for exam in build_data() for q in exam["questions"] if q["type"]=="code" and q.get("language","java")=="java" for r in verify_question(q)]
     target=ROOT/args.report; target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding="utf-8")
     failed=[r for r in results if not r["passed"]]

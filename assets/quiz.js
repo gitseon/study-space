@@ -186,7 +186,7 @@ function renderAnswer(q) {
       .join('');
     return '<fieldset class="choices"><legend class="sr-only">정답 선택</legend>' + choices + '</fieldset>';
   }
-  const label = q.type === 'code' ? 'Java 답안' : q.type === 'essay' ? '나의 설명' : '나의 답';
+  const label = q.type === 'code' ? languageLabel(q) + ' 답안' : q.type === 'essay' ? '나의 설명' : '나의 답';
   let html = '<label class="answer-label" for="answer">' + label + '</label>';
   if (q.type === 'short') {
     html += '<input id="answer" autocomplete="off" value="' + e(attempt.answers[q.id] || '') + '"' + (locked ? ' readonly' : '') + '>';
@@ -195,13 +195,14 @@ function renderAnswer(q) {
       + (locked ? ' readonly' : '') + '>' + e(attempt.answers[q.id] || '') + '</textarea>';
   }
   if (q.type === 'code') {
-    html += '<div class="editor-footer"><span>코드를 작성한 뒤 풀이와 비교해 보세요</span><button class="quiet" id="code-download">Java 파일 저장</button></div>';
+    html += '<div class="editor-footer"><span>코드를 작성한 뒤 풀이와 비교해 보세요</span><button class="quiet" id="code-download">' + languageLabel(q) + ' 파일 저장</button></div>';
   }
   return html;
 }
 
 // Concept titles name the topic and would hint at the answer, so they appear only with the explanation.
 // Implementation problems keep their title because it names the task rather than the technique.
+const languageLabel = (q) => (q.language === 'python' ? 'Python' : 'Java');
 const showsTitleWhileSolving = (q) => q.type === 'code';
 
 function feedbackHeading(q, result) {
@@ -381,7 +382,7 @@ function bindEvents(q, qs) {
       }
     };
   }
-  document.querySelector('#code-download')?.addEventListener('click', () => download('Main.java', attempt.answers[q.id] || '', 'text/plain'));
+  document.querySelector('#code-download')?.addEventListener('click', () => download(q.language === 'python' ? 'answer.py' : 'Main.java', attempt.answers[q.id] || '', 'text/plain'));
   document.querySelector('#reveal')?.addEventListener('click', () => {
     attempt.revealed = [...new Set([...attempt.revealed, q.id])];
     save();
@@ -433,7 +434,7 @@ async function topicExam(base, topic) {
   const manifest = await (await fetch('data/manifest.json')).json();
   const track = base.track || 'algorithm';
   const ids = manifest.exams
-    .filter((x) => (x.track || 'algorithm') === track && x.kind === 'subject')
+    .filter((x) => (x.track || 'algorithm') === track && ['subject', 'written'].includes(x.kind))
     .map((x) => x.id)
     .sort();
   const all = await Promise.all(ids.map(loadExam));

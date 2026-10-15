@@ -1,0 +1,650 @@
+[
+  {
+    "questionId": "ai-written-01-q001",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "AI이지만 ML은 아닌 시스템: 정답을 가리고 AI, ML, DL의 정의 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q002",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "AI와 ML과 DL의 포함관계: 정답을 가리고 AI, ML, DL의 정의 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q003",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "스팸 분류에서 Label: 정답을 가리고 데이터 구성요소 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q004",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "측정 오차 항의 의미: 정답을 가리고 데이터 구성요소 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q005",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "회귀 문제의 판별: 정답을 가리고 회귀와 분류 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q006",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "R제곱의 의미: 정답을 가리고 모델 평가 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q009",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "불균형 자료에서의 정확도: 정답을 가리고 모델 평가 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q010",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "ROC 곡선과 AUC: 정답을 가리고 모델 평가 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q011",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "과적합의 신호: 정답을 가리고 과적합 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q012",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "분포 변화와 과적합의 구분: 정답을 가리고 과적합 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q013",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "층화 분할의 효과: 정답을 가리고 학습과 검증 자료의 분할 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q014",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "표준화 시 데이터 누수: 정답을 가리고 학습과 검증 자료의 분할 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q015",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "다중회귀 계수의 해석: 정답을 가리고 선형회귀 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q016",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "유의하지 않은 변수의 해석: 정답을 가리고 선형회귀 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q017",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "로지스틱 회귀의 계수: 정답을 가리고 로지스틱 회귀 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q018",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "임계값 조정의 효과: 정답을 가리고 로지스틱 회귀 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q019",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "활성화 함수가 없는 신경망: 정답을 가리고 신경망의 표현력 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q020",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "SGD의 특징: 정답을 가리고 확률적 경사 하강법 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q022",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "학습 루프의 순서: 정답을 가리고 MLP 구현 실습 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q023",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "역전파의 동작: 정답을 가리고 역전파 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q024",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "군집화와 차원 축소의 사용: 정답을 가리고 비지도 학습 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q025",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "원-핫 인코딩의 한계: 정답을 가리고 원-핫 인코딩 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q026",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "의미가 비슷한 단어의 검색: 정답을 가리고 워드 임베딩 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q027",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Word2Vec 방식의 선택: 정답을 가리고 워드 임베딩 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q029",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "순차 데이터의 특징: 정답을 가리고 순차적 데이터 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q031",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RNN의 기울기 소실 원인: 정답을 가리고 단순 RNN의 한계 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q032",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "LSTM의 장기 의존성 처리: 정답을 가리고 LSTM 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q033",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "고정 길이 벡터의 병목: 정답을 가리고 Seq2Seq와 어텐션 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q034",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "어텐션의 동작: 정답을 가리고 어텐션 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q035",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "스케일링의 이유: 정답을 가리고 Transformer 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q036",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "셀프 어텐션의 계산 과정: 정답을 가리고 Self-Attention 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q037",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "위치 인코딩의 필요성: 정답을 가리고 Transformer 구성요소 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q038",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "과제에 맞는 모델 계열: 정답을 가리고 사전학습 언어 모델 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q039",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "디코더 계열의 학습 방식: 정답을 가리고 사전학습 언어 모델 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q040",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Few-shot 프롬프트: 정답을 가리고 In-Context Learning 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q041",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "CNN이 이미지에 유리한 이유: 정답을 가리고 CNN과 FCN 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q045",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "맥스 풀링의 특징: 정답을 가리고 풀링 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q046",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "AlexNet의 특징: 정답을 가리고 AlexNet 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q047",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "VGG의 3x3 합성곱: 정답을 가리고 VGGNet 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q048",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "ResNet이 해결한 문제: 정답을 가리고 ResNet 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q049",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "잔차 블록의 원리: 정답을 가리고 ResNet 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q052",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "위치 인코딩 방식: 정답을 가리고 ViT 위치 인코딩 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q053",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "소규모 자료에서의 ViT: 정답을 가리고 ViT 학습 시 유의점 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q054",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Sigmoid의 문제: 정답을 가리고 활성화 함수 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q055",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "죽은 ReLU 문제: 정답을 가리고 활성화 함수 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q056",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "학습과 운영의 전처리 불일치: 정답을 가리고 데이터 전처리 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q057",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "0 초기화의 문제: 정답을 가리고 모델 상수 초기화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q058",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "He 초기화: 정답을 가리고 모델 상수 초기화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q059",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "L1과 L2 정규화: 정답을 가리고 모델 정규화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q060",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "평가 때 드롭아웃: 정답을 가리고 모델 정규화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q063",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "학습 곡선의 해석: 정답을 가리고 체크리스트 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q064",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "선형 프로빙과 파인튜닝: 정답을 가리고 전이 학습 실습 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q065",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "사전학습과 사후학습: 정답을 가리고 Pre-training vs Post-training 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q066",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Instruction-tuning의 학습 방식: 정답을 가리고 Instruction-tuning 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q067",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Instruction-tuning의 한계: 정답을 가리고 Instruction-tuning 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q068",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RLHF가 비교를 쓰는 이유: 정답을 가리고 RLHF 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q069",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RLHF 이후에도 남는 문제: 정답을 가리고 RLHF 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q070",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "DPO의 특징: 정답을 가리고 DPO 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q071",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RLVR의 적용 조건: 정답을 가리고 RLVR 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q072",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RAG가 필요한 이유: 정답을 가리고 Retrieval-augmented LM 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q073",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RAG의 실패 상황: 정답을 가리고 Retrieval-augmented LM 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q074",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Sparse와 Dense 검색: 정답을 가리고 Information Retrieval 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q076",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Bi-encoder와 Cross-encoder: 정답을 가리고 Dense Retriever 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q077",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "Bi-encoder의 학습: 정답을 가리고 Dense Retriever 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q078",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "에이전트의 판별: 정답을 가리고 Agent 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q079",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "에이전트 구성요소의 역할: 정답을 가리고 LLM Agent 프레임워크 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q080",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "도구 호출의 실행 주체: 정답을 가리고 Tool Usage 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q081",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "MCP의 계층: 정답을 가리고 Model Context Protocol 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q082",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "MCP의 구성과 장점: 정답을 가리고 Model Context Protocol 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q083",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "계획 전략의 선택: 정답을 가리고 추론과 계획 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q084",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "RAG 파이프라인의 순서: 정답을 가리고 LangChain과 RAG 실습 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q087",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "2의 보수 범위: 정답을 가리고 부호 있는 수 체계 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q089",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "IEEE 754 단정밀도 구성: 정답을 가리고 IEEE 754 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q091",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "BF16과 FP16: 정답을 가리고 수 표현과 정밀도 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q092",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "양자화의 목적과 방법: 정답을 가리고 양자화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q094",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "PTQ와 QAT: 정답을 가리고 양자화 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q095",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "비구조적 가지치기와 GPU: 정답을 가리고 가지치기 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q096",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "구조적 가지치기: 정답을 가리고 가지치기 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q097",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "지식 증류의 손실: 정답을 가리고 지식 증류 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q098",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "PEFT 방법의 비교: 정답을 가리고 파인튜닝 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  },
+  {
+    "questionId": "ai-written-01-q100",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "QLoRA와 설정: 정답을 가리고 PEFT 실습 내용으로 다시 풀어 정답과 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-15"
+  }
+]

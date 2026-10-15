@@ -1,10 +1,11 @@
 import json
 import re
 from collections import Counter
-from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES
+from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES, CHOICE_KINDS
 
 MAX_FRONTEND_LINE=38
 FRONTEND_LANGS=("html","css","js")
+PYTHON_LANGS=("python",)
 
 def text_issues(text):
     prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",text)
@@ -46,14 +47,29 @@ def frontend_code_issues(text):
             if len(line)>MAX_FRONTEND_LINE: issues.append("line-length")
     return issues
 
+def python_code_issues(text):
+    """Python snippets use 4-space indentation and the same 38-column limit as the frontend snippets."""
+    issues=[]
+    for lang,body in re.findall(r"```(\w*)\n([\s\S]*?)```",text):
+        if lang not in PYTHON_LANGS: continue
+        for line in body.splitlines():
+            indent=len(line)-len(line.lstrip(" "))
+            if "\t" in line or indent%4: issues.append("indent")
+            if len(line)>MAX_FRONTEND_LINE: issues.append("line-length")
+    return issues
+
 def validate_bank(exams, scope, scopes=None):
     scopes=scopes or {"algorithm":scope}
     issues=[]; seen=set(); tag_seen={}
     def add(code,qid,message): issues.append({"code":code,"questionId":qid,"message":message,"severity":"error"})
     for exam in exams:
         track=track_of(exam); scope=scopes[track]
-        expected={"mc":21,"short":9,"essay":2,"code":0} if exam["kind"]=="subject" else {"mc":0,"short":0,"essay":1,"code":3}
+        composition=scope.get("composition",{}).get(exam["kind"])
+        expected=composition or ({"mc":21,"short":9,"essay":2,"code":0} if exam["kind"]=="subject" else {"mc":0,"short":0,"essay":1,"code":3})
         if exam["counts"]!=expected: add("counts",exam["id"],str(exam["counts"]))
+        if exam["kind"]=="practical":
+            total=sum(r["points"] for q in exam["questions"] for r in q.get("rubric",[]))
+            if total!=scope.get("practicalPoints",100): add("points",exam["id"],f"rubric points sum to {total}")
         covered=set()
         for q in exam["questions"]:
             qid=q["id"]
@@ -65,13 +81,13 @@ def validate_bank(exams, scope, scopes=None):
                 if not isinstance(q.get(field),int) or q[field]<1: add("required",qid,field)
             if not q.get("sourceRefs") or not q.get("topics"): add("required",qid,"sourceRefs/topics")
             if set(q.get("topics",[]))-set(scope["topics"]): add("topic",qid,"unknown topic")
-            if track=="frontend":
+            if "tags" in scope:
                 allowed=set(scope["tags"].get(q.get("group"),[]))
                 if q.get("topics")!=[q.get("group")]: add("topic",qid,"topics must be the single group ID")
                 if not q.get("tags") or set(q["tags"])-allowed: add("tags",qid,"tags missing or outside the group")
                 tag_seen.setdefault(track,set()).update(q.get("tags",[]))
                 for text in [q.get("stem",""),q.get("solution","")]+[c["text"] for c in q.get("choices",[])]+list(q.get("choiceExplanations",{}).values()):
-                    for issue in frontend_code_issues(text): add(issue,qid,"Frontend code format")
+                    for issue in frontend_code_issues(text)+python_code_issues(text): add(issue,qid,"Code snippet format")
             prose=[q.get("stem",""),q.get("solution",""),q.get("title","")]
             prose += [c["text"] for c in q.get("choices",[])] + list(q.get("choiceExplanations",{}).values())
             for text in prose:
@@ -84,9 +100,10 @@ def validate_bank(exams, scope, scopes=None):
                 if not rubric or not q.get("modelAnswer") or len({r["id"] for r in rubric})!=len(rubric) or any(r.get("points",0)<=0 for r in rubric):
                     add("rubric",qid,"missing model/rubric")
             if q["type"]=="code":
-                for field in ("constraints","examples","reviewCases","language","complexity"):
+                needed=("language","checks") if q.get("language")=="python" else ("constraints","examples","reviewCases","language","complexity")
+                for field in needed:
                     if not q.get(field): add("code",qid,field)
-        if exam["kind"]=="subject":
+        if exam["kind"] in CHOICE_KINDS:
             if set(scope["topics"])-covered: add("coverage",exam["id"],str(set(scope["topics"])-covered))
             for group,counts in scope["groups"].items():
                 actual=Counter(q["type"] for q in exam["questions"] if q.get("group")==group)
@@ -108,7 +125,7 @@ def validate_notes(source_root=ROOT/"source"):
         if len(re.findall(r"(?m)^## ",text))<3: issues.append({"code":"note-structure","questionId":note_id,"message":"too few sections","severity":"error"})
         if chr(0xFFFD) in text: issues.append({"code":"encoding","questionId":note_id,"message":"broken characters","severity":"error"})
         if re.search(r"[·,]{2,}|\.{3,}",prose): issues.append({"code":"punctuation","questionId":note_id,"message":"punctuation run","severity":"error"})
-        for code in set(frontend_code_issues(text)): issues.append({"code":code,"questionId":note_id,"message":"note code format","severity":"error"})
+        for code in set(frontend_code_issues(text)+python_code_issues(text)): issues.append({"code":code,"questionId":note_id,"message":"note code format","severity":"error"})
         fences=re.findall(r"(?m)^```",text)
         if len(fences)%2: issues.append({"code":"fence","questionId":note_id,"message":"unclosed code fence","severity":"error"})
     return issues

@@ -92,7 +92,7 @@ test('the concept note fits a 360px screen', async ({page}) => {
 test('both tracks are separate buttons on the main screen and the choice is remembered', async ({page}) => {
   await page.goto('index.html');
   const group = page.getByRole('group', {name: '과목'});
-  await expect(group.getByRole('button')).toHaveCount(2);
+  await expect(group.getByRole('button')).toHaveCount(3);
   await expect(group.getByRole('button', {name: /^자료구조와 알고리즘/})).toHaveAttribute('aria-pressed', 'true');
   await expect(group.getByRole('button', {name: /프론트엔드 3회차 96문항/})).toHaveAttribute('aria-pressed', 'false');
 

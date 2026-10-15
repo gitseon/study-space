@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "track": "ai",
+  "topics": {
+    "ml": "AI와 기계학습",
+    "nlp": "자연어 처리",
+    "vision": "딥러닝과 영상 모델",
+    "llm-agent": "LLM과 에이전트",
+    "efficiency": "리소스 최적화"
+  },
+  "composition": {
+    "written": {
+      "mc": 100,
+      "short": 0,
+      "essay": 0,
+      "code": 0
+    },
+    "practical": {
+      "mc": 0,
+      "short": 0,
+      "essay": 0,
+      "code": 8
+    }
+  },
+  "practicalPoints": 100,
+  "groups": {
+    "ml": {
+      "mc": 24
+    },
+    "nlp": {
+      "mc": 16
+    },
+    "vision": {
+      "mc": 24
+    },
+    "llm-agent": {
+      "mc": 20
+    },
+    "efficiency": {
+      "mc": 16
+    }
+  },
+  "tags": {
+    "ml": [
+      "ai-ml-dl",
+      "feature-label",
+      "regression-classification",
+      "regression-metrics",
+      "classification-metrics",
+      "roc-auc",
+      "overfitting",
+      "data-split",
+      "linear-regression",
+      "logistic-regression",
+      "nn-expressivity",
+      "gradient-descent",
+      "backprop-loop",
+      "unsupervised"
+    ],
+    "nlp": [
+      "onehot-embedding",
+      "word2vec",
+      "sequential-rnn",
+      "gradient-lstm",
+      "seq2seq-attention",
+      "self-attention",
+      "transformer-parts",
+      "pretrained-families",
+      "in-context-cot"
+    ],
+    "vision": [
+      "cnn-vs-fcn",
+      "conv-calc",
+      "pooling-receptive",
+      "classic-cnn",
+      "resnet",
+      "mobilenet",
+      "vit-structure",
+      "vit-position",
+      "vit-training",
+      "activation",
+      "preprocessing",
+      "init",
+      "regularization",
+      "lr-schedule",
+      "hyperparam-diagnosis",
+      "transfer-learning"
+    ],
+    "llm-agent": [
+      "posttraining",
+      "instruction-tuning",
+      "rlhf",
+      "dpo-rlvr",
+      "rag-need",
+      "sparse-dense",
+      "bi-cross-encoder",
+      "agent-concept",
+      "tool-use",
+      "mcp",
+      "planning",
+      "langchain-rag"
+    ],
+    "efficiency": [
+      "number-systems",
+      "twos-complement",
+      "ieee754",
+      "ai-formats",
+      "quantization",
+      "ptq-qat",
+      "pruning",
+      "distillation",
+      "peft-overview",
+      "lora",
+      "qlora-config"
+    ]
+  },
+  "sources": [
+    "source/AI역량검사/md/1-1_AI기계학습기초.md",
+    "source/AI역량검사/md/1-2_AI기계학습방법론.md",
+    "source/AI역량검사/md/2-1_자연어처리기본.md",
+    "source/AI역량검사/md/3-1_딥러닝&영상모델-1.md",
+    "source/AI역량검사/md/3-1_딥러닝&영상모델-2.md",
+    "source/AI역량검사/md/ai-4-1_LangChain.md",
+    "source/AI역량검사/md/ai-5-1_리소스_효율적_학습법.md",
+    "source/AI역량검사/AI역검안내-1.jpg",
+    "source/AI역량검사/AI 역량 평가_실기검정_Questions_sample.md"
+  ],
+  "notes": "1-2와 4-1은 md에 빠진 슬라이드(역전파와 MLP 실습, MCP와 LangChain과 RAG 실습)를 같은 강의의 PDF에서 보충해 범위에 넣는다. PDF에만 있는 3-2, 4-2, 5-2는 범위에서 제외한다."
+}

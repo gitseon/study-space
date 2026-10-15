@@ -1,0 +1,135 @@
+[
+  {
+    "questionId": "ai-written-01-q007",
+    "revision": 1,
+    "code": "import numpy as np\ny=np.array([3,5,7]);p=np.array([2,5,9])\nprint(round(float(((y-p)**2).mean()),2))",
+    "expect": "1.67",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q008",
+    "revision": 1,
+    "code": "print(round(40/(40+20),2))",
+    "expect": "0.67",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q021",
+    "revision": 1,
+    "code": "phi=2;a=0.1\nprint(round(phi-a*2*phi,2))",
+    "expect": "1.6",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q028",
+    "revision": 1,
+    "code": "t='the quick brown fox runs'.split();i=2;w=2\nprint(len([j for j in range(len(t)) if j!=i and abs(j-i)<=w]))",
+    "expect": "4",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q030",
+    "revision": 1,
+    "code": "import torch\nfrom torch import nn\nx=torch.randint(0,5000,(8,20))\nl=nn.LSTM(64,128,batch_first=True)\nprint(tuple(l(nn.Embedding(5000,64)(x))[0].shape))",
+    "expect": "(8, 20, 128)",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q042",
+    "revision": 1,
+    "code": "import torch\nfrom torch import nn\nprint(sum(p.numel() for p in nn.Conv2d(3,16,5).parameters()))",
+    "expect": "1216",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q043",
+    "revision": 1,
+    "code": "print((224-7+2*3)//2+1)",
+    "expect": "112",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q044",
+    "revision": 1,
+    "code": "print(round(55 * 55 * 3 * 11 * 11 * 96 / 1e8, 2))",
+    "expect": "1.05",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q050",
+    "revision": 1,
+    "code": "C = 72\nprint(int(9 * C / (9 + C)))",
+    "expect": "8",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q051",
+    "revision": 1,
+    "code": "print((224//16)**2)",
+    "expect": "196",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q061",
+    "revision": 1,
+    "code": "import math\nprint(round(0.1/2*(1+math.cos(math.pi*50/100)),3))",
+    "expect": "0.05",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q062",
+    "revision": 1,
+    "code": "import math\nprint(round(math.log(10),1))",
+    "expect": "2.3",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q075",
+    "revision": 1,
+    "code": "import math\nprint(round(math.log(1000/1000),1))",
+    "expect": "0.0",
+    "match": false
+  },
+  {
+    "questionId": "ai-written-01-q085",
+    "revision": 1,
+    "code": "print(bin(47)[2:])",
+    "expect": "101111",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q086",
+    "revision": 1,
+    "code": "print(int('4AF',16))",
+    "expect": "1199",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q088",
+    "revision": 1,
+    "code": "v = (0b0110 + 0b0011) & 0xF\nprint(v - 16 if v & 8 else v)",
+    "expect": "-7",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q090",
+    "revision": 1,
+    "code": "import struct\nb=int('0'+'10000000'+'1'+'0'*22,2).to_bytes(4,'big')\nprint(struct.unpack('>f',b)[0])",
+    "expect": "3.0",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q093",
+    "revision": 1,
+    "code": "s=2.54/127\nprint(round(1.0/s))",
+    "expect": "50",
+    "match": true
+  },
+  {
+    "questionId": "ai-written-01-q099",
+    "revision": 1,
+    "code": "d=k=4096;r=16\nprint(r*(d+k))",
+    "expect": "131072",
+    "match": true
+  }
+]

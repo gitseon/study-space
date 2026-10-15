@@ -103,5 +103,42 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(report["metrics"]["bank"]["n"],1)
         self.assertEqual(report["metrics"]["bank:frontend"]["n"],1)
 
+    def test_python_snippets_need_four_space_indent_and_short_lines(self):
+        m=self.load("validate_questions")
+        fence="\x60\x60\x60"
+        def block(lang,body): return f"{fence}{lang}\n{body}\n{fence}"
+        self.assertEqual(m.python_code_issues(block("python","if a:\n    run()")),[])
+        self.assertIn("indent",m.python_code_issues(block("python","if a:\n  run()")))
+        self.assertIn("line-length",m.python_code_issues(block("python","a = "+"b"*m.MAX_FRONTEND_LINE)))
+        self.assertEqual(m.python_code_issues(block("java","a"*80)),[])
+
+    def test_every_track_keeps_its_manuscripts_in_its_own_folder(self):
+        m=self.load("build_data")
+        for track,info in m.TRACKS.items():
+            folder=ROOT/"source"/info["dir"]
+            self.assertTrue((folder/info["scope"]).exists(),track)
+            self.assertTrue(list(folder.glob("*/exam.json")),track)
+        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai"})
+
+    def test_ai_scope_defines_both_exam_kinds_and_every_tag_group(self):
+        m=self.load("build_data")
+        scope=m.load_scope(ROOT/"source","ai")
+        self.assertEqual(scope["composition"]["written"]["mc"],100)
+        self.assertEqual(scope["composition"]["practical"]["code"],8)
+        self.assertEqual(set(scope["tags"]),set(scope["topics"]))
+        self.assertEqual(sum(g["mc"] for g in scope["groups"].values()),100)
+
+    def test_practical_points_must_add_up(self):
+        m=self.load("validate_questions")
+        scope={"topics":{"ml":"x"},"tags":{"ml":["t"]},"groups":{},"composition":{"practical":{"mc":0,"short":0,"essay":0,"code":1}},"practicalPoints":100}
+        q={"id":"p-q1","title":"t","stem":"s","solution":"s","revision":1,"difficulty":1,"sourceRefs":["r"],"topics":["ml"],"group":"ml",
+           "tags":["t"],"type":"code","language":"python","checks":["assert True"],"choices":[],"choiceExplanations":{},
+           "rubric":[{"id":"r0","criterion":"c","points":90}],"modelAnswer":"m"}
+        exam={"id":"p","kind":"practical","track":"ai","counts":{"mc":0,"short":0,"essay":0,"code":1},"questions":[q]}
+        codes=[i["code"] for i in m.validate_bank([exam],scope,{"ai":scope})]
+        self.assertIn("points",codes)
+        q["rubric"][0]["points"]=100
+        self.assertNotIn("points",[i["code"] for i in m.validate_bank([exam],scope,{"ai":scope})])
+
 if __name__ == "__main__":
     unittest.main()

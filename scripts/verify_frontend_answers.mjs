@@ -41,7 +41,7 @@ async function runJs(code, wait = 80) {
 const exams = readdirSync(resolve(root, 'data'))
   .filter((f) => /^frontend-\d+\.json$/.test(f))
   .map((f) => JSON.parse(readFileSync(resolve(root, 'data', f), 'utf8')));
-const reviews = JSON.parse(readFileSync(resolve(root, 'source/frontend-reviews.json'), 'utf8'));
+const reviews = JSON.parse(readFileSync(resolve(root, 'source/frontend/frontend-reviews.json'), 'utf8'));
 const browser = await chromium.launch();
 const results = [];
 

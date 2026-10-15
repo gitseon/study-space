@@ -3,6 +3,8 @@ const escape = (s) => s.replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', 
 
 const JS_KEYWORDS = 'async await break case catch class const continue default else export finally for function if import in let new of return switch this throw try typeof var while yield';
 const JS_LITERALS = 'true false null undefined NaN Infinity';
+const PY_KEYWORDS = 'and as assert break class continue def del elif else except finally for from global if import in is lambda not or pass raise return try while with yield';
+const PY_LITERALS = 'True False None';
 
 const rules = {
   js: [
@@ -18,6 +20,12 @@ const rules = {
     ['p', /-?[a-z][\w-]*(?=\s*:)/y],
     ['n', /#[0-9a-fA-F]{3,8}\b|-?\d*\.?\d+(?:px|em|rem|%|vh|vw|fr|s|ms|deg)?/y],
   ],
+  python: [
+    ['c', /#[^\n]*/y],
+    ['s', /'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"/y],
+    ['n', /\b\d+(?:\.\d+)?(?:e-?\d+)?\b/y],
+    ['w', /[A-Za-z_]\w*/y],
+  ],
   html: [
     ['c', /<!--[\s\S]*?-->/y],
     ['t', /<\/?[A-Za-z][\w-]*|\/?>|<!DOCTYPE/y],
@@ -26,15 +34,16 @@ const rules = {
   ],
 };
 
-export const languageNames = {js: 'JavaScript', css: 'CSS', html: 'HTML'};
+export const languageNames = {js: 'JavaScript', css: 'CSS', html: 'HTML', python: 'Python'};
 
 export function highlight(lang, source) {
   const list = rules[lang];
   if (!list) {
     return escape(source);
   }
-  const keywords = new Set(JS_KEYWORDS.split(' '));
-  const literals = new Set(JS_LITERALS.split(' '));
+  const python = lang === 'python';
+  const keywords = new Set((python ? PY_KEYWORDS : JS_KEYWORDS).split(' '));
+  const literals = new Set((python ? PY_LITERALS : JS_LITERALS).split(' '));
   let out = '';
   let plain = '';
   let i = 0;

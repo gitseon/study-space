@@ -1,57 +1,6 @@
 {
   "exams": [
     {
-      "id": "frontend-01",
-      "revision": 1,
-      "kind": "subject",
-      "track": "frontend",
-      "title": "프론트엔드 1회",
-      "subtitle": "개념을 단단하게",
-      "practiceMinutes": 60,
-      "sourceScopeVersion": 1,
-      "counts": {
-        "mc": 21,
-        "short": 9,
-        "essay": 2,
-        "code": 0
-      },
-      "contentVersion": "e59cc80791f4384d"
-    },
-    {
-      "id": "frontend-02",
-      "revision": 1,
-      "kind": "subject",
-      "track": "frontend",
-      "title": "프론트엔드 2회",
-      "subtitle": "실수하기 쉬운 경계",
-      "practiceMinutes": 60,
-      "sourceScopeVersion": 1,
-      "counts": {
-        "mc": 21,
-        "short": 9,
-        "essay": 2,
-        "code": 0
-      },
-      "contentVersion": "866cb2879e49635b"
-    },
-    {
-      "id": "frontend-03",
-      "revision": 1,
-      "kind": "subject",
-      "track": "frontend",
-      "title": "프론트엔드 3회",
-      "subtitle": "한 단계 더 깊이",
-      "practiceMinutes": 60,
-      "sourceScopeVersion": 1,
-      "counts": {
-        "mc": 21,
-        "short": 9,
-        "essay": 2,
-        "code": 0
-      },
-      "contentVersion": "3293cd42358bdebe"
-    },
-    {
       "id": "monthly-01",
       "revision": 1,
       "kind": "monthly",
@@ -152,6 +101,91 @@
       },
       "contentVersion": "fde3c63571e6b244",
       "track": "algorithm"
+    },
+    {
+      "id": "frontend-01",
+      "revision": 1,
+      "kind": "subject",
+      "track": "frontend",
+      "title": "프론트엔드 1회",
+      "subtitle": "개념을 단단하게",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "e59cc80791f4384d"
+    },
+    {
+      "id": "frontend-02",
+      "revision": 1,
+      "kind": "subject",
+      "track": "frontend",
+      "title": "프론트엔드 2회",
+      "subtitle": "실수하기 쉬운 경계",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "866cb2879e49635b"
+    },
+    {
+      "id": "frontend-03",
+      "revision": 1,
+      "kind": "subject",
+      "track": "frontend",
+      "title": "프론트엔드 3회",
+      "subtitle": "한 단계 더 깊이",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "3293cd42358bdebe"
+    },
+    {
+      "id": "ai-practical-01",
+      "revision": 1,
+      "kind": "practical",
+      "track": "ai",
+      "title": "AI 실기 1회",
+      "subtitle": "표 데이터 분류 실습",
+      "practiceMinutes": 120,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 0,
+        "short": 0,
+        "essay": 0,
+        "code": 8
+      },
+      "contentVersion": "925177aaaa638e7c"
+    },
+    {
+      "id": "ai-written-01",
+      "revision": 1,
+      "kind": "written",
+      "track": "ai",
+      "title": "AI 필기 1회",
+      "subtitle": "강의 개념을 연결해서",
+      "practiceMinutes": 120,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 100,
+        "short": 0,
+        "essay": 0,
+        "code": 0
+      },
+      "contentVersion": "a3e443c0f5decd2d"
     }
   ],
   "topics": {
@@ -229,6 +263,23 @@
         "async": 14,
         "storage": 10
       }
+    },
+    "ai": {
+      "label": "AI 역량검사",
+      "topics": {
+        "ml": "AI와 기계학습",
+        "nlp": "자연어 처리",
+        "vision": "딥러닝과 영상 모델",
+        "llm-agent": "LLM과 에이전트",
+        "efficiency": "리소스 최적화"
+      },
+      "topicCounts": {
+        "ml": 24,
+        "nlp": 16,
+        "vision": 24,
+        "llm-agent": 20,
+        "efficiency": 16
+      }
     }
   },
   "notes": [
@@ -243,6 +294,12 @@
       "title": "자료구조 알고리즘 개념",
       "track": "algorithm",
       "file": null
+    },
+    {
+      "id": "ai-concepts",
+      "title": "AI 개념",
+      "track": "ai",
+      "file": "ai-concepts.md"
     }
   ]
 }
