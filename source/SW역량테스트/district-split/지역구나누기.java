@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * BOJ 17471 게리맨더링: https://www.acmicpc.net/problem/17471
+ * BOJ 17471 게리맨더링 (풀이 참고: https://seongkyun.github.io/baekjoon/2019/10/18/baekjoon/)
  *
  * 입력: 구역 수 N(2~10), 각 구역의 인구, 각 구역의 인접 구역 목록이다.
  * 테스트 케이스 수 T는 없다. 인접 관계는 양방향이다.

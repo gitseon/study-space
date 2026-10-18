@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * BOJ 17472 다리 만들기 2: https://www.acmicpc.net/problem/17472
+ * BOJ 17472 다리 만들기 2 (풀이 참고: https://velog.io/@protoss1025/%EB%B0%B1%EC%A4%80-17472-%EB%8B%A4%EB%A6%AC-%EB%A7%8C%EB%93%A4%EA%B8%B0-2)
  *
  * 입력: N M 다음에 0(바다), 1(땅)로 이루어진 지도가 N줄 주어진다.
  * 테스트 케이스 수 T는 없다. 섬은 상하좌우로 연결된 땅의 묶음이다.

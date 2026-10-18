@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * BOJ 14567 선수과목: https://www.acmicpc.net/problem/14567
+ * BOJ 14567 선수과목 (풀이 참고: https://velog.io/@heyoni/14567)
  *
  * 입력: N M 다음에 선수 조건 A B가 M줄 주어진다. 테스트 케이스 수 T는 없다.
  * 출력: 1번부터 N번 과목까지 이수 가능한 최소 학기를 공백으로 구분한다.
