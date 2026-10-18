@@ -1,61 +1,95 @@
-// Theme choice: system setting, light or dark. A classic script loaded in <head> so the saved theme is on the page before the first paint.
-// html[data-theme-mode] holds the choice and html[data-theme] holds the theme in effect. The colours live in style.css as variables.
+// Theme choice: system setting, light or dark, plus a colour palette. A classic script loaded in <head> so the saved choice is on the page before the first paint.
+// html[data-theme-mode] holds the light/dark choice and html[data-theme] the theme in effect. html[data-palette] holds the palette.
+// The colours live in style.css as variables.
 (() => {
   const KEY = 'study-space:theme';
+  const PALETTE_KEY = 'study-space:palette';
   const MODES = {system: '시스템', light: '라이트', dark: '다크'};
+  const PALETTES = {default: '현재', blue: '블루 계열', mono: '모노톤 계열'};
   const root = document.documentElement;
   const query = matchMedia('(prefers-color-scheme: dark)');
 
-  const read = () => {
+  const read = (key, choices, fallback) => {
     try {
-      const saved = localStorage.getItem(KEY);
-      return saved in MODES ? saved : 'system';
+      const saved = localStorage.getItem(key);
+      return saved in choices ? saved : fallback;
     } catch {
-      return 'system';
+      return fallback;
     }
   };
+  const state = {mode: read(KEY, MODES, 'system'), palette: read(PALETTE_KEY, PALETTES, 'default')};
 
-  function apply(mode) {
-    root.dataset.themeMode = mode;
-    root.dataset.theme = mode === 'dark' || (mode === 'system' && query.matches) ? 'dark' : 'light';
+  function apply() {
+    root.dataset.themeMode = state.mode;
+    root.dataset.theme = state.mode === 'dark' || (state.mode === 'system' && query.matches) ? 'dark' : 'light';
+    root.dataset.palette = state.palette;
     const bar = document.querySelector('meta[name="theme-color"]');
     if (bar) {
       bar.content = getComputedStyle(root).getPropertyValue('--paper').trim() || bar.content;
     }
   }
 
-  apply(read());
-  query.addEventListener('change', () => apply(read()));
+  const syncSelects = () => {
+    const mode = document.querySelector('#theme-select');
+    const palette = document.querySelector('#palette-select');
+    if (mode) {
+      mode.value = state.mode;
+    }
+    if (palette) {
+      palette.value = state.palette;
+    }
+  };
+
+  apply();
+  query.addEventListener('change', apply);
   addEventListener('storage', (ev) => {
-    if (ev.key === KEY) {
-      apply(read());
-      const select = document.querySelector('#theme-select');
-      if (select) {
-        select.value = read();
-      }
+    if (ev.key === KEY || ev.key === PALETTE_KEY) {
+      state.mode = read(KEY, MODES, state.mode);
+      state.palette = read(PALETTE_KEY, PALETTES, state.palette);
+      apply();
+      syncSelects();
     }
   });
+
+  function field(text, id, choices) {
+    const label = document.createElement('label');
+    label.className = 'theme-field';
+    label.innerHTML = '<span class="theme-label">' + text + '</span><select id="' + id + '">'
+      + Object.entries(choices).map(([value, name]) => '<option value="' + value + '">' + name + '</option>').join('') + '</select>';
+    return label;
+  }
+
+  function remember(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // The choice still applies to this visit when storage is blocked.
+    }
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.site-header');
     if (!header) {
       return;
     }
-    const label = document.createElement('label');
-    label.className = 'theme-picker';
-    label.innerHTML = '<span class="sr-only">화면 테마</span><select id="theme-select">'
-      + Object.entries(MODES).map(([value, name]) => '<option value="' + value + '">' + name + '</option>').join('') + '</select>';
-    const select = label.querySelector('select');
-    select.value = read();
-    select.addEventListener('change', () => {
-      try {
-        localStorage.setItem(KEY, select.value);
-      } catch {
-        // The choice still applies to this visit when storage is blocked.
-      }
-      apply(select.value);
+    const picker = document.createElement('div');
+    picker.className = 'theme-picker';
+    picker.setAttribute('role', 'group');
+    picker.setAttribute('aria-label', '화면 테마와 색상');
+    const mode = field('테마', 'theme-select', MODES);
+    const palette = field('색상', 'palette-select', PALETTES);
+    picker.append(mode, palette);
+    header.append(picker);
+    syncSelects();
+    mode.querySelector('select').addEventListener('change', (ev) => {
+      state.mode = ev.target.value;
+      remember(KEY, state.mode);
+      apply();
     });
-    header.append(label);
-    apply(read());
+    palette.querySelector('select').addEventListener('change', (ev) => {
+      state.palette = ev.target.value;
+      remember(PALETTE_KEY, state.palette);
+      apply();
+    });
   });
 })();

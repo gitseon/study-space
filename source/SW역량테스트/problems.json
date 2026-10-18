@@ -10,16 +10,16 @@
   ],
   "problems": [
     {
-      "id": "tree-height", "tier": "top", "title": "나무의 키", "alias": "나무 높이",
+      "id": "tree-height", "tier": "top", "title": "나무 높이", "alias": "",
       "type": "구현과 그리디", "file": "나무높이.java",
       "summary": "부족한 높이를 +1과 +2 작업 횟수로 나눠 날짜 세기",
       "basis": "과거 2차 출제 기록에서 가장 자주 반복된 문제이고 전체 출제 횟수도 가장 많습니다.",
       "links": [{"label": "SWEA 14510 나무 높이", "url": "https://swexpertacademy.com/main/code/userProblem/userProblemDetail.do?contestProbId=AYFofW8qpXYDFAR4&categoryId=AYFofW8qpXYDFAR4&categoryType=CODE"}]
     },
     {
-      "id": "mountain-robot", "tier": "high", "title": "산악 구조 로봇", "alias": "보급로 유사",
-      "type": "최단경로", "file": "산악구조로봇.java",
-      "summary": "높이 차이에 따른 이동 비용을 우선순위 큐 다익스트라로 계산",
+      "id": "mountain-robot", "tier": "high", "title": "산악 구조 로봇(보급로)", "alias": "",
+      "type": "최단경로", "file": "보급로.java",
+      "summary": "칸마다 적힌 복구 시간을 비용으로 보고 우선순위 큐 다익스트라로 최소 합 계산",
       "basis": "여러 기수에서 반복 출제됐고 2차에도 나온 적이 있습니다. 헌터와 우열을 가릴 근거가 부족해 같은 후보군으로 봅니다.",
       "links": [{"label": "SWEA 보급로", "url": "https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV15QRX6APsCFAYD"}]
     },
@@ -27,7 +27,7 @@
       "id": "hunter", "tier": "high", "title": "헌터", "alias": "",
       "type": "순열과 완전탐색", "file": "헌터.java",
       "summary": "몬스터를 잡은 뒤에만 고객을 방문하는 순서를 백트래킹으로 탐색",
-      "basis": "반복 출제된 완전탐색 문제입니다. 2차에서 나무의 키와 함께 나온 기록이 있습니다.",
+      "basis": "반복 출제된 완전탐색 문제입니다. 2차에서 나무 높이와 함께 나온 기록이 있습니다.",
       "links": []
     },
     {
@@ -76,7 +76,7 @@
       "id": "apple-game", "tier": "reserve", "title": "사과 먹기 게임", "alias": "",
       "type": "구현과 규칙 찾기", "file": "사과먹기게임.java",
       "summary": "사과마다 목표의 앞쪽과 오른쪽 위치로 필요한 회전 횟수 결정",
-      "basis": "같은 2차에서 풍선 사격 게임과 함께 나온 구현 문제입니다. 나무의 키를 대신할 구현 후보로 봅니다.",
+      "basis": "같은 2차에서 풍선 사격 게임과 함께 나온 구현 문제입니다. 나무 높이를 대신할 구현 후보로 봅니다.",
       "links": []
     },
     {

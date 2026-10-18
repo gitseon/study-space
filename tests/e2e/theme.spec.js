@@ -34,3 +34,24 @@ test('a dark or light choice is remembered across pages and beats the system set
   await expect(html).toHaveAttribute('data-theme', 'light');
   expect(await page.evaluate(paper)).toBe('rgb(247, 246, 242)');
 });
+
+test('the header labels the theme picker and offers current, blue and monochrome palettes', async ({page}) => {
+  await page.goto('index.html');
+  const html = page.locator('html');
+  await expect(page.locator('.theme-picker .theme-label').first()).toHaveText('테마');
+  await expect(page.locator('#palette-select option')).toHaveText(['현재', '블루 계열', '모노톤 계열']);
+  await expect(html).toHaveAttribute('data-palette', 'default');
+  expect(await page.evaluate(paper)).toBe('rgb(247, 246, 242)');
+
+  await page.locator('#palette-select').selectOption('blue');
+  await expect(html).toHaveAttribute('data-palette', 'blue');
+  expect(await page.evaluate(paper)).toBe('rgb(244, 247, 251)');
+  await page.locator('#palette-select').selectOption('mono');
+  expect(await page.evaluate(paper)).toBe('rgb(245, 245, 245)');
+
+  await page.locator('#theme-select').selectOption('dark');
+  expect(await page.evaluate(paper)).toBe('rgb(18, 18, 18)');
+  await page.goto('pages/sw-test.html?p=hunter');
+  await expect(html).toHaveAttribute('data-palette', 'mono');
+  await expect(page.locator('#palette-select')).toHaveValue('mono');
+});
