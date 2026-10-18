@@ -39,6 +39,7 @@ test('every problem page renders without script errors and an unknown id falls b
   const errors = [];
   page.on('pageerror', (err) => errors.push(err.message));
   await page.goto('pages/sw-test.html');
+  await expect(page.locator('.sw-card')).toHaveCount(ORDER.length);
   const ids = await page.locator('.sw-card').evaluateAll((cards) => cards.map((a) => new URL(a.href).searchParams.get('p')));
   expect(ids).toHaveLength(ORDER.length);
   for (const id of ids) {

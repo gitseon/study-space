@@ -43,8 +43,8 @@ for (const examId of ['frontend-01', 'frontend-02', 'frontend-03']) {
     await page.setViewportSize({width: 360, height: 800});
     const response = await page.goto(`pages/quiz.html?exam=${examId}&mode=study`);
     expect(response.ok()).toBe(true);
-    const total = await page.locator('.question-nav button').count();
-    expect(total).toBe(32);
+    const total = 32;
+    await expect(page.locator('.question-nav button')).toHaveCount(total);
     let snippets = 0;
     for (let i = 1; i <= total; i++) {
       await page.getByRole('button', {name: `${i}번 문항`, exact: true}).click();
