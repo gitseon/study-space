@@ -67,17 +67,17 @@ const safeLinks = (links) => links
   .map((l) => '<a href="' + e(l.url) + '" target="_blank" rel="noopener noreferrer">' + e(l.label) + ' ↗</a>')
   .join('');
 
-// One solution's idea note followed by its Java code. The code sits beside a box where the learner writes their own version.
+// One solution: the idea note on the left and, to its right, the Java code above a box where the learner writes their own version.
 function solutionHtml(variant) {
   const idea = renderNote(variant.idea.trimEnd() + '\n', {java: 'Java'}).html;
   const code = renderNote('```java\n' + variant.code.trimEnd() + '\n```\n', {java: 'Java'}).html;
-  return idea + '<section class="sw-code"><div class="sw-code-head"><h2 id="sw-code-title">코드</h2>'
+  return '<div class="sw-split"><div class="sw-idea">' + idea + '</div><section class="sw-code"><div class="sw-code-head"><h2 id="sw-code-title">코드</h2>'
     + '<button type="button" class="sw-fold" aria-controls="sw-code-ref" aria-expanded="true">코드 접기</button></div>'
     + '<div class="sw-code-grid"><div class="sw-code-ref" id="sw-code-ref">' + code + '</div>'
     + '<div class="sw-code-mine"><label for="sw-draft">내 코드 입력</label>'
     + '<textarea id="sw-draft" class="code-editor" rows="24" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" '
     + 'placeholder="여기에 직접 코드를 작성합니다"></textarea>'
-    + '<p class="sw-draft-help">입력한 코드는 브라우저에만 저장합니다.</p></div></div></section>';
+    + '<p class="sw-draft-help">입력한 코드는 브라우저에만 저장합니다.</p></div></div></section></div>';
 }
 
 // The box starts with a runnable skeleton named after the solution's class, so the learner only fills in the body.
@@ -203,6 +203,8 @@ async function start() {
     const view = problemView(data, problem);
     document.title = view.title + ' | ' + data.title + ' | STUDY SPACE';
     root.innerHTML = view.html;
+    // The idea and the code sit side by side, so the page gets more width than the shared 1160px.
+    document.body.classList.add('sw-wide');
     bindToggle(problem);
     bindToc();
     bindCode(problem, variant);

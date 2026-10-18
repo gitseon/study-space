@@ -115,6 +115,9 @@ test('the model code folds and unfolds above a code box that closes braces and i
   await page.getByRole('button', {name: '코드 펼치기'}).click();
   await expect(reference).toBeVisible();
 
+  const idea = await page.locator('.sw-idea').boundingBox();
+  const code = await page.locator('.sw-code').boundingBox();
+  expect(code.x).toBeGreaterThanOrEqual(idea.x + idea.width);
   const box = page.getByLabel('내 코드 입력');
   const side = await Promise.all([reference.boundingBox(), box.boundingBox()]);
   expect(side[1].y).toBeGreaterThanOrEqual(side[0].y + side[0].height);
