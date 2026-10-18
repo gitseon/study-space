@@ -1,6 +1,6 @@
-# 모의고사
+# STUDY SPACE
 
-여러 주제의 모의고사를 풀고 복습하는 정적 사이트입니다. 공개 범위 목록을 바탕으로 직접 만든 연습 문제이며 실제 시험의 출제나 배점을 보장하지 않습니다.
+여러 주제의 문제와 개념을 다시 풀고 정리하는 학습 내용 복습실입니다. 공개 범위 목록을 바탕으로 직접 만든 연습 문제이며 실제 시험의 출제나 배점을 보장하지 않습니다.
 
 - 주소: <a href="https://gitseon.github.io/study-space/" target="_blank" rel="noopener noreferrer">https://gitseon.github.io/study-space/</a>
 - 답안과 진행 기록은 사용하는 브라우저에만 저장됩니다.
@@ -88,6 +88,13 @@ SITE_DIR=dist npm run test:e2e
 - `data/sw-test.json`은 생성물입니다. 원고를 고친 뒤 `python scripts/build_data.py`로 다시 만듭니다.
 - Java 풀이는 `tests/sw_test/`가 실제로 컴파일하고 실행해 확인합니다. 풀이를 고치면 이 테스트도 함께 통과해야 합니다.
 - 강의 복기 PDF와 원본 자료는 저장소에 넣지 않습니다.
+
+## 화면 테마와 색상
+
+- 머리글의 테마 선택에서 시스템, 라이트, 다크를 고릅니다. 선택은 브라우저의 `study-space:theme`에 저장되고 시스템을 고르면 기기 설정을 따릅니다.
+- `assets/theme.js`가 페이지를 그리기 전에 `html`의 `data-theme`를 정합니다. 테마를 바꿔도 풀이 기록과 기존 저장 키는 그대로입니다.
+- 사이트의 모든 색은 `assets/style.css` 맨 위의 색상 변수에서 읽습니다. 라이트 값은 원래 디자인 그대로이고 다크 테마는 `:root[data-theme="dark"]`에서 변수만 덮어씁니다.
+- 색상 테마를 더하려면 같은 방식으로 변수 블록을 하나 만들고 `theme.js`의 `MODES`에 항목을 추가합니다. 강조색 배경 위 글자는 `--on-accent`를 씁니다.
 
 ## 풀이 방식
 

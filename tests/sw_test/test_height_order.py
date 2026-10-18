@@ -19,9 +19,12 @@ def students_with_known_rank(count, shorter_taller_pairs):
 
 
 class HeightOrderTests(unittest.TestCase):
+    """The BFS solution. The Floyd-Warshall solution below runs the same cases."""
+    CLASS_NAME = "키순서"
+
     @classmethod
     def setUpClass(cls):
-        cls.program = JavaProgram("키순서")
+        cls.program = JavaProgram(cls.CLASS_NAME)
         cls.addClassCleanup(cls.program.close)
 
     def assert_cases(self, cases):
@@ -56,6 +59,10 @@ class HeightOrderTests(unittest.TestCase):
             pairs = rng.sample(candidates, rng.randint(0, len(candidates)))
             cases.append((count, pairs, students_with_known_rank(count, pairs)))
         self.assert_cases(cases)
+
+
+class FloydHeightOrderTests(HeightOrderTests):
+    CLASS_NAME = "키순서플로이드"
 
 
 if __name__ == "__main__":

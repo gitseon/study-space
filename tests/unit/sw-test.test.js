@@ -24,8 +24,8 @@ test('Java highlighting colours the syntax and never changes the visible code', 
   assert.match(colored, /<span class="tok-n">true<\/span>/);
   assert.match(colored, /<span class="tok-c">\/\/ note<\/span>/);
   assert.match(colored, /&lt;/);
-  for (const problem of sw.problems) {
-    assert.equal(unescape(highlight('java', problem.code)), problem.code, problem.id);
+  for (const variant of sw.problems.flatMap((p) => p.variants)) {
+    assert.equal(unescape(highlight('java', variant.code)), variant.code, variant.id);
   }
 });
 
@@ -36,8 +36,20 @@ test('the published problem list keeps the prediction order and complete notes',
     'height-order', 'hiking-trail', 'apple-game', 'balloon-shooting', 'island-bridges',
   ]);
   for (const problem of sw.problems) {
-    const {toc} = renderNote(problem.idea + '\n## 코드\n', {java: 'Java'});
-    assert.deepEqual(toc.filter((t) => t.level === 2).map((t) => t.text), ['문제 요약', '발상', '놓치기 쉬운 점', '복잡도와 검증', '코드'], problem.id);
-    assert.match(problem.code, /public class /, problem.id);
+    assert.ok(problem.variants.length >= 1, problem.id);
+    for (const variant of problem.variants) {
+      const {toc} = renderNote(variant.idea + '\n## 코드\n', {java: 'Java'});
+      assert.deepEqual(toc.filter((t) => t.level === 2).map((t) => t.text), ['문제 요약', '발상', '놓치기 쉬운 점', '복잡도와 검증', '코드'], problem.id + '/' + variant.id);
+      assert.match(variant.code, /public class /, problem.id);
+      assert.doesNotMatch(variant.code, /FastScanner|InputStream input/, problem.id);
+    }
   }
+});
+
+test('height order offers the BFS and Floyd-Warshall solutions and other links avoid the closed judge site', () => {
+  const order = sw.problems.find((p) => p.id === 'height-order');
+  assert.deepEqual(order.variants.map((v) => v.id), ['bfs', 'floyd']);
+  assert.match(order.variants[1].code, /for \(int via = 1; via <= N; via\+\+\)/);
+  const urls = sw.problems.flatMap((p) => p.links.map((l) => l.url));
+  assert.ok(urls.every((url) => url.startsWith('https://') && !url.includes('acmicpc.net')));
 });

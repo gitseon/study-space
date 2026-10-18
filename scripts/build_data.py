@@ -37,9 +37,13 @@ def build_sw_test(source_root):
         seen.add(pid)
         if item["tier"] not in tiers: raise ContentError(f"sw-test {pid}: unknown tier {item['tier']}")
         folder=base/pid
-        idea=(folder/"idea.md").read_text(encoding="utf-8-sig").strip()+"\n"
-        code=(folder/item["file"]).read_text(encoding="utf-8-sig").rstrip("\n")+"\n"
-        problems.append({**item,"rank":rank,"idea":idea,"code":code})
+        # A problem may list several solutions under "variants"; otherwise idea.md and "file" are its one solution.
+        variants=item.get("variants") or [{"id":"main","label":"풀이","idea":"idea.md","file":item["file"]}]
+        if len({v["id"] for v in variants})!=len(variants): raise ContentError(f"sw-test {pid}: duplicate variant id")
+        solved=[{"id":v["id"],"label":v["label"],
+                 "idea":(folder/v["idea"]).read_text(encoding="utf-8-sig").strip()+"\n",
+                 "code":(folder/v["file"]).read_text(encoding="utf-8-sig").rstrip("\n")+"\n"} for v in variants]
+        problems.append({**{k:v for k,v in item.items() if k!="variants"},"rank":rank,"variants":solved})
     stray=sorted(p.name for p in base.iterdir() if p.is_dir() and p.name not in seen)
     if stray: raise ContentError(f"sw-test: folders without an entry in problems.json: {stray}")
     return {"title":config["title"],"description":config["description"],"disclaimer":config["disclaimer"],

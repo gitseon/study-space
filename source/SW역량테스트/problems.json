@@ -1,7 +1,7 @@
 {
   "title": "SW역량테스트",
-  "description": "직접 푼 A형 대비 문제의 발상과 Java 코드를 예측 우선순위 순서로 정리했습니다.",
-  "disclaimer": "출제 기록을 바탕으로 직접 정리한 예측입니다. 순위는 상대적인 준비 우선순위이며 실제 출제나 배점을 보장하지 않습니다.",
+  "description": "직접 푼 A형 대비 문제의 발상과 Java 코드를 예측 우선순위 순서로 정리.",
+  "disclaimer": "출제 기록을 바탕으로 직접 정리한 예측. 순위는 상대적인 준비 우선순위이며 실제 출제와 배점은 보장하지 않음.",
   "tiers": [
     {"id": "top", "label": "최우선"},
     {"id": "high", "label": "상위 후보"},
@@ -12,82 +12,86 @@
     {
       "id": "tree-height", "tier": "top", "title": "나무의 키", "alias": "나무 높이",
       "type": "구현과 그리디", "file": "나무높이.java",
-      "summary": "부족한 높이를 +1과 +2 작업 횟수로 나눠 날짜를 센다",
+      "summary": "부족한 높이를 +1과 +2 작업 횟수로 나눠 날짜 세기",
       "basis": "과거 2차 출제 기록에서 가장 자주 반복된 문제이고 전체 출제 횟수도 가장 많습니다.",
       "links": [{"label": "SWEA 14510 나무 높이", "url": "https://swexpertacademy.com/main/code/userProblem/userProblemDetail.do?contestProbId=AYFofW8qpXYDFAR4&categoryId=AYFofW8qpXYDFAR4&categoryType=CODE"}]
     },
     {
       "id": "mountain-robot", "tier": "high", "title": "산악 구조 로봇", "alias": "보급로 유사",
       "type": "최단경로", "file": "산악구조로봇.java",
-      "summary": "높이 차이에 따른 이동 비용을 우선순위 큐 다익스트라로 구한다",
+      "summary": "높이 차이에 따른 이동 비용을 우선순위 큐 다익스트라로 계산",
       "basis": "여러 기수에서 반복 출제됐고 2차에도 나온 적이 있습니다. 헌터와 우열을 가릴 근거가 부족해 같은 후보군으로 봅니다.",
       "links": [{"label": "SWEA 보급로", "url": "https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV15QRX6APsCFAYD"}]
     },
     {
       "id": "hunter", "tier": "high", "title": "헌터", "alias": "",
       "type": "순열과 완전탐색", "file": "헌터.java",
-      "summary": "몬스터를 잡은 뒤에만 고객을 방문하는 순서를 백트래킹으로 탐색한다",
+      "summary": "몬스터를 잡은 뒤에만 고객을 방문하는 순서를 백트래킹으로 탐색",
       "basis": "반복 출제된 완전탐색 문제입니다. 2차에서 나무의 키와 함께 나온 기록이 있습니다.",
       "links": []
     },
     {
       "id": "prerequisite", "tier": "support", "title": "선수과목", "alias": "학교졸업",
       "type": "위상정렬", "file": "선수과목.java",
-      "summary": "진입 차수 0인 과목부터 처리하며 선수과목 학기의 최댓값에 1을 더한다",
+      "summary": "진입 차수 0인 과목부터 처리하며 선수과목 학기의 최댓값에 1을 더함",
       "basis": "선행관계가 있는 위상정렬 유형이고 2차에서 나온 기록이 있습니다. 유형을 넓게 대비하기 위한 후보입니다.",
-      "links": [{"label": "BOJ 14567 선수과목", "url": "https://www.acmicpc.net/problem/14567"}]
+      "links": [{"label": "14567 선수과목 풀이 참고", "url": "https://velog.io/@heyoni/14567"}]
     },
     {
       "id": "processor", "tier": "support", "title": "프로세서 연결하기", "alias": "",
       "type": "완전탐색과 DFS", "file": "프로세서연결하기.java",
-      "summary": "코어마다 네 방향과 연결 안 함을 고르고 전선을 놓았다 되돌린다",
+      "summary": "코어마다 네 방향과 연결 안 함을 고르고 전선을 놓았다 되돌림",
       "basis": "가장 최근 기수의 2차 출제 기록이 있는 완전탐색 문제입니다.",
       "links": [{"label": "SWEA 1767 프로세서 연결하기", "url": "https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV4suNtaXFEDFAUf"}]
     },
     {
       "id": "district-split", "tier": "reserve", "title": "지역구 나누기", "alias": "게리맨더링",
       "type": "부분집합과 그래프 탐색", "file": "지역구나누기.java",
-      "summary": "구역을 두 묶음으로 나누고 양쪽이 연결됐는지 확인한다",
+      "summary": "구역을 두 묶음으로 나누고 양쪽이 연결됐는지 확인",
       "basis": "전체 출제 횟수는 많지만 2차 출제 기록은 없어 예비 후보입니다.",
-      "links": [{"label": "BOJ 17471 게리맨더링", "url": "https://www.acmicpc.net/problem/17471"}]
+      "links": [{"label": "17471 게리맨더링 풀이 참고", "url": "https://seongkyun.github.io/baekjoon/2019/10/18/baekjoon/"}]
     },
     {
       "id": "height-order", "tier": "reserve", "title": "키 순서", "alias": "",
-      "type": "그래프 탐색", "file": "키순서.java",
-      "summary": "정방향과 역방향 탐색으로 닿는 학생 수의 합이 N-1인지 센다",
+      "type": "그래프 탐색과 플로이드–워셜", "file": "키순서.java",
+      "summary": "직접 또는 간접으로 아는 키 관계가 N-1개인 학생 세기",
       "basis": "2차 출제 기록은 없습니다. 그래프 탐색을 점검하는 예비 후보입니다.",
+      "variants": [
+        {"id": "bfs", "label": "BFS 풀이", "idea": "idea.md", "file": "키순서.java"},
+        {"id": "floyd", "label": "플로이드–워셜 풀이", "idea": "idea-floyd.md", "file": "키순서플로이드.java"}
+      ],
       "links": [
         {"label": "SWEA 5643 키 순서", "url": "https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AWXQsLWKd5cDFAUo"},
-        {"label": "BOJ 2458 키 순서", "url": "https://www.acmicpc.net/problem/2458"}
+        {"label": "2458 키 순서 풀이 참고", "url": "https://velog.io/@lifeisbeautiful/%EB%B0%B1%EC%A4%80-2458%EB%B2%88-%ED%82%A4-%EC%88%9C%EC%84%9C-Java"}
       ]
     },
     {
       "id": "hiking-trail", "tier": "reserve", "title": "등산로 조성", "alias": "",
       "type": "DFS와 백트래킹", "file": "등산로조성.java",
-      "summary": "최고점마다 내리막 DFS를 하며 한 번만 깎고 되돌린다",
+      "summary": "최고점마다 내리막 DFS를 하며 한 번만 깎고 되돌림",
       "basis": "출제 횟수가 적고 2차 기록이 없습니다. 최고점에서 시작하는 DFS를 점검하는 예비 후보입니다.",
       "links": [{"label": "SWEA 1949 등산로 조성", "url": "https://swexpertacademy.com/main/code/problem/problemDetail.do?contestProbId=AV5PoOKKAPIDFAUq"}]
     },
     {
       "id": "apple-game", "tier": "reserve", "title": "사과 먹기 게임", "alias": "",
       "type": "구현과 규칙 찾기", "file": "사과먹기게임.java",
-      "summary": "사과마다 목표의 앞쪽과 오른쪽 위치로 필요한 회전 횟수를 정한다",
+      "summary": "사과마다 목표의 앞쪽과 오른쪽 위치로 필요한 회전 횟수 결정",
       "basis": "같은 2차에서 풍선 사격 게임과 함께 나온 구현 문제입니다. 나무의 키를 대신할 구현 후보로 봅니다.",
       "links": []
     },
     {
       "id": "balloon-shooting", "tier": "reserve", "title": "풍선 사격 게임", "alias": "",
       "type": "순열과 구간 DP", "file": "풍선사격게임.java",
-      "summary": "마지막에 터뜨리는 풍선을 기준으로 구간을 둘로 나눈다",
+      "summary": "마지막에 터뜨리는 풍선을 기준으로 구간을 둘로 나눔",
       "basis": "사과 먹기 게임과 함께 2차에 나온 완전탐색 계열 문제입니다.",
       "links": []
     },
     {
       "id": "island-bridges", "tier": "reserve", "title": "다리 건설", "alias": "다리 만들기 2",
       "type": "그래프와 MST", "file": "다리건설.java",
-      "summary": "섬에 번호를 붙이고 다리 후보를 모아 크루스칼로 연결한다",
+      "summary": "섬에 번호를 붙이고 다리 후보를 모아 크루스칼로 연결",
       "basis": "이전 기수의 2차에 나온 문제라 같은 문제가 다시 나올 가능성은 낮게 봅니다. 그래프 응용을 더 준비할 때 점검합니다.",
-      "links": [{"label": "BOJ 17472 다리 만들기 2", "url": "https://www.acmicpc.net/problem/17472"}]
+      "links": [{"label": "17472 다리 만들기 2 풀이 참고", "url": "https://velog.io/@protoss1025/%EB%B0%B1%EC%A4%80-17472-%EB%8B%A4%EB%A6%AC-%EB%A7%8C%EB%93%A4%EA%B8%B0-2"}]
     }
   ]
 }

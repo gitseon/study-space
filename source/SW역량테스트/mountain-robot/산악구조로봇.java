@@ -94,64 +94,22 @@ public class 산악구조로봇 {
     }
 
     public static void main(String[] args) throws IOException {
-        FastScanner scanner = new FastScanner(System.in);
-        int testCases = scanner.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
         StringBuilder output = new StringBuilder();
+        int testCases = Integer.parseInt(br.readLine().trim());
         for (int test = 1; test <= testCases; test++) {
-            int n = scanner.nextInt();
+            int n = Integer.parseInt(br.readLine().trim());
             int[][] heights = new int[n][n];
             for (int row = 0; row < n; row++) {
+                st = new StringTokenizer(br.readLine());
                 for (int col = 0; col < n; col++) {
-                    heights[row][col] = scanner.nextInt();
+                    heights[row][col] = Integer.parseInt(st.nextToken());
                 }
             }
             output.append('#').append(test).append(' ')
                     .append(minimumEnergy(heights)).append('\n');
         }
         System.out.print(output);
-    }
-
-    private static class FastScanner {
-        private final InputStream input;
-        private final byte[] buffer = new byte[1 << 16];
-        private int position;
-        private int length;
-
-        FastScanner(InputStream input) {
-            this.input = input;
-        }
-
-        private int read() throws IOException {
-            if (position >= length) {
-                length = input.read(buffer);
-                position = 0;
-                if (length < 0) {
-                    return -1;
-                }
-            }
-            return buffer[position++];
-        }
-
-        int nextInt() throws IOException {
-            int character;
-            do {
-                character = read();
-                if (character == -1) {
-                    throw new EOFException("입력 정수가 부족합니다.");
-                }
-            } while (character <= ' ');
-
-            int sign = 1;
-            if (character == '-') {
-                sign = -1;
-                character = read();
-            }
-            int value = 0;
-            while (character > ' ') {
-                value = value * 10 + character - '0';
-                character = read();
-            }
-            return value * sign;
-        }
     }
 }

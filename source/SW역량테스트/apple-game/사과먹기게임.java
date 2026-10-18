@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 /**
  * 사과 먹기 게임 복기본을 기준으로 한 풀이.
@@ -33,20 +35,21 @@ public class 사과먹기게임 {
     private static final int MAX_APPLES = 10;
 
     public static void main(String[] args) throws IOException {
-        FastScanner in = new FastScanner(System.in);
-        int testCases = in.nextInt();
-        if (testCases == -1) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String first = br.readLine();
+        if (first == null) {
             return;
         }
+        int testCases = Integer.parseInt(first.trim());
 
         StringBuilder answer = new StringBuilder();
         for (int testCase = 0; testCase < testCases; testCase++) {
-            int size = in.nextInt();
+            int size = Integer.parseInt(br.readLine().trim());
             int[] appleRow = new int[MAX_APPLES + 1];
             int[] appleCol = new int[MAX_APPLES + 1];
             int count = 0;
             for (int row = 0; row < size; row++) {
-                count = Math.max(count, in.readBoardRow(size, row, appleRow, appleCol));
+                count = Math.max(count, readBoardRow(br.readLine().trim(), size, row, appleRow, appleCol));
             }
             answer.append(minimumTurns(appleRow, appleCol, count)).append('\n');
         }
@@ -75,77 +78,19 @@ public class 사과먹기게임 {
         return total;
     }
 
-    private static class FastScanner {
-        private final InputStream input;
-        private final byte[] buffer = new byte[1 << 16];
-        private int position;
-        private int length;
-
-        FastScanner(InputStream input) {
-            this.input = input;
-        }
-
-        private int read() throws IOException {
-            if (position >= length) {
-                length = input.read(buffer);
-                position = 0;
-                if (length == -1) {
-                    return -1;
-                }
+    // 공백이 있으면 정수 행이고, 없으면 숫자를 붙여 쓴 행이다.
+    private static int readBoardRow(String line, int size, int row, int[] appleRow, int[] appleCol) {
+        boolean spaced = line.indexOf(' ') >= 0;
+        StringTokenizer st = spaced ? new StringTokenizer(line) : null;
+        int maximum = 0;
+        for (int col = 0; col < size; col++) {
+            int number = spaced ? Integer.parseInt(st.nextToken()) : line.charAt(col) - '0';
+            if (number > 0) {
+                appleRow[number] = row;
+                appleCol[number] = col;
+                maximum = Math.max(maximum, number);
             }
-            return buffer[position++];
         }
-
-        private int nextNonWhitespace() throws IOException {
-            int ch;
-            do {
-                ch = read();
-            } while (ch != -1 && ch <= ' ');
-            return ch;
-        }
-
-        int nextInt() throws IOException {
-            int ch = nextNonWhitespace();
-            int value = 0;
-            if (ch == -1) {
-                return -1;
-            }
-            while (ch > ' ') {
-                value = value * 10 + ch - '0';
-                ch = read();
-            }
-            return value;
-        }
-
-        int readBoardRow(int size, int row, int[] appleRow, int[] appleCol)
-                throws IOException {
-            int first = nextNonWhitespace();
-            int second = read();
-            int third = second > ' ' ? read() : -1;
-            // 한 칸은 최대 두 자리이고 붙인 행은 다섯 자리 이상이다.
-            // 처음 세 글자로 형식을 판별해 긴 행 문자열도 저장하지 않는다.
-            boolean compact = third > ' ';
-            int maximum = 0;
-            for (int col = 0; col < size; col++) {
-                int number;
-                if (compact) {
-                    int ch = col == 0 ? first : col == 1 ? second : col == 2 ? third : read();
-                    number = ch - '0';
-                } else if (col == 0) {
-                    number = first - '0';
-                    if (second > ' ') {
-                        number = number * 10 + second - '0';
-                    }
-                } else {
-                    number = nextInt();
-                }
-                if (number > 0) {
-                    appleRow[number] = row;
-                    appleCol[number] = col;
-                    maximum = Math.max(maximum, number);
-                }
-            }
-            return maximum;
-        }
+        return maximum;
     }
 }
