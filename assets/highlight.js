@@ -11,8 +11,10 @@ const JAVA_LITERALS = 'true false null';
 const rules = {
   // Java is coloured only where a caller asks for it by name. languageNames stays unchanged on purpose.
   java: [
+    ['d', /\/\*\*[\s\S]*?\*\//y],
     ['c', /\/\/[^\n]*|\/\*[\s\S]*?\*\//y],
     ['s', /'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"/y],
+    ['a', /@[A-Za-z_]\w*/y],
     ['n', /\b\d+(?:\.\d+)?[LlFfDd]?\b/y],
     ['w', /[A-Za-z_$][\w$]*/y],
   ],
@@ -76,7 +78,8 @@ export function highlight(lang, source) {
     }
     let [kind, text] = hit;
     if (kind === 'w') {
-      kind = keywords.has(text) ? 'k' : literals.has(text) ? 'n' : null;
+      // Java reads true, false and null as keywords, as Eclipse does.
+      kind = keywords.has(text) ? 'k' : literals.has(text) ? (lang === 'java' ? 'k' : 'n') : null;
     }
     i += text.length;
     if (!kind) {

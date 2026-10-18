@@ -147,7 +147,9 @@
 --tok-c:#8a9890;--tok-s:#e0a07a;--tok-k:#7fd09a;--tok-n:#e0b866;--tok-t:#7fd09a;--tok-a:#b79ae6;--tok-p:#b79ae6}
 
 /* Theme picker in the site header */
-.theme-picker{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px 14px}.theme-field{display:inline-flex;align-items:center;gap:6px}.theme-label{font-size:12px;color:var(--muted);white-space:nowrap}.theme-picker select{font-size:12px;padding:5px 8px}
+.theme-picker{position:relative;display:inline-flex}.theme-button{font-size:12px;padding:6px 14px}
+.theme-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:30;display:grid;gap:12px;width:210px;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 28px var(--shadow-card)}.theme-panel[hidden]{display:none}
+.theme-field{display:grid;gap:5px}.theme-label{font-size:12px;font-weight:700;color:var(--muted)}.theme-panel select{width:100%;font-size:13px;padding:7px 9px}
 .sw-toggle{display:inline-flex;margin-top:24px}.sw-toggle+.sw-solution>h2:first-child{margin-top:20px}
 /* The site name is longer than before, so narrow headers keep each item on one line. */
 @media(max-width:480px){.site-header{flex-wrap:wrap;height:auto;min-height:74px;padding-top:12px;padding-bottom:12px;gap:8px 12px}.brand{white-space:nowrap;font-size:17px;gap:8px}.brand-icon{width:28px;height:28px}.header-link,.site-header>.quiet{white-space:nowrap}.theme-picker select{padding:4px 6px}}
@@ -158,7 +160,7 @@
 .sw-nav .sw-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 24px;margin-top:6px}
 .sw-nav .sw-group-label{margin-top:8px}
 .note-layout.sw-single{grid-template-columns:minmax(0,1fr);padding-top:0}
-.note .sw-code-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:46px 0 14px;padding-top:26px;border-top:2px solid var(--accent)}
+.note .sw-code-head{display:flex;align-items:center;justify-content:flex-start;gap:14px;margin:46px 0 14px;padding-top:26px;border-top:2px solid var(--accent)}
 .note .sw-code-head h2{margin:0;padding:0;border:0}
 .sw-code-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}.sw-code-grid.folded{grid-template-columns:minmax(0,1fr)}
 .sw-code-ref[hidden]{display:none}.sw-code-ref .snippet{margin:0}
@@ -227,3 +229,18 @@
 /* Without colour, monochrome code tells its tokens apart by weight and slant. */
 :root[data-palette="mono"] .tok-k,:root[data-palette="mono"] .tok-t{font-weight:700}
 :root[data-palette="mono"] .tok-c{font-style:italic}
+
+/* Java snippets use the Eclipse editor colours: keywords and literals purple-red and bold, strings blue, comments green, Javadoc blue-grey, annotations grey,
+   everything else the normal text colour. The dark set follows the Eclipse dark theme. */
+.snippet[data-lang="java"] .tok-k{color:#7f0055;font-weight:700}
+.snippet[data-lang="java"] .tok-s{color:#2a00ff}
+.snippet[data-lang="java"] .tok-c{color:#3f7f5f;font-style:normal}
+.snippet[data-lang="java"] .tok-d{color:#3f5fbf;font-style:normal}
+.snippet[data-lang="java"] .tok-a{color:#646464}
+.snippet[data-lang="java"] .tok-n{color:inherit}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-k{color:#cc7832}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-s{color:#6a8759}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-c{color:#808080}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-d{color:#629755}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-a{color:#bbb529}
+:root[data-theme="dark"] .snippet[data-lang="java"] .tok-n{color:#6897bb}

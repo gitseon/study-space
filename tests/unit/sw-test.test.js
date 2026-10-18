@@ -21,7 +21,8 @@ test('Java highlighting colours the syntax and never changes the visible code', 
   const colored = highlight('java', 'public static void main() { int x = 10L; // note\n  String s = "a<b"; boolean t = true; }');
   assert.match(colored, /<span class="tok-k">public<\/span>/);
   assert.match(colored, /<span class="tok-n">10L<\/span>/);
-  assert.match(colored, /<span class="tok-n">true<\/span>/);
+  assert.match(colored, /<span class="tok-k">true<\/span>/);
+  assert.match(highlight('java', '/** doc */ @Override int a;'), /<span class="tok-d">\/\*\* doc \*\/<\/span> <span class="tok-a">@Override<\/span>/);
   assert.match(colored, /<span class="tok-c">\/\/ note<\/span>/);
   assert.match(colored, /&lt;/);
   for (const variant of sw.problems.flatMap((p) => p.variants)) {

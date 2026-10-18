@@ -104,6 +104,9 @@ test('the model code folds and unfolds beside a code box that closes braces and 
   await page.goto('pages/sw-test.html?p=hunter');
   const reference = page.locator('.sw-code-ref');
   await expect(reference).toBeVisible();
+  const [title, fold] = await Promise.all([page.locator('#sw-code-title').boundingBox(), page.getByRole('button', {name: '코드 접기'}).boundingBox()]);
+  expect(fold.x).toBeLessThan(title.x + title.width + 40);
+  expect(fold.y + fold.height).toBeLessThanOrEqual((await reference.boundingBox()).y);
   await page.getByRole('button', {name: '코드 접기'}).click();
   await expect(reference).toBeHidden();
   await page.reload();

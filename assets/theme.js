@@ -67,6 +67,7 @@
     }
   }
 
+  // One "테마" button in the header opens a small panel holding both choices, light/dark and colour palette.
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.site-header');
     if (!header) {
@@ -74,13 +75,32 @@
     }
     const picker = document.createElement('div');
     picker.className = 'theme-picker';
-    picker.setAttribute('role', 'group');
-    picker.setAttribute('aria-label', '화면 테마와 색상');
+    picker.innerHTML = '<button type="button" class="theme-button" aria-haspopup="true" aria-expanded="false" aria-controls="theme-panel">테마</button>'
+      + '<div class="theme-panel" id="theme-panel" role="group" aria-label="테마와 색상 계열" hidden></div>';
+    const button = picker.querySelector('.theme-button');
+    const panel = picker.querySelector('.theme-panel');
     const mode = field('테마', 'theme-select', MODES);
-    const palette = field('색상', 'palette-select', PALETTES);
-    picker.append(mode, palette);
+    const palette = field('색상 계열', 'palette-select', PALETTES);
+    panel.append(mode, palette);
     header.append(picker);
     syncSelects();
+
+    const setOpen = (open) => {
+      panel.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+    };
+    button.addEventListener('click', () => setOpen(panel.hidden));
+    document.addEventListener('click', (ev) => {
+      if (!picker.contains(ev.target)) {
+        setOpen(false);
+      }
+    });
+    picker.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        button.focus();
+      }
+    });
     mode.querySelector('select').addEventListener('change', (ev) => {
       state.mode = ev.target.value;
       remember(KEY, state.mode);
