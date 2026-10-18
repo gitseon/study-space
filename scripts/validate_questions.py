@@ -1,7 +1,7 @@
 import json
 import re
 from collections import Counter
-from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES, CHOICE_KINDS
+from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES, CHOICE_KINDS, SW_TEST_DIR
 
 MAX_FRONTEND_LINE=38
 FRONTEND_LANGS=("html","css","js")
@@ -130,9 +130,45 @@ def validate_notes(source_root=ROOT/"source"):
         if len(fences)%2: issues.append({"code":"fence","questionId":note_id,"message":"unclosed code fence","severity":"error"})
     return issues
 
+SW_IDEA_SECTIONS=("## 문제 요약","## 발상","## 놓치기 쉬운 점","## 복잡도와 검증")
+
+def validate_sw_test(source_root=ROOT/"source"):
+    """SW역량테스트 problems need every idea section, a runnable Java class, readable text and no private links."""
+    base=source_root/SW_TEST_DIR
+    if not (base/"problems.json").exists():
+        return []
+    issues=[]
+    def add(code,item,message): issues.append({"code":code,"questionId":item,"message":message,"severity":"error"})
+    config=json.loads((base/"problems.json").read_text(encoding="utf-8-sig"))
+    tier_order=[t["id"] for t in config["tiers"]]
+    last_tier=-1
+    for item in config["problems"]:
+        pid=item["id"]
+        tier=tier_order.index(item["tier"]) if item["tier"] in tier_order else -1
+        if tier<0: add("sw-tier",pid,"unknown tier")
+        elif tier<last_tier: add("sw-order",pid,"problems must follow the tier order")
+        last_tier=max(last_tier,tier)
+        for field in ("title","type","summary","basis","file"):
+            if not str(item.get(field,"")).strip(): add("sw-field",pid,f"missing {field}")
+        idea_path,code_path=base/pid/"idea.md",base/pid/item.get("file","")
+        if not idea_path.is_file() or not code_path.is_file():
+            add("sw-file",pid,"missing idea.md or code file"); continue
+        idea=idea_path.read_text(encoding="utf-8-sig"); code=code_path.read_text(encoding="utf-8-sig")
+        for heading in SW_IDEA_SECTIONS:
+            if not re.search(r"(?m)^"+re.escape(heading)+r"\s*$",idea): add("sw-section",pid,f"missing {heading}")
+        if len(re.findall(r"(?m)^```",idea))%2: add("fence",pid,"unclosed code fence")
+        prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",idea+" "+item.get("summary","")+" "+item.get("basis",""))
+        if re.search(r"[·,]{2,}|\.{3,}",prose): add("punctuation",pid,"punctuation run")
+        for text in (idea,code,json.dumps(item,ensure_ascii=False)):
+            if chr(0xFFFD) in text: add("encoding",pid,"broken characters")
+            if re.search(r"notion|\.pdf",text,re.I): add("sw-private",pid,"private link or course file name")
+        if not re.search(r"public\s+class\s+"+re.escape(code_path.stem)+r"\b",code) or "static void main" not in code:
+            add("sw-code",pid,"code must declare the public class and main")
+    return issues
+
 if __name__=="__main__":
     exams=build_data(); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
-    issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()
+    issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()+validate_sw_test()
     for item in issues: print(json.dumps(item,ensure_ascii=True))
     print(f"Content validation: {len(issues)} errors")
     raise SystemExit(bool(issues))

@@ -5,8 +5,17 @@ const JS_KEYWORDS = 'async await break case catch class const continue default e
 const JS_LITERALS = 'true false null undefined NaN Infinity';
 const PY_KEYWORDS = 'and as assert break class continue def del elif else except finally for from global if import in is lambda not or pass raise return try while with yield';
 const PY_LITERALS = 'True False None';
+const JAVA_KEYWORDS = 'abstract boolean break byte case catch char class continue default do double else enum extends final finally float for if implements import instanceof int interface long new package private protected public return short static super switch this throw throws try void while';
+const JAVA_LITERALS = 'true false null';
 
 const rules = {
+  // Java is coloured only where a caller asks for it by name. languageNames stays unchanged on purpose.
+  java: [
+    ['c', /\/\/[^\n]*|\/\*[\s\S]*?\*\//y],
+    ['s', /'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"/y],
+    ['n', /\b\d+(?:\.\d+)?[LlFfDd]?\b/y],
+    ['w', /[A-Za-z_$][\w$]*/y],
+  ],
   js: [
     ['c', /\/\/[^\n]*|\/\*[\s\S]*?\*\//y],
     ['s', /`(?:\\[\s\S]|[^`\\])*`|'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"/y],
@@ -41,9 +50,9 @@ export function highlight(lang, source) {
   if (!list) {
     return escape(source);
   }
-  const python = lang === 'python';
-  const keywords = new Set((python ? PY_KEYWORDS : JS_KEYWORDS).split(' '));
-  const literals = new Set((python ? PY_LITERALS : JS_LITERALS).split(' '));
+  const [keywordList, literalList] = {python: [PY_KEYWORDS, PY_LITERALS], java: [JAVA_KEYWORDS, JAVA_LITERALS]}[lang] || [JS_KEYWORDS, JS_LITERALS];
+  const keywords = new Set(keywordList.split(' '));
+  const literals = new Set(literalList.split(' '));
   let out = '';
   let plain = '';
   let i = 0;

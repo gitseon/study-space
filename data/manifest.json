@@ -301,5 +301,10 @@
       "track": "ai",
       "file": "ai-concepts.md"
     }
-  ]
+  ],
+  "swTest": {
+    "title": "SW역량테스트",
+    "file": "sw-test.json",
+    "count": 11
+  }
 }

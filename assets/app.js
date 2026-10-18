@@ -129,8 +129,14 @@ function trackSection() {
         + '<span>' + mine.length + '회차 ' + questions + '문항</span></button>';
     })
     .join('');
+  // SW역량테스트 is a page of notes rather than an exam track, so it opens as a link beside the track buttons.
+  const sw = manifest.swTest;
+  const swLink = sw
+    ? '<a class="track-button sw-link" href="pages/sw-test.html"><strong>' + e(sw.title) + '</strong>'
+      + '<span>예측 순서대로 ' + sw.count + '문제의 발상과 코드 ↗</span></a>'
+    : '';
   return '<section class="track-picker"><span class="eyebrow">무엇을 풀어볼까요</span>'
-    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + '</div>'
+    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + swLink + '</div>'
     + noteButtons() + '</section>';
 }
 

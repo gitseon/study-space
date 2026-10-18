@@ -85,3 +85,31 @@
 
 .note-button:disabled{border-style:dashed;color:var(--muted);border-color:var(--line);background:transparent;cursor:default;opacity:1}.note-button small{font-size:11px}
 .track-picker .note-buttons{margin-top:14px}
+
+/* SW역량테스트: home link, table of contents and problem pages */
+.track-button.sw-link{border-style:dashed}.track-button.sw-link:hover{border-style:solid;border-color:var(--green)}.track-button.sw-link strong{color:var(--green)}
+.sw-intro{padding:38px 0 6px}.sw-intro h1{font-size:34px;margin:8px 0 10px;letter-spacing:-.03em}.sw-lead{max-width:640px;margin:0;color:var(--muted)}
+.sw-disclaimer{display:inline-block;margin:16px 0 0;padding:8px 14px;border-radius:10px;background:var(--soft);color:var(--green);font-size:13px}
+.sw-tier{margin-top:34px}.sw-tier h2{font-size:15px;margin:0 0 12px;color:var(--green);letter-spacing:.02em}
+.sw-cards,.sw-groups,.sw-groups ol,.sw-sections{list-style:none;margin:0;padding:0}
+.sw-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sw-card{display:flex;align-items:center;gap:16px;height:100%;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.sw-card:hover,.sw-card:focus-visible{border-color:var(--green)}
+.sw-rank{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:26px;height:26px;padding:0 6px;border-radius:999px;background:var(--green);color:#fff;font-size:12px;font-weight:700}
+.sw-card-body{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.sw-card-body strong{font-size:16px}.sw-card-body small{font-size:12px;font-weight:400;color:var(--muted)}
+.sw-card-type{font-size:11px;font-weight:700;color:var(--green)}.sw-card-summary{font-size:13px;line-height:1.6;color:var(--muted)}
+.sw-go{color:var(--green);font-size:18px}
+.sw-nav .sw-home{display:block;margin:8px 0 4px;font-size:12px;font-weight:700;color:var(--green)}
+.sw-group-label{display:block;margin:14px 0 4px;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.sw-groups ol>li>a{display:flex;align-items:center;gap:8px;padding:4px 0}.sw-groups a:hover{color:var(--green)}
+.sw-groups a.active{font-weight:700;color:var(--green)}
+.sw-nav .sw-rank{min-width:22px;height:22px;font-size:11px;background:#cdd8c8;color:var(--green)}.sw-nav a.active .sw-rank{background:var(--green);color:#fff}
+.sw-sections{margin:2px 0 6px 30px;padding-left:10px;border-left:2px solid var(--line)}.sw-sections a{padding:2px 0;font-size:12px;font-weight:400;color:var(--muted)}
+.sw-head h1{margin:6px 0 10px}.sw-head h1 small{margin-left:8px;font-size:15px;font-weight:400;color:var(--muted)}
+.sw-crumb{margin:0;font-size:13px}.sw-crumb a{color:var(--green)}
+.sw-meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.sw-chip{padding:2px 10px;border-radius:999px;background:var(--soft);color:var(--green);font-size:12px;font-weight:700}.sw-chip.rank{background:var(--green);color:#fff}
+.sw-basis{margin:8px 0;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:#f7f8f3;font-size:13px}
+.sw-links{margin:6px 0 0;font-size:13px;color:var(--muted)}.sw-links a{margin-left:10px;font-weight:600;color:var(--green)}
+.sw-pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:14px}.sw-pager a{font-weight:700;color:var(--green)}
+@media(max-width:760px){.sw-cards{grid-template-columns:minmax(0,1fr)}.sw-intro h1{font-size:28px}.sw-card{padding:16px}}
