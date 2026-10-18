@@ -29,6 +29,7 @@ test('choosing a problem shows its idea and highlighted Java code, and the pager
   await page.getByRole('link', {name: /선수과목 →/}).click();
   await expect(page).toHaveURL(/\?p=prerequisite$/);
   await expect(page.getByRole('heading', {name: '선수과목', level: 1})).toBeVisible();
+  await page.getByRole('button', {name: '목차 보기'}).click();
   await page.getByRole('link', {name: '전체 목차 보기'}).click();
   await expect(page.locator('.sw-card')).toHaveCount(ORDER.length);
   expect(outside).toEqual([]);
@@ -75,20 +76,31 @@ test('the mountain robot note is the 보급로 solution', async ({page}) => {
   await expect(page.locator('figure.snippet code')).toContainText('PriorityQueue');
 });
 
-test('the contents list can be hidden and shown again, and the choice is remembered', async ({page}) => {
+test('the contents list opens above the problem, picks another problem and the choice is remembered', async ({page}) => {
   await page.goto('pages/sw-test.html?p=hunter');
-  const toggle = page.getByRole('button', {name: '목차 숨기기'});
-  await expect(page.locator('#sw-nav')).toBeVisible();
-  await toggle.click();
-  await expect(page.locator('#sw-nav')).toBeHidden();
-  await expect(page.getByRole('button', {name: '목차 보이기'})).toHaveAttribute('aria-expanded', 'false');
+  const nav = page.locator('#sw-nav');
+  await expect(nav).toBeHidden();
+  await page.getByRole('button', {name: '목차 보기'}).click();
+  await expect(nav).toBeVisible();
+  const [navBox, articleBox] = await Promise.all([nav.boundingBox(), page.locator('article.sw-problem').boundingBox()]);
+  expect(navBox.y + navBox.height).toBeLessThanOrEqual(articleBox.y + 1);
   await page.reload();
-  await expect(page.locator('#sw-nav')).toBeHidden();
-  await page.getByRole('button', {name: '목차 보이기'}).click();
-  await expect(page.locator('#sw-nav')).toBeVisible();
+  await expect(nav).toBeVisible();
+  await nav.getByRole('link', {name: /선수과목/}).click();
+  await expect(page).toHaveURL(/\?p=prerequisite$/);
+  await page.getByRole('button', {name: '목차 숨기기'}).click();
+  await expect(nav).toBeHidden();
+  await expect(page.getByRole('button', {name: '목차 보기'})).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('the model code folds and unfolds beside a code box that indents by four spaces', async ({page}) => {
+test('the code box starts with the Hello World skeleton named after the solution class', async ({page}) => {
+  await page.goto('pages/sw-test.html?p=mountain-robot');
+  const box = page.getByLabel('내 코드 입력');
+  await expect(box).toHaveValue(['public class 보급로 {', '    public static void main(String[] args) {', '        System.out.println("Hello World!");', '    }', '}'].join('\n'));
+  await expect(page.locator('.sw-draft-help')).toHaveCount(0);
+});
+
+test('the model code folds and unfolds beside a code box that closes braces and indents by four spaces', async ({page}) => {
   await page.goto('pages/sw-test.html?p=hunter');
   const reference = page.locator('.sw-code-ref');
   await expect(reference).toBeVisible();
@@ -102,12 +114,13 @@ test('the model code folds and unfolds beside a code box that indents by four sp
   const box = page.getByLabel('내 코드 입력');
   const side = await Promise.all([reference.boundingBox(), box.boundingBox()]);
   expect(side[1].x).toBeGreaterThan(side[0].x + side[0].width - 1);
-  await box.click();
+  await box.fill('');
   await page.keyboard.type('void f() {');
+  await expect(box).toHaveValue('void f() {}');
   await page.keyboard.press('Enter');
   await page.keyboard.type('x = 1;');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('}');
+  await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('End');
   await page.keyboard.press('Tab');
   await expect(box).toHaveValue('void f() {\n    x = 1;\n}    ');
   await page.reload();

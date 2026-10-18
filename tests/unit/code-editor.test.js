@@ -32,3 +32,11 @@ test('a closing brace on a blank line steps back one level', () => {
   assert.equal(editKey(at('    x = 1', 9), '}'), null);
   assert.equal(editKey(at('a', 1), 'ArrowUp'), null);
 });
+
+test('typing an opening brace adds the closing one, wraps a selection and can be typed over or deleted together', () => {
+  assert.deepEqual(editKey(at('f()', 3), '{'), at('f(){}', 4));
+  assert.deepEqual(editKey(at('ab', 0, 2), '{'), at('{ab}', 1, 3));
+  assert.deepEqual(editKey(at('{}', 1), '}'), at('{}', 2));
+  assert.deepEqual(editKey(at('{}', 1), 'Backspace'), at('', 0));
+  assert.equal(editKey(at('{x}', 2), 'Backspace'), null);
+});

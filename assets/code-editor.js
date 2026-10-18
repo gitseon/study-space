@@ -67,8 +67,21 @@ export function editKey(state, key, shift = false) {
   if (key === 'Enter') {
     return enter(state);
   }
+  if (key === '{') {
+    // The closing brace is added at once. A selection is wrapped instead of replaced.
+    const caret = start + 1;
+    const wrapped = value.slice(start, end);
+    return {value: value.slice(0, start) + '{' + wrapped + '}' + value.slice(end), start: caret, end: caret + wrapped.length};
+  }
   if (key === '}') {
+    // Typing the brace that was already added moves past it.
+    if (start === end && value[start] === '}') {
+      return {value, start: start + 1, end: start + 1};
+    }
     return closeBrace(state);
+  }
+  if (key === 'Backspace' && start === end && value[start - 1] === '{' && value[start] === '}') {
+    return {value: value.slice(0, start - 1) + value.slice(start + 1), start: start - 1, end: start - 1};
   }
   return null;
 }

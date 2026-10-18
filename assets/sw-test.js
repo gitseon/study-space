@@ -10,7 +10,7 @@ const href = (id) => PAGE + '?p=' + encodeURIComponent(id);
 
 // Small per-browser conveniences: the contents list, the folded code and the learner's own draft. Blocked storage only loses them.
 const FOLD_KEY = 'study-space:sw-code-folded';
-const TOC_KEY = 'study-space:sw-toc-hidden';
+const TOC_KEY = 'study-space:sw-toc-open';
 const draftKey = (problem, variant) => 'study-space:sw-draft:' + problem.id + ':' + variant.id;
 const keep = {
   get(key) {
@@ -42,8 +42,8 @@ function navHtml(data, current) {
     }).join('');
     return '<li><span class="sw-group-label">' + e(tier.label) + '</span><ol>' + rows + '</ol></li>';
   }).join('');
-  return '<nav class="note-toc sw-nav" id="sw-nav" aria-label="문제 목차"><details open><summary>문제 목차</summary>'
-    + '<a class="sw-home" href="' + PAGE + '">전체 목차 보기</a><ul class="sw-groups">' + groups + '</ul></details></nav>';
+  return '<nav class="sw-nav" id="sw-nav" aria-label="문제 목차" hidden>'
+    + '<a class="sw-home" href="' + PAGE + '">전체 목차 보기</a><ul class="sw-groups">' + groups + '</ul></nav>';
 }
 
 function cardHtml(p) {
@@ -76,8 +76,19 @@ function solutionHtml(variant) {
     + '<div class="sw-code-grid"><div class="sw-code-ref" id="sw-code-ref">' + code + '</div>'
     + '<div class="sw-code-mine"><label for="sw-draft">내 코드 입력</label>'
     + '<textarea id="sw-draft" class="code-editor" rows="24" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" '
-    + 'placeholder="여기에 직접 코드를 작성합니다"></textarea>'
-    + '<p class="sw-draft-help">Tab은 4칸 들여쓰기, Shift+Tab은 내어쓰기, Enter는 들여쓰기를 이어 줌. 입력한 코드는 이 브라우저에만 저장.</p></div></div></section>';
+    + 'placeholder="여기에 직접 코드를 작성합니다"></textarea></div></div></section>';
+}
+
+// The box starts with a runnable skeleton named after the solution's class, so the learner only fills in the body.
+function starterCode(variant) {
+  const name = variant.code.match(/public\s+class\s+(\S+)/)?.[1] ?? 'Main';
+  return [
+    'public class ' + name + ' {',
+    '    public static void main(String[] args) {',
+    '        System.out.println("Hello World!");',
+    '    }',
+    '}',
+  ].join('\n');
 }
 
 // Folding hides the model code so the learner can write from memory. The choice is remembered for every problem.
@@ -99,7 +110,7 @@ function bindCode(problem, variant) {
     keep.set(FOLD_KEY, folded ? '1' : '0');
   };
   const draft = section.querySelector('#sw-draft');
-  draft.value = keep.get(draftKey(problem, variant)) ?? '';
+  draft.value = keep.get(draftKey(problem, variant)) ?? starterCode(variant);
   attachEditor(draft, () => keep.set(draftKey(problem, variant), draft.value));
 }
 
@@ -130,22 +141,20 @@ function bindToggle(problem) {
   });
 }
 
-// The contents list can be hidden so the note and the code box use the whole width. The choice is remembered.
+// The contents list opens above the problem so another problem can be picked without leaving the note. It starts closed.
 function bindToc() {
-  const layout = root.querySelector('.note-layout');
   const nav = root.querySelector('#sw-nav');
   const button = root.querySelector('.sw-toc-toggle');
   const show = (visible) => {
     nav.hidden = !visible;
-    layout.classList.toggle('toc-hidden', !visible);
-    button.textContent = visible ? '목차 숨기기' : '목차 보이기';
+    button.textContent = visible ? '목차 숨기기' : '목차 보기';
     button.setAttribute('aria-expanded', String(visible));
   };
-  show(keep.get(TOC_KEY) !== '1');
+  show(keep.get(TOC_KEY) === '1');
   button.onclick = () => {
     const visible = nav.hidden;
     show(visible);
-    keep.set(TOC_KEY, visible ? '0' : '1');
+    keep.set(TOC_KEY, visible ? '1' : '0');
   };
 }
 
@@ -169,8 +178,8 @@ function problemView(data, problem) {
     + (prev ? link(prev, '← ' + prev.rank + '. ' + e(prev.title), 'prev') : '<span></span>')
     + (next ? link(next, next.rank + '. ' + e(next.title) + ' →', 'next') : '<span></span>')
     + '</nav></article>';
-  const tools = '<div class="sw-tools"><button type="button" class="sw-toc-toggle" aria-controls="sw-nav" aria-expanded="true">목차 숨기기</button></div>';
-  return {html: tools + '<div class="note-layout">' + navHtml(data, problem) + article + '</div>', title: problem.title};
+  const tools = '<div class="sw-tools"><button type="button" class="sw-toc-toggle" aria-controls="sw-nav" aria-expanded="false">목차 보기</button></div>';
+  return {html: tools + navHtml(data, problem) + '<div class="note-layout sw-single">' + article + '</div>', title: problem.title};
 }
 
 async function start() {
@@ -196,10 +205,6 @@ async function start() {
     bindToggle(problem);
     bindToc();
     bindCode(problem, variant);
-    // On a narrow screen the contents list would push the problem off the first screen, so it starts folded.
-    if (matchMedia('(max-width: 900px)').matches) {
-      root.querySelector('.sw-nav details')?.removeAttribute('open');
-    }
   } else {
     document.title = data.title + ' | STUDY SPACE';
     root.innerHTML = landingHtml(data);

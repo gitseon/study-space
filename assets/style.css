@@ -153,15 +153,17 @@
 @media(max-width:480px){.site-header{flex-wrap:wrap;height:auto;min-height:74px;padding-top:12px;padding-bottom:12px;gap:8px 12px}.brand{white-space:nowrap;font-size:17px;gap:8px}.brand-icon{width:28px;height:28px}.header-link,.site-header>.quiet{white-space:nowrap}.theme-picker select{padding:4px 6px}}
 
 /* SW역량테스트: contents toggle, foldable model code beside the learner's own code box */
-.sw-tools{padding-top:22px}.sw-tools button,.sw-fold{font-size:12px;padding:6px 12px}
-.sw-nav[hidden]{display:none}.note-layout.toc-hidden{grid-template-columns:minmax(0,1fr)}
+.sw-tools{padding:22px 0 12px}.sw-tools button,.sw-fold{font-size:12px;padding:6px 12px}
+.sw-nav{margin-bottom:14px;padding:16px 20px;background:var(--sidebar);border:1px solid var(--line);border-radius:14px}.sw-nav[hidden]{display:none}
+.sw-nav .sw-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 24px;margin-top:6px}
+.sw-nav .sw-group-label{margin-top:8px}
+.note-layout.sw-single{grid-template-columns:minmax(0,1fr);padding-top:0}
 .note .sw-code-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:46px 0 14px;padding-top:26px;border-top:2px solid var(--accent)}
 .note .sw-code-head h2{margin:0;padding:0;border:0}
 .sw-code-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}.sw-code-grid.folded{grid-template-columns:minmax(0,1fr)}
 .sw-code-ref[hidden]{display:none}.sw-code-ref .snippet{margin:0}
 .sw-code-mine{display:flex;flex-direction:column;gap:8px;min-width:0}.sw-code-mine label{font-size:12px;font-weight:700;color:var(--accent)}
 .sw-code-mine textarea{width:100%;min-height:420px;padding:14px;border:1px solid var(--field-line);border-radius:9px;background:var(--field-bg);color:var(--ink);tab-size:4;line-height:1.7}
-.sw-draft-help{margin:0;font-size:11px;line-height:1.6;color:var(--muted)}
 @media(max-width:760px){.sw-code-grid{grid-template-columns:minmax(0,1fr)}.sw-code-mine textarea{min-height:320px}}
 
 /* Colour palettes. The theme picker sets html[data-palette]; "default" keeps the original tokens above.
