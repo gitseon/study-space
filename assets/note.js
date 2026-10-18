@@ -23,7 +23,7 @@ async function start() {
     throw Error('개념 노트를 불러오지 못했습니다');
   }
   const {title, toc, html} = renderNote(await res.text());
-  document.title = (note.title || title) + ' | 모의고사';
+  document.title = (note.title || title) + ' | STUDY SPACE';
   root.innerHTML = '<div class="note-layout">' + tocHtml(toc) + '<article class="note">' + html + '</article></div>';
   if (location.hash) {
     document.getElementById(location.hash.slice(1))?.scrollIntoView();

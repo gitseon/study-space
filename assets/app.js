@@ -54,10 +54,10 @@ const kindNames = {subject: '과목평가', monthly: '월말평가', written: '�
 const CHOICE_KINDS = ['subject', 'written'];
 const KIND_ORDER = ['subject', 'written', 'monthly', 'practical'];
 const kindDescriptions = {
-  subject: '개념부터 코드 추적까지 차근차근 점검합니다.',
-  monthly: '직접 구현하고 풀이 과정을 설명합니다.',
-  written: '강의 개념을 연결해 객관식으로 점검합니다.',
-  practical: '코드를 직접 작성하고 기준에 맞춰 자기채점합니다.',
+  subject: '개념부터 코드 추적까지 차근차근 점검.',
+  monthly: '직접 구현하고 풀이 과정을 설명.',
+  written: '강의 개념을 연결해 객관식으로 점검.',
+  practical: '코드를 직접 작성하고 기준에 맞춰 자기채점.',
 };
 
 // Only the notes of the selected track are offered. A note without a file is a placeholder until its link exists.
@@ -75,9 +75,9 @@ function heroSection() {
   const mine = manifest.exams.filter((x) => (x.track || 'algorithm') === track);
   const questionCount = mine.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
   return '<section class="hero">'
-    + '<div class="eyebrow"><span class="dot"></span> 모의고사 연습실</div>'
+    + '<div class="eyebrow"><span class="dot"></span> 학습 내용 복습실</div>'
     + '<h1>이해한 만큼, 풀어보기</h1>'
-    + '<p class="hero-copy">개념을 확인하고 직접 풀어보세요.<br class="desktop-break">틀린 문제는 다시 살펴보며 내 것으로 만듭니다.</p>'
+    + '<p class="hero-copy">문제를 다시 풀고 개념 노트로 핵심을 정리하는 복습.<br class="desktop-break">틀린 문제와 헷갈린 개념은 해설과 함께 다시 살펴보며 내 것으로 만듦.</p>'
     + '<div class="hero-stats">'
     + '<span><strong>' + questionCount + '</strong>문항</span>'
     + '<span><strong>' + mine.length + '</strong>회차</span>'
@@ -166,7 +166,7 @@ function practiceSection() {
       + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
   return '<section class="practice-strip">'
-    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 연습하기</h2><p>객관식 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 풀어보세요.</p></div>'
+    + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 복습하기</h2><p>객관식 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 복습.</p></div>'
     + '<div class="topic-links">' + links + '</div>'
     + '</section>';
 }

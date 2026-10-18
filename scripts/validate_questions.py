@@ -150,20 +150,24 @@ def validate_sw_test(source_root=ROOT/"source"):
         last_tier=max(last_tier,tier)
         for field in ("title","type","summary","basis","file"):
             if not str(item.get(field,"")).strip(): add("sw-field",pid,f"missing {field}")
-        idea_path,code_path=base/pid/"idea.md",base/pid/item.get("file","")
-        if not idea_path.is_file() or not code_path.is_file():
-            add("sw-file",pid,"missing idea.md or code file"); continue
-        idea=idea_path.read_text(encoding="utf-8-sig"); code=code_path.read_text(encoding="utf-8-sig")
-        for heading in SW_IDEA_SECTIONS:
-            if not re.search(r"(?m)^"+re.escape(heading)+r"\s*$",idea): add("sw-section",pid,f"missing {heading}")
-        if len(re.findall(r"(?m)^```",idea))%2: add("fence",pid,"unclosed code fence")
-        prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",idea+" "+item.get("summary","")+" "+item.get("basis",""))
-        if re.search(r"[·,]{2,}|\.{3,}",prose): add("punctuation",pid,"punctuation run")
-        for text in (idea,code,json.dumps(item,ensure_ascii=False)):
-            if chr(0xFFFD) in text: add("encoding",pid,"broken characters")
-            if re.search(r"notion|\.pdf",text,re.I): add("sw-private",pid,"private link or course file name")
-        if not re.search(r"public\s+class\s+"+re.escape(code_path.stem)+r"\b",code) or "static void main" not in code:
-            add("sw-code",pid,"code must declare the public class and main")
+        variants=item.get("variants") or [{"id":"main","label":"풀이","idea":"idea.md","file":item.get("file","")}]
+        for variant in variants:
+            where=pid if len(variants)==1 else f"{pid}/{variant.get('id')}"
+            if not str(variant.get("label","")).strip(): add("sw-field",where,"missing variant label")
+            idea_path,code_path=base/pid/variant.get("idea",""),base/pid/variant.get("file","")
+            if not idea_path.is_file() or not code_path.is_file():
+                add("sw-file",where,"missing idea or code file"); continue
+            idea=idea_path.read_text(encoding="utf-8-sig"); code=code_path.read_text(encoding="utf-8-sig")
+            for heading in SW_IDEA_SECTIONS:
+                if not re.search(r"(?m)^"+re.escape(heading)+r"\s*$",idea): add("sw-section",where,f"missing {heading}")
+            if len(re.findall(r"(?m)^```",idea))%2: add("fence",where,"unclosed code fence")
+            prose=re.sub(r"```[\s\S]*?```|`[^`]*`","",idea+" "+item.get("summary","")+" "+item.get("basis",""))
+            if re.search(r"[·,]{2,}|\.{3,}",prose): add("punctuation",where,"punctuation run")
+            for text in (idea,code,json.dumps(item,ensure_ascii=False)):
+                if chr(0xFFFD) in text: add("encoding",where,"broken characters")
+                if re.search(r"notion|\.pdf",text,re.I): add("sw-private",where,"private link or course file name")
+            if not re.search(r"public\s+class\s+"+re.escape(code_path.stem)+r"\b",code) or "static void main" not in code:
+                add("sw-code",where,"code must declare the public class and main")
     return issues
 
 if __name__=="__main__":

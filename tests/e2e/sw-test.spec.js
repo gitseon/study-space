@@ -8,7 +8,7 @@ test('home button opens the contents list in prediction order', async ({page}) =
   await expect(page).toHaveURL(/pages\/sw-test\.html$/);
   await expect(page.getByRole('heading', {name: 'SW역량테스트', level: 1})).toBeVisible();
   await expect(page.locator('.sw-card strong')).toHaveText(ORDER.map((name) => new RegExp('^' + name)));
-  await expect(page.locator('.sw-disclaimer')).toContainText('보장하지 않습니다');
+  await expect(page.locator('.sw-disclaimer')).toContainText('보장하지 않음');
 });
 
 test('choosing a problem shows its idea and highlighted Java code, and the pager moves on', async ({page, baseURL}) => {
@@ -42,10 +42,28 @@ test('every problem page renders without script errors and an unknown id falls b
   expect(ids).toHaveLength(ORDER.length);
   for (const id of ids) {
     await page.goto('pages/sw-test.html?p=' + id);
-    await expect(page.locator('figure.snippet[data-lang="java"]')).toHaveCount(id === 'height-order' ? 2 : 1);
-    await expect(page.locator('.sw-sections a')).toHaveCount(5);
+    await expect(page.locator('figure.snippet[data-lang="java"]')).toHaveCount(1);
+    await expect(page.locator('.sw-nav a[href^="#"]')).toHaveCount(0);
+    await expect(page.locator('.sw-toggle')).toHaveCount(id === 'height-order' ? 1 : 0);
   }
   await page.goto('pages/sw-test.html?p=missing');
   await expect(page.locator('.sw-card')).toHaveCount(ORDER.length);
   expect(errors).toEqual([]);
+});
+
+test('height order toggles between the BFS and Floyd-Warshall solutions and keeps the choice on reload', async ({page}) => {
+  await page.goto('pages/sw-test.html?p=height-order');
+  const bfs = page.getByRole('button', {name: 'BFS 풀이'});
+  const floyd = page.getByRole('button', {name: '플로이드–워셜 풀이'});
+  await expect(bfs).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('figure.snippet code')).toContainText('smallQ');
+  await floyd.click();
+  await expect(floyd).toHaveAttribute('aria-pressed', 'true');
+  await expect(bfs).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('figure.snippet code')).toContainText('for (int via = 1; via <= N; via++)');
+  await expect(page.locator('.sw-solution')).toContainText('경유 학생 via를 가장 바깥 반복문에 둡니다');
+  await expect(page).toHaveURL(/\?p=height-order&v=floyd$/);
+  await page.reload();
+  await expect(page.getByRole('button', {name: '플로이드–워셜 풀이'})).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('figure.snippet code')).toContainText('reachable');
 });
