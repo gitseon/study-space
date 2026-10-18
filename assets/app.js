@@ -76,8 +76,8 @@ function heroSection() {
   const questionCount = mine.reduce((n, x) => n + Object.values(x.counts).reduce((a, b) => a + b, 0), 0);
   return '<section class="hero">'
     + '<div class="eyebrow"><span class="dot"></span> 학습 내용 복습실</div>'
-    + '<h1>이해한 만큼, 풀어보기</h1>'
-    + '<p class="hero-copy">문제를 다시 풀고 개념 노트로 핵심을 정리하는 복습.<br class="desktop-break">틀린 문제와 헷갈린 개념은 해설과 함께 다시 살펴보며 내 것으로 만듦.</p>'
+    + '<h1>이해한 만큼, 복습하기</h1>'
+    + '<p class="hero-copy">학습 내용을 점검하고 복습하세요.<br class="desktop-break">틀린 문제와 헷갈리는 개념은 해설과 함께 다시 살펴보며 내 것으로 만드세요.</p>'
     + '<div class="hero-stats">'
     + '<span><strong>' + questionCount + '</strong>문항</span>'
     + '<span><strong>' + mine.length + '</strong>회차</span>'
@@ -135,7 +135,7 @@ function trackSection() {
     ? '<a class="track-button sw-link" href="pages/sw-test.html"><strong>' + e(sw.title) + '</strong>'
       + '<span>예측 순서대로 ' + sw.count + '문제의 발상과 코드 ↗</span></a>'
     : '';
-  return '<section class="track-picker"><span class="eyebrow">무엇을 풀어볼까요</span>'
+  return '<section class="track-picker"><span class="eyebrow">주제</span>'
     + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + swLink + '</div>'
     + noteButtons() + '</section>';
 }

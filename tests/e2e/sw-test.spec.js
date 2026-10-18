@@ -8,7 +8,7 @@ test('home button opens the contents list in prediction order', async ({page}) =
   await expect(page).toHaveURL(/pages\/sw-test\.html$/);
   await expect(page.getByRole('heading', {name: 'SW역량테스트', level: 1})).toBeVisible();
   await expect(page.locator('.sw-card strong')).toHaveText(ORDER.map((name) => new RegExp('^' + name.replace(/[()]/g, '\\$&'))));
-  await expect(page.locator('.sw-disclaimer')).toContainText('보장하지 않음');
+  await expect(page.locator('.sw-disclaimer')).toContainText('보장하지 않습니다');
 });
 
 test('choosing a problem shows its idea and highlighted Java code, and the pager moves on', async ({page, baseURL}) => {
@@ -97,7 +97,7 @@ test('the code box starts with the Hello World skeleton named after the solution
   await page.goto('pages/sw-test.html?p=mountain-robot');
   const box = page.getByLabel('내 코드 입력');
   await expect(box).toHaveValue(['public class 보급로 {', '    public static void main(String[] args) {', '        System.out.println("Hello World!");', '    }', '}'].join('\n'));
-  await expect(page.locator('.sw-draft-help')).toHaveCount(0);
+  await expect(page.locator('.sw-draft-help')).toHaveText('입력한 코드는 브라우저에만 저장합니다.');
 });
 
 test('the model code folds and unfolds beside a code box that closes braces and indents by four spaces', async ({page}) => {

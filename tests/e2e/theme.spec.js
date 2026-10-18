@@ -51,7 +51,7 @@ test('one 테마 button opens a panel with the theme and the colour palette choi
   await openPanel(page);
   await expect(panel).toBeVisible();
   await expect(panel.locator('.theme-label')).toHaveText(['테마', '색상 계열']);
-  await expect(page.locator('#palette-select option')).toHaveText(['현재', '블루 계열', '모노톤 계열']);
+  await expect(page.locator('#palette-select option')).toHaveText(['그린 계열', '블루 계열', '모노톤 계열']);
   await expect(html).toHaveAttribute('data-palette', 'default');
   expect(await page.evaluate(paper)).toBe('rgb(247, 246, 242)');
 

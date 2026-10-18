@@ -165,8 +165,10 @@
 .sw-code-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}.sw-code-grid.folded{grid-template-columns:minmax(0,1fr)}
 .sw-code-ref[hidden]{display:none}.sw-code-ref .snippet{margin:0}
 .sw-code-mine{display:flex;flex-direction:column;gap:8px;min-width:0}.sw-code-mine label{font-size:12px;font-weight:700;color:var(--accent)}
+.sw-draft-help{margin:0;font-size:11px;line-height:1.6;color:var(--muted)}
 .sw-code-mine textarea{width:100%;min-height:420px;padding:14px;border:1px solid var(--field-line);border-radius:9px;background:var(--field-bg);color:var(--ink);tab-size:4;line-height:1.7}
-@media(max-width:760px){.sw-code-grid{grid-template-columns:minmax(0,1fr)}.sw-code-mine textarea{min-height:320px}}
+@media(max-width:760px){.sw-code-grid{grid-template-columns:minmax(0,1fr)}.sw-draft-help{margin:0;font-size:11px;line-height:1.6;color:var(--muted)}
+.sw-code-mine textarea{min-height:320px}}
 
 /* Colour palettes. The theme picker sets html[data-palette]; "default" keeps the original tokens above.
    Each palette gives a light and a dark token list so it works with the light, dark and system choices. */

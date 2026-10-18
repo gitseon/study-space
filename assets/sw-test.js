@@ -58,7 +58,7 @@ function landingHtml(data) {
     .map(({tier, items}) => '<section class="sw-tier"><h2>' + e(tier.label) + '</h2><ol class="sw-cards">' + items.map(cardHtml).join('') + '</ol></section>')
     .join('');
   return '<div class="sw-landing"><section class="sw-intro"><span class="eyebrow">A형 대비</span><h1>' + e(data.title) + '</h1>'
-    + '<p class="sw-lead">' + e(data.description) + ' 문제를 고르면 발상과 코드 열람.</p>'
+    + '<p class="sw-lead">' + e(data.description) + ' 문제를 고르면 발상과 코드를 볼 수 있습니다.</p>'
     + '<p class="sw-disclaimer" role="note">' + e(data.disclaimer) + '</p></section>' + tiers + '</div>';
 }
 
@@ -76,7 +76,8 @@ function solutionHtml(variant) {
     + '<div class="sw-code-grid"><div class="sw-code-ref" id="sw-code-ref">' + code + '</div>'
     + '<div class="sw-code-mine"><label for="sw-draft">내 코드 입력</label>'
     + '<textarea id="sw-draft" class="code-editor" rows="24" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" '
-    + 'placeholder="여기에 직접 코드를 작성합니다"></textarea></div></div></section>';
+    + 'placeholder="여기에 직접 코드를 작성합니다"></textarea>'
+    + '<p class="sw-draft-help">입력한 코드는 브라우저에만 저장합니다.</p></div></div></section>';
 }
 
 // The box starts with a runnable skeleton named after the solution's class, so the learner only fills in the body.

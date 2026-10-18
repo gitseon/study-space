@@ -128,7 +128,7 @@ test('monthly text is restored and revealing a solution is not a grade', async (
 test('mobile layout and UTF-8 prose do not overflow', async ({page}) => {
   await page.setViewportSize({width: 360, height: 800});
   await page.goto('index.html');
-  await expect(page.getByRole('heading', {name: '이해한 만큼, 풀어보기'})).toBeVisible();
+  await expect(page.getByRole('heading', {name: '이해한 만큼, 복습하기'})).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(await page.locator('body').innerText()).not.toContain('�');
   for (const url of ['pages/quiz.html?exam=monthly-01&mode=study', 'pages/quiz.html?exam=subject-01&mode=study']) {

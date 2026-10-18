@@ -5,7 +5,7 @@
   const KEY = 'study-space:theme';
   const PALETTE_KEY = 'study-space:palette';
   const MODES = {system: '시스템', light: '라이트', dark: '다크'};
-  const PALETTES = {default: '현재', blue: '블루 계열', mono: '모노톤 계열'};
+  const PALETTES = {default: '그린 계열', blue: '블루 계열', mono: '모노톤 계열'};
   const root = document.documentElement;
   const query = matchMedia('(prefers-color-scheme: dark)');
 
