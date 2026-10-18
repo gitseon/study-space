@@ -100,7 +100,7 @@ test('the code box starts with the Hello World skeleton named after the solution
   await expect(page.locator('.sw-draft-help')).toHaveText('입력한 코드는 브라우저에만 저장합니다.');
 });
 
-test('the model code folds and unfolds beside a code box that closes braces and indents by four spaces', async ({page}) => {
+test('the model code folds and unfolds above a code box that closes braces and indents by four spaces', async ({page}) => {
   await page.goto('pages/sw-test.html?p=hunter');
   const reference = page.locator('.sw-code-ref');
   await expect(reference).toBeVisible();
@@ -116,7 +116,8 @@ test('the model code folds and unfolds beside a code box that closes braces and 
 
   const box = page.getByLabel('내 코드 입력');
   const side = await Promise.all([reference.boundingBox(), box.boundingBox()]);
-  expect(side[1].x).toBeGreaterThan(side[0].x + side[0].width - 1);
+  expect(side[1].y).toBeGreaterThanOrEqual(side[0].y + side[0].height);
+  expect(side[1].width).toBeGreaterThanOrEqual(side[0].width - 1);
   await box.fill('');
   await page.keyboard.type('void f() {');
   await expect(box).toHaveValue('void f() {}');
