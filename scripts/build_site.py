@@ -4,7 +4,7 @@ import tempfile
 from pathlib import Path
 from build_data import ROOT, build_data
 
-PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html"]
+PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html","pages/sw-test.html"]
 
 def build_site(output_dir: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:

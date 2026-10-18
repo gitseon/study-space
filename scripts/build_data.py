@@ -22,6 +22,29 @@ NOTES=[("web-concepts","Web 개념","frontend/web개념 요약노트.md","fronte
 class ContentError(ValueError):
     pass
 
+# The SW역량테스트 page is not an exam track. It lists solved problems in prediction order,
+# each with an idea note and the Java solution, all read from source/SW역량테스트/.
+SW_TEST_DIR="SW역량테스트"
+
+def build_sw_test(source_root):
+    base=source_root/SW_TEST_DIR
+    config=json.loads((base/"problems.json").read_text(encoding="utf-8-sig"))
+    tiers={t["id"] for t in config["tiers"]}
+    problems, seen = [], set()
+    for rank,item in enumerate(config["problems"],start=1):
+        pid=item["id"]
+        if pid in seen: raise ContentError(f"sw-test: duplicate {pid}")
+        seen.add(pid)
+        if item["tier"] not in tiers: raise ContentError(f"sw-test {pid}: unknown tier {item['tier']}")
+        folder=base/pid
+        idea=(folder/"idea.md").read_text(encoding="utf-8-sig").strip()+"\n"
+        code=(folder/item["file"]).read_text(encoding="utf-8-sig").rstrip("\n")+"\n"
+        problems.append({**item,"rank":rank,"idea":idea,"code":code})
+    stray=sorted(p.name for p in base.iterdir() if p.is_dir() and p.name not in seen)
+    if stray: raise ContentError(f"sw-test: folders without an entry in problems.json: {stray}")
+    return {"title":config["title"],"description":config["description"],"disclaimer":config["disclaimer"],
+            "tiers":config["tiers"],"problems":problems}
+
 def track_of(exam):
     return exam.get("track","algorithm")
 
@@ -84,7 +107,7 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
     if not exams:
         raise ContentError("No exam manuscripts found")
     for exam in exams:
-        (output_root/f"{exam['id']}.json").write_text(json.dumps(exam,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        (output_root/f"{exam['id']}.json").write_text(json.dumps(exam,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     notes=[]
     for note_id,title,filename,note_track in NOTES:
         if filename is None:
@@ -99,7 +122,12 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
     scope=load_scope(source_root,"algorithm")
     def topic_counts(t): return {k:sum(k in q.get("topics",[]) for e in exams if track_of(e)==t and e["kind"] in CHOICE_KINDS for q in e["questions"]) for k in load_scope(source_root,t)["topics"]}
     tracks={t:{"label":info["label"],"topics":load_scope(source_root,t)["topics"],"topicCounts":topic_counts(t)} for t,info in TRACKS.items() if any(track_of(e)==t for e in exams)}
-    (output_root/"manifest.json").write_text(json.dumps({"exams":summary,"topics":scope["topics"],"tracks":tracks,"notes":notes},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    manifest={"exams":summary,"topics":scope["topics"],"tracks":tracks,"notes":notes}
+    if (source_root/SW_TEST_DIR/"problems.json").exists():
+        sw=build_sw_test(source_root)
+        (output_root/"sw-test.json").write_text(json.dumps(sw,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
+        manifest["swTest"]={"title":sw["title"],"file":"sw-test.json","count":len(sw["problems"])}
+    (output_root/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     return exams
 
 if __name__=="__main__":

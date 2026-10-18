@@ -49,16 +49,18 @@ function list(lines) {
   return '<' + tag + '>' + items.join('') + '</' + tag + '>';
 }
 
-function code(lang, body) {
+function code(lang, body, names) {
   const text = body.replace(/\n$/, '');
-  if (languageNames[lang]) {
-    return '<figure class="snippet" data-lang="' + lang + '"><figcaption>' + languageNames[lang] + '</figcaption><pre tabindex="0"><code>'
+  if (names[lang]) {
+    return '<figure class="snippet" data-lang="' + lang + '"><figcaption>' + names[lang] + '</figcaption><pre tabindex="0"><code>'
       + highlight(lang, text) + '</code></pre></figure>';
   }
   return '<pre tabindex="0"><code>' + escapeHtml(text) + '</code></pre>';
 }
 
-export function renderNote(source) {
+// extraLanguages lets one page colour a language the shared notes leave plain, for example {java: 'Java'}.
+export function renderNote(source, extraLanguages = {}) {
+  const names = {...languageNames, ...extraLanguages};
   const lines = String(source).replace(/\r\n?/g, '\n').split('\n');
   const html = [];
   const toc = [];
@@ -76,7 +78,7 @@ export function renderNote(source) {
         body.push(lines[i++]);
       }
       i++;
-      html.push(code(lang, body.join('\n')));
+      html.push(code(lang, body.join('\n'), names));
     } else if (/^#{1,3}\s/.test(line)) {
       const level = line.match(/^#+/)[0].length;
       const text = line.replace(/^#+\s+/, '');
