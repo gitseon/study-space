@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "track": "adsp",
+  "topics": {
+    "data": "데이터와 정보와 지식",
+    "dbsys": "데이터베이스와 기업 솔루션",
+    "bigdata": "빅데이터와 데이터 사이언스",
+    "plan": "분석 기획과 방법론",
+    "govern": "분석 과제 관리와 거버넌스",
+    "stat": "데이터 전처리와 기초 통계",
+    "infer": "확률 분포와 통계적 추론",
+    "regress": "회귀분석과 모형 해석",
+    "multi": "상관과 다변량과 시계열",
+    "classify": "분류 분석과 모형 평가",
+    "cluster": "군집 분석과 연관 분석"
+  },
+  "composition": {
+    "subject": {"mc": 50, "short": 0, "essay": 0, "code": 0}
+  },
+  "subjects": {
+    "1과목 데이터 이해": ["data", "dbsys", "bigdata"],
+    "2과목 데이터 분석 기획": ["plan", "govern"],
+    "3과목 데이터 분석": ["stat", "infer", "regress", "multi", "classify", "cluster"]
+  },
+  "groups": {
+    "data": {"mc": 4},
+    "dbsys": {"mc": 3},
+    "bigdata": {"mc": 3},
+    "plan": {"mc": 5},
+    "govern": {"mc": 5},
+    "stat": {"mc": 5},
+    "infer": {"mc": 5},
+    "regress": {"mc": 5},
+    "multi": {"mc": 5},
+    "classify": {"mc": 5},
+    "cluster": {"mc": 5}
+  },
+  "tags": {
+    "data": ["dikw", "knowledge", "data-kinds", "database"],
+    "dbsys": ["dbms", "enterprise-system", "dw-mart"],
+    "bigdata": ["bigdata-concept", "bigdata-tech", "bigdata-issue"],
+    "plan": ["analysis-type", "dev-model", "kdd-crisp", "analytics-method", "approach"],
+    "govern": ["priority", "project-mgmt", "governance", "org", "maturity"],
+    "stat": ["missing-outlier", "sampling", "scale-transform", "descriptive", "derived-variable"],
+    "infer": ["probability", "distribution", "sampling-dist", "hypothesis", "estimator-test"],
+    "regress": ["assumption", "fit-metrics", "regularization", "selection-glm", "summary-reading"],
+    "multi": ["correlation", "pca-mds", "multivariate", "stationarity", "arima-acf"],
+    "classify": ["logistic", "tree-ensemble", "svm-nn-knn", "validation", "evaluation"],
+    "cluster": ["distance-hier", "partition", "mixture-som", "association", "cluster-eval"]
+  },
+  "sources": [
+    "ADsP 핵심 요약 노트 1과목 데이터 이해",
+    "ADsP 핵심 요약 노트 2과목 데이터분석 기획",
+    "ADsP 핵심 요약 노트 3과목 데이터분석"
+  ],
+  "notes": "요약 노트는 개인 소장 자료이며 저장소에 넣지 않는다. 문항은 개념과 사실만 바탕으로 새 상황과 새 숫자로 직접 쓴다. 회차는 50문항(1과목 10, 2과목 10, 3과목 30)이고 모두 객관식이다."
+}

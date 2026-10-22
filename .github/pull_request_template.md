@@ -8,6 +8,7 @@
 - [ ] `python scripts/verify_code_answers.py` 전체 통과
 - [ ] `node scripts/verify_frontend_answers.mjs` 전체 통과 (프론트엔드 문항 변경 시)
 - [ ] `python scripts/verify_ai_answers.py` 전체 통과 (AI 역량검사 문항 변경 시)
+- [ ] `python scripts/verify_adsp_answers.py` 전체 통과 (ADsP 문항 변경 시)
 - [ ] `python -m unittest discover -s tests/content`와 `npm test` 통과
 - [ ] `npm run test:e2e` 통과
 

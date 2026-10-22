@@ -68,6 +68,7 @@ python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
 python scripts/verify_ai_answers.py
+python scripts/verify_adsp_answers.py
 python -m unittest discover -s tests/content
 npm test
 npm run test:e2e
@@ -114,3 +115,16 @@ AI 역량검사 문항은 `exam.json`에 `"track": "ai"`를 쓰고 회차 종류
 - 실기 데이터는 scikit-learn에 포함된 자료나 코드로 만든 자료만 쓴다. 인터넷과 생성형 AI 호출과 외부 가중치 내려받기가 필요한 과제는 내지 않는다. 정확도 수치는 정답 조건으로 쓰지 않는다.
 - 실기 서술 소문항은 모범답안과 별도로 핵심어와 배점을 `rubric`에 둔다.
 - 강의 원본(PDF, 슬라이드 이미지, 전사본, 실기 예시)은 저장소에 올리지 않는다. 문항의 `sourceRefs`에는 강의 파일 이름과 해당 절을 적는다.
+
+## 9. ADsP 트랙
+
+ADsP 문항은 `exam.json`에 `"track": "adsp"`를 쓰고 회차 종류(`kind`)는 `subject`다. 범위는 `source/adsp/scope-adsp.json`을 따르며 1~6절을 그대로 적용한다.
+
+- 회차는 객관식 50문항이다. 1과목 데이터 이해 10, 2과목 데이터 분석 기획 10, 3과목 데이터 분석 30으로 나누고 단답형과 서술형은 두지 않는다. 대주제별 문항 수는 scope의 `groups`가 정한다.
+- 정답 번호는 한 회차에서 번호별 11~14개, 3회를 합친 150문항에서 번호별 36~39개로 맞춘다(2절의 일반 N 규칙). 같은 번호 3연속과 반복 패턴은 회차 안에서 금지한다. 주제별 연습 세트도 같은 규칙으로 검사한다.
+- 길이 편향은 3절을 그대로 적용한다. 회차가 50문항이므로 가중 최장·최단 비율 0.15~0.35와 정답/오답 평균 길이 비 0.85~1.15를 회차마다 지켜야 한다. 숫자나 짧은 용어만 있는 선지는 길이가 같도록 쓴다.
+- 문항 메타데이터의 `topics`와 `group`에는 대주제 ID 하나를 쓰고 세부 주제는 `tags`에 쓴다. 3회를 합쳐 모든 태그가 한 번 이상 나와야 한다.
+- 요약 노트는 개인 소장 자료이며 저작권 보호 대상이다. 개념과 사실만 쓰고 노트의 문장, 표, 예제 수치, 비유를 옮기지 않는다. 상황과 숫자는 새로 만든다. `sourceRefs`에는 노트의 과목과 절을 적고 파일 이름은 적지 않는다. 노트 PDF는 `private/`에 두고 커밋하지 않는다.
+- 교재마다 다르게 쓰이는 값(데이터 분할 비율, t분포를 쓰는 표본 수 기준 등)은 정답의 근거로 쓰지 않는다. 정의나 수식으로 정답이 하나로 정해지는 내용만 출제하고, 노트에 부정확한 설명이 있으면 그대로 따르지 않고 올바른 정의로 쓴다. p-값은 "귀무가설이 참일 확률"이 아니라 귀무가설 아래에서 관측 결과 이상으로 극단적인 값이 나올 확률로 다룬다.
+- R 출력 화면처럼 외부 도구의 출력은 옮기지 않고 필요한 수치를 문장으로 제시한다. 수식은 6절의 LaTeX 규칙을 따른다.
+- 계산 문항은 `scripts/verify_adsp_answers.py`가 `source/adsp/adsp-checks.json`의 코드를 실행해 출력값이 정답 선지에 들어 있는지 확인한다. 계산하지 않는 문항은 `source/adsp/adsp-reviews.json`에 문항 ID와 revision을 가리키는 재풀이 기록을 둔다. 코드는 표준 라이브러리만 쓴다.

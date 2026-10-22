@@ -186,6 +186,23 @@
         "code": 0
       },
       "contentVersion": "a3e443c0f5decd2d"
+    },
+    {
+      "id": "adsp-01",
+      "revision": 1,
+      "kind": "subject",
+      "track": "adsp",
+      "title": "ADsP 1회",
+      "subtitle": "개념을 단단하게",
+      "practiceMinutes": 90,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 50,
+        "short": 0,
+        "essay": 0,
+        "code": 0
+      },
+      "contentVersion": "31e72f114662161f"
     }
   ],
   "topics": {
@@ -279,6 +296,35 @@
         "vision": 24,
         "llm-agent": 20,
         "efficiency": 16
+      }
+    },
+    "adsp": {
+      "label": "ADsP",
+      "topics": {
+        "data": "데이터와 정보와 지식",
+        "dbsys": "데이터베이스와 기업 솔루션",
+        "bigdata": "빅데이터와 데이터 사이언스",
+        "plan": "분석 기획과 방법론",
+        "govern": "분석 과제 관리와 거버넌스",
+        "stat": "데이터 전처리와 기초 통계",
+        "infer": "확률 분포와 통계적 추론",
+        "regress": "회귀분석과 모형 해석",
+        "multi": "상관과 다변량과 시계열",
+        "classify": "분류 분석과 모형 평가",
+        "cluster": "군집 분석과 연관 분석"
+      },
+      "topicCounts": {
+        "data": 4,
+        "dbsys": 3,
+        "bigdata": 3,
+        "plan": 5,
+        "govern": 5,
+        "stat": 5,
+        "infer": 5,
+        "regress": 5,
+        "multi": 5,
+        "classify": 5,
+        "cluster": 5
       }
     }
   },

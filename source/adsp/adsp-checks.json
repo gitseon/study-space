@@ -1,0 +1,100 @@
+[
+  {
+    "questionId": "adsp-01-q21",
+    "revision": 1,
+    "code": "q1,q3=30,50\niqr=q3-q1\nlo,hi=q1-1.5*iqr,q3+1.5*iqr\nout=[x for x in (83,76,12,55) if x<lo or x>hi]\nassert len(out)==1\nprint(out[0])",
+    "expect": "83",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q24",
+    "revision": 1,
+    "code": "m,v=8,5\na,b=2,-3\nprint(f'평균 {a*m+b}, 분산 {a*a*v}')",
+    "expect": "평균 13, 분산 20",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q26",
+    "revision": 1,
+    "code": "from fractions import Fraction as F\npa,pb,pab=F(2,5),F(1,2),F(1,5)\ncond=pab/pb\nprint(float(cond) if cond==pa and pab==pa*pb else 'dependent')",
+    "expect": "0.4",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q28",
+    "revision": 1,
+    "code": "import math\nprint(f'{12/math.sqrt(36):g}')",
+    "expect": "2",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q30",
+    "revision": 1,
+    "code": "r,c=3,5\nprint((r-1)*(c-1))",
+    "expect": "8",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q32",
+    "revision": 1,
+    "code": "sst,sse=200,50\nprint(f'{1-sse/sst:.2f}')",
+    "expect": "0.75",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q36",
+    "revision": 1,
+    "code": "import statistics as s\nx=[1,2,3,4,5,6]\ny=[2,1,4,3,6,5]\nr=s.correlation(x,y)\nu=[3*a+1 for a in x]\nv=[-2*b+5 for b in y]\nsign=round(s.correlation(u,v)/r)\nprint(f'{0.6*sign:.2f}')",
+    "expect": "-0.60",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q37",
+    "revision": 1,
+    "code": "ev=[3.0,1.5,0.9,0.6]\nt=sum(ev)\nc=0\nfor i,e in enumerate(ev,1):\n    c+=e/t\n    if c>=0.8:\n        print(f'{i}개')\n        break",
+    "expect": "3개",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q41",
+    "revision": 1,
+    "code": "a,b,c,d=30,20,15,35\nprint(f'{(a/b)/(c/d):.2f}')",
+    "expect": "3.50",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q42",
+    "revision": 1,
+    "code": "p=0.7\nprint(f'{1-(p*p+(1-p)**2):.2f}')",
+    "expect": "0.42",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q44",
+    "revision": 1,
+    "code": "n=10**6\nprint(f'약 {(1-1/n)**n*100:.1f}%')",
+    "expect": "약 36.8%",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q45",
+    "revision": 1,
+    "code": "tp,fn,fp,tn=40,10,20,30\nprint(f'{tp/(tp+fn):.2f}')",
+    "expect": "0.80",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q46",
+    "revision": 1,
+    "code": "a=(1,2);b=(4,6)\nprint(f'거리 {abs(a[0]-b[0])+abs(a[1]-b[1])}')",
+    "expect": "거리 7",
+    "match": true
+  },
+  {
+    "questionId": "adsp-01-q49",
+    "revision": 1,
+    "code": "n,a,b,ab=200,60,50,30\nprint(f'{(ab/a)/(b/n):.2f}')",
+    "expect": "2.00",
+    "match": true
+  }
+]

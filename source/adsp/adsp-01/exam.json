@@ -1,0 +1,10 @@
+{
+  "id": "adsp-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "adsp",
+  "title": "ADsP 1회",
+  "subtitle": "개념을 단단하게",
+  "practiceMinutes": 90,
+  "sourceScopeVersion": 1
+}
