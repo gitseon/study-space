@@ -118,7 +118,7 @@ class PipelineTests(unittest.TestCase):
             folder=ROOT/"source"/info["dir"]
             self.assertTrue((folder/info["scope"]).exists(),track)
             self.assertTrue(list(folder.glob("*/exam.json")),track)
-        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai"})
+        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp"})
 
     def test_ai_scope_defines_both_exam_kinds_and_every_tag_group(self):
         m=self.load("build_data")
@@ -127,6 +127,16 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(scope["composition"]["practical"]["code"],8)
         self.assertEqual(set(scope["tags"]),set(scope["topics"]))
         self.assertEqual(sum(g["mc"] for g in scope["groups"].values()),100)
+
+    def test_adsp_scope_is_fifty_choice_questions_split_by_subject(self):
+        m=self.load("build_data")
+        scope=m.load_scope(ROOT/"source","adsp")
+        self.assertEqual(scope["composition"]["subject"],{"mc":50,"short":0,"essay":0,"code":0})
+        self.assertEqual(set(scope["tags"]),set(scope["topics"]))
+        self.assertEqual(sum(g["mc"] for g in scope["groups"].values()),50)
+        by_subject={name:sum(scope["groups"][t]["mc"] for t in topics) for name,topics in scope["subjects"].items()}
+        self.assertEqual(sorted(by_subject.values()),[10,10,30])
+        self.assertEqual(sorted(t for topics in scope["subjects"].values() for t in topics),sorted(scope["topics"]))
 
     def test_practical_points_must_add_up(self):
         m=self.load("validate_questions")

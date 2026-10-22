@@ -38,6 +38,7 @@ jobs:
       - run: python scripts/verify_code_answers.py --report reports/code-verification.json
       - run: node scripts/verify_frontend_answers.mjs --report reports/frontend-verification.json
       - run: python scripts/verify_ai_answers.py --report reports/ai-verification.json
+      - run: python scripts/verify_adsp_answers.py --report reports/adsp-verification.json
       - run: python -m unittest discover -s tests/content
       - run: python -m unittest discover -s tests/sw_test
       - run: npm test

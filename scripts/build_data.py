@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # Each track keeps its manuscripts, scope file and review records in its own folder under source/.
 TRACKS={"algorithm":{"label":"자료구조와 알고리즘","dir":"dsAlgo","scope":"scope.json"},
         "frontend":{"label":"프론트엔드","dir":"frontend","scope":"scope-frontend.json"},
-        "ai":{"label":"AI 역량검사","dir":"AI역량검사","scope":"scope-ai.json"}}
+        "ai":{"label":"AI 역량검사","dir":"AI역량검사","scope":"scope-ai.json"},
+        "adsp":{"label":"ADsP","dir":"adsp","scope":"scope-adsp.json"}}
 # Exam kinds that are answered mostly with multiple choice and feed the topic practice sets.
 CHOICE_KINDS=("subject","written")
 

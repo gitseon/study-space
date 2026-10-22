@@ -12,6 +12,7 @@
 | 자료구조와 알고리즘 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2)와 월말평가 3회(회차마다 구현형 3, 서술형 1) |
 | 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2) |
 | AI 역량검사 | 필기 검정 1회(객관식 100)와 실기 검정 1회(코드형 8문항, 100점) |
+| ADsP | 객관식 50문항(1과목 10, 2과목 10, 3과목 30) 모의평가 3회 |
 | SW역량테스트 | A형 대비 11문제의 발상과 Java 코드를 예측 우선순위 순서로 정리한 노트(시험 회차 없음) |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
@@ -40,6 +41,7 @@ python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
 python scripts/verify_ai_answers.py
+python scripts/verify_adsp_answers.py
 python -m unittest discover -s tests/content
 python -m unittest discover -s tests/sw_test
 npm test
@@ -55,7 +57,7 @@ SITE_DIR=dist npm run test:e2e
 
 문제를 추가하거나 고치기 전에 [AGENTS.md](AGENTS.md)와 [QUESTION_AUTHORING.md](docs/QUESTION_AUTHORING.md)를 읽습니다. 편향 기준의 단일 원본은 QUESTION_AUTHORING.md입니다.
 
-- 원고는 `source/<트랙 폴더>/<회차 ID>/`의 `exam.json`, `questions.md`, `solutions.md`입니다. 트랙 폴더는 자료구조와 알고리즘이 `dsAlgo`, 프론트엔드가 `frontend`, AI 역량검사가 `AI역량검사`입니다.
+- 원고는 `source/<트랙 폴더>/<회차 ID>/`의 `exam.json`, `questions.md`, `solutions.md`입니다. 트랙 폴더는 자료구조와 알고리즘이 `dsAlgo`, 프론트엔드가 `frontend`, AI 역량검사가 `AI역량검사`, ADsP가 `adsp`입니다.
 - `data/`는 생성물입니다. 직접 고치지 않고 원고를 수정한 뒤 `python scripts/build_data.py`로 다시 만듭니다.
 - 문항을 고치면 해당 문항 메타데이터의 `revision`을 올립니다. 기존 응시 기록은 당시 스냅샷으로 복습되며 새 답으로 다시 해석되지 않습니다.
 - 정답과 해설은 `choiceId`로 연결합니다. 선택지 순서를 바꿔도 해설에 번호가 남지 않게 합니다.
@@ -67,7 +69,7 @@ SITE_DIR=dist npm run test:e2e
 
 ### 새 트랙과 회차 추가
 
-1. 트랙의 범위 파일을 확인합니다. `source/dsAlgo/scope.json`, `source/frontend/scope-frontend.json`, `source/AI역량검사/scope-ai.json`이 있습니다. 새 트랙은 `scripts/build_data.py`의 `TRACKS`에 폴더와 범위 파일을 등록합니다.
+1. 트랙의 범위 파일을 확인합니다. `source/dsAlgo/scope.json`, `source/frontend/scope-frontend.json`, `source/AI역량검사/scope-ai.json`, `source/adsp/scope-adsp.json`이 있습니다. 새 트랙은 `scripts/build_data.py`의 `TRACKS`에 폴더와 범위 파일을 등록합니다.
 2. 기존 회차 폴더를 참고해 `source/dsAlgo/subject-04/`나 `source/frontend/frontend-04/` 같은 새 폴더를 만듭니다. 프론트엔드 회차는 `exam.json`에 `"track": "frontend"`를 씁니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
 3. 위의 검증 명령을 실행하고 PR 템플릿의 콘텐츠 기록 항목을 채웁니다.
 
@@ -76,6 +78,8 @@ SITE_DIR=dist npm run test:e2e
 홈 화면의 `Web 개념` 버튼은 개념 요약 노트(`pages/concepts.html`)를 엽니다. 원고는 `source/frontend/web개념 요약노트.md`이고 `python scripts/build_data.py`가 `data/web-concepts.md`로 복사합니다. 노트 목록은 `scripts/build_data.py`의 `NOTES`에 있으며 새 노트는 한 줄을 더하면 홈에 버튼이 생깁니다. 제목과 구획 수와 깨진 글자와 코드 형식은 `validate_questions.py`가 검사합니다.
 
 `AI 개념` 버튼은 AI 역량검사의 개념 요약 노트를 엽니다. 원고는 `source/AI역량검사/AI역량 개념 요약노트.md`입니다. AI 역량검사의 강의 원본(PDF, 슬라이드 이미지, 전사본)은 용량과 저작권 때문에 저장소에서 제외하며 `.gitignore`에 들어 있습니다.
+
+`verify_adsp_answers.py`는 ADsP 계산 문항의 코드를 표준 라이브러리로 실행해 정답 선지와 비교하고, 계산하지 않는 문항은 `source/adsp/adsp-reviews.json`의 재풀이 기록으로 확인합니다. 결과는 `reports/adsp-verification.json`에 남습니다.
 
 `verify_ai_answers.py`는 필기 문항의 계산과 코드를 실행해 정답과 비교하고, 실기 문항은 모범답안이 숨은 검사를 통과하고 빈 템플릿이 실패하는지 확인합니다. 결과는 `reports/ai-verification.json`에 남습니다.
 

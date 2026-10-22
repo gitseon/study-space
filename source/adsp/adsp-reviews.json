@@ -1,0 +1,954 @@
+[
+  {
+    "questionId": "adsp-01-q01",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 데이터는 가공 전 사실, 정보는 패턴, 지식은 행동 판단, 지혜는 일반화라는 기준으로 네 문장을 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q02",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 암묵지에서 형식지로의 전환이 표출화라는 SECI 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q03",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 구조 정보의 유무로 정형, 반정형, 비정형을 나눠 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q04",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 데이터베이스 4대 특성의 정의와 문장의 조건(값으로 찾기)을 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q05",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 DBMS 장점 네 가지와 단점(비용, 전문성, 장애 영향)을 나눠 각 선지를 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q06",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 SCM, CRM, ERP, KMS의 정의를 문장 조건(공급망 전체 흐름)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q07",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 통합, 시계열, 주제 지향, 비소멸 네 특징을 각각 설명하는 문장으로 나눠 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q08",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 사전처리에서 사후처리, 표본에서 전수, 질에서 양, 인과에서 상관이라는 네 가지 변화 방향으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q09",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 입력 분할, 처리, 재분배, 집계의 데이터 흐름이 성립하는 순서를 직접 따라가 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q10",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 가명처리, 총계처리, 범주화, 마스킹의 정의를 변환 예(27세에서 20대)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q11",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 대상과 방법의 알려진 여부 2x2 표를 직접 그려 대상 Known, 방법 Unknown 칸이 솔루션임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q12",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 폭포수, 나선형, 프로토타입, 혼합형의 핵심 특징과 문장 조건(시제품, 요구 불분명)을 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q13",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 CRISP-DM 여섯 단계의 순서와 모델링의 기술적 평가, 평가의 사업적 평가 구분으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q14",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 분석 기획, 데이터 준비, 데이터 분석, 시스템 구현, 평가 및 전개의 대표 업무를 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q15",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 문제 정의가 어려울 때 데이터 우선 탐색은 상향식이고 나머지는 하향식 계열이라는 기준으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q16",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 시급성은 효과(Return), 난이도는 투자 비용(Investment)이라는 구분으로 네 요소를 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q17",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 품질 계획, 품질 관리, 품질 보증의 정의를 문장의 조건(계획된 기준으로 실제 산출물 점검)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q18",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 조직, 프로세스, 데이터, 시스템, 교육 다섯 요소 중 절차 운영을 뜻하는 요소를 다시 골라 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q19",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 집중형, 기능 중심, 분산 세 유형의 인력 배치 방식으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q20",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 준비도와 성숙도의 높음과 낮음 2x2 구분으로 네 유형을 다시 배치해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q22",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 학년이라는 층에서 각각 무작위로 뽑았다는 조건을 층화, 계통, 군집, 단순 추출의 정의에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q23",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 명목, 서열, 등간, 비율 척도의 정의와 절대 영점 유무로 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q25",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 집계 형태인 요약변수와 기존 변수를 결합해 의미를 부여한 파생변수로 네 변수를 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q27",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 단위 시간당 평균 발생 횟수가 주어진 상황이 포아송 분포의 전형적 조건임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q29",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 귀무가설의 참과 거짓, 기각과 채택의 2x2 표에서 제1종 오류 칸을 직접 찾아 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q31",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 선형성, 독립성, 정규성, 등분산성 가정이 각각 무엇을 요구하는지로 네 상황을 다시 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q33",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 L1은 절댓값 벌점으로 계수를 0으로 만들고 L2는 제곱 벌점으로 작게만 만든다는 구분으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q34",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 정규, 이항, 포아송, 감마 분포별 연결함수와 대표 모형 표를 직접 채워 이항 칸이 로짓임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q35",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 t검정은 변수별, F검정은 모형 전체, 결정계수는 설명 비율이라는 기준으로 네 해석을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q38",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 VIF, 더빈-왓슨, 조정 결정계수, 스트레스 값의 용도를 문장 조건(독립변수 사이의 상관)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q39",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 평균 불안정은 차분, 분산 불안정은 변환이라는 기준으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q40",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 AR은 PACF 절단, MA는 ACF 절단이라는 규칙에 시차 2를 대입해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q43",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 k가 작으면 과대적합, k가 크면 과소적합이라는 구분으로 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q47",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 군집 수 지정 여부, 잡음 처리, 군집 모양이라는 세 조건을 각 방법의 특징에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q48",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 SOM의 구조(입력층과 경쟁층), 학습 방식(승자 독점), 비지도학습이라는 특징으로 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-01-q50",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 WSS 곡선과 꺾임 지점이라는 조건이 엘보 방법의 정의임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-22"
+  },
+  {
+    "questionId": "adsp-02-q01",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 데이터는 사실, 정보는 관계, 지식은 행동 판단, 지혜는 원리의 일반화라는 기준으로 네 문장을 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q02",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 형식지에서 암묵지로 바뀌는 방향이 내면화라는 SECI 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q03",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 수치 측정값인지 문장 형태인지로 정량과 정성을 나눠 네 항목을 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q04",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 갱신 중에도 현재 값을 정확히 유지한다는 조건이 계속적인 변화의 정의임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q05",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 일관성 모델과 확장 방식이라는 두 조건을 RDBMS, ODBMS, NoSQL, DW에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q06",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 고객 이력 분석과 맞춤 마케팅이라는 조건을 CRM, SCM, ERP, KMS의 정의에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q07",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 중앙 웨어하우스의 유무와 구축 방향(하향식 또는 상향식)으로 종속형과 독립형을 나눠 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q08",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 Volume은 양, Variety는 형태, Velocity는 속도라는 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q09",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 분산 저장, 복제, 범용 장비, 다양한 데이터 형태라는 HDFS의 특징으로 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q10",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 사생활 침해, 책임 원칙 훼손, 데이터 오용의 정의를 사례(예측으로 사전 구금)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q11",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 대상과 방법의 Known, Unknown 2x2 표에서 둘 다 Known인 칸이 최적화임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q12",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 위험 분석 단계를 포함한 네 활동의 반복이 나선형이라는 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q13",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 KDD의 다섯 단계(선택, 전처리, 변환, 마이닝, 평가)의 순서와 각 업무로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q14",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 WBS, SOW, ETL, EDA의 정의를 문장 조건(업무 분할)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q15",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 문제를 찾고 정의한 뒤 해결 옵션을 만들고 타당성을 평가하는 논리적 순서를 직접 따라가 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q16",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 도출, 평가, 적용 순서, 일정화라는 논리적 의존 관계로 다시 정렬해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q17",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 정확도는 실제값과의 차이, 정밀도는 반복 결과의 편차이고 둘은 트레이드오프라는 구분으로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q18",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 데이터 거버넌스 네 요소가 정하는 대상(용어, 원칙, 저장소, 점검)으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q19",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 독립 조직 유무와 인력 배치 방식을 기준으로 세 유형을 다시 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q20",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 도입, 활용, 확산, 최적화 네 단계의 대표 특징을 문장 조건(샌드박스)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q21",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 같은 값을 반복해 넣으면 변동이 줄어 표준오차가 과소추정된다는 논리로 네 진술을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q22",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 일부 집단만 선택해 그 안을 전부 조사한다는 조건을 군집, 층화, 계통, 단순 추출의 정의에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q24",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 평균은 꼬리 쪽으로 끌려간다는 성질에 오른쪽 꼬리를 대입해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q25",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 단순 집계인지 변형 또는 결합인지로 네 변수를 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q28",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 모집단 분포는 그대로이고 표본평균의 분포가 정규분포에 가까워진다는 정리의 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q29",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 p-값이 유의수준보다 작으면 귀무가설 기각이라는 규칙과 p-값의 정확한 정의로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q30",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 불편성, 일치성, 효율성, 충분성의 정의를 문장 조건(기댓값이 모수와 같음)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q31",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 더빈-왓슨은 오차의 독립성, 샤피로-윌크는 정규성, VIF는 다중공선성이라는 도구별 용도로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q32",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 독립변수 개수를 반영해 보정하는 지표는 수정된 결정계수뿐이라는 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q33",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 L2는 계수를 줄일 뿐 0으로 만들지 않고 L1은 0으로 만든다는 구분으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q34",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 출발 모형이 전체 변수 모형인지 빈 모형인지를 기준으로 세 방법을 다시 구분해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q35",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 기울기는 단위당 변화량, 절편은 x가 0일 때의 예측값이라는 해석으로 네 진술을 판정하고 x가 10일 때 46.5를 직접 계산해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q36",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 공분산은 단위 의존, 상관계수는 표준화, 독립이면 공분산 0이지만 역은 불성립이라는 사실로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q37",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 PCA는 비지도 차원 축소이며 첫 주성분이 분산을 가장 크게 설명한다는 정의로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q38",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 직각회전과 사각회전의 분류에서 프로맥스만 사각회전이라는 구분으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q39",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 평균 일정, 분산 일정, 공분산의 시차 의존이라는 세 조건으로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q40",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 d번 차분하면 ARMA(p, q)가 된다는 정의에 p는 2, q는 0을 대입해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q43",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 마진, 서포트 벡터, 하드와 소프트 마진, 커널의 정의로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q46",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 가장 먼 쌍, 가장 가까운 쌍, 평균, 중심이라는 네 정의로 연결법을 다시 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q47",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 K-평균의 장점(단순, 빠름)과 단점(이상값, 비구형, K 지정)을 나눠 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q48",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 초기화, E 단계의 기댓값 추정, M 단계의 모수 갱신 순서를 직접 따라가 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-02-q50",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 실루엣 계수의 범위와 방향 해석을 문장 조건과 대조해 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q01",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 가공 전 사실에서 패턴, 이해, 원리 순으로 의미가 깊어지는 단계를 직접 나열해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q02",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 문서 없이 시범으로 전달된 암묵지끼리의 이동이 공통화라는 정의로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q03",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 정형, 반정형, 비정형을 구조 정보의 유무로 구분하는 기준에 네 진술을 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q04",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 통합, 저장, 공용, 운영 네 요소의 정의를 문장 조건(중복 최소화)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q05",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 인덱스와 메타데이터의 역할 차이를 문장 조건(빠른 검색)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q06",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 BI는 질문 응답, BA는 통계와 수학 분석이라는 구분과 EDW와 RTE의 성격으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q07",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 전사 규모와 부서 규모의 차이, 거래 처리와 분석의 차이로 네 항목을 다시 구분해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q08",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 활용 방식의 다양성과 기술 발전에 따른 가치의 사후 발생이라는 이유로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q09",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 인메모리, 통합 엔진, RDD라는 세 조건을 스파크와 하둡 계열 도구의 특징에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q10",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 데이터 오용의 통제 방안으로 도입되는 전문가의 역할을 네 직무에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q11",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 방법 Known, 대상 Unknown 칸을 2x2 표에서 직접 찾아 통찰임을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q12",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 네 모형의 핵심 키워드(순차, 위험 분석, 시제품, 모델링 반복)를 각 모형에 다시 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q13",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 CRISP-DM 여섯 단계별 대표 업무를 나열해 네 진술이 속한 단계를 다시 찾고 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q14",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 회피, 전이, 완화, 수용의 정의를 보험 가입 사례에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q15",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 STEEP 다섯 요소와 시장 니즈 탐색 관점의 구성 요소를 나눠 네 항목을 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q16",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 과제 우선순위의 세 기준과 적용 우선순위의 세 요소를 나눠 네 묶음을 다시 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q17",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 프로젝트 확산 방지라는 목적을 시간, 품질, 통합 관리의 정의에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q18",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 준비도 여섯 영역에 각 항목을 대응시켜 어디에도 속하지 않는 항목을 찾아 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q19",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 독립 조직의 유무로 집중형과 기능 중심을 가르고 인력 배치로 분산을 구분해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q20",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 도입, 유효성 검증, 확산 및 고도화의 순서와 단계별 업무로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q22",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 표본오차는 표본 크기에 따라 줄고 비표본추출오차는 그렇지 않으며 표본편의는 확률화로 줄인다는 구분으로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q23",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 레이블, 원-핫, 바이너리, 타깃 인코딩의 변환 방식을 구분해 네 진술을 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q25",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 요약변수는 집계와 재사용성, 파생변수는 변형과 주관성이라는 구분으로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q27",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 제곱합이 음이 아니라는 성질과 자유도가 변수 개수와 같다는 정의로 네 분포를 다시 걸러 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q29",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 입증하려는 주장을 대립가설로 두고 방향이 짧아짐이므로 좌측 단측이라는 원칙으로 가설 쌍을 다시 세워 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q30",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 순위에 기반한 검정과 정규분포를 가정하는 검정을 나눠 네 검정을 다시 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q31",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 정규성, 독립성, 다중공선성, 설명력을 각각 확인하는 도구를 대응시켜 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q33",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 라쏘는 L1, 릿지는 L2, 엘라스틱넷은 둘 다라는 구분으로 다시 풀어 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q34",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 AIC가 작을수록 좋고 복잡도에 벌점이 있다는 정의로 네 선택을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q37",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 스트레스는 적합 오차이므로 작을수록 좋다는 정의로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q38",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 공분산분석, 판별분석, 정준상관분석, 주성분분석의 목적을 문장 조건(공변량 통제)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q39",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 추세, 계절, 순환, 불규칙요인의 주기 여부와 성격으로 네 요인을 다시 구분해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q40",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 MA는 ACF 절단, AR은 PACF 절단이라는 규칙에 q를 3으로 대입해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q42",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 순차 학습과 가중치 부여라는 두 조건을 부스팅, 배깅, 보팅, 스태킹에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q43",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 ReLU, 시그모이드, 소프트맥스, 계단 함수의 출력 형태를 문장 조건(양수는 그대로)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q44",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 시간 순서 유지와 데이터 비중복이라는 두 원칙으로 네 분할 방법을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q45",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 ROC는 FP 비율 대 민감도, PR 곡선은 재현율 대 정밀도라는 구분으로 네 진술을 판정해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q46",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 거리 기준 연결법과 오차제곱합 기준 연결법을 나눠 문장 조건(SSE 증가량 최소화)에 대조해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q47",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 중심으로 평균을 쓰는지 실제 관측치를 쓰는지로 K-평균과 K-메도이드를 가르고 나머지는 방식이 다름을 확인해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q48",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 SOM의 구조(입력층과 경쟁층)와 승자 독점 방식에 맞는 용어가 BMU임을 확인해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  },
+  {
+    "questionId": "adsp-03-q49",
+    "revision": 1,
+    "method": "작성자 재풀이",
+    "note": "정답을 가리고 FP-tree를 쓰는 연관분석 알고리즘은 FP-Growth뿐이라는 점으로 네 알고리즘을 분류해 일치함을 확인했다.",
+    "reviewer": "claude-sonnet-5-5",
+    "reviewedAt": "2026-10-23"
+  }
+]
