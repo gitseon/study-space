@@ -1,0 +1,10 @@
+{
+  "id": "adsp-02",
+  "revision": 1,
+  "kind": "subject",
+  "track": "adsp",
+  "title": "ADsP 2회",
+  "subtitle": "함정과 경계 조건을 점검",
+  "practiceMinutes": 90,
+  "sourceScopeVersion": 1
+}

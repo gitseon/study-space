@@ -203,6 +203,40 @@
         "code": 0
       },
       "contentVersion": "31e72f114662161f"
+    },
+    {
+      "id": "adsp-02",
+      "revision": 1,
+      "kind": "subject",
+      "track": "adsp",
+      "title": "ADsP 2회",
+      "subtitle": "함정과 경계 조건을 점검",
+      "practiceMinutes": 90,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 50,
+        "short": 0,
+        "essay": 0,
+        "code": 0
+      },
+      "contentVersion": "5e61afb8cd93cea4"
+    },
+    {
+      "id": "adsp-03",
+      "revision": 1,
+      "kind": "subject",
+      "track": "adsp",
+      "title": "ADsP 3회",
+      "subtitle": "응용과 복합 판단으로",
+      "practiceMinutes": 90,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 50,
+        "short": 0,
+        "essay": 0,
+        "code": 0
+      },
+      "contentVersion": "4e47a8059aea6423"
     }
   ],
   "topics": {
@@ -314,17 +348,17 @@
         "cluster": "군집 분석과 연관 분석"
       },
       "topicCounts": {
-        "data": 4,
-        "dbsys": 3,
-        "bigdata": 3,
-        "plan": 5,
-        "govern": 5,
-        "stat": 5,
-        "infer": 5,
-        "regress": 5,
-        "multi": 5,
-        "classify": 5,
-        "cluster": 5
+        "data": 12,
+        "dbsys": 9,
+        "bigdata": 9,
+        "plan": 15,
+        "govern": 15,
+        "stat": 15,
+        "infer": 15,
+        "regress": 15,
+        "multi": 15,
+        "classify": 15,
+        "cluster": 15
       }
     }
   },

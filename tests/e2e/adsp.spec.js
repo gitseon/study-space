@@ -2,13 +2,15 @@ import {test, expect} from '@playwright/test';
 
 const track = (page) => page.getByRole('group', {name: '과목'});
 
-test('the ADsP track shows its exam card and eleven topics without a concept note', async ({page}) => {
+test('the ADsP track shows its three exam cards and eleven topics without a concept note', async ({page}) => {
   await page.goto('index.html');
   await track(page).getByRole('button', {name: /^ADsP/}).click();
   await expect(page).toHaveURL(/track=adsp/);
-  await expect(page.locator('#mode-adsp-01')).toBeVisible();
+  for (const id of ['adsp-01', 'adsp-02', 'adsp-03']) {
+    await expect(page.locator('#mode-' + id)).toBeVisible();
+  }
   await expect(page.locator('#mode-subject-01')).toHaveCount(0);
-  await expect(page.locator('.hero-stats')).toHaveText(/50문항\s*1회차\s*11핵심 주제/);
+  await expect(page.locator('.hero-stats')).toHaveText(/150문항\s*3회차\s*11핵심 주제/);
   await expect(page.locator('.topic-links a')).toHaveCount(11);
   await expect(page.getByRole('link', {name: /개념$/})).toHaveCount(0);
 });
@@ -22,7 +24,7 @@ test('ADsP topic practice only contains the chosen topic', async ({page}) => {
     return {topics: [...new Set(attempt.snapshot.questions.flatMap((q) => q.topics))], count: attempt.snapshot.questions.length};
   });
   expect(info.topics).toEqual(['classify']);
-  expect(info.count).toBe(5);
+  expect(info.count).toBe(15);
 });
 
 test('ADsP formulas render without errors and fit a phone screen', async ({page}) => {

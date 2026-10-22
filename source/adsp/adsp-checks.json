@@ -96,5 +96,124 @@
     "code": "n,a,b,ab=200,60,50,30\nprint(f'{(ab/a)/(b/n):.2f}')",
     "expect": "2.00",
     "match": true
+  },
+  {
+    "questionId": "adsp-02-q23",
+    "revision": 1,
+    "code": "m,s,x=70,8,86\nprint(f'Z = {(x-m)/s:.1f}')",
+    "expect": "Z = 2.0",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q26",
+    "revision": 1,
+    "code": "pa,pb=0.6,0.4\nda,db=0.02,0.05\nprint(f'{pa*da/(pa*da+pb*db):.3f}')",
+    "expect": "0.375",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q27",
+    "revision": 1,
+    "code": "n,p=20,0.3\nprint(f'기댓값 {n*p:g}, 분산 {n*p*(1-p):g}')",
+    "expect": "기댓값 6, 분산 4.2",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q41",
+    "revision": 1,
+    "code": "a,b,c,d=20,80,5,95\nprint(f'{(a/(a+b))/(c/(c+d)):.2f}')",
+    "expect": "4.00",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q42",
+    "revision": 1,
+    "code": "import math\np=0.25\nprint(f'{-(p*math.log2(p)+(1-p)*math.log2(1-p)):.2f}')",
+    "expect": "0.81",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q44",
+    "revision": 1,
+    "code": "n,k=100,5\nprint(f'{n-n//k}개')",
+    "expect": "80개",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q45",
+    "revision": 1,
+    "code": "tp,fp,fn=30,10,20\np=tp/(tp+fp)\nr=tp/(tp+fn)\nprint(f'{2*p*r/(p+r):.2f}')",
+    "expect": "0.67",
+    "match": true
+  },
+  {
+    "questionId": "adsp-02-q49",
+    "revision": 1,
+    "code": "n,x,xy=500,100,40\nprint(f'{xy/x:.2f}')",
+    "expect": "0.40",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q21",
+    "revision": 1,
+    "code": "mu,s=100,10\nlo,hi=mu-3*s,mu+3*s\nout=[x for x in (133,128,75,110) if x<lo or x>hi]\nassert len(out)==1\nprint(out[0])",
+    "expect": "133",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q24",
+    "revision": 1,
+    "code": "a=(50,10);b=(200,30)\ncv={'A':a[1]/a[0],'B':b[1]/b[0]}\nk=max(cv,key=cv.get)\nprint(f'{k}, 변동계수 {cv[k]*100:g}%')",
+    "expect": "A, 변동계수 20%",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q26",
+    "revision": 1,
+    "code": "pa,pb=0.3,0.4\nassert pa*pb!=0\nprint(f'{pa+pb:.1f}')",
+    "expect": "0.7",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q28",
+    "revision": 1,
+    "code": "print(f'{1/(4**0.5):g}')",
+    "expect": "0.5",
+    "match": false
+  },
+  {
+    "questionId": "adsp-03-q32",
+    "revision": 1,
+    "code": "import math\ny=[10,20,30,40];p=[12,18,33,37]\nm=sum((a-b)**2 for a,b in zip(y,p))/4\nprint(f'{math.sqrt(m):.2f}')",
+    "expect": "2.55",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q35",
+    "revision": 1,
+    "code": "n,k=100,4\nprint(n-k-1)",
+    "expect": "95",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q36",
+    "revision": 1,
+    "code": "import statistics as s\nx=[1,2,3,4,5,6]\ny=[v*v for v in x]\nr=lambda a:[sorted(a).index(v)+1 for v in a]\nprint(round(s.correlation(r(x),r(y)),2), round(s.correlation(x,y),2))",
+    "expect": "1.0 0.98",
+    "match": false
+  },
+  {
+    "questionId": "adsp-03-q41",
+    "revision": 1,
+    "code": "import math\nprint(f'약 {math.exp(0.7):.2f}배')",
+    "expect": "약 2.01배",
+    "match": true
+  },
+  {
+    "questionId": "adsp-03-q50",
+    "revision": 1,
+    "code": "tss,wss=100,35\nprint(tss-wss)",
+    "expect": "65",
+    "match": true
   }
 ]
