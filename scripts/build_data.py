@@ -18,7 +18,8 @@ CHOICE_KINDS=("subject","written")
 # A note without a manuscript file (None) shows a disabled placeholder button until its link is added.
 NOTES=[("web-concepts","Web 개념","frontend/web개념 요약노트.md","frontend"),
        ("algorithm-concepts","자료구조 알고리즘 개념",None,"algorithm"),
-       ("ai-concepts","AI 개념","AI역량검사/AI역량 개념 요약노트.md","ai")]
+       ("ai-concepts","AI 개념","AI역량검사/AI역량 개념 요약노트.md","ai"),
+       ("backend-concepts","Backend 개념","backend/backend개념 요약노트.md","backend")]
 
 class ContentError(ValueError):
     pass

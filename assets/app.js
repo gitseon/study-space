@@ -135,8 +135,14 @@ function trackSection() {
     ? '<a class="track-button sw-link" href="pages/sw-test.html"><strong>' + e(sw.title) + '</strong>'
       + '<span>예측 순서대로 ' + sw.count + '문제의 발상과 코드 ↗</span></a>'
     : '';
+  // A note whose track has no exams yet opens the same way, until its mock exams give it a track button.
+  const noteLinks = (manifest.notes || [])
+    .filter((n) => n.file && !manifest.tracks?.[n.track])
+    .map((n) => '<a class="track-button sw-link" href="pages/concepts.html?note=' + e(n.id) + '"><strong>' + e(n.title) + '</strong>'
+      + '<span>개념 요약 노트 ↗</span></a>')
+    .join('');
   return '<section class="track-picker"><span class="eyebrow">주제</span>'
-    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + swLink + '</div>'
+    + '<div class="track-buttons" role="group" aria-label="과목">' + buttons + swLink + noteLinks + '</div>'
     + noteButtons() + '</section>';
 }
 

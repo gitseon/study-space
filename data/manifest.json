@@ -380,6 +380,12 @@
       "title": "AI 개념",
       "track": "ai",
       "file": "ai-concepts.md"
+    },
+    {
+      "id": "backend-concepts",
+      "title": "Backend 개념",
+      "track": "backend",
+      "file": "backend-concepts.md"
     }
   ],
   "swTest": {
