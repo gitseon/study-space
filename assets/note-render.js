@@ -35,18 +35,32 @@ function table(lines) {
     + '</tbody></table></div>';
 }
 
+// An indented "답:" line under a list item becomes a closed toggle with the answer to that item.
+const ANSWER = /^\s+답:\s*(.*)$/;
+
 function list(lines) {
   const ordered = /^\d+\.\s/.test(lines[0]);
-  const items = lines.map((line) => {
+  const items = [];
+  for (const line of lines) {
+    const answer = line.match(ANSWER);
+    if (answer && items.length) {
+      items[items.length - 1].answer = answer[1];
+    } else {
+      items.push({line});
+    }
+  }
+  const html = items.map(({line, answer}) => {
     const text = line.replace(/^(?:[-*]|\d+\.)\s+/, '');
     const box = text.match(/^\[( |x)\]\s+(.*)$/i);
     if (box) {
       return '<li class="task"><input type="checkbox" disabled' + (box[1] !== ' ' ? ' checked' : '') + '> <span>' + rich(box[2]) + '</span></li>';
     }
-    return '<li>' + rich(text) + '</li>';
+    const toggle = answer === undefined ? ''
+      : '<details class="answer"><summary>답 보기</summary><div>' + rich(answer) + '</div></details>';
+    return '<li>' + rich(text) + toggle + '</li>';
   });
   const tag = ordered ? 'ol' : 'ul';
-  return '<' + tag + '>' + items.join('') + '</' + tag + '>';
+  return '<' + tag + '>' + html.join('') + '</' + tag + '>';
 }
 
 function code(lang, body, names) {
@@ -99,7 +113,7 @@ export function renderNote(source, extraLanguages = {}) {
       html.push(table(rows));
     } else if (/^(?:[-*]|\d+\.)\s/.test(line)) {
       const items = [];
-      while (i < lines.length && /^(?:[-*]|\d+\.)\s/.test(lines[i])) {
+      while (i < lines.length && (/^(?:[-*]|\d+\.)\s/.test(lines[i]) || ANSWER.test(lines[i]))) {
         items.push(lines[i++]);
       }
       html.push(list(items));

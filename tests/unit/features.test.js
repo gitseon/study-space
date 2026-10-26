@@ -120,6 +120,27 @@ test('concept notes render headings, tables, lists, task items and code without 
   assert.match(html, /<p>문단 <code>코드<\/code> 입니다.<\/p>/);
 });
 
+test('an indented answer line becomes a closed toggle under its list item', () => {
+  const {html} = renderNote(['# 제목', '', '1. 질문 `a`', '   답: **정답** <b>x</b>', '2. 답이 없는 질문', '', '- 일반 항목'].join('\n'));
+  assert.match(html, /<li>질문 <code>a<\/code><details class="answer"><summary>답 보기<\/summary><div><strong>정답<\/strong> &lt;b&gt;x&lt;\/b&gt;<\/div><\/details><\/li>/);
+  assert.match(html, /<li>답이 없는 질문<\/li>/);
+  assert.doesNotMatch(html, /<details[^>]*open|<b>/);
+  assert.equal((html.match(/<details/g) || []).length, 1);
+});
+
+test('every review question in the backend note has an answer toggle', () => {
+  const md = readFileSync(new URL('../../data/backend-concepts.md', import.meta.url), 'utf8');
+  const questions = md.split('### 복습 질문').slice(1).map((part) => part.split(/^## /m)[0]);
+  assert.equal(questions.length, 7);
+  for (const part of questions) {
+    const asked = (part.match(/^\d+\. /gm) || []).length;
+    const answered = (part.match(/^ {3}답: \S/gm) || []).length;
+    assert.ok(asked > 0);
+    assert.equal(answered, asked);
+  }
+  assert.equal((renderNote(md).html.match(/<details class="answer">/g) || []).length, 26);
+});
+
 test('the published web concept note renders every section and table', () => {
   const md = readFileSync(new URL('../../data/web-concepts.md', import.meta.url), 'utf8');
   const {title, toc, html} = renderNote(md);
