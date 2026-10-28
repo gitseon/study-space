@@ -3,7 +3,7 @@ import {test, expect} from '@playwright/test';
 test('review answers in the backend note open and close under their question', async ({page}) => {
   await page.goto('pages/concepts.html?note=backend-concepts');
   const toggles = page.locator('details.answer');
-  await expect(toggles).toHaveCount(26);
+  await expect(toggles).toHaveCount(29);
   const first = toggles.first();
   await expect(first).not.toHaveAttribute('open', '');
   await expect(first.locator('div')).toBeHidden();

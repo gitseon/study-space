@@ -179,6 +179,20 @@ public class HelloServlet
 
 - `web.xml`과 `@WebServlet`의 매핑은 하나로 합쳐 관리된다. 같은 경로를 두 Servlet에 매핑하면 서버가 시작되지 않는다.
 - `@WebServlet`의 `loadOnStartup` 기본값은 `-1`이다. 0 이상이면 첫 요청을 기다리지 않고 서버 시작 때 객체를 만든다.
+- 기본값이면 `init()`의 무거운 작업(DB 연결 등)이 첫 요청 때 실행되어 첫 사용자가 한참 빈 화면을 본다. `loadOnStartup`을 지정하면 이 지연을 서버 시작 시점으로 옮길 수 있다. Servlet끼리 의존 관계가 있으면 숫자가 작은 쪽이 먼저 생성되므로 순서도 정할 수 있다.
+
+```java
+@WebServlet(urlPatterns = "/board/*",
+    loadOnStartup = 1)
+```
+
+- URL 패턴을 구분하는 스타일은 세 가지이다.
+
+| 스타일 | 예 |
+|---|---|
+| 경로 기반 | `/board/list` |
+| 확장자 기반 | `*.do` |
+| 파라미터 기반 | `/board?action=list` |
 
 ### 5. 경로의 종류
 
@@ -205,6 +219,7 @@ public class HelloServlet
 | PATCH | 예 | 아니오 | 아니오 | 아니오 |
 | HEAD | 선택 | 예 | 예 | 예 |
 
+- 용도는 GET이 조회, POST가 생성, PUT이 전체(또는 대부분) 교체, PATCH가 부분 수정, DELETE가 삭제이다. OPTIONS는 서버가 지원하는 메서드 확인, TRACE는 요청 진단에 쓴다.
 - **멱등**: 같은 요청을 여러 번 보내도 결과가 같다. POST는 멱등하지 않아 새로고침으로 중복 처리될 수 있다(Part 5의 PRG 참고).
 - **안전**: 서버의 상태를 바꾸지 않는다.
 - HEAD는 응답에 Body가 없다.
@@ -224,6 +239,22 @@ public class HelloServlet
 
 - 요청 파라미터는 `form`이나 쿼리스트링으로 전달된다. 값은 **언제나 문자열**이고 클라이언트가 보낸 뒤 서버에서 바꿀 수 없다.
 - 그래서 Servlet이 가장 먼저 하는 일은 파라미터 추출과 검증이다. 숫자는 `Integer.parseInt`로 변환하고 `NumberFormatException`을 대비한다.
+
+**요청 인코딩**
+
+- POST 본문의 한글은 `request.setCharacterEncoding("UTF-8")`로 해결한다. 파라미터를 **읽기 전에** 호출해야 하며 이미 읽은 뒤에는 효과가 없다.
+- 구형 Tomcat은 GET 쿼리스트링의 한글을 깨뜨리는 문제가 있었다. 이미 올바른 GET 값에 변환을 다시 적용하면 오히려 깨지므로, 인코딩 처리는 한 곳에서 조건부로 적용한다.
+- `service()`를 직접 오버라이드하면 HTTP 메서드 분기와 인코딩 처리를 모두 직접 해야 하므로 `doGet`과 `doPost`를 나눠 구현한다.
+
+**URI 구조**
+
+```text
+http://localhost:8080/board/view?no=10&type=notice
+                      └ 리소스 경로 ┘ └ 쿼리 스트링 ┘
+```
+
+- URI는 자원의 전체 식별자이고 그중 위치를 나타내는 것이 URL이다.
+- `?` 뒤의 쿼리 스트링에 `이름=값` 쌍으로 파라미터가 담긴다. 리소스 경로와 쿼리 스트링 파라미터를 구분해서 다룬다.
 
 ### 8. HttpServletResponse
 
@@ -248,6 +279,8 @@ public class HelloServlet
 | 404 | Not Found | 리소스를 찾을 수 없음 |
 | 405 | Method Not Allowed | 허용하지 않는 HTTP 메서드 |
 | 500 | Internal Server Error | 서버 내부 오류 |
+
+- 범위로 보면 2xx는 성공, 3xx는 redirect, 4xx는 클라이언트 오류, 5xx는 서버 오류이다.
 
 | Content-Type | 용도 |
 |---|---|
@@ -280,6 +313,8 @@ resp.getWriter().append("<h1>한글</h1>");
 4. `setContentType`을 `getWriter()`로 출력한 뒤에 호출해도 된다고 생각한다.
 5. 401과 403을 바꿔 말한다. 401은 인증, 403은 권한 문제이다.
 6. `form action`의 `/`를 context root로 착각한다.
+7. `setCharacterEncoding`을 파라미터를 읽은 뒤에 호출해도 된다고 생각한다. 읽기 전에 호출해야 한다.
+8. `loadOnStartup`을 지정하지 않아도 서버 시작 때 Servlet이 만들어진다고 생각한다. 기본값에서는 첫 요청 때 만들어진다.
 
 ### 복습 질문
 
@@ -291,6 +326,8 @@ resp.getWriter().append("<h1>한글</h1>");
    답: POST는 같은 요청을 보낼 때마다 새 데이터가 만들어지는 식으로 서버 상태가 계속 달라진다. GET은 조회만 하고 PUT은 같은 내용으로 덮어쓰며 DELETE는 이미 지워진 것을 다시 지워도 결과가 같다.
 4. 체크박스로 여러 값이 넘어올 때 쓰는 메서드는 무엇인가?
    답: `getParameterValues(name)`이다. 같은 이름의 값을 `String[]`로 돌려준다.
+5. `loadOnStartup`을 지정하면 어떤 문제를 피할 수 있는가?
+   답: `init()`에서 DB 연결 같은 무거운 작업을 할 때 첫 요청 사용자가 오래 기다리며 빈 화면을 보는 문제이다. 서버 시작 때 미리 생성하므로 지연이 사용자에게 보이지 않는다.
 
 ## Part 3. Front Controller, Filter, Listener, Multi-Thread
 
@@ -335,7 +372,19 @@ public class MainController
 ```
 
 - 여러 Front Controller(`/main`, `/member`)가 공통으로 쓰는 기능은 인터페이스 `ControllerHelper`의 `default` 메서드로 모은다.
-- `getActionParameter`는 파라미터를 로깅하고 action이 `null`이거나 비어 있으면 `"index"`를 돌려준다.
+- `getActionParameter`는 파라미터를 로깅하고 action이 `null`이거나 비어 있으면 `"index"`를 돌려준다. 게시판 실습에서는 `getPathInfo()`와 쿼리 파라미터로 액션을 가려내고 값이 없으면 기본값 `list`로 처리한다.
+- 인코딩 같은 공통 작업은 Front Controller 한 곳에서 처리하고 이후 핸들러가 정리된 요청을 받게 한다. 그러면 기능 담당자는 고유 로직에만 집중할 수 있어 팀 개발에도 유리하다.
+- 모든 이동(단순 페이지 이동 포함)을 Front Controller를 거치게 한다. HTML, Servlet, JSP 링크가 섞이면 유지보수와 디버깅이 어렵다.
+
+**Command 패턴**
+
+- 액션이 늘수록 Front Controller의 `switch`가 거대해진다. 액션별(list, write, view, modify, delete) 명령 클래스를 `controller.command` 같은 패키지에 두고 Front Controller는 위임만 한다.
+- Spring이 경로별로 컨트롤러에 라우팅하는 방식과 비슷해 이후 Spring MVC로 옮기기 쉽다.
+
+```java
+Command command = commands.get(action);
+command.execute(request, response);
+```
 
 ### 3. Filter
 
@@ -438,6 +487,8 @@ void buy(/* 생략 */) {
    답: 요청 파라미터는 직접 바꿀 수 없다. 그래서 `HttpServletRequestWrapper`로 요청을 감싸 `getParameter`가 변환된 값을 돌려주게 재정의한다.
 4. Servlet의 멤버 변수 `count`를 여러 요청이 증가시키면 어떤 문제가 생기는가?
    답: Servlet 객체는 하나이고 스레드가 공유하므로 동시 요청이 같은 변수를 건드려 값이 훼손된다. `synchronized`로 막으면 성능이 떨어지므로 멤버 변수로 상태를 두지 않는다.
+5. Front Controller에 액션이 늘어날 때 Command 패턴을 쓰는 이유는 무엇인가?
+   답: 액션마다 거대한 `switch` 분기가 생기는 것을 막기 위해서이다. 액션별 명령 클래스로 처리를 나누고 Front Controller는 위임만 한다.
 
 ## Part 4. JSP와 MVC 패턴
 
@@ -518,6 +569,15 @@ void buy(/* 생략 */) {
 | application | 웹 애플리케이션 종료까지 | `getServletContext()` | `application` |
 
 - 범위가 작은 순서는 page < request < session < application이다.
+| scope | forward 뒤 | redirect 뒤 |
+|---|---|---|
+| page | 사라짐 | 사라짐 |
+| request | 유지 | 사라짐 (새 요청) |
+| session | 유지 | 유지 |
+| application | 유지 | 유지 |
+
+- 선택 기준은 이렇다. 화면에 한 번 보여 주고 끝나는 데이터(목록 조회 결과)는 request, 여러 요청에 걸쳐 필요한 데이터(로그인 정보)는 session에 담는다.
+- session과 application은 forward와 redirect 어느 쪽을 쓰든 유지되므로 이동 방식이 값에 영향을 주지 않는다.
 - 네 scope 모두 `setAttribute` `getAttribute` `removeAttribute` `getAttributeNames`를 쓴다. 같은 키로 저장하면 덮어쓰고 없는 키를 읽으면 `null`이다.
 
 | 구분 | Parameter | Attribute |
@@ -541,6 +601,7 @@ void buy(/* 생략 */) {
 | 장점 | 구조가 단순하고 개발이 빠름 | 역할 분리로 유지보수, 재사용, 확장이 쉬움 |
 | 단점 | 로직과 화면이 섞여 유지보수가 어려움 | 초기 설정이 복잡하고 학습 곡선이 가파름 |
 
+- 계층을 나누면 오류 위치를 좁히기 쉽다. 라우팅이 이상하면 Controller, 로직이 틀리면 Service, SQL 문제면 DAO, 화면 표시 문제면 View(JSP)를 먼저 본다.
 - MVC 작성 순서: Model(비즈니스 로직과 화면에 줄 데이터) → View(데이터 활용) → Controller(둘을 잇는 접착제). 유즈케이스 단위로 작성한다.
 
 ### 7. forward와 redirect
@@ -604,13 +665,16 @@ response.sendRedirect(
    답: 요청 검증, Model(Service) 호출, 결과를 scope에 저장, View 선택(forward 또는 redirect)이다.
 4. 로그인 정보를 저장할 scope와 검색 결과를 저장할 scope는 각각 무엇인가?
    답: 로그인 정보는 로그아웃이나 만료까지 유지해야 하므로 session, 검색 결과는 한 요청의 응답에만 쓰이므로 request이다.
+5. redirect 뒤에도 값이 남는 scope는 무엇인가?
+   답: session과 application이다. request와 page는 redirect하면 새 요청이 되어 사라진다.
 
 ## Part 5. EL, JSTL, PRG
 
 ### 1. PRG (Post Redirect Get)
 
 - 새로고침은 직전 요청을 다시 보낸다. POST 처리 후 forward로 화면을 보여 주면 새로고침할 때 등록이 중복된다.
-- POST를 처리한 뒤에는 **redirect로 GET 요청을 하게 만든다.** 새로고침해도 마지막 GET만 다시 실행된다.
+- 게시글이 하나 더 등록되는 정도는 무해하지만 송금 같은 거래라면 새로고침 한 번에 이중 송금이 된다. POST 뒤 forward는 주소창에 POST URL이 그대로 남아 이런 재전송을 부른다.
+- POST를 처리한 뒤에는 **redirect로 GET 요청을 하게 만든다.** 새로고침해도 마지막 GET만 다시 실행된다. 결과 메시지가 필요하면 URL 파라미터나 session으로 넘긴다.
 - 반대로 가입 실패(중복 이메일)처럼 입력값을 살려 폼으로 돌아가야 하면 forward로 오류 정보를 request attribute에 담는다.
 
 ### 2. EL (Expression Language)
@@ -852,7 +916,9 @@ if (m != null) {
 
 ### 2. AJAX로 이메일 중복 확인
 
-- 서버는 객체를 JSON으로 바꿔 응답한다. Jackson의 `ObjectMapper`를 쓴다.
+- 동기 방식은 요청마다 페이지 전체를 이동하지만 AJAX는 페이지 이동 없이 서버와 데이터만 주고받는다. 아이디나 이메일 중복 검사가 대표 사례이며 키 입력마다 호출해도 버튼 클릭 때 호출해도 된다.
+- 어느 쪽이든 서버 엔드포인트는 HTML이 아니라 데이터(JSON 또는 XML)를 반환해야 한다.
+- 서버는 객체를 JSON으로 바꿔 응답한다. Jackson의 `ObjectMapper`를 쓰며 프로젝트 의존성에 추가해야 한다.
 
 ```java
 String json = new ObjectMapper()
@@ -973,6 +1039,8 @@ list.stream()
 - [ ] Filter의 수명 주기와 `chain.doFilter()` 전후의 의미를 설명할 수 있는가
 - [ ] dispatcher 종류와 기본값을 알고 있는가
 - [ ] Servlet이 Thread Safe하지 않은 이유와 대책을 설명할 수 있는가
+- [ ] POST 한글 인코딩 처리 시점과 URI의 경로와 쿼리 스트링 구성을 설명할 수 있는가
+- [ ] Command 패턴을 쓰는 이유를 설명할 수 있는가
 - [ ] JSP가 Servlet으로 변환되는 과정과 구성 요소의 변환 위치를 설명할 수 있는가
 - [ ] 네 가지 Web scope의 범위와 Servlet에서 얻는 방법을 말할 수 있는가
 - [ ] forward와 redirect의 차이와 사용 시점을 설명할 수 있는가
