@@ -138,7 +138,7 @@ test('every review question in the backend note has an answer toggle', () => {
     assert.ok(asked > 0);
     assert.equal(answered, asked);
   }
-  assert.equal((renderNote(md).html.match(/<details class="answer">/g) || []).length, 26);
+  assert.equal((renderNote(md).html.match(/<details class="answer">/g) || []).length, 29);
 });
 
 test('the published web concept note renders every section and table', () => {
