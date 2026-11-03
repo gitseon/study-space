@@ -1,6 +1,7 @@
 import {store} from './storage.js';
 import {escapeHtml as e, download, typeNames, gradingNames} from './render.js';
 import {summarize} from './grading.js';
+import {effectiveMinutes} from './practice-time.js';
 
 const root = document.querySelector('#app');
 const PREF_KEY = 'mock-exam:grading-mode';
@@ -96,9 +97,11 @@ function examCard(exam, attempts, preference) {
     .filter(([, n]) => n > 0)
     .map(([type, n]) => '<span>' + typeNames[type] + ' <b>' + n + '</b></span>')
     .join('');
+  // Shortest limit first and "no limit" (0) last. The exam's own length stays the preselected choice.
   const times = [[exam.practiceMinutes, exam.practiceMinutes + '분'], [30, '30분'], [90, '90분'], [0, '시간 제한 없음']]
     .filter(([value], i, list) => list.findIndex(([v]) => v === value) === i)
-    .map(([value, label]) => '<option value="' + value + '">' + label + '</option>')
+    .sort(([a], [b]) => (a || Infinity) - (b || Infinity))
+    .map(([value, label]) => '<option value="' + value + '"' + (value === exam.practiceMinutes ? ' selected' : '') + '>' + label + '</option>')
     .join('');
   const modes = Object.entries(gradingNames)
     .map(([value, label]) => '<option value="' + value + '"' + (value === preference ? ' selected' : '') + '>' + label + '</option>')
@@ -253,10 +256,27 @@ function render() {
     b.onclick = () => {
       const id = b.dataset.start;
       const mode = document.getElementById('mode-' + id).value;
-      const minutes = document.getElementById('time-' + id).value;
+      const minutes = effectiveMinutes(manifest.exams.find((x) => x.id === id), mode, document.getElementById('time-' + id).value);
       writePreference(mode);
       location.href = 'pages/quiz.html?exam=' + encodeURIComponent(id) + '&mode=' + mode + '&minutes=' + minutes + '&new=1';
     };
+  });
+  // A fixed-length exam shows its real limit and locks the time choice while the grading mode is exam.
+  manifest.exams.filter((x) => x.fixedPracticeMinutes).forEach((x) => {
+    const mode = document.getElementById('mode-' + x.id);
+    const time = document.getElementById('time-' + x.id);
+    if (!mode || !time) {
+      return;
+    }
+    const sync = () => {
+      const fixed = mode.value === 'exam';
+      time.disabled = fixed;
+      if (fixed) {
+        time.value = String(x.practiceMinutes);
+      }
+    };
+    mode.addEventListener('change', sync);
+    sync();
   });
   document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
   document.querySelector('#import').onchange = (ev) => importBackup(ev, attempts);

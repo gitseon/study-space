@@ -57,7 +57,7 @@ test('every formula in the published data renders without KaTeX errors', () => {
 
 test('frontend snippets get a language label and escaped, coloured tokens', () => {
   const html = markdown('```html\n<p class="a">x</p>\n```');
-  assert.match(html, /<figure class="snippet" data-lang="html"><figcaption>HTML<\/figcaption>/);
+  assert.match(html, /<figure class="snippet window" data-lang="html"><figcaption>HTML<\/figcaption>/);
   assert.match(html, /&lt;p/);
   assert.doesNotMatch(html, /<p class="a">/);
 
@@ -66,7 +66,7 @@ test('frontend snippets get a language label and escaped, coloured tokens', () =
   assert.match(js, /<span class="tok-s">&#39;&lt;b&gt;&#39;<\/span>/);
   assert.match(js, /<span class="tok-c">\/\/ note<\/span>/);
 
-  assert.doesNotMatch(markdown('```java\nint a = 1;\n```'), /snippet/);
+  assert.match(markdown('```java\nint a = 1;\n```'), /<figure class="snippet window" data-lang="java"><figcaption>Java<\/figcaption>/);
 });
 
 test('highlighting never changes the visible code text', () => {

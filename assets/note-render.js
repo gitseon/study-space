@@ -1,5 +1,5 @@
 import {escapeHtml, inline} from './render.js';
-import {highlight, languageNames} from './highlight.js';
+import {highlight, languageNames, codeWindow} from './highlight.js';
 
 // Renders the small Markdown subset used by the concept notes: headings, paragraphs, tables, flat
 // lists with checkboxes, code fences and inline code, bold and math through render.js. Nothing is
@@ -63,8 +63,11 @@ function list(lines) {
   return '<' + tag + '>' + html.join('') + '</' + tag + '>';
 }
 
-function code(lang, body, names) {
+function code(lang, body, names, windowed) {
   const text = body.replace(/\n$/, '');
+  if (windowed) {
+    return codeWindow(lang, text);
+  }
   if (names[lang]) {
     return '<figure class="snippet" data-lang="' + lang + '"><figcaption>' + names[lang] + '</figcaption><pre tabindex="0"><code>'
       + highlight(lang, text) + '</code></pre></figure>';
@@ -73,7 +76,8 @@ function code(lang, body, names) {
 }
 
 // extraLanguages lets one page colour a language the shared notes leave plain, for example {java: 'Java'}.
-export function renderNote(source, extraLanguages = {}) {
+// With {window: true} every code fence becomes a code window; the default keeps the colouring the SW test page relies on.
+export function renderNote(source, extraLanguages = {}, {window: windowed = false} = {}) {
   const names = {...languageNames, ...extraLanguages};
   const lines = String(source).replace(/\r\n?/g, '\n').split('\n');
   const html = [];
@@ -92,7 +96,7 @@ export function renderNote(source, extraLanguages = {}) {
         body.push(lines[i++]);
       }
       i++;
-      html.push(code(lang, body.join('\n'), names));
+      html.push(code(lang, body.join('\n'), names, windowed));
     } else if (/^#{1,3}\s/.test(line)) {
       const level = line.match(/^#+/)[0].length;
       const text = line.replace(/^#+\s+/, '');

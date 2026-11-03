@@ -8,6 +8,12 @@ const PY_LITERALS = 'True False None';
 const JAVA_KEYWORDS = 'abstract boolean break byte case catch char class continue default do double else enum extends final finally float for if implements import instanceof int interface long new package private protected public return short static super switch this throw throws try void while';
 const JAVA_LITERALS = 'true false null';
 
+const SQL_KEYWORDS = ('SELECT FROM WHERE GROUP BY HAVING ORDER LIMIT OFFSET INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE ALTER DROP TRUNCATE '
+  + 'JOIN LEFT RIGHT INNER OUTER FULL CROSS ON AS AND OR NOT IN EXISTS ANY ALL UNION INTERSECT EXCEPT DISTINCT START TRANSACTION BEGIN ROLLBACK COMMIT '
+  + 'SAVEPOINT TO PRIMARY KEY FOREIGN REFERENCES VIEW WITH CHECK OPTION ADD COLUMN INDEX UNIQUE DEFAULT IS LIKE BETWEEN ASC DESC CASE WHEN THEN ELSE END '
+  + 'FOR CONSTRAINT CASCADE RESTRICT DATABASE USE SHOW DESCRIBE ENGINE AUTO_INCREMENT').replace(/\s+/g, ' ');
+const SQL_LITERALS = 'NULL TRUE FALSE';
+
 const rules = {
   // Java is coloured only where a caller asks for it by name. languageNames stays unchanged on purpose.
   java: [
@@ -37,6 +43,19 @@ const rules = {
     ['n', /\b\d+(?:\.\d+)?(?:e-?\d+)?\b/y],
     ['w', /[A-Za-z_]\w*/y],
   ],
+  sql: [
+    ['c', /--[^\n]*|#[^\n]*|\/\*[\s\S]*?\*\//y],
+    ['s', /'(?:''|\\.|[^'\\])*'|"(?:\\.|[^"\\])*"/y],
+    ['n', /\b\d+(?:\.\d+)?\b/y],
+    ['w', /[A-Za-z_]\w*/y],
+  ],
+  jsp: [
+    ['c', /<%--[\s\S]*?--%>|<!--[\s\S]*?-->/y],
+    ['k', /<%[@=!]?|%>/y],
+    ['t', /<\/?[A-Za-z][\w:-]*|\/?>|<!DOCTYPE/y],
+    ['s', /"[^"\n]*"|'[^'\n]*'/y],
+    ['a', /[A-Za-z-]+(?==)/y],
+  ],
   html: [
     ['c', /<!--[\s\S]*?-->/y],
     ['t', /<\/?[A-Za-z][\w-]*|\/?>|<!DOCTYPE/y],
@@ -45,14 +64,25 @@ const rules = {
   ],
 };
 
+rules.xml = rules.html;
+
 export const languageNames = {js: 'JavaScript', css: 'CSS', html: 'HTML', python: 'Python'};
+
+// Code windows label every block, including languages that carry no colouring such as plain text tables.
+const WINDOW_LABELS = {...languageNames, java: 'Java', sql: 'SQL', xml: 'XML', jsp: 'JSP', text: 'TEXT'};
+export const windowLabel = (lang) => WINDOW_LABELS[lang] || (lang ? lang.toUpperCase() : 'CODE');
+
+export function codeWindow(lang, source) {
+  return '<figure class="snippet window" data-lang="' + escape(lang) + '"><figcaption>' + escape(windowLabel(lang)) + '</figcaption>'
+    + '<pre tabindex="0"><code>' + highlight(lang, source) + '</code></pre></figure>';
+}
 
 export function highlight(lang, source) {
   const list = rules[lang];
   if (!list) {
     return escape(source);
   }
-  const [keywordList, literalList] = {python: [PY_KEYWORDS, PY_LITERALS], java: [JAVA_KEYWORDS, JAVA_LITERALS]}[lang] || [JS_KEYWORDS, JS_LITERALS];
+  const [keywordList, literalList] = {python: [PY_KEYWORDS, PY_LITERALS], java: [JAVA_KEYWORDS, JAVA_LITERALS], sql: [SQL_KEYWORDS, SQL_LITERALS]}[lang] || [JS_KEYWORDS, JS_LITERALS];
   const keywords = new Set(keywordList.split(' '));
   const literals = new Set(literalList.split(' '));
   let out = '';
@@ -79,7 +109,8 @@ export function highlight(lang, source) {
     let [kind, text] = hit;
     if (kind === 'w') {
       // Java reads true, false and null as keywords, as Eclipse does.
-      kind = keywords.has(text) ? 'k' : literals.has(text) ? (lang === 'java' ? 'k' : 'n') : null;
+      const word = lang === 'sql' ? text.toUpperCase() : text;
+      kind = keywords.has(word) ? 'k' : literals.has(word) ? (lang === 'java' ? 'k' : 'n') : null;
     }
     i += text.length;
     if (!kind) {

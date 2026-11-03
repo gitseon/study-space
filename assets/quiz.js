@@ -1,7 +1,9 @@
 import {store} from './storage.js';
 import {createAttempt, remainingSeconds} from './attempt.js';
 import {resultFor, summarize, needsReview} from './grading.js';
-import {escapeHtml as e, inline, markdown, loadExam, download, typeNames, gradingNames} from './render.js';
+import {effectiveMinutes} from './practice-time.js';
+import {toggleElimination, clearElimination, isEraserEnabled, readEraserPreference, writeEraserPreference} from './choice-eraser.js';
+import {escapeHtml as e, inline, markdown, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -14,6 +16,13 @@ let filter = FILTERS[params.get('filter')] ? params.get('filter') : 'all';
 let typeFilter = 'all';
 let saveMessage = '';
 let versionNotice = false;
+let prefStorage;
+try {
+  prefStorage = globalThis.localStorage;
+} catch {
+  // Blocked storage only means the eraser setting is not remembered.
+}
+let eraserPreference = readEraserPreference(prefStorage);
 
 document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
 
@@ -166,10 +175,29 @@ function choiceOrder(q) {
   return attempt.choiceOrders[q.id] || q.choices.map((c) => c.id);
 }
 
+const ERASER_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
+  + '<path d="M15.5 4.5a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8L10 18H6.2L3.7 15.5a2 2 0 0 1 0-2.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>'
+  + '<path d="M8.6 7.8l7.6 7.6M10 18h10.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+
+function eraserToggle(on) {
+  return '<div class="eraser-tool"><button type="button" id="eraser-toggle" class="quiet" aria-pressed="' + on + '">선택지 지우개 ' + (on ? 'ON' : 'OFF') + '</button>'
+    + '<span class="muted">' + (on ? '지울 선택지 오른쪽의 지우개를 누르세요. ' : '') + '선택한 선지를 다시 누르면 선택이 해제됩니다.</span></div>';
+}
+
+// Erasing the chosen choice also withdraws the answer, so every choice has a working button.
+function eraserButton(id, number, erased) {
+  return '<button type="button" class="eraser-btn' + (erased ? ' on' : '') + '" data-erase="' + e(id) + '"'
+    + ' aria-label="' + number + '번 선택지 ' + (erased ? '복원' : '지우기') + '">' + ERASER_ICON + '</button>';
+}
+
 function renderAnswer(q) {
   const locked = isViewing() || attempt.revealed.includes(q.id);
   if (q.type === 'mc') {
     const revealed = isRevealed(q);
+    // The eraser is a scratch aid: it is offered only while the question can still be answered.
+    const eraserOn = !isViewing() && isEraserEnabled(attempt, eraserPreference);
+    const erasing = eraserOn && !locked;
+    const erased = new Set(erasing ? attempt.eliminatedChoices?.[q.id] : []);
     const choices = choiceOrder(q)
       .map((id, i) => {
         const choice = q.choices.find((c) => c.id === id);
@@ -179,12 +207,18 @@ function renderAnswer(q) {
         } else if (revealed && attempt.answers[q.id] === id) {
           classes.push('wrong-choice');
         }
-        return '<label class="' + classes.join(' ') + '"><input name="choice" type="radio" value="' + e(id) + '"'
+        if (erased.has(id)) {
+          classes.push('erased');
+        }
+        const label = '<label class="' + classes.join(' ') + '"><input name="choice" type="radio" value="' + e(id) + '"'
           + (attempt.answers[q.id] === id ? ' checked' : '') + (locked ? ' disabled' : '') + '>'
-          + '<span class="choice-num">' + (i + 1) + '</span><span>' + inline(choice.text) + '</span></label>';
+          + '<span class="choice-num">' + (i + 1) + '</span><span>' + inline(choice.text)
+          + (erased.has(id) ? '<span class="sr-only"> (지운 선택지)</span>' : '') + '</span></label>';
+        return '<div class="choice-row">' + label + (erasing ? eraserButton(id, i + 1, erased.has(id)) : '') + '</div>';
       })
       .join('');
-    return '<fieldset class="choices"><legend class="sr-only">정답 선택</legend>' + choices + '</fieldset>';
+    return (isViewing() ? '' : eraserToggle(eraserOn))
+      + '<fieldset class="choices"><legend class="sr-only">정답 선택</legend>' + choices + '</fieldset>';
   }
   const label = q.type === 'code' ? languageLabel(q) + ' 답안' : q.type === 'essay' ? '나의 설명' : '나의 답';
   let html = '<label class="answer-label" for="answer">' + label + '</label>';
@@ -234,7 +268,7 @@ function explanation(q) {
     html += '<p class="answer-line">모범답안 <b>' + e(q.acceptedAnswers[0]) + '</b>'
       + (hasAnswer(q) ? '<span>내 답 <b>' + e(attempt.answers[q.id]) + '</b></span>' : '') + '</p>';
   }
-  html += '<div class="prose">' + markdown(q.solution) + '</div>';
+  html += '<div class="prose solution">' + markdown(solutionMarkdown(q.solution)) + '</div>';
   if (q.type === 'mc') {
     html += '<div class="choice-reasons">' + choiceOrder(q)
       .map((id, i) => '<div><b>' + (i + 1) + (id === q.correctChoiceId ? ' 정답' : '') + '</b><p>' + inline(q.choiceExplanations[id]) + '</p></div>')
@@ -363,8 +397,47 @@ function bindEvents(q, qs) {
     }
     render();
   };
+  document.querySelector('#eraser-toggle')?.addEventListener('click', () => {
+    eraserPreference = !isEraserEnabled(attempt, eraserPreference);
+    attempt.eraserEnabled = eraserPreference;
+    writeEraserPreference(prefStorage, eraserPreference);
+    save();
+    render();
+    document.querySelector('#eraser-toggle')?.focus();
+  });
+  root.querySelectorAll('[data-erase]').forEach((button) => {
+    button.onclick = () => {
+      if (!toggleElimination(attempt, q.id, button.dataset.erase)) {
+        return;
+      }
+      save();
+      render();
+      [...root.querySelectorAll('[data-erase]')].find((b) => b.dataset.erase === button.dataset.erase)?.focus();
+    };
+  });
   root.querySelectorAll('input[name=choice]').forEach((input) => {
+    // Clicking the chosen radio again fires no change event, so the stored answer decides: same value means withdraw it.
+    // A new choice reaches this handler before the answer is stored, so it falls through to onchange.
+    const withdraw = () => {
+      delete attempt.answers[q.id];
+      save();
+      render();
+      document.querySelector('input[value="' + input.value + '"]')?.focus();
+    };
+    input.onclick = () => {
+      if (attempt.answers[q.id] === input.value) {
+        withdraw();
+      }
+    };
+    // Space on a checked radio fires no click, so the keyboard withdraws the answer here.
+    input.onkeydown = (ev) => {
+      if (ev.key === ' ' && attempt.answers[q.id] === input.value) {
+        ev.preventDefault();
+        withdraw();
+      }
+    };
     input.onchange = () => {
+      clearElimination(attempt, q.id, input.value);
       attempt.answers[q.id] = input.value;
       save();
       render();
@@ -474,11 +547,8 @@ async function start() {
     }
     const existing = !params.has('new') && !topic && store.listAttempts()
       .find((a) => a.examId === exam.id && a.mode === mode && !a.submittedAt && a.contentVersion === exam.contentVersion && !a.topic);
-    let minutes = Number(params.get('minutes') ?? (mode === 'study' ? 0 : exam.practiceMinutes));
-    if (!Number.isFinite(minutes) || minutes < 0 || minutes > 600) {
-      minutes = exam.practiceMinutes;
-    }
-    attempt = existing || createAttempt(exam, {mode, durationMinutes: minutes, shuffle: params.has('shuffle')});
+    const minutes = effectiveMinutes(topic ? {...exam, fixedPracticeMinutes: false} : exam, mode, params.get('minutes'));
+    attempt = existing || createAttempt(exam, {mode, durationMinutes: minutes, shuffle: params.has('shuffle'), eraserEnabled: isEraserEnabled({}, eraserPreference)});
     attempt.topic = topic || null;
     save();
     history.replaceState(null, '', 'quiz.html?attempt=' + encodeURIComponent(attempt.attemptId));
@@ -486,6 +556,7 @@ async function start() {
   attempt.selfGrades ??= {};
   attempt.overrides ??= {};
   attempt.revealed ??= [];
+  attempt.eliminatedChoices ??= {};
   render();
   setInterval(tick, 1000);
 }

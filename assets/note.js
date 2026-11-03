@@ -22,7 +22,7 @@ async function start() {
   if (!res.ok) {
     throw Error('개념 노트를 불러오지 못했습니다');
   }
-  const {title, toc, html} = renderNote(await res.text());
+  const {title, toc, html} = renderNote(await res.text(), {}, {window: true});
   document.title = (note.title || title) + ' | STUDY SPACE';
   root.innerHTML = '<div class="note-layout">' + tocHtml(toc) + '<article class="note">' + html + '</article></div>';
   if (location.hash) {
