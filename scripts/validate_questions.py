@@ -108,6 +108,15 @@ def validate_bank(exams, scope, scopes=None):
             for group,counts in scope["groups"].items():
                 actual=Counter(q["type"] for q in exam["questions"] if q.get("group")==group)
                 if any(actual[t]!=n for t,n in counts.items()): add("blueprint",exam["id"],group)
+            # Areas group topics (backend / db / integration) and carry the essay split, which groups do not list.
+            area_counts=scope.get("areaComposition",{}).get(exam["kind"])
+            if area_counts:
+                area_of={t:a for a,topics in scope["topicAreas"].items() for t in topics}
+                found={a:Counter() for a in area_counts}
+                for q in exam["questions"]:
+                    if area_of.get(q.get("group")) in found: found[area_of[q["group"]]][q["type"]]+=1
+                for area,counts in area_counts.items():
+                    if any(found[area][t]!=counts.get(t,0) for t in ("mc","short","essay","code")): add("area-blueprint",exam["id"],area)
     for track,found in tag_seen.items():
         needed={t for tags in scopes[track]["tags"].values() for t in tags}
         if needed-found: add("tag-coverage",track,str(sorted(needed-found)))
@@ -128,6 +137,46 @@ def validate_notes(source_root=ROOT/"source"):
         for code in set(frontend_code_issues(text)+python_code_issues(text)): issues.append({"code":code,"questionId":note_id,"message":"note code format","severity":"error"})
         fences=re.findall(r"(?m)^```",text)
         if len(fences)%2: issues.append({"code":"fence","questionId":note_id,"message":"unclosed code fence","severity":"error"})
+    return issues
+
+COVERAGE_PROFILES=("pilot","full")
+
+def backend_note_texts(source_root=ROOT/"source"):
+    """Manuscripts of the notes owned by the backend track, keyed by note ID."""
+    return {note_id:(source_root/filename).read_text(encoding="utf-8-sig") for note_id,_,filename,note_track in NOTES if note_track=="backend" and filename}
+
+def validate_coverage(coverage, exams, note_texts):
+    """Every scope row must point at real note sections and, once backend exams exist, at real backend questions.
+    A pilot needs one question per row, a full bank needs one per keyword."""
+    issues=[]
+    def add(code,item,message): issues.append({"code":code,"questionId":item,"message":message,"severity":"error"})
+    profile=coverage.get("coverageProfile")
+    if profile not in COVERAGE_PROFILES: add("coverage-profile","coverage",str(profile))
+    track_of_question={q["id"]:track_of(e) for e in exams for q in e["questions"]}
+    has_exams=any(track=="backend" for track in track_of_question.values())
+    def check_section(where,note_id,section):
+        if note_id not in note_texts: add("coverage-note",where,f"unknown backend note {note_id}"); return
+        if not re.search(r"(?m)^## "+re.escape(str(section))+r"\s*$",note_texts[note_id]): add("coverage-section",where,f"{note_id}: {section}")
+    def check_questions(where,ids):
+        for qid in ids:
+            if qid not in track_of_question: add("coverage-unknown",where,qid)
+            elif track_of_question[qid]!="backend": add("coverage-track",where,qid)
+    seen=set()
+    for req in coverage.get("requirements",[]):
+        rid=req.get("requirementId","?")
+        if rid in seen: add("coverage-duplicate",rid,"duplicate requirement")
+        seen.add(rid)
+        check_section(rid,req.get("noteId"),req.get("section"))
+        for extra in req.get("alsoSee",[]): check_section(rid,extra.get("noteId"),extra.get("section"))
+        listed=req.get("questionIds",[])
+        check_questions(rid,listed)
+        keywords=req.get("keywords",[])
+        if not keywords or len({k["id"] for k in keywords})!=len(keywords): add("coverage-duplicate",rid,"keywords missing or duplicated")
+        for keyword in keywords:
+            check_questions(f"{rid}/{keyword['id']}",keyword.get("questionIds",[]))
+            if set(keyword.get("questionIds",[]))-set(listed): add("coverage-listed",f"{rid}/{keyword['id']}","keyword question missing from the requirement")
+            if has_exams and profile=="full" and not keyword.get("questionIds"): add("coverage-keyword",f"{rid}/{keyword['id']}","keyword without a question")
+        if has_exams and not listed: add("coverage-question",rid,"requirement without a question")
     return issues
 
 SW_IDEA_SECTIONS=("## 문제 요약","## 발상","## 놓치기 쉬운 점","## 복잡도와 검증")
@@ -173,6 +222,9 @@ def validate_sw_test(source_root=ROOT/"source"):
 if __name__=="__main__":
     exams=build_data(); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
     issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()+validate_sw_test()
+    coverage_path=ROOT/"source"/"backend"/"coverage-backend.json"
+    if coverage_path.exists():
+        issues+=validate_coverage(json.loads(coverage_path.read_text(encoding="utf-8-sig")),exams,backend_note_texts())
     for item in issues: print(json.dumps(item,ensure_ascii=True))
     print(f"Content validation: {len(issues)} errors")
     raise SystemExit(bool(issues))

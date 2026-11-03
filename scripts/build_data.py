@@ -10,7 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TRACKS={"algorithm":{"label":"자료구조와 알고리즘","dir":"dsAlgo","scope":"scope.json"},
         "frontend":{"label":"프론트엔드","dir":"frontend","scope":"scope-frontend.json"},
         "ai":{"label":"AI 역량검사","dir":"AI역량검사","scope":"scope-ai.json"},
-        "adsp":{"label":"ADsP","dir":"adsp","scope":"scope-adsp.json"}}
+        "adsp":{"label":"ADsP","dir":"adsp","scope":"scope-adsp.json"},
+        "backend":{"label":"백엔드 · DB","dir":"backend","scope":"scope-backend.json"}}
 # Exam kinds that are answered mostly with multiple choice and feed the topic practice sets.
 CHOICE_KINDS=("subject","written")
 
@@ -19,7 +20,8 @@ CHOICE_KINDS=("subject","written")
 NOTES=[("web-concepts","Web 개념","frontend/web개념 요약노트.md","frontend"),
        ("algorithm-concepts","자료구조 알고리즘 개념",None,"algorithm"),
        ("ai-concepts","AI 개념","AI역량검사/AI역량 개념 요약노트.md","ai"),
-       ("backend-concepts","Backend 개념","backend/backend개념 요약노트.md","backend")]
+       ("backend-concepts","Backend 개념","backend/backend개념 요약노트.md","backend"),
+       ("db-concepts","DB 개념","DB/DB개념 요약노트.md","backend")]
 
 class ContentError(ValueError):
     pass

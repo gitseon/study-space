@@ -1,0 +1,391 @@
+{
+  "coverageProfile": "pilot",
+  "requirements": [
+    {
+      "requirementId": "B01",
+      "noteId": "backend-concepts",
+      "section": "Part 2. Servlet 기초",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "servlet-lifecycle",
+          "questionIds": [
+            "backend-01-q01"
+          ]
+        },
+        {
+          "id": "shared-field-thread",
+          "questionIds": [
+            "backend-01-q04"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q01",
+        "backend-01-q04"
+      ]
+    },
+    {
+      "requirementId": "B02",
+      "noteId": "backend-concepts",
+      "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 2. Servlet 기초"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "url-mapping",
+          "questionIds": [
+            "backend-01-q02"
+          ]
+        },
+        {
+          "id": "dispatcher-type",
+          "questionIds": [
+            "backend-01-q05"
+          ]
+        },
+        {
+          "id": "filter-chain",
+          "questionIds": [
+            "backend-01-q05"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q02",
+        "backend-01-q05"
+      ]
+    },
+    {
+      "requirementId": "B03",
+      "noteId": "backend-concepts",
+      "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 6. Cookie와 Session"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "front-controller-branch",
+          "questionIds": [
+            "backend-01-q31"
+          ]
+        },
+        {
+          "id": "error-page-status",
+          "questionIds": [
+            "backend-01-q23"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q23",
+        "backend-01-q31"
+      ]
+    },
+    {
+      "requirementId": "B04",
+      "noteId": "backend-concepts",
+      "section": "Part 4. JSP와 MVC 패턴",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 5. EL, JSTL, PRG"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "jsp-translation-position",
+          "questionIds": [
+            "backend-01-q07"
+          ]
+        },
+        {
+          "id": "include-directive",
+          "questionIds": [
+            "backend-01-q07"
+          ]
+        },
+        {
+          "id": "scope-lookup",
+          "questionIds": [
+            "backend-01-q06"
+          ]
+        },
+        {
+          "id": "jstl-condition",
+          "questionIds": [
+            "backend-01-q06"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q06",
+        "backend-01-q07"
+      ]
+    },
+    {
+      "requirementId": "B05",
+      "noteId": "backend-concepts",
+      "section": "Part 6. Cookie와 Session",
+      "alsoSee": [],
+      "keywords": [
+        {
+          "id": "session-auth-state",
+          "questionIds": [
+            "backend-01-q09"
+          ]
+        },
+        {
+          "id": "remember-id-cookie",
+          "questionIds": [
+            "backend-01-q08"
+          ]
+        },
+        {
+          "id": "session-invalidate",
+          "questionIds": [
+            "backend-01-q09"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q08",
+        "backend-01-q09",
+        "backend-01-q25"
+      ]
+    },
+    {
+      "requirementId": "B06",
+      "noteId": "backend-concepts",
+      "section": "Part 4. JSP와 MVC 패턴",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 5. EL, JSTL, PRG"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "forward-redirect-three-axes",
+          "questionIds": [
+            "backend-01-q24"
+          ]
+        },
+        {
+          "id": "prg-after-post",
+          "questionIds": [
+            "backend-01-q24"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q24"
+      ]
+    },
+    {
+      "requirementId": "D01",
+      "noteId": "db-concepts",
+      "section": "Part 2. SELECT, 조건, NULL과 정렬",
+      "alsoSee": [
+        {
+          "noteId": "db-concepts",
+          "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "null-three-valued",
+          "questionIds": [
+            "backend-01-q10",
+            "backend-01-q26"
+          ]
+        },
+        {
+          "id": "where-having-aggregate",
+          "questionIds": [
+            "backend-01-q11"
+          ]
+        },
+        {
+          "id": "count-avg-null",
+          "questionIds": [
+            "backend-01-q11"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q10",
+        "backend-01-q11",
+        "backend-01-q26"
+      ]
+    },
+    {
+      "requirementId": "D02",
+      "noteId": "db-concepts",
+      "section": "Part 6. DDL, 자료형, 제약조건과 DML",
+      "alsoSee": [
+        {
+          "noteId": "db-concepts",
+          "section": "Part 2. SELECT, 조건, NULL과 정렬"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "pk-fk-integrity",
+          "questionIds": [
+            "backend-01-q16"
+          ]
+        },
+        {
+          "id": "delete-truncate-drop",
+          "questionIds": [
+            "backend-01-q16"
+          ]
+        },
+        {
+          "id": "order-limit-concat",
+          "questionIds": [
+            "backend-01-q12"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q12",
+        "backend-01-q16"
+      ]
+    },
+    {
+      "requirementId": "D03",
+      "noteId": "db-concepts",
+      "section": "Part 5. 서브쿼리와 VIEW",
+      "alsoSee": [
+        {
+          "noteId": "db-concepts",
+          "section": "Part 7. 트랜잭션, 격리 수준, MVCC와 잠금"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "savepoint-partial-rollback",
+          "questionIds": [
+            "backend-01-q18"
+          ]
+        },
+        {
+          "id": "in-any-all-exists",
+          "questionIds": [
+            "backend-01-q15"
+          ]
+        },
+        {
+          "id": "set-difference",
+          "questionIds": []
+        },
+        {
+          "id": "view-dml-condition",
+          "questionIds": [
+            "backend-01-q27"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q15",
+        "backend-01-q18",
+        "backend-01-q27"
+      ]
+    },
+    {
+      "requirementId": "D04",
+      "noteId": "db-concepts",
+      "section": "Part 9. 모델링, 키, 관계와 정규화",
+      "alsoSee": [
+        {
+          "noteId": "db-concepts",
+          "section": "Part 8. 인덱스와 실행 계획"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "partial-transitive-dependency",
+          "questionIds": [
+            "backend-01-q17"
+          ]
+        },
+        {
+          "id": "full-table-scan",
+          "questionIds": []
+        },
+        {
+          "id": "clustered-secondary-leaf",
+          "questionIds": [
+            "backend-01-q29"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q17",
+        "backend-01-q29"
+      ]
+    },
+    {
+      "requirementId": "I01",
+      "noteId": "db-concepts",
+      "section": "Part 10. JDBC와 백엔드 연결",
+      "alsoSee": [
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread"
+        },
+        {
+          "noteId": "backend-concepts",
+          "section": "Part 6. Cookie와 Session"
+        }
+      ],
+      "keywords": [
+        {
+          "id": "prepared-binding",
+          "questionIds": [
+            "backend-01-q20"
+          ]
+        },
+        {
+          "id": "resultset-iteration",
+          "questionIds": [
+            "backend-01-q30"
+          ]
+        },
+        {
+          "id": "execute-methods",
+          "questionIds": []
+        },
+        {
+          "id": "resource-close",
+          "questionIds": []
+        },
+        {
+          "id": "exception-propagation",
+          "questionIds": [
+            "backend-01-q21"
+          ]
+        }
+      ],
+      "questionIds": [
+        "backend-01-q20",
+        "backend-01-q21",
+        "backend-01-q30"
+      ]
+    }
+  ]
+}

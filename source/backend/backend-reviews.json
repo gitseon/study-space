@@ -1,0 +1,164 @@
+[
+  {
+    "questionId": "backend-01-q01",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "생성자와 init은 첫 요청 때 한 번이고 doGet은 요청마다 호출되며 destroy는 종료 때 한 번이라는 서블릿 생명주기 규칙으로 C I S S D를 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q02",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "Servlet 명세의 매핑 우선순위(정확한 일치, 가장 긴 경로 패턴, 확장자 패턴, 기본 서블릿)로 /board/list.do는 /board/*에 맞는다고 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q03",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "본문 파라미터는 처음 읽을 때 해석되므로 setCharacterEncoding은 그 전에 호출해야 한다는 규칙으로 정답을 정했다. 기본 인코딩이 버전마다 다를 수 있어 문항에는 지정 위치만 묻는다."
+  },
+  {
+    "questionId": "backend-01-q04",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "서블릿 객체 하나를 여러 스레드가 공유한다는 점과 필드 덮어쓰기 경합으로 A의 응답에 B의 이름이 나올 수 있음을 도출했다. 경합은 재현하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q05",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "dispatcherTypes에 REQUEST와 FORWARD를 모두 지정하면 직접 요청과 forward에 각각 한 번씩 적용된다는 명세로 2회를 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q06",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "EL 변수 탐색이 page, request, session, application 순서라는 규칙으로 rank가 gold이고 sessionScope.rank는 silver임을 따져 A와 gold를 도출했다. JSP 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q07",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "include 지시자는 번역 시점에 합쳐지고 jsp:include는 별도 서블릿 실행 결과를 합친다는 규칙으로 가 방식만 count를 쓸 수 있음을 도출했다. 컴파일은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q08",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "쿠키 삭제는 같은 이름과 경로의 maxAge 0 쿠키를 응답에 추가하는 방식이고 -1은 세션 쿠키라는 규칙으로 정답을 정했다. 브라우저 동작은 실행하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q09",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "로그인 여부는 세션의 loginUser로 판단하고 savedId 쿠키는 세션과 별개로 남는다는 규칙으로 정답을 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-01-q17",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "복합키 일부인 product_no가 product_name을 결정하므로 부분 함수 종속이며 2정규형 위반이라고 함수 종속 정의로 도출했다."
+  },
+  {
+    "questionId": "backend-01-q22",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "getParameterValues가 같은 이름의 모든 값을 String 배열로 돌려준다는 API 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-01-q23",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "web.xml의 error-page가 error-code 또는 exception-type 중 하나를 쓴다는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-01-q24",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "redirect는 응답으로 새 주소를 알려 주고 브라우저가 새 요청을 보내므로 POST 하나와 GET 하나의 2회라고 도출했다."
+  },
+  {
+    "questionId": "backend-01-q25",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "web.xml의 session-timeout이 분 단위라는 서블릿 명세로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-01-q28",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "후보키 중 기본키로 선택되지 않은 키가 대체키라는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-01-q29",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "InnoDB에서 기본키 인덱스의 리프에 행 데이터가 저장되는 클러스터드 인덱스라는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-01-q31",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "Front Controller의 목적과 처리 흐름과 없는 action의 처리를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  },
+  {
+    "questionId": "backend-01-q32",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "다대다 관계의 연결 테이블과 복합 기본키와 연결 속성의 위치를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  }
+]

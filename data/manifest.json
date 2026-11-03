@@ -237,6 +237,24 @@
         "code": 0
       },
       "contentVersion": "4e47a8059aea6423"
+    },
+    {
+      "id": "backend-01",
+      "revision": 1,
+      "kind": "subject",
+      "track": "backend",
+      "title": "백엔드 · DB 1회",
+      "subtitle": "요청 흐름과 SQL 읽기",
+      "practiceMinutes": 60,
+      "fixedPracticeMinutes": true,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "b42b7f3b401b3ba4"
     }
   ],
   "topics": {
@@ -360,6 +378,31 @@
         "classify": 15,
         "cluster": 15
       }
+    },
+    "backend": {
+      "label": "백엔드 · DB",
+      "topics": {
+        "web-servlet": "WAS와 Servlet 기초",
+        "mvc-filter": "Front Controller, Filter와 동시성",
+        "jsp-el": "JSP, EL, JSTL과 페이지 이동",
+        "state-session": "Cookie와 Session",
+        "sql-select": "SELECT, NULL, 함수와 집계",
+        "sql-join-subquery": "조인, 집합 연산과 서브쿼리",
+        "db-schema": "DDL, DML, 제약조건과 모델링",
+        "db-tx-index": "트랜잭션과 인덱스",
+        "jdbc": "JDBC와 DAO"
+      },
+      "topicCounts": {
+        "web-servlet": 4,
+        "mvc-filter": 4,
+        "jsp-el": 3,
+        "state-session": 3,
+        "sql-select": 4,
+        "sql-join-subquery": 4,
+        "db-schema": 4,
+        "db-tx-index": 3,
+        "jdbc": 3
+      }
     }
   },
   "notes": [
@@ -386,6 +429,12 @@
       "title": "Backend 개념",
       "track": "backend",
       "file": "backend-concepts.md"
+    },
+    {
+      "id": "db-concepts",
+      "title": "DB 개념",
+      "track": "backend",
+      "file": "db-concepts.md"
     }
   ],
   "swTest": {

@@ -1,0 +1,11 @@
+{
+  "id": "backend-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "backend",
+  "title": "백엔드 · DB 1회",
+  "subtitle": "요청 흐름과 SQL 읽기",
+  "practiceMinutes": 60,
+  "fixedPracticeMinutes": true,
+  "sourceScopeVersion": 1
+}
