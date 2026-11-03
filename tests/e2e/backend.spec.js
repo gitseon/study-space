@@ -5,16 +5,18 @@ const openBackend = async (page) => {
   await page.getByRole('group', {name: '과목'}).getByRole('button', {name: /^백엔드 · DB/}).click();
 };
 
-test('the backend track shows one integrated exam card and both notes inside the track', async ({page}) => {
+test('the backend track shows the integrated exam cards and both notes inside the track', async ({page}) => {
   await openBackend(page);
   await expect(page).toHaveURL(/track=backend/);
   await expect(page.locator('#mode-backend-01')).toBeVisible();
+  await expect(page.locator('#mode-backend-02')).toBeVisible();
   await expect(page.locator('#mode-subject-01')).toHaveCount(0);
-  await expect(page.locator('.exam-card')).toHaveCount(1);
-  const types = await page.locator('.exam-card .card-types').innerText();
-  expect(types).toMatch(/객관식\s*21/);
-  expect(types).toMatch(/단답형\s*9/);
-  expect(types).toMatch(/서술형\s*2/);
+  await expect(page.locator('.exam-card')).toHaveCount(2);
+  for (const types of await page.locator('.exam-card .card-types').allInnerTexts()) {
+    expect(types).toMatch(/객관식\s*21/);
+    expect(types).toMatch(/단답형\s*9/);
+    expect(types).toMatch(/서술형\s*2/);
+  }
   await expect(page.getByRole('link', {name: /^Backend 개념/})).toHaveAttribute('href', /note=backend-concepts/);
   await expect(page.getByRole('link', {name: /^DB 개념/})).toHaveAttribute('href', /note=db-concepts/);
   await expect(page.getByRole('link', {name: /^Backend 개념/})).toHaveCount(1);
@@ -31,18 +33,20 @@ test('other tracks do not offer the backend notes and the note pages keep their 
   await expect(page.locator('.note h2').first()).toContainText('Part 1');
 });
 
-test('exam mode is fixed at 60 minutes while study mode lets the learner choose', async ({page}) => {
-  await openBackend(page);
-  const time = page.locator('#time-backend-01');
-  await page.locator('#mode-backend-01').selectOption({label: '모두 풀고 한 번에 채점'});
-  await expect(time).toBeDisabled();
-  await expect(time).toHaveValue('60');
-  await page.locator('#mode-backend-01').selectOption({label: '한 문제씩 정답 확인'});
-  await expect(time).toBeEnabled();
-  await time.selectOption('0');
-  await page.locator('#mode-backend-01').selectOption({label: '모두 풀고 한 번에 채점'});
-  await expect(time).toHaveValue('60');
-});
+for (const id of ['backend-01', 'backend-02']) {
+  test('exam mode is fixed at 60 minutes while study mode lets the learner choose in ' + id, async ({page}) => {
+    await openBackend(page);
+    const time = page.locator('#time-' + id);
+    await page.locator('#mode-' + id).selectOption({label: '모두 풀고 한 번에 채점'});
+    await expect(time).toBeDisabled();
+    await expect(time).toHaveValue('60');
+    await page.locator('#mode-' + id).selectOption({label: '한 문제씩 정답 확인'});
+    await expect(time).toBeEnabled();
+    await time.selectOption('0');
+    await page.locator('#mode-' + id).selectOption({label: '모두 풀고 한 번에 채점'});
+    await expect(time).toHaveValue('60');
+  });
+}
 
 test('starting from the card and tampering with the address both give a 60 minute exam', async ({page}) => {
   await openBackend(page);
@@ -83,11 +87,12 @@ test('every topic practice set holds only backend questions of that topic', asyn
     });
     const topic = new URL(href, 'http://x/').searchParams.get('topic');
     expect(found.topics, topic).toEqual([topic]);
-    expect(found.ids.every((id) => id.startsWith('backend-01-')), topic).toBe(true);
+    expect(found.ids.every((id) => id.startsWith('backend-0')), topic).toBe(true);
+    expect(new Set(found.ids.map((id) => id.slice(0, 10))), topic).toEqual(new Set(['backend-01', 'backend-02']));
     sizes[topic] = found.ids.length;
   }
-  expect(sizes).toEqual({'web-servlet': 4, 'mvc-filter': 4, 'jsp-el': 3, 'state-session': 3, 'sql-select': 4,
-    'sql-join-subquery': 4, 'db-schema': 4, 'db-tx-index': 3, jdbc: 3});
+  expect(sizes).toEqual({'web-servlet': 8, 'mvc-filter': 7, 'jsp-el': 7, 'state-session': 6, 'sql-select': 8,
+    'sql-join-subquery': 8, 'db-schema': 7, 'db-tx-index': 7, jdbc: 6});
 });
 
 test('the first question renders a code block and four choices without script errors', async ({page}) => {
@@ -100,14 +105,16 @@ test('the first question renders a code block and four choices without script er
   expect(errors).toEqual([]);
 });
 
-test('all 32 questions fit a 360px phone screen without sideways page scrolling', async ({page}) => {
-  await page.setViewportSize({width: 360, height: 780});
-  await page.goto('pages/quiz.html?exam=backend-01&mode=study&minutes=0&new=1');
-  const navButtons = page.locator('.question-nav button');
-  await expect(navButtons).toHaveCount(32);
-  for (let i = 0; i < 32; i++) {
-    await navButtons.nth(i).click();
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(overflow, 'question ' + (i + 1)).toBeLessThanOrEqual(0);
-  }
-});
+for (const id of ['backend-01', 'backend-02']) {
+  test('all 32 questions of ' + id + ' fit a 360px phone screen without sideways page scrolling', async ({page}) => {
+    await page.setViewportSize({width: 360, height: 780});
+    await page.goto('pages/quiz.html?exam=' + id + '&mode=study&minutes=0&new=1');
+    const navButtons = page.locator('.question-nav button');
+    await expect(navButtons).toHaveCount(32);
+    for (let i = 0; i < 32; i++) {
+      await navButtons.nth(i).click();
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(overflow, id + ' question ' + (i + 1)).toBeLessThanOrEqual(0);
+    }
+  });
+}

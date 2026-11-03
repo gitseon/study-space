@@ -13,7 +13,7 @@
 | 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2) |
 | AI 역량검사 | 필기 검정 1회(객관식 100)와 실기 검정 1회(코드형 8문항, 100점) |
 | ADsP | 객관식 50문항(1과목 10, 2과목 10, 3과목 30) 모의평가 3회 |
-| 백엔드 · DB | 개념 노트 2개(Backend, DB)와 과목평가 시범 1회(객관식 21, 단답형 9, 서술형 2, 실전 60분). 2회와 3회는 추가 예정 |
+| 백엔드 · DB | 개념 노트 2개(Backend, DB)와 과목평가 2회(회차마다 객관식 21, 단답형 9, 서술형 2, 실전 60분). 3회는 추가 예정 |
 | SW역량테스트 | A형 대비 11문제의 발상과 Java 코드를 예측 우선순위 순서로 정리한 노트(시험 회차 없음) |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
@@ -85,7 +85,7 @@ SITE_DIR=dist npm run test:e2e
 
 `AI 개념` 버튼은 AI 역량검사의 개념 요약 노트를 엽니다. 원고는 `source/AI역량검사/AI역량 개념 요약노트.md`입니다. AI 역량검사의 강의 원본(PDF, 슬라이드 이미지, 전사본)은 용량과 저작권 때문에 저장소에서 제외하며 `.gitignore`에 들어 있습니다.
 
-`verify_backend_answers.py`는 백엔드 · DB 문항의 SQL을 MySQL 8.4에서, JDBC 코드를 Java와 Connector/J 8.4.0으로 실제 실행해 정답과 비교합니다. 접속 정보는 환경 변수 `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`나 git에서 제외된 `private/backend-db/mysql-verify.env`에서 읽으며 저장소에는 넣지 않습니다. 검증 계정은 전용 스키마만 쓸 수 있는 계정을 만들어 씁니다. 실행할 수 없는 문항은 `source/backend/backend-reviews.json`의 재풀이 기록(작성자 검토는 `independent: false`)으로 확인하고, 문항 revision이 바뀌면 기록이 만료됩니다. 접속 정보가 없거나 서버에 닿지 않으면 검증을 건너뛰지 않고 실패합니다. 결과는 `reports/backend-verification.json`에 서버 버전과 `sql_mode` 같은 환경 정보와 함께 남습니다. 이 검증은 MySQL이 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다.
+`verify_backend_answers.py`는 백엔드 · DB 문항의 SQL을 MySQL 8.4에서, JDBC 코드를 Java와 Connector/J 8.4.0으로 실제 실행해 정답과 비교하고, 쿠키 경로처럼 브라우저가 판단하는 동작은 Chromium으로 확인합니다. 접속 정보는 환경 변수 `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`나 git에서 제외된 `private/backend-db/mysql-verify.env`에서 읽으며 저장소에는 넣지 않습니다. 검증 계정은 전용 스키마만 쓸 수 있는 계정을 만들어 씁니다. 실행할 수 없는 문항은 `source/backend/backend-reviews.json`의 재풀이 기록(작성자 검토는 `independent: false`)으로 확인하고, 문항 revision이 바뀌면 기록이 만료됩니다. 접속 정보가 없거나 서버에 닿지 않으면 검증을 건너뛰지 않고 실패합니다. 결과는 `reports/backend-verification.json`에 서버 버전과 `sql_mode` 같은 환경 정보와 함께 남습니다. 이 검증은 MySQL이 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다.
 
 `verify_adsp_answers.py`는 ADsP 계산 문항의 코드를 표준 라이브러리로 실행해 정답 선지와 비교하고, 계산하지 않는 문항은 `source/adsp/adsp-reviews.json`의 재풀이 기록으로 확인합니다. 결과는 `reports/adsp-verification.json`에 남습니다.
 

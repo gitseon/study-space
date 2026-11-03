@@ -39,6 +39,15 @@ public class JdbcCheck {
         }
     }
 
+    // Mirrors the DAO method of the question: the try-with-resources block closes the ResultSet before the caller reads it.
+    private static ResultSet findAll() throws SQLException {
+        try (Connection con = open();
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM book");
+                ResultSet rs = ps.executeQuery()) {
+            return rs;
+        }
+    }
+
     private static void reset() throws SQLException {
         update("DELETE FROM account");
         update("INSERT INTO account VALUES (1, 1000), (2, 1000)");
@@ -50,6 +59,9 @@ public class JdbcCheck {
         update("CREATE TABLE book (title VARCHAR(30))");
         update("INSERT INTO book VALUES ('java basics'), ('sql basics')");
         update("CREATE TABLE account (id INT PRIMARY KEY, balance INT) ENGINE=InnoDB");
+        update("DROP TABLE IF EXISTS member");
+        update("CREATE TABLE member (name VARCHAR(20))");
+        update("INSERT INTO member VALUES ('가'), ('나'), ('다')");
         try {
             String stage = "prepare";
             try (Connection con = open();
@@ -126,6 +138,36 @@ public class JdbcCheck {
             }
             System.out.println("one_connection_commit_balances=" + balance(1) + "," + balance(2));
 
+            // A ResultSet returned out of a try-with-resources block is already closed.
+            ResultSet returned = findAll();
+            try {
+                returned.next();
+                System.out.println("returned_resultset=readable");
+            } catch (SQLException e) {
+                System.out.println("returned_resultset=SQLException");
+            }
+
+            // Concatenated input is parsed as SQL while a bound value stays a value.
+            String name = "x' OR '1'='1";
+            try (Connection con = open(); Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM member WHERE name = '" + name + "'")) {
+                rs.next();
+                System.out.println("concat_count=" + rs.getInt(1));
+            }
+            try (Connection con = open();
+                    PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM member WHERE name = ?")) {
+                ps.setString(1, name);
+                try (ResultSet rs = ps.executeQuery()) {
+                    rs.next();
+                    System.out.println("bound_count=" + rs.getInt(1));
+                }
+            }
+            try (Connection con = open();
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO member VALUES (?)")) {
+                ps.setString(1, "라");
+                System.out.println("execute_update_rows=" + ps.executeUpdate());
+            }
+
             // The first next() call already consumes the first row.
             update("DROP TABLE IF EXISTS three");
             update("CREATE TABLE three (n INT)");
@@ -143,6 +185,7 @@ public class JdbcCheck {
             update("DROP TABLE IF EXISTS book");
             update("DROP TABLE IF EXISTS account");
             update("DROP TABLE IF EXISTS three");
+            update("DROP TABLE IF EXISTS member");
         }
     }
 }

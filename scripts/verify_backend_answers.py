@@ -162,6 +162,13 @@ def run_java_file(relative, env):
         raise VerifyError(f"{relative} failed: {(result.stderr or result.stdout)[:400]}".replace(env["MYSQL_PASSWORD"], "***"))
     return dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
 
+def run_node_file(relative):
+    """Browser-level checks run with Node and Playwright; they need no database."""
+    result = subprocess.run(["node", str(SOURCE / relative)], capture_output=True, text=True, encoding="utf-8", cwd=ROOT)
+    if result.returncode != 0:
+        raise VerifyError(f"{relative} failed: {(result.stderr or result.stdout)[:400]}")
+    return dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
+
 def java_failures(check, outputs):
     produced = outputs[check["file"]]
     return [f"{k}: expected {v!r} but got {produced.get(k)!r}" for k, v in check["expect"].items() if produced.get(k) != v]
@@ -198,8 +205,10 @@ def main(argv=None):
         java_outputs = {}
         for file in sorted({c["file"] for c in checks if c["kind"] == "java"}):
             java_outputs[file] = run_java_file(file, env)
+        for file in sorted({c["file"] for c in checks if c["kind"] == "node"}):
+            java_outputs[file] = run_node_file(file)
         for check in checks:
-            if check["kind"] == "java":
+            if check["kind"] in ("java", "node"):
                 found = java_failures(check, java_outputs)
             else:
                 found = run_sql_check(check, env)

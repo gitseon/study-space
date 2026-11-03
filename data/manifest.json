@@ -255,6 +255,24 @@
         "code": 0
       },
       "contentVersion": "b42b7f3b401b3ba4"
+    },
+    {
+      "id": "backend-02",
+      "revision": 1,
+      "kind": "subject",
+      "track": "backend",
+      "title": "백엔드 · DB 2회",
+      "subtitle": "오류의 원인 찾기",
+      "practiceMinutes": 60,
+      "fixedPracticeMinutes": true,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "6684a49efefa8e31"
     }
   ],
   "topics": {
@@ -393,15 +411,15 @@
         "jdbc": "JDBC와 DAO"
       },
       "topicCounts": {
-        "web-servlet": 4,
-        "mvc-filter": 4,
-        "jsp-el": 3,
-        "state-session": 3,
-        "sql-select": 4,
-        "sql-join-subquery": 4,
-        "db-schema": 4,
-        "db-tx-index": 3,
-        "jdbc": 3
+        "web-servlet": 8,
+        "mvc-filter": 7,
+        "jsp-el": 7,
+        "state-session": 6,
+        "sql-select": 8,
+        "sql-join-subquery": 8,
+        "db-schema": 7,
+        "db-tx-index": 7,
+        "jdbc": 6
       }
     }
   },

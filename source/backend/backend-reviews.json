@@ -160,5 +160,158 @@
     "independent": false,
     "reviewedAt": "2026-11-03",
     "note": "다대다 관계의 연결 테이블과 복합 기본키와 연결 속성의 위치를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  },
+  {
+    "questionId": "backend-02-q01",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "loadOnStartup이 0 이상이면 서버 시작 때 작은 값부터 초기화하고 지정이 없으면 첫 요청 때 초기화한다는 명세로 B A C를 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q02",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "getServletPath는 컨텍스트 경로를 뺀 요청 경로 중 서블릿 매핑에 맞은 부분이며 확장자 패턴은 경로 전체라는 API 정의로 /board/list.do를 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q03",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "ServletResponse.setCharacterEncoding은 getWriter 호출 뒤에는 효과가 없다는 API 문서의 규정으로 정답을 정했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q04",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "증가 연산이 읽기와 더하기와 쓰기로 나뉘어 두 스레드가 겹치면 갱신 손실이 생긴다는 점으로 정답을 정했다. 2000 보장이 없다는 사실은 이론으로 도출했고 경합은 재현하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q05",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "chain.doFilter를 부르지 않고 return하면 다음 Filter와 Servlet이 실행되지 않고 이전 Filter의 뒷부분으로 돌아온다는 규칙으로 F1 in F2 in F1 out을 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q06",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "JSP 선언은 서블릿 필드로 스크립틀릿은 _jspService의 지역 변수로 번역된다는 규칙으로 세 번째 요청의 total=3 visit=1을 도출했다. JSP 컴파일은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q07",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "c:set의 scope 기본값이 page이고 EL이 page부터 찾는다는 규칙으로 B A를 도출했다. JSP 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q09",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "인자 없는 getSession은 세션이 없으면 새로 만든다는 HttpServletRequest 명세로 정답을 정했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-02-q19",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "복합 인덱스가 앞 열로 정렬한 뒤 뒤 열로 정렬한다는 구조로 age 단독 조건이 연속 구간을 만들지 못한다고 도출했다. EXPLAIN으로 접근 경로를 확인하지는 않았고 성능 수치는 묻지 않는다."
+  },
+  {
+    "questionId": "backend-02-q22",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "getQueryString이 물음표 뒤 문자열을 그대로 돌려준다는 API 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q23",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "HttpServletResponse.sendError가 상태 코드와 오류 페이지로 응답하는 메서드라는 API 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q24",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "c:forEach가 컬렉션을 반복하는 JSTL core 태그라는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q25",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "무효화된 세션의 접근이 IllegalStateException을 던진다는 HttpSession 명세로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q28",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "속성 A가 B를 하나로 결정하는 관계가 함수 종속이라는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q29",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "같은 행을 두 번 읽어 값이 달라지는 현상이 반복 불가능한 읽기라는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-02-q31",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "forward와 redirect의 요청 횟수와 주소창과 request 공유와 새로고침 동작을 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  },
+  {
+    "questionId": "backend-02-q32",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "갱신 손실과 트랜잭션 묶기와 행 잠금과 커밋 롤백 경계를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
   }
 ]

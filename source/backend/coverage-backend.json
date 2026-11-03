@@ -15,19 +15,23 @@
         {
           "id": "servlet-lifecycle",
           "questionIds": [
-            "backend-01-q01"
+            "backend-01-q01",
+            "backend-02-q01"
           ]
         },
         {
           "id": "shared-field-thread",
           "questionIds": [
-            "backend-01-q04"
+            "backend-01-q04",
+            "backend-02-q04"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q01",
-        "backend-01-q04"
+        "backend-01-q04",
+        "backend-02-q01",
+        "backend-02-q04"
       ]
     },
     {
@@ -44,7 +48,8 @@
         {
           "id": "url-mapping",
           "questionIds": [
-            "backend-01-q02"
+            "backend-01-q02",
+            "backend-02-q02"
           ]
         },
         {
@@ -56,13 +61,16 @@
         {
           "id": "filter-chain",
           "questionIds": [
-            "backend-01-q05"
+            "backend-01-q05",
+            "backend-02-q05"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q02",
-        "backend-01-q05"
+        "backend-01-q05",
+        "backend-02-q02",
+        "backend-02-q05"
       ]
     },
     {
@@ -85,13 +93,15 @@
         {
           "id": "error-page-status",
           "questionIds": [
-            "backend-01-q23"
+            "backend-01-q23",
+            "backend-02-q23"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q23",
-        "backend-01-q31"
+        "backend-01-q31",
+        "backend-02-q23"
       ]
     },
     {
@@ -108,7 +118,8 @@
         {
           "id": "jsp-translation-position",
           "questionIds": [
-            "backend-01-q07"
+            "backend-01-q07",
+            "backend-02-q06"
           ]
         },
         {
@@ -120,19 +131,24 @@
         {
           "id": "scope-lookup",
           "questionIds": [
-            "backend-01-q06"
+            "backend-01-q06",
+            "backend-02-q07"
           ]
         },
         {
           "id": "jstl-condition",
           "questionIds": [
-            "backend-01-q06"
+            "backend-01-q06",
+            "backend-02-q24"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q06",
-        "backend-01-q07"
+        "backend-01-q07",
+        "backend-02-q06",
+        "backend-02-q07",
+        "backend-02-q24"
       ]
     },
     {
@@ -144,26 +160,32 @@
         {
           "id": "session-auth-state",
           "questionIds": [
-            "backend-01-q09"
+            "backend-01-q09",
+            "backend-02-q09"
           ]
         },
         {
           "id": "remember-id-cookie",
           "questionIds": [
-            "backend-01-q08"
+            "backend-01-q08",
+            "backend-02-q08"
           ]
         },
         {
           "id": "session-invalidate",
           "questionIds": [
-            "backend-01-q09"
+            "backend-01-q09",
+            "backend-02-q25"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q08",
         "backend-01-q09",
-        "backend-01-q25"
+        "backend-01-q25",
+        "backend-02-q08",
+        "backend-02-q09",
+        "backend-02-q25"
       ]
     },
     {
@@ -180,18 +202,21 @@
         {
           "id": "forward-redirect-three-axes",
           "questionIds": [
-            "backend-01-q24"
+            "backend-01-q24",
+            "backend-02-q31"
           ]
         },
         {
           "id": "prg-after-post",
           "questionIds": [
-            "backend-01-q24"
+            "backend-01-q24",
+            "backend-02-q31"
           ]
         }
       ],
       "questionIds": [
-        "backend-01-q24"
+        "backend-01-q24",
+        "backend-02-q31"
       ]
     },
     {
@@ -209,26 +234,35 @@
           "id": "null-three-valued",
           "questionIds": [
             "backend-01-q10",
-            "backend-01-q26"
+            "backend-01-q26",
+            "backend-02-q10",
+            "backend-02-q12",
+            "backend-02-q26"
           ]
         },
         {
           "id": "where-having-aggregate",
           "questionIds": [
-            "backend-01-q11"
+            "backend-01-q11",
+            "backend-02-q11"
           ]
         },
         {
           "id": "count-avg-null",
           "questionIds": [
-            "backend-01-q11"
+            "backend-01-q11",
+            "backend-02-q26"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q10",
         "backend-01-q11",
-        "backend-01-q26"
+        "backend-01-q26",
+        "backend-02-q10",
+        "backend-02-q11",
+        "backend-02-q12",
+        "backend-02-q26"
       ]
     },
     {
@@ -245,25 +279,31 @@
         {
           "id": "pk-fk-integrity",
           "questionIds": [
-            "backend-01-q16"
+            "backend-01-q16",
+            "backend-02-q16"
           ]
         },
         {
           "id": "delete-truncate-drop",
           "questionIds": [
-            "backend-01-q16"
+            "backend-01-q16",
+            "backend-02-q17"
           ]
         },
         {
           "id": "order-limit-concat",
           "questionIds": [
-            "backend-01-q12"
+            "backend-01-q12",
+            "backend-02-q10"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q12",
-        "backend-01-q16"
+        "backend-01-q16",
+        "backend-02-q10",
+        "backend-02-q16",
+        "backend-02-q17"
       ]
     },
     {
@@ -280,30 +320,39 @@
         {
           "id": "savepoint-partial-rollback",
           "questionIds": [
-            "backend-01-q18"
+            "backend-01-q18",
+            "backend-02-q18"
           ]
         },
         {
           "id": "in-any-all-exists",
           "questionIds": [
-            "backend-01-q15"
+            "backend-01-q15",
+            "backend-02-q15"
           ]
         },
         {
           "id": "set-difference",
-          "questionIds": []
+          "questionIds": [
+            "backend-02-q14"
+          ]
         },
         {
           "id": "view-dml-condition",
           "questionIds": [
-            "backend-01-q27"
+            "backend-01-q27",
+            "backend-02-q27"
           ]
         }
       ],
       "questionIds": [
         "backend-01-q15",
         "backend-01-q18",
-        "backend-01-q27"
+        "backend-01-q27",
+        "backend-02-q14",
+        "backend-02-q15",
+        "backend-02-q18",
+        "backend-02-q27"
       ]
     },
     {
@@ -320,12 +369,15 @@
         {
           "id": "partial-transitive-dependency",
           "questionIds": [
-            "backend-01-q17"
+            "backend-01-q17",
+            "backend-02-q28"
           ]
         },
         {
           "id": "full-table-scan",
-          "questionIds": []
+          "questionIds": [
+            "backend-02-q19"
+          ]
         },
         {
           "id": "clustered-secondary-leaf",
@@ -336,7 +388,10 @@
       ],
       "questionIds": [
         "backend-01-q17",
-        "backend-01-q29"
+        "backend-01-q29",
+        "backend-02-q19",
+        "backend-02-q28",
+        "backend-02-q29"
       ]
     },
     {
@@ -357,7 +412,8 @@
         {
           "id": "prepared-binding",
           "questionIds": [
-            "backend-01-q20"
+            "backend-01-q20",
+            "backend-02-q21"
           ]
         },
         {
@@ -368,11 +424,15 @@
         },
         {
           "id": "execute-methods",
-          "questionIds": []
+          "questionIds": [
+            "backend-02-q30"
+          ]
         },
         {
           "id": "resource-close",
-          "questionIds": []
+          "questionIds": [
+            "backend-02-q20"
+          ]
         },
         {
           "id": "exception-propagation",
@@ -384,7 +444,10 @@
       "questionIds": [
         "backend-01-q20",
         "backend-01-q21",
-        "backend-01-q30"
+        "backend-01-q30",
+        "backend-02-q20",
+        "backend-02-q21",
+        "backend-02-q30"
       ]
     }
   ]
