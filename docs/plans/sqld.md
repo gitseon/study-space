@@ -116,11 +116,11 @@ SQLD는 1과목 4개 이상, 2과목 16개 이상 정답이 필요하며 전체 
 
 파일: 신규 `source/sqld/scope-sqld.json`과 `source/sqld/SQLD개념 요약노트.md`, `assets/study-links.js`. 수정 대상은 `scripts/build_data.py`와 `scripts/validate_questions.py`다. 화면은 `assets/app.js`와 `assets/quiz.js` 및 `assets/note.js`를 수정한다. 출제 지침과 README 및 AGENTS.md도 갱신한다. 관련 DB/Backend 노트 보강은 [기존 계획 12절](backend-db.md#12-범위표--요약노트--문항-연결)을 따른다.
 
-- [ ] `tests/content/test_sqld.py`에 문항 수 50과 과목 배분 10/40 및 주제·태그 검사를 먼저 추가한다. `tests/unit/study-links.test.js`에는 소유/보충 노트와 잘못된 절 검사를 추가한다.
+- [x] `tests/content/test_sqld.py`에 문항 수 50과 과목 배분 10/40 및 주제·태그 검사를 먼저 추가한다. `tests/unit/study-links.test.js`에는 소유/보충 노트와 잘못된 절 검사를 추가한다.
 - [ ] scope의 공식 세부항목과 두 참고 자료·그림의 채택 범위를 매핑하고 노트 10개 Part를 작성한다. 보정 목록을 모두 검토한다.
-- [ ] TRACKS에 sqld, NOTES에 `sqld-concepts`를 등록한다. `studyLinks`와 note section 조회를 구현한다. 공통 DB 노트는 `db-concepts` 하나만 생성한다.
-- [ ] 360px/데스크톱에서 표와 SQL 및 새 도식을 확인한다. 없는 링크와 중복 절이 실패하고 기존 노트 URL과 AI 버튼이 유지되는지 검사한다.
-- [ ] `python -m unittest discover -s tests/content`, `npm test` 통과. `npx playwright test tests/e2e/study-links.spec.js`로 주제 진입·실전 숨김·복습 복원을 검사한다.
+- [x] TRACKS에 sqld, NOTES에 `sqld-concepts`를 등록한다. `studyLinks`와 note section 조회를 구현한다. 공통 DB 노트는 `db-concepts` 하나만 생성한다.
+- [x] 360px/데스크톱에서 표와 SQL 및 새 도식을 확인한다. 없는 링크와 중복 절이 실패하고 기존 노트 URL과 AI 버튼이 유지되는지 검사한다.
+- [x] `python -m unittest discover -s tests/content`, `npm test` 통과. `npx playwright test tests/e2e/study-links.spec.js`로 주제 진입·실전 숨김·복습 복원을 검사한다.
 
 ### S2. 시범 모의고사와 SQLD 결과
 

@@ -2,6 +2,7 @@ import {store} from './storage.js';
 import {escapeHtml as e, download, typeNames, gradingNames} from './render.js';
 import {summarize} from './grading.js';
 import {effectiveMinutes} from './practice-time.js';
+import {studyLinksFor} from './study-links.js';
 
 const root = document.querySelector('#app');
 const PREF_KEY = 'mock-exam:grading-mode';
@@ -174,9 +175,17 @@ function practiceSection() {
     .map(([id, label]) => '<a href="pages/quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
       + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
+  // Topics that have concept-note sections get a second row, so reading can come before the questions.
+  const study = Object.entries(trackTopics())
+    .map(([id, label]) => [label, studyLinksFor(manifest, track, id)])
+    .filter(([, list]) => list.length)
+    .map(([label, list]) => '<li><span>' + e(label) + '</span>'
+      + list.map((l) => '<a href="' + e(l.href) + '" title="' + e(l.label) + '">' + e(l.short) + ' <small aria-hidden="true">↗</small></a>').join('') + '</li>')
+    .join('');
   return '<section class="practice-strip">'
     + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 복습하기</h2><p>객관식 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 복습.</p></div>'
     + '<div class="topic-links">' + links + '</div>'
+    + (study ? '<details class="topic-study"><summary>주제별 개념 노트 읽기</summary><ul>' + study + '</ul></details>' : '')
     + '</section>';
 }
 

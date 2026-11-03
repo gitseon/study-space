@@ -1,0 +1,234 @@
+{
+  "version": 1,
+  "track": "sqld",
+  "topics": {
+    "model-basics": "모델링과 엔터티, 속성, 관계, 식별자",
+    "model-sql": "정규화, 관계와 조인, 트랜잭션, NULL, 식별자",
+    "sql-basics": "SELECT, 함수, WHERE, 그룹과 정렬, NULL",
+    "join": "조인과 표준 조인, OUTER JOIN",
+    "subquery-set": "서브쿼리와 집합 연산",
+    "group-window": "ROLLUP, CUBE, GROUPING SETS, 윈도우 함수",
+    "top-hierarchy": "Top N, 계층 질의, 셀프 조인",
+    "pivot-regex": "PIVOT, UNPIVOT, 정규 표현식",
+    "management": "DML과 TCL, DDL과 DCL, 제약조건"
+  },
+  "tags": {
+    "model-basics": [
+      "model-levels",
+      "entity-attribute",
+      "relationship-cardinality",
+      "identifier-key",
+      "supertype-subtype"
+    ],
+    "model-sql": [
+      "normalization",
+      "denormalization",
+      "relationship-join",
+      "transaction-model",
+      "null-property",
+      "surrogate-key"
+    ],
+    "sql-basics": [
+      "select-order",
+      "where-conditions",
+      "string-functions",
+      "null-functions",
+      "group-having",
+      "order-by-null"
+    ],
+    "join": [
+      "inner-join",
+      "outer-join",
+      "standard-join-syntax",
+      "join-row-count"
+    ],
+    "subquery-set": [
+      "subquery-kinds",
+      "multi-row-operators",
+      "correlated-exists",
+      "set-operators"
+    ],
+    "group-window": [
+      "rollup-cube",
+      "grouping-sets",
+      "window-rank",
+      "window-frame",
+      "window-lag-lead"
+    ],
+    "top-hierarchy": [
+      "top-n",
+      "hierarchical-query",
+      "self-join"
+    ],
+    "pivot-regex": [
+      "pivot-unpivot",
+      "regexp"
+    ],
+    "management": [
+      "dml-merge",
+      "tcl",
+      "ddl-truncate",
+      "dcl",
+      "constraints"
+    ]
+  },
+  "groups": {
+    "model-basics": {
+      "mc": 5
+    },
+    "model-sql": {
+      "mc": 5
+    },
+    "sql-basics": {
+      "mc": 8
+    },
+    "join": {
+      "mc": 5
+    },
+    "subquery-set": {
+      "mc": 6
+    },
+    "group-window": {
+      "mc": 7
+    },
+    "top-hierarchy": {
+      "mc": 5
+    },
+    "pivot-regex": {
+      "mc": 3
+    },
+    "management": {
+      "mc": 6
+    }
+  },
+  "composition": {
+    "subject": {
+      "mc": 50,
+      "short": 0,
+      "essay": 0,
+      "code": 0
+    }
+  },
+  "subjects": {
+    "1과목": [
+      "model-basics",
+      "model-sql"
+    ],
+    "2과목": [
+      "sql-basics",
+      "join",
+      "subquery-set",
+      "group-window",
+      "top-hierarchy",
+      "pivot-regex",
+      "management"
+    ]
+  },
+  "subjectComposition": {
+    "1과목": {
+      "mc": 10
+    },
+    "2과목": {
+      "mc": 40
+    }
+  },
+  "studyLinks": {
+    "model-basics": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 1. 데이터 모델링의 이해"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 9. 모델링, 키, 관계와 정규화"
+      }
+    ],
+    "model-sql": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 2. 모델과 SQL의 연결"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 9. 모델링, 키, 관계와 정규화"
+      }
+    ],
+    "sql-basics": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 3. SQL 기본"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 2. SELECT, 조건, NULL과 정렬"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+      }
+    ],
+    "join": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 4. 조인"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 4. JOIN과 집합 연산"
+      }
+    ],
+    "subquery-set": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 5. 서브쿼리와 집합 연산"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 5. 서브쿼리와 VIEW"
+      }
+    ],
+    "group-window": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 6. 그룹 함수와 윈도우 함수"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+      }
+    ],
+    "top-hierarchy": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 7. Top N, 계층 질의, 셀프 조인"
+      }
+    ],
+    "pivot-regex": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 8. PIVOT, UNPIVOT, 정규 표현식"
+      }
+    ],
+    "management": [
+      {
+        "noteId": "sqld-concepts",
+        "section": "Part 9. 관리 구문"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 6. DDL, 자료형, 제약조건과 DML"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 7. 트랜잭션, 격리 수준, MVCC와 잠금"
+      }
+    ]
+  },
+  "sources": [
+    "SQLD-A",
+    "SQLD-B",
+    "https://www.dataq.or.kr/www/sub/a_04.do (공식 안내의 시험 구성)",
+    "https://www.sqldpass.com/past-exams?cert=SQLD (복원 회차의 구성과 주제 분포만 참고)",
+    "https://quiz.dreaming-ryan.com/subjects/sqld (복원 회차의 과목 비중만 참고)"
+  ]
+}

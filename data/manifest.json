@@ -346,7 +346,8 @@
         "greedy": 4,
         "binary": 5,
         "twopointer": 4
-      }
+      },
+      "studyLinks": {}
     },
     "frontend": {
       "label": "프론트엔드",
@@ -367,7 +368,8 @@
         "dom": 12,
         "async": 14,
         "storage": 10
-      }
+      },
+      "studyLinks": {}
     },
     "ai": {
       "label": "AI 역량검사",
@@ -384,7 +386,8 @@
         "vision": 24,
         "llm-agent": 20,
         "efficiency": 16
-      }
+      },
+      "studyLinks": {}
     },
     "adsp": {
       "label": "ADsP",
@@ -413,7 +416,8 @@
         "multi": 15,
         "classify": 15,
         "cluster": 15
-      }
+      },
+      "studyLinks": {}
     },
     "backend": {
       "label": "백엔드 · DB",
@@ -438,6 +442,82 @@
         "db-schema": 11,
         "db-tx-index": 10,
         "jdbc": 9
+      },
+      "studyLinks": {
+        "web-servlet": [
+          {
+            "noteId": "backend-concepts",
+            "section": "Part 2. Servlet 기초"
+          }
+        ],
+        "mvc-filter": [
+          {
+            "noteId": "backend-concepts",
+            "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread"
+          }
+        ],
+        "jsp-el": [
+          {
+            "noteId": "backend-concepts",
+            "section": "Part 4. JSP와 MVC 패턴"
+          },
+          {
+            "noteId": "backend-concepts",
+            "section": "Part 5. EL, JSTL, PRG"
+          }
+        ],
+        "state-session": [
+          {
+            "noteId": "backend-concepts",
+            "section": "Part 6. Cookie와 Session"
+          }
+        ],
+        "sql-select": [
+          {
+            "noteId": "db-concepts",
+            "section": "Part 2. SELECT, 조건, NULL과 정렬"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+          }
+        ],
+        "sql-join-subquery": [
+          {
+            "noteId": "db-concepts",
+            "section": "Part 4. JOIN과 집합 연산"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 5. 서브쿼리와 VIEW"
+          }
+        ],
+        "db-schema": [
+          {
+            "noteId": "db-concepts",
+            "section": "Part 6. DDL, 자료형, 제약조건과 DML"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 9. 모델링, 키, 관계와 정규화"
+          }
+        ],
+        "db-tx-index": [
+          {
+            "noteId": "db-concepts",
+            "section": "Part 7. 트랜잭션, 격리 수준, MVCC와 잠금"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 8. 인덱스와 실행 계획"
+          }
+        ],
+        "jdbc": [
+          {
+            "noteId": "db-concepts",
+            "section": "Part 10. JDBC와 백엔드 연결"
+          }
+        ]
       }
     }
   },
@@ -471,6 +551,12 @@
       "title": "DB 개념",
       "track": "backend",
       "file": "db-concepts.md"
+    },
+    {
+      "id": "sqld-concepts",
+      "title": "SQLD 개념",
+      "track": "sqld",
+      "file": "sqld-concepts.md"
     }
   ],
   "swTest": {

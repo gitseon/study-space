@@ -2,6 +2,7 @@ import {store} from './storage.js';
 import {createAttempt, remainingSeconds} from './attempt.js';
 import {resultFor, summarize, needsReview} from './grading.js';
 import {effectiveMinutes} from './practice-time.js';
+import {studyLinksFor} from './study-links.js';
 import {toggleElimination, clearElimination, isEraserEnabled, readEraserPreference, writeEraserPreference} from './choice-eraser.js';
 import {escapeHtml as e, inline, markdown, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
 
@@ -23,6 +24,7 @@ try {
   // Blocked storage only means the eraser setting is not remembered.
 }
 let eraserPreference = readEraserPreference(prefStorage);
+let studyManifest = null;
 
 document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
 
@@ -298,6 +300,17 @@ function checkButton(q) {
     + (auto ? '<p class="muted reveal-help">정답을 확인하면 이 문제의 답은 더 이상 바꿀 수 없습니다.</p>' : '');
 }
 
+// Concept-note links appear while studying and in the review, never during a timed exam run.
+function studyLinksHtml(q) {
+  if (!studyManifest || !(perQuestion() || isViewing())) {
+    return '';
+  }
+  const links = studyLinksFor(studyManifest, exam.track || 'algorithm', q.group, '');
+  return links.length
+    ? '<p class="study-links"><span>관련 개념 노트</span>' + links.map((l) => '<a href="' + e(l.href) + '" target="_blank" rel="noopener">' + e(l.label) + ' ↗</a>').join('') + '</p>'
+    : '';
+}
+
 function questionPanel(q, qs) {
   if (!q) {
     const message = filter === 'wrong' ? '틀린 문제가 없습니다. 모두 맞혔어요.' : '이 조건에 해당하는 문제가 없습니다.';
@@ -315,6 +328,7 @@ function questionPanel(q, qs) {
     + renderAnswer(q)
     + checkButton(q)
     + (isRevealed(q) ? explanation(q) : '')
+    + studyLinksHtml(q)
     + '<div class="question-actions"><button class="quiet" id="prev"' + (attempt.currentIndex === 0 ? ' disabled' : '') + '>← 이전</button>'
     + '<span>' + (attempt.currentIndex + 1) + ' / ' + qs.length + '</span><button class="primary" id="next">' + nextLabel + '</button></div>'
     + '</section>';
@@ -552,6 +566,11 @@ async function start() {
     attempt.topic = topic || null;
     save();
     history.replaceState(null, '', 'quiz.html?attempt=' + encodeURIComponent(attempt.attemptId));
+  }
+  try {
+    studyManifest = await (await fetch(new URL('../data/manifest.json', import.meta.url))).json();
+  } catch {
+    // Without the manifest the questions still work; only the note links are missing.
   }
   attempt.selfGrades ??= {};
   attempt.overrides ??= {};

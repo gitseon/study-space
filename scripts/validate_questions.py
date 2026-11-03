@@ -179,6 +179,25 @@ def validate_coverage(coverage, exams, note_texts):
         if has_exams and not listed: add("coverage-question",rid,"requirement without a question")
     return issues
 
+def all_note_texts(source_root=ROOT/"source"):
+    """Manuscripts of every published note, keyed by note ID. Study links may point at a note owned by another track."""
+    return {note_id:(source_root/filename).read_text(encoding="utf-8-sig") for note_id,_,filename,_ in NOTES if filename}
+
+def validate_study_links(links, topics, note_texts):
+    """Every study link names a topic group of the track and an existing, unambiguous ## heading of a note."""
+    issues=[]
+    def add(code,where,message): issues.append({"code":code,"questionId":where,"message":message,"severity":"error"})
+    for group,entries in links.items():
+        if group not in topics: add("study-group",group,"not a topic group of this track")
+        if not isinstance(entries,list): add("study-entry",group,"entries must be a list"); continue
+        for entry in entries:
+            note_id,section=(entry.get("noteId"),entry.get("section")) if isinstance(entry,dict) else (None,None)
+            if not note_id or not section: add("study-entry",group,"entry needs noteId and section"); continue
+            if note_id not in note_texts: add("study-note",group,f"unknown note {note_id}"); continue
+            found=len(re.findall(r"(?m)^## "+re.escape(str(section))+r"\s*$",note_texts[note_id]))
+            if found!=1: add("study-section",group,f"{note_id}: {section} found {found} times")
+    return issues
+
 SW_IDEA_SECTIONS=("## 문제 요약","## 발상","## 놓치기 쉬운 점","## 복잡도와 검증")
 
 def validate_sw_test(source_root=ROOT/"source"):
@@ -222,6 +241,8 @@ def validate_sw_test(source_root=ROOT/"source"):
 if __name__=="__main__":
     exams=build_data(); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
     issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()+validate_sw_test()
+    notes_text=all_note_texts()
+    for track,scope in scopes.items(): issues+=validate_study_links(scope.get("studyLinks",{}),scope["topics"],notes_text)
     coverage_path=ROOT/"source"/"backend"/"coverage-backend.json"
     if coverage_path.exists():
         issues+=validate_coverage(json.loads(coverage_path.read_text(encoding="utf-8-sig")),exams,backend_note_texts())

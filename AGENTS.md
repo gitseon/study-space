@@ -46,7 +46,7 @@
 ## 모든 문제·해설 작업의 필수 기준
 
 1. 작업 전 `docs/QUESTION_AUTHORING.md`와 해당 트랙의 범위 파일을 읽는다. 문제 추가·수정·번역·선지 재배치·해설 변경에도 같은 기준을 적용한다.
-2. 출제 범위는 트랙별 원본을 기준으로 한다. 자료구조·알고리즘은 노션 「과평 월평 소스」에서 정리한 공개용 주제 목록(`source/dsAlgo/scope.json`)이고 프론트엔드는 `source/frontend/frontend.md`와 복습 노트 `source/frontend/Web_복습노트.md`를 정리한 `source/frontend/scope-frontend.json`이다. AI 역량검사는 `source/AI역량검사/md`의 강의 자료를 정리한 `source/AI역량검사/scope-ai.json`이다. 과평은 21/9/2, 월평은 구현 3/서술 1을 유지한다. 프론트엔드는 과평형 3회(21/9/2)만 둔다. AI 역량검사는 필기형(객관식 100)과 실기형(코드형 8문항 100점)을 둔다. ADsP는 개인 소장 요약 노트의 개념을 정리한 `source/adsp/scope-adsp.json`이 범위이고 회차마다 객관식 50문항(1과목 10, 2과목 10, 3과목 30)만 둔다. 백엔드 · DB는 Servlet·JSP와 MySQL·JDBC를 한 시험으로 묶은 `backend` 트랙이고 범위는 `source/backend/scope-backend.json`, 노트 연결은 `source/backend/coverage-backend.json`이다. 회차는 과평형(21/9/2, 실전 60분)이며 영역별 배분은 scope의 `areaComposition`이 정한다. 구현 계획은 `docs/plans/frontend.md`, `docs/plans/ai-competency.md`, `docs/plans/adsp.md`, `docs/plans/backend-db.md`를 따른다.
+2. 출제 범위는 트랙별 원본을 기준으로 한다. 자료구조·알고리즘은 노션 「과평 월평 소스」에서 정리한 공개용 주제 목록(`source/dsAlgo/scope.json`)이고 프론트엔드는 `source/frontend/frontend.md`와 복습 노트 `source/frontend/Web_복습노트.md`를 정리한 `source/frontend/scope-frontend.json`이다. AI 역량검사는 `source/AI역량검사/md`의 강의 자료를 정리한 `source/AI역량검사/scope-ai.json`이다. 과평은 21/9/2, 월평은 구현 3/서술 1을 유지한다. 프론트엔드는 과평형 3회(21/9/2)만 둔다. AI 역량검사는 필기형(객관식 100)과 실기형(코드형 8문항 100점)을 둔다. ADsP는 개인 소장 요약 노트의 개념을 정리한 `source/adsp/scope-adsp.json`이 범위이고 회차마다 객관식 50문항(1과목 10, 2과목 10, 3과목 30)만 둔다. 백엔드 · DB는 Servlet·JSP와 MySQL·JDBC를 한 시험으로 묶은 `backend` 트랙이고 범위는 `source/backend/scope-backend.json`, 노트 연결은 `source/backend/coverage-backend.json`이다. 회차는 과평형(21/9/2, 실전 60분)이며 영역별 배분은 scope의 `areaComposition`이 정한다. SQLD는 객관식 50문항(1과목 10, 2과목 40)이며 범위는 `source/sqld/scope-sqld.json`이다. SQL 문항은 방언(Oracle, SQL Server, 공통)을 지문에 밝히고 수업의 MySQL 규칙을 섞지 않는다. 구현 계획은 `docs/plans/frontend.md`, `docs/plans/ai-competency.md`, `docs/plans/adsp.md`, `docs/plans/backend-db.md`, `docs/plans/sqld.md`를 따른다.
 3. 정답 번호 분포, 동일 번호 연속, 반복 패턴, 선지 길이·구체성·표현에 따른 정답 단서를 검사한다. 구체적인 수치와 경고 처리 방식은 docs/QUESTION_AUTHORING.md를 따른다.
 4. 정답 번호만 섞거나 선지 상자 높이만 맞추는 것으로 길이 편향 문제가 해결됐다고 판단하지 않는다.
 5. 정답은 하나로 결정되어야 하며 모든 오답에 명확한 근거가 있어야 한다. 지표를 맞추려고 정답을 바꾸거나 오답을 모호하게 만들지 않는다.
@@ -54,7 +54,7 @@
 7. 문제 ID와 revision을 관리한다. 생성된 `data/`를 직접 수정하지 않고 `source/` 원고를 고친 후 재생성한다.
 8. 알고리즘 추적·출력·경계 사례는 실제 실행 또는 독립적인 풀이로 확인하고 검수 기록을 남긴다. 해설에는 전제·풀이 과정·오답 근거·주의점을 넣는다. AI 역량검사의 코드 결과와 수치 계산은 `requirements-ai.txt`의 Python 환경에서 실행하고 ADsP의 수치 계산은 `scripts/verify_adsp_answers.py`로 확인한다.
 9. 단답형 허용 표기는 문항별로 지정한다. 서술·구현형의 모범답안 열람을 정답 판정으로 처리하지 않는다.
-10. 참고 문제의 문구·해설을 그대로 복사하지 않는다. 새 문제의 출처와 참고한 개념을 sourceRefs에 기록하고, 실제 기출/출제 확정이라고 표현하지 않는다. 강의 슬라이드의 문장과 확인문제를 옮기지 않고 sourceRefs에 강의 파일과 해당 절을 적는다. 백엔드 · DB 문항은 `docs/plans/source-publication.md`에 따라 원본 파일명 대신 공개 자료 ID와 절·쪽을 적는다.
+10. 참고 문제의 문구·해설을 그대로 복사하지 않는다. 새 문제의 출처와 참고한 개념을 sourceRefs에 기록하고, 실제 기출/출제 확정이라고 표현하지 않는다. 강의 슬라이드의 문장과 확인문제를 옮기지 않고 sourceRefs에 강의 파일과 해당 절을 적는다. 백엔드 · DB와 SQLD 문항은 `docs/plans/source-publication.md`에 따라 원본 파일명 대신 공개 자료 ID와 절·쪽을 적는다. 기출 복원 사이트는 회차 구성과 주제 분포를 참고하는 데만 쓰고 문제 문구·선지·해설을 옮기지 않으며 복원 문제를 실제 기출이라고 표현하지 않는다.
 11. 답안·진행 기록은 사용자의 브라우저에 저장한다. 내용 버전이나 선지 순서가 바뀌어도 답을 다른 선택지로 잘못 매핑하지 않는다.
 12. 필수 검증 오류나 미검토 경고가 있으면 배포하지 않는다. 품질 기준을 낮추거나 CI를 우회해서 작업을 완료하지 않는다.
 13. 강의 원본(PDF, 슬라이드 이미지, 강의 전사본, 실기 예시 노트북)과 `private/`의 개인 자료는 저장소에 커밋하지 않는다. `.gitignore`의 제외 목록을 유지한다.
