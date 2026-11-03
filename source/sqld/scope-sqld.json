@@ -22,11 +22,10 @@
     ],
     "model-sql": [
       "normalization",
-      "denormalization",
+      "surrogate-key",
       "relationship-join",
       "transaction-model",
-      "null-property",
-      "surrogate-key"
+      "null-property"
     ],
     "sql-basics": [
       "select-order",

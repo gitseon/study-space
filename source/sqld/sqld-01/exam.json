@@ -1,0 +1,12 @@
+{
+  "id": "sqld-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "sqld",
+  "title": "SQLD 1회",
+  "subtitle": "개념과 SQL 결과 추적",
+  "draft": true,
+  "practiceMinutes": 90,
+  "fixedPracticeMinutes": true,
+  "sourceScopeVersion": 1
+}

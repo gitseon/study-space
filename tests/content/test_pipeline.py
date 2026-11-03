@@ -114,13 +114,10 @@ class PipelineTests(unittest.TestCase):
 
     def test_every_track_keeps_its_manuscripts_in_its_own_folder(self):
         m=self.load("build_data")
-        # sqld has its scope and note first; its exams wait for answers verified on Oracle and SQL Server (sqld.md stage S2).
-        without_exams={"sqld"}
         for track,info in m.TRACKS.items():
             folder=ROOT/"source"/info["dir"]
             self.assertTrue((folder/info["scope"]).exists(),track)
-            if track not in without_exams:
-                self.assertTrue(list(folder.glob("*/exam.json")),track)
+            self.assertTrue(list(folder.glob("*/exam.json")),track)
         self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp","backend","sqld"})
         self.assertEqual(m.TRACKS["backend"]["label"],"백엔드 · DB")
 

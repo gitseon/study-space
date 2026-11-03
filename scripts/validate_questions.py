@@ -3,6 +3,7 @@ import re
 from collections import Counter
 from build_data import ROOT, build_data, track_of, load_scope, TRACKS, NOTES, CHOICE_KINDS, SW_TEST_DIR
 
+SQLD_DIALECTS=("common","oracle","sqlserver")
 MAX_FRONTEND_LINE=38
 FRONTEND_LANGS=("html","css","js")
 PYTHON_LANGS=("python",)
@@ -93,6 +94,7 @@ def validate_bank(exams, scope, scopes=None):
             for text in prose:
                 for issue in text_issues(text): add(issue,qid,"Invalid text quality")
             for issue in diagram_issues(q.get("stem","")): add(issue,qid,"Invalid tree or graph diagram")
+            if track=="sqld" and q.get("sqlDialect") not in SQLD_DIALECTS: add("dialect",qid,"sqlDialect must be common, oracle or sqlserver")
             if q["type"]=="short" and (not q.get("acceptedAnswers") or q.get("normalization") not in ("none","trim","caseFold")):
                 add("short",qid,"answer normalization missing")
             if q["type"] in ("essay","code"):

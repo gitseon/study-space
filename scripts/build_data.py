@@ -131,7 +131,7 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
     summary=[{**{k:v for k,v in e.items() if k not in ("questions","defaultChoiceOrders","questionIds")},"track":track_of(e)} for e in exams]
     scope=load_scope(source_root,"algorithm")
     def topic_counts(t): return {k:sum(k in q.get("topics",[]) for e in exams if track_of(e)==t and e["kind"] in CHOICE_KINDS for q in e["questions"]) for k in load_scope(source_root,t)["topics"]}
-    tracks={t:{"label":info["label"],"topics":load_scope(source_root,t)["topics"],"topicCounts":topic_counts(t),"studyLinks":load_scope(source_root,t).get("studyLinks",{})} for t,info in TRACKS.items() if any(track_of(e)==t for e in exams)}
+    tracks={t:{"label":info["label"],"topics":load_scope(source_root,t)["topics"],"topicCounts":topic_counts(t),"studyLinks":load_scope(source_root,t).get("studyLinks",{}),**({"subjects":load_scope(source_root,t)["subjects"]} if "subjects" in load_scope(source_root,t) else {})} for t,info in TRACKS.items() if any(track_of(e)==t for e in exams)}
     manifest={"exams":summary,"topics":scope["topics"],"tracks":tracks,"notes":notes}
     if (source_root/SW_TEST_DIR/"problems.json").exists():
         sw=build_sw_test(source_root)

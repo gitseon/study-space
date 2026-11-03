@@ -51,8 +51,8 @@ test('other tracks keep their quiz screen without a note row', async ({page}) =>
   await expect(page.locator('.study-links')).toHaveCount(0);
 });
 
-test('the SQLD note opens from its own card, has ten parts and a section link reaches the right heading', async ({page}) => {
-  await page.goto('index.html');
+test('the SQLD note opens from its track, has ten parts and a section link reaches the right heading', async ({page}) => {
+  await page.goto('index.html?track=sqld');
   const card = page.getByRole('link', {name: /^SQLD 개념/});
   await expect(card).toHaveAttribute('href', /note=sqld-concepts/);
   await card.click();

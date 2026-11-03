@@ -45,14 +45,53 @@ class SqldScopeTests(unittest.TestCase):
             self.assertIn(needle, text)
         self.assertNotIn("MySQL 8", text)
 
-    def test_the_published_manifest_leaves_a_track_without_exams_out_of_the_tracks(self):
+    def test_the_draft_exam_follows_the_blueprint_and_keeps_the_dialects_explicit(self):
+        import tempfile, json
+        from collections import Counter
+        with tempfile.TemporaryDirectory() as tmp:
+            exams = [e for e in build_data.build_data(ROOT / "source", Path(tmp)) if build_data.track_of(e) == "sqld"]
+        self.assertEqual([e["id"] for e in exams], ["sqld-01"])
+        exam = exams[0]
+        self.assertEqual((exam["kind"], exam["practiceMinutes"], exam.get("draft"), exam.get("fixedPracticeMinutes")), ("subject", 90, True, True))
+        self.assertEqual(exam["counts"], {"mc": 50, "short": 0, "essay": 0, "code": 0})
+        groups = Counter(q["group"] for q in exam["questions"])
+        self.assertEqual(dict(groups), {g: v["mc"] for g, v in self.scope["groups"].items()})
+        subject_of = {t: n for n, ts in self.scope["subjects"].items() for t in ts}
+        self.assertEqual(Counter(subject_of[q["group"]] for q in exam["questions"]), Counter({"1과목": 10, "2과목": 40}))
+        self.assertTrue(all(q["sqlDialect"] in ("common", "oracle", "sqlserver") for q in exam["questions"]))
+        self.assertTrue({"oracle", "sqlserver", "common"} <= {q["sqlDialect"] for q in exam["questions"]})
+        self.assertTrue(all(len(q["choices"]) == 4 and set(q["choiceExplanations"]) == {c["id"] for c in q["choices"]} for q in exam["questions"]))
+        self.assertTrue(all(q["sourceRefs"] and "mysql" not in json.dumps(q["sourceRefs"]).lower() for q in exam["questions"]))
+
+    def test_every_draft_question_has_a_review_record_that_claims_no_engine_run_or_independence(self):
+        import json, tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            exam = next(e for e in build_data.build_data(ROOT / "source", Path(tmp)) if e["id"] == "sqld-01")
+        records = json.loads((ROOT / "source/sqld/sqld-reviews.json").read_text(encoding="utf-8"))
+        self.assertEqual({r["questionId"]: r["revision"] for r in records}, {q["id"]: q["revision"] for q in exam["questions"]})
+        for r in records:
+            self.assertEqual(r["status"], "draft-unverified")
+            self.assertFalse(r["engineRun"])
+            self.assertFalse(r["independent"])
+
+    def test_the_manifest_lists_the_track_with_its_subjects_and_marks_the_exam_as_a_draft(self):
         import tempfile, json
         with tempfile.TemporaryDirectory() as tmp:
             build_data.build_data(ROOT / "source", Path(tmp))
             manifest = json.loads((Path(tmp) / "manifest.json").read_text(encoding="utf-8"))
-        self.assertNotIn("sqld", manifest["tracks"])
-        sqld_note = next(n for n in manifest["notes"] if n["id"] == "sqld-concepts")
-        self.assertEqual((sqld_note["track"], sqld_note["file"]), ("sqld", "sqld-concepts.md"))
+        self.assertEqual(manifest["tracks"]["sqld"]["subjects"], self.scope["subjects"])
+        self.assertTrue(next(e for e in manifest["exams"] if e["id"] == "sqld-01")["draft"])
+
+    def test_a_question_without_a_valid_dialect_fails_validation(self):
+        import validate_questions as vq
+        scope = {"topics": {"g": "x"}, "tags": {"g": ["t"]}, "groups": {}, "composition": {"subject": {"mc": 1, "short": 0, "essay": 0, "code": 0}}}
+        q = {"id": "s-q1", "title": "t", "stem": "s", "solution": "s", "revision": 1, "difficulty": 1, "sourceRefs": ["r"], "topics": ["g"], "group": "g",
+             "tags": ["t"], "type": "mc", "choices": [{"id": c, "text": c} for c in "abcd"], "choiceExplanations": {}}
+        exam = lambda extra: {"id": "s", "kind": "subject", "track": "sqld", "counts": {"mc": 1, "short": 0, "essay": 0, "code": 0}, "questions": [{**q, **extra}]}
+        codes = lambda e: [i["code"] for i in vq.validate_bank([e], scope, {"sqld": scope})]
+        self.assertIn("dialect", codes(exam({})))
+        self.assertIn("dialect", codes(exam({"sqlDialect": "mysql"})))
+        self.assertNotIn("dialect", codes(exam({"sqlDialect": "oracle"})))
 
 if __name__ == "__main__":
     unittest.main()

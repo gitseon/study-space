@@ -3,6 +3,7 @@ import {createAttempt, remainingSeconds} from './attempt.js';
 import {resultFor, summarize, needsReview} from './grading.js';
 import {effectiveMinutes} from './practice-time.js';
 import {studyLinksFor} from './study-links.js';
+import {summarizeSqld} from './sqld-result.js';
 import {toggleElimination, clearElimination, isEraserEnabled, readEraserPreference, writeEraserPreference} from './choice-eraser.js';
 import {escapeHtml as e, inline, markdown, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
 
@@ -101,6 +102,23 @@ function countCard(label, value, extra = '') {
   return '<div class="count ' + extra + '"><small>' + label + '</small><strong>' + value + '</strong></div>';
 }
 
+// SQLD scores 2 points per answer and applies the pass rule only to a finished 50-question exam run.
+function sqldResult() {
+  const subjects = studyManifest?.tracks?.[exam.track]?.subjects;
+  if (exam.track !== 'sqld' || !subjects) {
+    return '';
+  }
+  const r = summarizeSqld(attemptQuestions(), attempt, subjects);
+  const rows = r.perSubject
+    .map((s) => '<li class="' + (s.failed ? 'bad' : 'good') + '">' + e(s.name) + ' <b>' + s.correct + ' / ' + s.total + '</b> <small>(과락 기준 ' + s.minCorrect + '문항)</small></li>')
+    .join('');
+  const verdict = r.pass === null
+    ? '<p class="muted">합격 판정은 50문항을 모두 시험 방식으로 푼 응시에만 표시합니다.</p>'
+    : '<p class="sqld-verdict ' + (r.pass ? 'good' : 'bad') + '">' + (r.pass ? '합격 연습 기준을 충족했습니다' : r.failedSubjects.length ? e(r.failedSubjects.join(' ')) + ' 과락으로 불합격 연습 결과입니다' : '60점 미만으로 불합격 연습 결과입니다') + '</p>';
+  return '<section class="sqld-result" aria-label="SQLD 점수"><div><small>점수</small><strong>' + r.score + '<span> / ' + r.maxScore + '</span></strong></div>'
+    + '<ul>' + rows + '</ul>' + verdict + '<p class="muted">총점 60점 이상이고 과목마다 40% 이상이어야 합니다. 정답 검증 전 초안의 점수는 참고용입니다.</p></section>';
+}
+
 function resultSummary() {
   const s = summarize(attemptQuestions(), attempt);
   const wrong = s.incorrect + s.unanswered;
@@ -119,7 +137,7 @@ function resultSummary() {
     + '</div>'
     + '<div class="review-filters"><span class="muted">복습 모드</span><div class="tabs" role="group" aria-label="복습 범위">' + filters + '</div></div>'
     + '<p class="muted">틀린 문제만 보기에는 답하지 않은 문제도 포함됩니다. 서술형과 구현형은 직접 채점을 저장하면 결과에 반영됩니다.</p>'
-    + '</section>';
+    + '</section>' + sqldResult();
 }
 
 function progressTally() {
@@ -349,6 +367,7 @@ function render() {
     + '<div class="quiz-title"><div><span class="eyebrow">' + e(exam.subtitle || '주제별 연습') + '</span><h1>' + e(exam.title) + '</h1></div>'
     + '<p id="save-status" class="muted" role="status">' + e(saveMessage || '답안은 자동으로 저장됩니다') + '</p></div>'
     + (versionNotice ? '<p class="notice">개정 전 응시 기록입니다. 당시 문제와 답안으로 복습합니다.</p>' : '')
+    + (exam.draft ? '<p class="notice">정답 검증 전 초안입니다. 정답과 해설이 틀릴 수 있으니 개념 노트와 함께 확인하세요.</p>' : '')
     + (viewing ? resultSummary() : '')
     + '<div class="quiz-layout">' + sidebar(qs) + questionPanel(q, qs) + '</div>';
 

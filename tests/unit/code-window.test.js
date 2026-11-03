@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {markdown, solutionMarkdown} from '../../assets/render.js';
+import {markdown, solutionMarkdown, inline} from '../../assets/render.js';
 import {highlight, windowLabel} from '../../assets/highlight.js';
 import {renderNote} from '../../assets/note-render.js';
 
@@ -56,4 +56,10 @@ test('labels inside code fences or in the middle of a sentence are left alone', 
   assert.ok(out.endsWith('근거를 살핀다: 값이다.'));
   assert.equal(solutionMarkdown(''), '');
   assert.equal(solutionMarkdown(undefined), '');
+});
+
+test('short inline code stays in one piece and long inline code may wrap', () => {
+  assert.equal(inline('`COUNT(*)`'), '<code>COUNT(*)</code>');
+  const long = 'SELECT * FROM emp WHERE ROWNUM <= 3 ORDER BY sal DESC';
+  assert.equal(inline('`' + long + '`'), '<code class="long">' + long.replace('<', '&lt;') + '</code>');
 });

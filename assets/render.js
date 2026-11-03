@@ -18,7 +18,8 @@ export function inline(text) {
     .split(/(`[^`]+`|\$[^$]+\$)/g)
     .map((part) => {
       if (part.startsWith('`') && part.endsWith('`') && part.length > 1) {
-        return '<code>' + escapeHtml(part.slice(1, -1)) + '</code>';
+        // Short code stays in one piece; long code may wrap so a phone screen never scrolls sideways.
+        return '<code' + (part.length > 30 ? ' class="long"' : '') + '>' + escapeHtml(part.slice(1, -1)) + '</code>';
       }
       if (part.startsWith('$') && part.endsWith('$') && part.length > 1) {
         return renderMath(part.slice(1, -1));

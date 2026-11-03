@@ -291,6 +291,25 @@
         "code": 0
       },
       "contentVersion": "2e789e4f7c7e3243"
+    },
+    {
+      "id": "sqld-01",
+      "revision": 1,
+      "kind": "subject",
+      "track": "sqld",
+      "title": "SQLD 1회",
+      "subtitle": "개념과 SQL 결과 추적",
+      "draft": true,
+      "practiceMinutes": 90,
+      "fixedPracticeMinutes": true,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 50,
+        "short": 0,
+        "essay": 0,
+        "code": 0
+      },
+      "contentVersion": "8bd80cbad2d97559"
     }
   ],
   "topics": {
@@ -417,7 +436,26 @@
         "classify": 15,
         "cluster": 15
       },
-      "studyLinks": {}
+      "studyLinks": {},
+      "subjects": {
+        "1과목 데이터 이해": [
+          "data",
+          "dbsys",
+          "bigdata"
+        ],
+        "2과목 데이터 분석 기획": [
+          "plan",
+          "govern"
+        ],
+        "3과목 데이터 분석": [
+          "stat",
+          "infer",
+          "regress",
+          "multi",
+          "classify",
+          "cluster"
+        ]
+      }
     },
     "backend": {
       "label": "백엔드 · DB",
@@ -517,6 +555,138 @@
             "noteId": "db-concepts",
             "section": "Part 10. JDBC와 백엔드 연결"
           }
+        ]
+      }
+    },
+    "sqld": {
+      "label": "SQLD",
+      "topics": {
+        "model-basics": "모델링과 엔터티, 속성, 관계, 식별자",
+        "model-sql": "정규화, 관계와 조인, 트랜잭션, NULL, 식별자",
+        "sql-basics": "SELECT, 함수, WHERE, 그룹과 정렬, NULL",
+        "join": "조인과 표준 조인, OUTER JOIN",
+        "subquery-set": "서브쿼리와 집합 연산",
+        "group-window": "ROLLUP, CUBE, GROUPING SETS, 윈도우 함수",
+        "top-hierarchy": "Top N, 계층 질의, 셀프 조인",
+        "pivot-regex": "PIVOT, UNPIVOT, 정규 표현식",
+        "management": "DML과 TCL, DDL과 DCL, 제약조건"
+      },
+      "topicCounts": {
+        "model-basics": 5,
+        "model-sql": 5,
+        "sql-basics": 8,
+        "join": 5,
+        "subquery-set": 6,
+        "group-window": 7,
+        "top-hierarchy": 5,
+        "pivot-regex": 3,
+        "management": 6
+      },
+      "studyLinks": {
+        "model-basics": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 1. 데이터 모델링의 이해"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 9. 모델링, 키, 관계와 정규화"
+          }
+        ],
+        "model-sql": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 2. 모델과 SQL의 연결"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 9. 모델링, 키, 관계와 정규화"
+          }
+        ],
+        "sql-basics": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 3. SQL 기본"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 2. SELECT, 조건, NULL과 정렬"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+          }
+        ],
+        "join": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 4. 조인"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 4. JOIN과 집합 연산"
+          }
+        ],
+        "subquery-set": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 5. 서브쿼리와 집합 연산"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 5. 서브쿼리와 VIEW"
+          }
+        ],
+        "group-window": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 6. 그룹 함수와 윈도우 함수"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+          }
+        ],
+        "top-hierarchy": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 7. Top N, 계층 질의, 셀프 조인"
+          }
+        ],
+        "pivot-regex": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 8. PIVOT, UNPIVOT, 정규 표현식"
+          }
+        ],
+        "management": [
+          {
+            "noteId": "sqld-concepts",
+            "section": "Part 9. 관리 구문"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 6. DDL, 자료형, 제약조건과 DML"
+          },
+          {
+            "noteId": "db-concepts",
+            "section": "Part 7. 트랜잭션, 격리 수준, MVCC와 잠금"
+          }
+        ]
+      },
+      "subjects": {
+        "1과목": [
+          "model-basics",
+          "model-sql"
+        ],
+        "2과목": [
+          "sql-basics",
+          "join",
+          "subquery-set",
+          "group-window",
+          "top-hierarchy",
+          "pivot-regex",
+          "management"
         ]
       }
     }

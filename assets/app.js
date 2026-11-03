@@ -108,9 +108,10 @@ function examCard(exam, attempts, preference) {
     .map(([value, label]) => '<option value="' + value + '"' + (value === preference ? ' selected' : '') + '>' + label + '</option>')
     .join('');
   return '<article class="exam-card ' + e(exam.kind) + '">'
-    + '<div class="card-top"><span class="pill">' + e(kindNames[exam.kind] || exam.kind) + '</span><span class="card-number">' + String(index).padStart(2, '0') + '</span></div>'
+    + '<div class="card-top"><span class="pill">' + e(kindNames[exam.kind] || exam.kind) + '</span>' + (exam.draft ? '<span class="pill draft">초안</span>' : '') + '<span class="card-number">' + String(index).padStart(2, '0') + '</span></div>'
     + '<h3>' + e(exam.subtitle) + '</h3>'
     + '<p class="card-description">' + e(kindDescriptions[exam.kind] || '') + '</p>'
+    + (exam.draft ? '<p class="draft-note">정답을 해당 DBMS에서 아직 검증하지 못한 초안입니다. 정답과 해설이 틀릴 수 있습니다.</p>' : '')
     + '<div class="card-types">' + types + '</div>'
     + '<label class="card-setting">채점 방식 <select id="mode-' + e(exam.id) + '">' + modes + '</select></label>'
     + '<label class="card-setting">제한 시간 <select id="time-' + e(exam.id) + '">' + times + '</select></label>'
