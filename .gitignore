@@ -19,3 +19,12 @@ source/backend/*.pdf
 
 # 개인 학습 자료(공개 금지)
 private/
+
+# DB 강의 원본(공개 금지)
+source/DB/**/*.pdf
+
+# DB 자격 대비 원본과 수업 평가 자료(공개 금지)
+source/DB/*SQLD*.md
+source/DB/sqld-*.md
+source/DB/images/
+source/backend/backendDB*
