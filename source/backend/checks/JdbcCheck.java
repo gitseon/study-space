@@ -168,6 +168,25 @@ public class JdbcCheck {
                 System.out.println("execute_update_rows=" + ps.executeUpdate());
             }
 
+            // Closing a connection without commit keeps nothing of the change.
+            reset();
+            try (Connection con = open()) {
+                con.setAutoCommit(false);
+                change(con, 1, -500);
+            }
+            System.out.println("uncommitted_close_balance=" + balance(1));
+
+            // getInt turns SQL NULL into 0 and wasNull tells the two apart.
+            update("DROP TABLE IF EXISTS bonus_t");
+            update("CREATE TABLE bonus_t (bonus INT)");
+            update("INSERT INTO bonus_t VALUES (NULL)");
+            try (Connection con = open(); Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT bonus FROM bonus_t")) {
+                rs.next();
+                int bonus = rs.getInt("bonus");
+                System.out.println("getint_null=" + bonus + "," + rs.wasNull());
+            }
+
             // The first next() call already consumes the first row.
             update("DROP TABLE IF EXISTS three");
             update("CREATE TABLE three (n INT)");
@@ -186,6 +205,7 @@ public class JdbcCheck {
             update("DROP TABLE IF EXISTS account");
             update("DROP TABLE IF EXISTS three");
             update("DROP TABLE IF EXISTS member");
+            update("DROP TABLE IF EXISTS bonus_t");
         }
     }
 }

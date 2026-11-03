@@ -313,5 +313,140 @@
     "independent": false,
     "reviewedAt": "2026-11-03",
     "note": "갱신 손실과 트랜잭션 묶기와 행 잠금과 커밋 롤백 경계를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  },
+  {
+    "questionId": "backend-03-q01",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "HttpServlet.service가 요청 방식에 맞는 doXxx를 호출하고 재정의하지 않은 메서드의 기본 구현이 405를 보낸다는 API 문서로 정답을 정했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q02",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "경로 패턴은 확장자 패턴보다 우선하고 기본 매핑 슬래시는 가장 낮다는 매핑 규칙으로 /*만 JSP 요청을 가로챈다고 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q05",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "Filter는 URL 패턴에 맞는 요청에만 적용되고 맞는 Filter는 선언 순서로 체인을 이룬다는 규칙으로 두 요청의 실행 순서를 도출했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q06",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "page 지시자의 session=false이면 번역된 메서드에 session 내장 객체가 선언되지 않는다는 JSP 명세로 번역 오류를 도출했다. JSP 컴파일은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q07",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "varStatus의 index는 0부터 count는 1부터라는 JSTL 정의로 마지막 반복의 2:3을 도출했다. JSP 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q09",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "changeSessionId가 속성은 유지하고 ID만 바꿔 세션 고정 공격을 막는다는 Servlet 3.1 API 정의로 정답을 정했다. 컨테이너 실행은 하지 않았다."
+  },
+  {
+    "questionId": "backend-03-q22",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "web.xml의 servlet-mapping이 url-pattern으로 경로를 지정한다는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q23",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "지역 변수는 스레드의 스택에 있어 스레드마다 따로라는 자바의 기본 규칙으로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q24",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "application scope가 ServletContext에 저장되어 모든 사용자가 공유한다는 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q25",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "HttpSession.setMaxInactiveInterval이 초 단위로 유지 시간을 지정한다는 API 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q28",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "업무 의미 없는 번호 식별자가 인조키 또는 대리키라는 모델링 용어 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q29",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "InnoDB 인덱스가 B+Tree 구조라는 MySQL 문서의 설명으로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q30",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "PreparedStatement.executeQuery가 SELECT를 실행해 ResultSet을 돌려준다는 JDBC API 정의로 정답을 정했다."
+  },
+  {
+    "questionId": "backend-03-q31",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "Filter의 매핑과 로그인 판단과 통과 및 차단과 중복 제거를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+  },
+  {
+    "questionId": "backend-03-q32",
+    "revision": 1,
+    "method": "정답을 가리고 다시 도출",
+    "reviewer": "Claude(작성자)",
+    "independent": false,
+    "reviewedAt": "2026-11-03",
+    "note": "이행 종속과 3정규형 위반과 분해 결과와 수정 이상 감소를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
   }
 ]

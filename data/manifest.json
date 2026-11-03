@@ -273,6 +273,24 @@
         "code": 0
       },
       "contentVersion": "6684a49efefa8e31"
+    },
+    {
+      "id": "backend-03",
+      "revision": 1,
+      "kind": "subject",
+      "track": "backend",
+      "title": "백엔드 · DB 3회",
+      "subtitle": "웹과 SQL 연결하기",
+      "practiceMinutes": 60,
+      "fixedPracticeMinutes": true,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "2e789e4f7c7e3243"
     }
   ],
   "topics": {
@@ -411,15 +429,15 @@
         "jdbc": "JDBC와 DAO"
       },
       "topicCounts": {
-        "web-servlet": 8,
-        "mvc-filter": 7,
-        "jsp-el": 7,
-        "state-session": 6,
-        "sql-select": 8,
-        "sql-join-subquery": 8,
-        "db-schema": 7,
-        "db-tx-index": 7,
-        "jdbc": 6
+        "web-servlet": 12,
+        "mvc-filter": 11,
+        "jsp-el": 10,
+        "state-session": 9,
+        "sql-select": 12,
+        "sql-join-subquery": 12,
+        "db-schema": 11,
+        "db-tx-index": 10,
+        "jdbc": 9
       }
     }
   },

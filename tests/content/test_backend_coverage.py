@@ -75,7 +75,8 @@ class BackendCoverageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             exams = build_data.build_data(ROOT / "source", Path(tmp))
         self.assertEqual(vq.validate_coverage(data, exams, texts), [])
-        self.assertEqual(data["coverageProfile"], "pilot")
+        self.assertEqual(data["coverageProfile"], "full")
+        self.assertTrue(all(k["questionIds"] for r in data["requirements"] for k in r["keywords"]))
         self.assertTrue(all(r["questionIds"] for r in data["requirements"]))
 
 if __name__ == "__main__":

@@ -10,8 +10,9 @@ test('the backend track shows the integrated exam cards and both notes inside th
   await expect(page).toHaveURL(/track=backend/);
   await expect(page.locator('#mode-backend-01')).toBeVisible();
   await expect(page.locator('#mode-backend-02')).toBeVisible();
+  await expect(page.locator('#mode-backend-03')).toBeVisible();
   await expect(page.locator('#mode-subject-01')).toHaveCount(0);
-  await expect(page.locator('.exam-card')).toHaveCount(2);
+  await expect(page.locator('.exam-card')).toHaveCount(3);
   for (const types of await page.locator('.exam-card .card-types').allInnerTexts()) {
     expect(types).toMatch(/객관식\s*21/);
     expect(types).toMatch(/단답형\s*9/);
@@ -33,7 +34,7 @@ test('other tracks do not offer the backend notes and the note pages keep their 
   await expect(page.locator('.note h2').first()).toContainText('Part 1');
 });
 
-for (const id of ['backend-01', 'backend-02']) {
+for (const id of ['backend-01', 'backend-02', 'backend-03']) {
   test('exam mode is fixed at 60 minutes while study mode lets the learner choose in ' + id, async ({page}) => {
     await openBackend(page);
     const time = page.locator('#time-' + id);
@@ -88,11 +89,11 @@ test('every topic practice set holds only backend questions of that topic', asyn
     const topic = new URL(href, 'http://x/').searchParams.get('topic');
     expect(found.topics, topic).toEqual([topic]);
     expect(found.ids.every((id) => id.startsWith('backend-0')), topic).toBe(true);
-    expect(new Set(found.ids.map((id) => id.slice(0, 10))), topic).toEqual(new Set(['backend-01', 'backend-02']));
+    expect(new Set(found.ids.map((id) => id.slice(0, 10))), topic).toEqual(new Set(['backend-01', 'backend-02', 'backend-03']));
     sizes[topic] = found.ids.length;
   }
-  expect(sizes).toEqual({'web-servlet': 8, 'mvc-filter': 7, 'jsp-el': 7, 'state-session': 6, 'sql-select': 8,
-    'sql-join-subquery': 8, 'db-schema': 7, 'db-tx-index': 7, jdbc: 6});
+  expect(sizes).toEqual({'web-servlet': 12, 'mvc-filter': 11, 'jsp-el': 10, 'state-session': 9, 'sql-select': 12,
+    'sql-join-subquery': 12, 'db-schema': 11, 'db-tx-index': 10, jdbc: 9});
 });
 
 test('the first question renders a code block and four choices without script errors', async ({page}) => {
@@ -105,7 +106,7 @@ test('the first question renders a code block and four choices without script er
   expect(errors).toEqual([]);
 });
 
-for (const id of ['backend-01', 'backend-02']) {
+for (const id of ['backend-01', 'backend-02', 'backend-03']) {
   test('all 32 questions of ' + id + ' fit a 360px phone screen without sideways page scrolling', async ({page}) => {
     await page.setViewportSize({width: 360, height: 780});
     await page.goto('pages/quiz.html?exam=' + id + '&mode=study&minutes=0&new=1');

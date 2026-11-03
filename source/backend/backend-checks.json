@@ -1283,5 +1283,708 @@
       "cookie_sent_under_auth": "yes",
       "cookie_sent_to_context_root": "no"
     }
+  },
+  {
+    "id": "sql-b3-q10",
+    "questionId": "backend-03-q10",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS pay",
+      "CREATE TABLE pay(name VARCHAR(10), dept VARCHAR(10), sal INT)",
+      "INSERT INTO pay VALUES ('가온','개발',100),('나래','개발',300),('다솜','개발',500),('라온','운영',200),('마루','운영',250),('바다','품질',400)"
+    ],
+    "steps": [
+      {
+        "sql": "SELECT dept, AVG(sal) FROM pay WHERE sal >= 200 GROUP BY dept HAVING AVG(sal) >= 300 ORDER BY dept",
+        "expect": {
+          "rows": [
+            [
+              "개발",
+              "400.0000"
+            ],
+            [
+              "품질",
+              "400.0000"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT dept, AVG(sal) FROM pay GROUP BY dept HAVING AVG(sal) >= 300 ORDER BY dept",
+        "expect": {
+          "rows": [
+            [
+              "개발",
+              "300.0000"
+            ],
+            [
+              "품질",
+              "400.0000"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT dept, AVG(sal) FROM pay WHERE sal >= 200 GROUP BY dept ORDER BY dept",
+        "expect": {
+          "rows": [
+            [
+              "개발",
+              "400.0000"
+            ],
+            [
+              "운영",
+              "225.0000"
+            ],
+            [
+              "품질",
+              "400.0000"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT dept, AVG(sal) FROM pay GROUP BY dept ORDER BY dept",
+        "expect": {
+          "rows": [
+            [
+              "개발",
+              "300.0000"
+            ],
+            [
+              "운영",
+              "225.0000"
+            ],
+            [
+              "품질",
+              "400.0000"
+            ]
+          ],
+          "ordered": true
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS pay"
+    ]
+  },
+  {
+    "id": "sql-b3-q11",
+    "questionId": "backend-03-q11",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [],
+    "steps": [
+      {
+        "sql": "SELECT LENGTH('가나'), CHAR_LENGTH('가나')",
+        "expect": {
+          "rows": [
+            [
+              "6",
+              "2"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": []
+  },
+  {
+    "id": "sql-b3-q12",
+    "questionId": "backend-03-q12",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS p",
+      "DROP TABLE IF EXISTS q",
+      "CREATE TABLE p(k INT)",
+      "CREATE TABLE q(k INT)",
+      "INSERT INTO p VALUES (1),(NULL)",
+      "INSERT INTO q VALUES (1),(NULL)"
+    ],
+    "steps": [
+      {
+        "sql": "SELECT COUNT(*) FROM p JOIN q ON p.k = q.k",
+        "expect": {
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "ordered": false
+        }
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM p JOIN q ON p.k <=> q.k",
+        "expect": {
+          "rows": [
+            [
+              "2"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS p",
+      "DROP TABLE IF EXISTS q"
+    ]
+  },
+  {
+    "id": "sql-b3-q13",
+    "questionId": "backend-03-q13",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS emp",
+      "CREATE TABLE emp(id INT PRIMARY KEY, name VARCHAR(10), mgr INT)",
+      "INSERT INTO emp VALUES (1,'가온',NULL),(2,'나래',1),(3,'다솜',1),(4,'라온',2)"
+    ],
+    "steps": [
+      {
+        "sql": "SELECT m.name FROM emp e LEFT JOIN emp m ON e.mgr = m.id ORDER BY e.id",
+        "expect": {
+          "rows": [
+            [
+              "NULL"
+            ],
+            [
+              "가온"
+            ],
+            [
+              "가온"
+            ],
+            [
+              "나래"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT m.name FROM emp e JOIN emp m ON e.mgr = m.id ORDER BY e.id",
+        "expect": {
+          "rows": [
+            [
+              "가온"
+            ],
+            [
+              "가온"
+            ],
+            [
+              "나래"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT e.name FROM emp e LEFT JOIN emp m ON e.mgr = m.id ORDER BY e.id",
+        "expect": {
+          "rows": [
+            [
+              "가온"
+            ],
+            [
+              "나래"
+            ],
+            [
+              "다솜"
+            ],
+            [
+              "라온"
+            ]
+          ],
+          "ordered": true
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS emp"
+    ]
+  },
+  {
+    "id": "sql-b3-q14",
+    "questionId": "backend-03-q14",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS pay",
+      "CREATE TABLE pay(name VARCHAR(10), dept VARCHAR(10), sal INT)",
+      "INSERT INTO pay VALUES ('가온','개발',100),('나래','개발',300),('다솜','개발',500),('라온','운영',200),('마루','운영',250),('바다','품질',400)"
+    ],
+    "steps": [
+      {
+        "sql": "SELECT COUNT(*) FROM pay e WHERE sal > (SELECT AVG(sal) FROM pay x WHERE x.dept = e.dept)",
+        "expect": {
+          "rows": [
+            [
+              "2"
+            ]
+          ],
+          "ordered": false
+        }
+      },
+      {
+        "sql": "SELECT name FROM pay e WHERE sal > (SELECT AVG(sal) FROM pay x WHERE x.dept = e.dept) ORDER BY name",
+        "expect": {
+          "rows": [
+            [
+              "다솜"
+            ],
+            [
+              "마루"
+            ]
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM pay WHERE sal > (SELECT AVG(sal) FROM pay)",
+        "expect": {
+          "rows": [
+            [
+              "3"
+            ]
+          ],
+          "ordered": false
+        }
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM pay e WHERE sal >= (SELECT AVG(sal) FROM pay x WHERE x.dept = e.dept)",
+        "expect": {
+          "rows": [
+            [
+              "4"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS pay"
+    ]
+  },
+  {
+    "id": "sql-b3-q15",
+    "questionId": "backend-03-q15",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP VIEW IF EXISTS v_dept_avg",
+      "DROP TABLE IF EXISTS pay",
+      "CREATE TABLE pay(name VARCHAR(10), dept VARCHAR(10), sal INT)",
+      "INSERT INTO pay VALUES ('가온','개발',100),('나래','개발',300),('다솜','개발',500),('라온','운영',200),('마루','운영',250),('바다','품질',400)",
+      "CREATE VIEW v_dept_avg AS SELECT dept, AVG(sal) AS avg_sal FROM pay GROUP BY dept"
+    ],
+    "steps": [
+      {
+        "sql": "UPDATE v_dept_avg SET avg_sal = 300 WHERE dept = '개발'",
+        "expect": {
+          "error": 1288
+        }
+      },
+      {
+        "sql": "SELECT SUM(sal) FROM pay WHERE dept = '개발'",
+        "expect": {
+          "rows": [
+            [
+              "900"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP VIEW IF EXISTS v_dept_avg",
+      "DROP TABLE IF EXISTS pay"
+    ]
+  },
+  {
+    "id": "sql-b3-q16",
+    "questionId": "backend-03-q16",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS acct",
+      "CREATE TABLE acct(email VARCHAR(20) UNIQUE)"
+    ],
+    "steps": [
+      {
+        "sql": "INSERT INTO acct VALUES ('a@x')",
+        "expect": {}
+      },
+      {
+        "sql": "INSERT INTO acct VALUES ('a@x')",
+        "expect": {
+          "error": 1062
+        }
+      },
+      {
+        "sql": "INSERT INTO acct VALUES (NULL)",
+        "expect": {}
+      },
+      {
+        "sql": "INSERT INTO acct VALUES (NULL)",
+        "expect": {}
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM acct",
+        "expect": {
+          "rows": [
+            [
+              "3"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS acct"
+    ]
+  },
+  {
+    "id": "sql-b3-q17",
+    "questionId": "backend-03-q17",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS t",
+      "CREATE TABLE t(n INT) ENGINE=InnoDB",
+      "INSERT INTO t VALUES (1),(2),(3)"
+    ],
+    "steps": [
+      {
+        "sql": "START TRANSACTION",
+        "expect": {}
+      },
+      {
+        "sql": "DELETE FROM t",
+        "expect": {}
+      },
+      {
+        "sql": "ROLLBACK",
+        "expect": {}
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM t",
+        "expect": {
+          "rows": [
+            [
+              "3"
+            ]
+          ],
+          "ordered": false
+        }
+      },
+      {
+        "sql": "START TRANSACTION",
+        "expect": {}
+      },
+      {
+        "sql": "TRUNCATE TABLE t",
+        "expect": {}
+      },
+      {
+        "sql": "ROLLBACK",
+        "expect": {}
+      },
+      {
+        "sql": "SELECT COUNT(*) FROM t",
+        "expect": {
+          "rows": [
+            [
+              "0"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS t"
+    ]
+  },
+  {
+    "id": "sql-b3-q18",
+    "questionId": "backend-03-q18",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS account",
+      "CREATE TABLE account(id INT PRIMARY KEY, balance INT) ENGINE=InnoDB",
+      "INSERT INTO account VALUES (1,100)"
+    ],
+    "steps": [
+      {
+        "sql": "SET autocommit = 0",
+        "expect": {},
+        "session": "t2"
+      },
+      {
+        "sql": "UPDATE account SET balance = 150 WHERE id = 1",
+        "expect": {},
+        "session": "t2"
+      },
+      {
+        "sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED",
+        "expect": {},
+        "session": "t1"
+      },
+      {
+        "sql": "START TRANSACTION",
+        "expect": {},
+        "session": "t1"
+      },
+      {
+        "sql": "SELECT balance FROM account WHERE id = 1",
+        "expect": {
+          "rows": [
+            [
+              "150"
+            ]
+          ],
+          "ordered": false
+        },
+        "session": "t1"
+      },
+      {
+        "sql": "COMMIT",
+        "expect": {},
+        "session": "t1"
+      },
+      {
+        "sql": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+        "expect": {},
+        "session": "t3"
+      },
+      {
+        "sql": "START TRANSACTION",
+        "expect": {},
+        "session": "t3"
+      },
+      {
+        "sql": "SELECT balance FROM account WHERE id = 1",
+        "expect": {
+          "rows": [
+            [
+              "100"
+            ]
+          ],
+          "ordered": false
+        },
+        "session": "t3"
+      },
+      {
+        "sql": "COMMIT",
+        "expect": {},
+        "session": "t3"
+      },
+      {
+        "sql": "START TRANSACTION",
+        "expect": {},
+        "session": "t4"
+      },
+      {
+        "sql": "SELECT balance FROM account WHERE id = 1",
+        "expect": {
+          "rows": [
+            [
+              "100"
+            ]
+          ],
+          "ordered": false
+        },
+        "session": "t4"
+      },
+      {
+        "sql": "COMMIT",
+        "expect": {},
+        "session": "t4"
+      },
+      {
+        "sql": "ROLLBACK",
+        "expect": {},
+        "session": "t2"
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS account"
+    ]
+  },
+  {
+    "id": "sql-b3-q19",
+    "questionId": "backend-03-q19",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS t",
+      "CREATE TABLE t(n INT) ENGINE=InnoDB"
+    ],
+    "steps": [
+      {
+        "sql": "START TRANSACTION",
+        "expect": {}
+      },
+      {
+        "sql": "INSERT INTO t VALUES (1)",
+        "expect": {}
+      },
+      {
+        "sql": "START TRANSACTION",
+        "expect": {}
+      },
+      {
+        "sql": "INSERT INTO t VALUES (2)",
+        "expect": {}
+      },
+      {
+        "sql": "ROLLBACK",
+        "expect": {}
+      },
+      {
+        "sql": "SELECT n FROM t ORDER BY n",
+        "expect": {
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "ordered": true
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS t"
+    ]
+  },
+  {
+    "id": "sql-b3-q26",
+    "questionId": "backend-03-q26",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [
+      "DROP TABLE IF EXISTS ct",
+      "CREATE TABLE ct(c INT)",
+      "INSERT INTO ct VALUES (1),(NULL),(3)"
+    ],
+    "steps": [
+      {
+        "sql": "SELECT COUNT(*), COUNT(c), COUNT(DISTINCT c) FROM ct",
+        "expect": {
+          "rows": [
+            [
+              "3",
+              "2",
+              "2"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": [
+      "DROP TABLE IF EXISTS ct"
+    ]
+  },
+  {
+    "id": "sql-b3-q27",
+    "questionId": "backend-03-q27",
+    "revision": 1,
+    "kind": "sql",
+    "setup": [],
+    "steps": [
+      {
+        "sql": "SELECT 1 UNION ALL SELECT 1",
+        "expect": {
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "1"
+            ]
+          ],
+          "ordered": false
+        }
+      },
+      {
+        "sql": "SELECT 1 UNION SELECT 1",
+        "expect": {
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "ordered": false
+        }
+      }
+    ],
+    "cleanup": []
+  },
+  {
+    "id": "java-b3-q03",
+    "questionId": "backend-03-q03",
+    "revision": 1,
+    "kind": "java",
+    "file": "checks/StringChecks.java",
+    "expect": {
+      "url_encode": "%EA%B0%80+%EB%82%98",
+      "url_encode_plus": "a%2Bb"
+    }
+  },
+  {
+    "id": "java-b3-q04",
+    "questionId": "backend-03-q04",
+    "revision": 1,
+    "kind": "java",
+    "file": "checks/StringChecks.java",
+    "expect": {
+      "action": "write",
+      "action_without_plus_one": "/write",
+      "action_with_extension": "write.do"
+    }
+  },
+  {
+    "id": "java-b3-q20",
+    "questionId": "backend-03-q20",
+    "revision": 1,
+    "kind": "java",
+    "file": "checks/JdbcCheck.java",
+    "expect": {
+      "uncommitted_close_balance": "1000",
+      "separate_connections_balances": "500,1000"
+    }
+  },
+  {
+    "id": "java-b3-q21",
+    "questionId": "backend-03-q21",
+    "revision": 1,
+    "kind": "java",
+    "file": "checks/JdbcCheck.java",
+    "expect": {
+      "getint_null": "0,true"
+    }
+  },
+  {
+    "id": "node-b3-q08",
+    "questionId": "backend-03-q08",
+    "revision": 1,
+    "kind": "node",
+    "file": "checks/cookie-httponly.mjs",
+    "expect": {
+      "httponly_visible_to_script": "no",
+      "plain_cookie_visible_to_script": "yes",
+      "httponly_sent_with_request": "yes"
+    }
   }
 ]

@@ -285,8 +285,8 @@ JDBC 문항은 DB 노트 Part 10을 기본 근거로 두고 백엔드 MVC 문맥
 - [x] 전용 테스트 스키마에서만 fixture를 만들고 실행 후 정리한다. 운영 DB 주소·자격정보는 코드나 공개 JSON에 넣지 않는다.
 - [x] 정상 기대값 통과와 의도적으로 틀린 기대값 실패를 확인한다. SQL 순서 비보장, 중복 행, NULL, 두 연결의 Tx 순서를 검사한다.
 - [ ] 모든 문항을 답을 가리고 재풀이하고 검수 기록을 남긴다. 작성자 검토를 다른 사람의 독립 검토로 기록하지 않는다.
-- [ ] `python scripts/verify_backend_answers.py`와 `python scripts/audit_bias.py --strict --report reports/bias.json`이 통과한 뒤 2·3회를 확장한다.
-- [ ] 최종 96문항, 전체 객관식 63개의 분포·반복 패턴, 9개 주제 연습 세트까지 다시 검사한다.
+- [x] `python scripts/verify_backend_answers.py`와 `python scripts/audit_bias.py --strict --report reports/bias.json`이 통과한 뒤 2·3회를 확장한다.
+- [x] 최종 96문항, 전체 객관식 63개의 분포·반복 패턴, 9개 주제 연습 세트까지 다시 검사한다.
 
 ### 단계 4. 지우개 상태와 저장
 
@@ -317,8 +317,8 @@ JDBC 문항은 DB 노트 Part 10을 기본 근거로 두고 백엔드 MVC 문맥
 
 ### 단계 6. 전체 검증과 인계
 
-- [ ] README의 기존 검증 전체와 신규 backend 검증을 실행한다. 빌드, 스키마, 편향, 답안 검수, 단위·E2E 결과를 기록한다.
-- [ ] `python scripts/build_site.py`로 배포 산출물을 만들고 `/study-space/` 하위 경로에서 링크를 확인한다.
+- [x] README의 기존 검증 전체와 신규 backend 검증을 실행한다. 빌드, 스키마, 편향, 답안 검수, 단위·E2E 결과를 기록한다.
+- [x] `python scripts/build_site.py`로 배포 산출물을 만들고 `/study-space/` 하위 경로에서 링크를 확인한다.
 - [ ] PDF, OCR, 과제 원본이 추적되거나 `dist/`에 들어가지 않았는지 확인한다.
 - [ ] 변경 파일과 명령별 결과를 사용자에게 보고한다. 커밋과 push, PR과 배포는 별도 요청 전까지 하지 않는다.
 - [ ] 월말 자료 검토와 기능 구현 상태를 구분한다. 아래 12절의 Web 프로젝트 연습을 실제 구현하기 전에는 시험 카드로 노출하지 않는다.
