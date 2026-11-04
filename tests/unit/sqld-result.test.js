@@ -70,8 +70,15 @@ test('topic practice and partial sets report accuracy only', async () => {
   assert.equal(part.pass, null);
   assert.equal(part.complete, false);
   assert.equal(part.correct, 20);
-  const study = summarizeSqld(questions, attemptWith(10, 40, {mode: 'study'}), subjects);
-  assert.equal(study.pass, null);
+});
+
+test('a submitted 50-question run is judged in exam mode and in study mode with or without a time limit', async () => {
+  const {summarizeSqld} = await load();
+  for (const extra of [{mode: 'exam'}, {mode: 'study'}, {mode: 'exam', deadlineAt: null}, {mode: 'study', deadlineAt: 99}]) {
+    assert.equal(summarizeSqld(questions, attemptWith(10, 40, extra), subjects).pass, true, JSON.stringify(extra));
+    assert.equal(summarizeSqld(questions, attemptWith(3, 27, extra), subjects).pass, false, JSON.stringify(extra));
+    assert.equal(summarizeSqld(questions, attemptWith(10, 40, {...extra, submittedAt: null}), subjects).pass, null, JSON.stringify(extra));
+  }
 });
 
 test('erasing choices changes nothing and 2 points are counted per correct answer', async () => {

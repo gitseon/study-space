@@ -113,7 +113,7 @@ function sqldResult() {
     .map((s) => '<li class="' + (s.failed ? 'bad' : 'good') + '">' + e(s.name) + ' <b>' + s.correct + ' / ' + s.total + '</b> <small>(과락 기준 ' + s.minCorrect + '문항)</small></li>')
     .join('');
   const verdict = r.pass === null
-    ? '<p class="muted">합격 판정은 50문항을 모두 시험 방식으로 푼 응시에만 표시합니다.</p>'
+    ? '<p class="muted">합격 판정은 50문항을 모두 풀고 제출한 응시에만 표시합니다. 주제별 연습은 정답률만 보여 줍니다.</p>'
     : '<p class="sqld-verdict ' + (r.pass ? 'good' : 'bad') + '">' + (r.pass ? '합격 연습 기준을 충족했습니다' : r.failedSubjects.length ? e(r.failedSubjects.join(' ')) + ' 과락으로 불합격 연습 결과입니다' : '60점 미만으로 불합격 연습 결과입니다') + '</p>';
   return '<section class="sqld-result" aria-label="SQLD 점수"><div><small>점수</small><strong>' + r.score + '<span> / ' + r.maxScore + '</span></strong></div>'
     + '<ul>' + rows + '</ul>' + verdict + '<p class="muted">총점 60점 이상이고 과목마다 40% 이상이어야 합니다. 정답 검증 전 초안의 점수는 참고용입니다.</p></section>';

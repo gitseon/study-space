@@ -52,7 +52,7 @@ class SqldScopeTests(unittest.TestCase):
             exams = [e for e in build_data.build_data(ROOT / "source", Path(tmp)) if build_data.track_of(e) == "sqld"]
         self.assertEqual([e["id"] for e in exams], ["sqld-01"])
         exam = exams[0]
-        self.assertEqual((exam["kind"], exam["practiceMinutes"], exam.get("draft"), exam.get("fixedPracticeMinutes")), ("subject", 90, True, True))
+        self.assertEqual((exam["kind"], exam["practiceMinutes"], exam.get("draft"), exam.get("fixedPracticeMinutes")), ("subject", 90, True, None))
         self.assertEqual(exam["counts"], {"mc": 50, "short": 0, "essay": 0, "code": 0})
         groups = Counter(q["group"] for q in exam["questions"])
         self.assertEqual(dict(groups), {g: v["mc"] for g, v in self.scope["groups"].items()})

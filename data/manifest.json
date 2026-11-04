@@ -301,7 +301,6 @@
       "subtitle": "개념과 SQL 결과 추적",
       "draft": true,
       "practiceMinutes": 90,
-      "fixedPracticeMinutes": true,
       "sourceScopeVersion": 1,
       "counts": {
         "mc": 50,
@@ -309,7 +308,7 @@
         "essay": 0,
         "code": 0
       },
-      "contentVersion": "8bd80cbad2d97559"
+      "contentVersion": "2ec04f006aa8a13c"
     }
   ],
   "topics": {
