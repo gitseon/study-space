@@ -11,6 +11,10 @@ test('the SQLD track shows one draft exam card with its note and the nine topic 
   await expect(page.locator('.exam-card')).toHaveCount(1);
   await expect(page.locator('.exam-card .pill.draft')).toHaveText('초안');
   await expect(page.locator('.draft-note')).toContainText('아직 검증하지 못한');
+  const notes = page.locator('.exam-card .exam-notes li');
+  await expect(notes).toHaveCount(3);
+  await expect(notes.first()).toContainText('90분');
+  await expect(notes.nth(1)).toContainText('계산기');
   const types = await page.locator('.exam-card .card-types').innerText();
   expect(types).toMatch(/객관식\s*50/);
   expect(types).not.toMatch(/단답형|서술형/);
@@ -21,10 +25,13 @@ test('the SQLD track shows one draft exam card with its note and the nine topic 
 test('the time limit is selectable with 90 minutes preselected and the list is ordered', async ({page}) => {
   await openSqld(page);
   const time = page.locator('#time-sqld-01');
-  await expect(time.locator('option')).toHaveText(['30분', '90분', '시간 제한 없음']);
+  await expect(time.locator('option')).toHaveText(['90분', '120분', '시간 제한 없음']);
   await expect(time).toHaveValue('90');
   await page.locator('#mode-sqld-01').selectOption({label: '모두 풀고 한 번에 채점'});
   await expect(time).toBeEnabled();
+  await time.selectOption('0');
+  await time.selectOption('120');
+  await expect(time).toHaveValue('120');
   await time.selectOption('0');
   await page.getByRole('button', {name: 'SQLD 1회 시작', exact: true}).click();
   await expect(page.locator('.choice')).toHaveCount(4);
@@ -33,9 +40,23 @@ test('the time limit is selectable with 90 minutes preselected and the list is o
   expect(deadline).toBeNull();
 });
 
+test('a 120 minute choice gives a 120 minute limit', async ({page}) => {
+  await openSqld(page);
+  await page.locator('#mode-sqld-01').selectOption({label: '모두 풀고 한 번에 채점'});
+  await page.locator('#time-sqld-01').selectOption('120');
+  await page.getByRole('button', {name: 'SQLD 1회 시작', exact: true}).click();
+  await expect(page.locator('.choice')).toHaveCount(4);
+  const minutes = await page.evaluate(() => {
+    const a = JSON.parse(localStorage.getItem('algorithm-notes:v1')).attempts[0];
+    return Math.round((a.deadlineAt - a.startedAt) / 60000);
+  });
+  expect(minutes).toBe(120);
+  await expect(page.locator('.notice.exam-notes li')).toHaveCount(3);
+});
+
 test('the quiz warns that the draft is unverified and hides note links while the timed run is open', async ({page}) => {
   await page.goto('pages/quiz.html?exam=sqld-01&mode=exam&minutes=0&new=1');
-  await expect(page.locator('.notice')).toContainText('정답 검증 전 초안');
+  await expect(page.locator('.notice').first()).toContainText('정답 검증 전 초안');
   await expect(page.locator('.study-links')).toHaveCount(0);
   await page.goto('pages/quiz.html?exam=sqld-01&mode=study&minutes=0&new=1');
   await expect(page.locator('.study-links a').first()).toContainText('SQLD 개념 · Part 1');
@@ -51,6 +72,10 @@ test('submitting a blank run shows 0 points, the subject cut-offs and a failing 
   const result = page.getByRole('region', {name: 'SQLD 점수'});
   await expect(result).toContainText('0 / 100');
   await expect(result).toContainText('1과목 0 / 10');
+  await expect(result).toContainText('0점 / 20점');
+  await expect(result).toContainText('0점 / 80점');
+  await expect(result).toContainText('(8점)');
+  await expect(result).toContainText('(32점)');
   await expect(result).toContainText('과락 기준 4문항');
   await expect(result).toContainText('과락 기준 16문항');
   await expect(result.locator('.sqld-verdict')).toContainText('과락');

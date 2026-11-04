@@ -110,13 +110,13 @@ function sqldResult() {
   }
   const r = summarizeSqld(attemptQuestions(), attempt, subjects);
   const rows = r.perSubject
-    .map((s) => '<li class="' + (s.failed ? 'bad' : 'good') + '">' + e(s.name) + ' <b>' + s.correct + ' / ' + s.total + '</b> <small>(과락 기준 ' + s.minCorrect + '문항)</small></li>')
+    .map((s) => '<li class="' + (s.failed ? 'bad' : 'good') + '">' + e(s.name) + ' <b>' + s.correct + ' / ' + s.total + '</b> <small>' + s.points + '점 / ' + s.maxPoints + '점 · 과락 기준 ' + s.minCorrect + '문항(' + s.minScore + '점)</small></li>')
     .join('');
   const verdict = r.pass === null
     ? '<p class="muted">합격 판정은 50문항을 모두 풀고 제출한 응시에만 표시합니다. 주제별 연습은 정답률만 보여 줍니다.</p>'
     : '<p class="sqld-verdict ' + (r.pass ? 'good' : 'bad') + '">' + (r.pass ? '합격 연습 기준을 충족했습니다' : r.failedSubjects.length ? e(r.failedSubjects.join(' ')) + ' 과락으로 불합격 연습 결과입니다' : '60점 미만으로 불합격 연습 결과입니다') + '</p>';
   return '<section class="sqld-result" aria-label="SQLD 점수"><div><small>점수</small><strong>' + r.score + '<span> / ' + r.maxScore + '</span></strong></div>'
-    + '<ul>' + rows + '</ul>' + verdict + '<p class="muted">총점 60점 이상이고 과목마다 40% 이상이어야 합니다. 정답 검증 전 초안의 점수는 참고용입니다.</p></section>';
+    + '<ul>' + rows + '</ul>' + verdict + '<p class="muted">총점 60점 이상이고 과목마다 40% 미만이면 과락입니다. 미응답은 0점입니다. 정답 검증 전 초안의 점수는 참고용입니다.</p></section>';
 }
 
 function resultSummary() {
@@ -368,6 +368,7 @@ function render() {
     + '<p id="save-status" class="muted" role="status">' + e(saveMessage || '답안은 자동으로 저장됩니다') + '</p></div>'
     + (versionNotice ? '<p class="notice">개정 전 응시 기록입니다. 당시 문제와 답안으로 복습합니다.</p>' : '')
     + (exam.draft ? '<p class="notice">정답 검증 전 초안입니다. 정답과 해설이 틀릴 수 있으니 개념 노트와 함께 확인하세요.</p>' : '')
+    + (exam.examNotes?.length && !viewing ? '<ul class="notice exam-notes">' + exam.examNotes.map((n) => '<li>' + e(n) + '</li>').join('') + '</ul>' : '')
     + (viewing ? resultSummary() : '')
     + '<div class="quiz-layout">' + sidebar(qs) + questionPanel(q, qs) + '</div>';
 

@@ -8,6 +8,16 @@
   "draft": true,
   "practiceMinutes": 90,
   "sourceScopeVersion": 1,
+  "timeOptions": [
+    90,
+    120,
+    0
+  ],
+  "examNotes": [
+    "실제 시험은 90분이고 종이 문제지와 OMR 답안지로 치릅니다. 120분과 시간 제한 없음은 연습용입니다.",
+    "실제 시험에서는 계산기를 쓸 수 없습니다. 계산은 손으로 연습하세요.",
+    "문항당 2점이고 총점 60점 이상이면서 과목별 40% 미만이 없어야 합니다. 미응답은 0점입니다."
+  ],
   "questions": [
     {
       "title": "3단계 스키마의 독립성",
@@ -2670,5 +2680,5 @@
       "d"
     ]
   },
-  "contentVersion": "2ec04f006aa8a13c"
+  "contentVersion": "6abda8f5727eed62"
 }

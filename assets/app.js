@@ -99,7 +99,9 @@ function examCard(exam, attempts, preference) {
     .map(([type, n]) => '<span>' + typeNames[type] + ' <b>' + n + '</b></span>')
     .join('');
   // Shortest limit first and "no limit" (0) last. The exam's own length stays the preselected choice.
-  const times = [[exam.practiceMinutes, exam.practiceMinutes + '분'], [30, '30분'], [90, '90분'], [0, '시간 제한 없음']]
+  // An exam may list its own choices in timeOptions (minutes, 0 for no limit); the other exams keep the common list.
+  const choices = exam.timeOptions || [exam.practiceMinutes, 30, 90, 0];
+  const times = [...new Set(choices)].map((value) => [value, value ? value + '분' : '시간 제한 없음'])
     .filter(([value], i, list) => list.findIndex(([v]) => v === value) === i)
     .sort(([a], [b]) => (a || Infinity) - (b || Infinity))
     .map(([value, label]) => '<option value="' + value + '"' + (value === exam.practiceMinutes ? ' selected' : '') + '>' + label + '</option>')
@@ -111,6 +113,7 @@ function examCard(exam, attempts, preference) {
     + '<div class="card-top"><span class="pill">' + e(kindNames[exam.kind] || exam.kind) + '</span>' + (exam.draft ? '<span class="pill draft">초안</span>' : '') + '<span class="card-number">' + String(index).padStart(2, '0') + '</span></div>'
     + '<h3>' + e(exam.subtitle) + '</h3>'
     + '<p class="card-description">' + e(kindDescriptions[exam.kind] || '') + '</p>'
+    + (exam.examNotes?.length ? '<ul class="exam-notes">' + exam.examNotes.map((n) => '<li>' + e(n) + '</li>').join('') + '</ul>' : '')
     + (exam.draft ? '<p class="draft-note">정답을 해당 DBMS에서 아직 검증하지 못한 초안입니다. 정답과 해설이 틀릴 수 있습니다.</p>' : '')
     + '<div class="card-types">' + types + '</div>'
     + '<label class="card-setting">채점 방식 <select id="mode-' + e(exam.id) + '">' + modes + '</select></label>'

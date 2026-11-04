@@ -88,3 +88,12 @@ test('erasing choices changes nothing and 2 points are counted per correct answe
   assert.equal(r.correct, 25);
   assert.equal(r.score, 50);
 });
+
+test('each subject reports its points, maximum points and the cut-off score', async () => {
+  const {summarizeSqld} = await load();
+  const r = summarizeSqld(questions, attemptWith(7, 18), subjects);
+  const [first, second] = r.perSubject;
+  assert.deepEqual([first.points, first.maxPoints, first.minScore], [14, 20, 8]);
+  assert.deepEqual([second.points, second.maxPoints, second.minScore], [36, 80, 32]);
+  assert.equal(r.score, 50);
+});

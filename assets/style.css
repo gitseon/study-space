@@ -302,3 +302,5 @@
 .sqld-result p{grid-column:1/-1;margin:0}.sqld-verdict{font-weight:700}.sqld-verdict.good{color:var(--accent)}.sqld-verdict.bad{color:var(--alert)}
 @media(max-width:480px){.sqld-result{grid-template-columns:1fr}}
 .prose p code.long,.choice code.long,.choice-reasons code.long{white-space:normal;overflow-wrap:anywhere}
+.exam-notes{margin:0 0 12px;padding-left:18px;font-size:12px;color:var(--muted)}
+.notice.exam-notes{padding:12px 14px 12px 30px}

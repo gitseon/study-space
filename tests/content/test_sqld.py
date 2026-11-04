@@ -23,6 +23,22 @@ class SqldScopeTests(unittest.TestCase):
         self.assertEqual({k: v["mc"] for k, v in s["subjectComposition"].items()}, by_subject)
         self.assertEqual(sorted(t for ts in s["subjects"].values() for t in ts), sorted(s["topics"]))
 
+    def test_the_exam_rules_match_the_official_guide(self):
+        rules = self.scope["rules"]
+        self.assertEqual((rules["examMinutes"], rules["pointsPerQuestion"], rules["passScore"], rules["subjectFailRatio"]), (90, 2, 60, 0.4))
+        self.assertEqual(rules["subjectPoints"], {"1과목": 20, "2과목": 80})
+        self.assertEqual((rules["format"], rules["calculator"]), ("PBT", False))
+        self.assertTrue(any("dataq.or.kr" in s for s in self.scope["sources"]))
+        per_subject = {n: sum(self.scope["groups"][g]["mc"] for g in gs) * rules["pointsPerQuestion"] for n, gs in self.scope["subjects"].items()}
+        self.assertEqual(per_subject, rules["subjectPoints"])
+
+    def test_the_draft_exam_offers_90_120_and_no_limit_and_lists_the_rules(self):
+        import json
+        exam = json.loads((ROOT / "source/sqld/sqld-01/exam.json").read_text(encoding="utf-8"))
+        self.assertEqual(exam["timeOptions"], [90, 120, 0])
+        self.assertEqual(exam["practiceMinutes"], 90)
+        self.assertEqual(len(exam["examNotes"]), 3)
+
     def test_group_sizes_follow_the_plan(self):
         sizes = {g: v["mc"] for g, v in self.scope["groups"].items()}
         self.assertEqual(sizes, {"model-basics": 5, "model-sql": 5, "sql-basics": 8, "join": 5, "subquery-set": 6,

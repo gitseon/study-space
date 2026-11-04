@@ -11,7 +11,7 @@ const FULL_EXAM = 50;
 export function summarizeSqld(questions, attempt, subjects) {
   const subjectOf = new Map();
   Object.entries(subjects).forEach(([name, groups]) => groups.forEach((group) => subjectOf.set(group, name)));
-  const perSubject = Object.keys(subjects).map((name) => ({name, total: 0, correct: 0, minCorrect: 0, failed: false}));
+  const perSubject = Object.keys(subjects).map((name) => ({name, total: 0, correct: 0, minCorrect: 0, points: 0, maxPoints: 0, minScore: 0, failed: false}));
   const byName = new Map(perSubject.map((s) => [s.name, s]));
   let correct = 0;
   for (const q of questions) {
@@ -28,6 +28,9 @@ export function summarizeSqld(questions, attempt, subjects) {
   }
   for (const s of perSubject) {
     s.minCorrect = Math.ceil(s.total * SUBJECT_RATIO);
+    s.points = s.correct * POINTS;
+    s.maxPoints = s.total * POINTS;
+    s.minScore = s.minCorrect * POINTS;
     s.failed = s.correct < s.minCorrect;
   }
   const score = correct * POINTS;

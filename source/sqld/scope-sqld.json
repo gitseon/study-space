@@ -228,6 +228,20 @@
     "SQLD-B",
     "https://www.dataq.or.kr/www/sub/a_04.do (공식 안내의 시험 구성)",
     "https://www.sqldpass.com/past-exams?cert=SQLD (복원 회차의 구성과 주제 분포만 참고)",
-    "https://quiz.dreaming-ryan.com/subjects/sqld (복원 회차의 과목 비중만 참고)"
-  ]
+    "https://quiz.dreaming-ryan.com/subjects/sqld (복원 회차의 과목 비중만 참고)",
+    "https://www.dataq.or.kr/www/accept/warning.do (시험 진행 규칙)",
+    "https://www.sqldpass.com/cbt-mock-exam/sqld (시험 구성과 합격 기준 정리)"
+  ],
+  "rules": {
+    "examMinutes": 90,
+    "pointsPerQuestion": 2,
+    "passScore": 60,
+    "subjectFailRatio": 0.4,
+    "subjectPoints": {
+      "1과목": 20,
+      "2과목": 80
+    },
+    "format": "PBT",
+    "calculator": false
+  }
 }
