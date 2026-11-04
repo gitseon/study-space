@@ -1,7 +1,11 @@
 import {store} from './storage.js';
 import {createAttempt, remainingSeconds} from './attempt.js';
 import {resultFor, summarize, needsReview} from './grading.js';
-import {escapeHtml as e, inline, markdown, loadExam, download, typeNames, gradingNames} from './render.js';
+import {effectiveMinutes} from './practice-time.js';
+import {studyLinksFor} from './study-links.js';
+import {summarizeSqld} from './sqld-result.js';
+import {toggleElimination, clearElimination, isEraserEnabled, readEraserPreference, writeEraserPreference} from './choice-eraser.js';
+import {escapeHtml as e, inline, markdown, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -14,6 +18,14 @@ let filter = FILTERS[params.get('filter')] ? params.get('filter') : 'all';
 let typeFilter = 'all';
 let saveMessage = '';
 let versionNotice = false;
+let prefStorage;
+try {
+  prefStorage = globalThis.localStorage;
+} catch {
+  // Blocked storage only means the eraser setting is not remembered.
+}
+let eraserPreference = readEraserPreference(prefStorage);
+let studyManifest = null;
 
 document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
 
@@ -90,6 +102,23 @@ function countCard(label, value, extra = '') {
   return '<div class="count ' + extra + '"><small>' + label + '</small><strong>' + value + '</strong></div>';
 }
 
+// SQLD scores 2 points per answer and applies the pass rule only to a finished 50-question exam run.
+function sqldResult() {
+  const subjects = studyManifest?.tracks?.[exam.track]?.subjects;
+  if (exam.track !== 'sqld' || !subjects) {
+    return '';
+  }
+  const r = summarizeSqld(attemptQuestions(), attempt, subjects);
+  const rows = r.perSubject
+    .map((s) => '<li class="' + (s.failed ? 'bad' : 'good') + '">' + e(s.name) + ' <b>' + s.correct + ' / ' + s.total + '</b> <small>' + s.points + '점 / ' + s.maxPoints + '점 · 과락 기준 ' + s.minCorrect + '문항(' + s.minScore + '점)</small></li>')
+    .join('');
+  const verdict = r.pass === null
+    ? '<p class="muted">합격 판정은 50문항을 모두 풀고 제출한 응시에만 표시합니다. 주제별 연습은 정답률만 보여 줍니다.</p>'
+    : '<p class="sqld-verdict ' + (r.pass ? 'good' : 'bad') + '">' + (r.pass ? '합격 연습 기준을 충족했습니다' : r.failedSubjects.length ? e(r.failedSubjects.join(' ')) + ' 과락으로 불합격 연습 결과입니다' : '60점 미만으로 불합격 연습 결과입니다') + '</p>';
+  return '<section class="sqld-result" aria-label="SQLD 점수"><div><small>점수</small><strong>' + r.score + '<span> / ' + r.maxScore + '</span></strong></div>'
+    + '<ul>' + rows + '</ul>' + verdict + '<p class="muted">총점 60점 이상이고 과목마다 40% 미만이면 과락입니다. 미응답은 0점입니다. 정답 검증 전 초안의 점수는 참고용입니다.</p></section>';
+}
+
 function resultSummary() {
   const s = summarize(attemptQuestions(), attempt);
   const wrong = s.incorrect + s.unanswered;
@@ -108,7 +137,7 @@ function resultSummary() {
     + '</div>'
     + '<div class="review-filters"><span class="muted">복습 모드</span><div class="tabs" role="group" aria-label="복습 범위">' + filters + '</div></div>'
     + '<p class="muted">틀린 문제만 보기에는 답하지 않은 문제도 포함됩니다. 서술형과 구현형은 직접 채점을 저장하면 결과에 반영됩니다.</p>'
-    + '</section>';
+    + '</section>' + sqldResult();
 }
 
 function progressTally() {
@@ -166,10 +195,29 @@ function choiceOrder(q) {
   return attempt.choiceOrders[q.id] || q.choices.map((c) => c.id);
 }
 
+const ERASER_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
+  + '<path d="M15.5 4.5a2 2 0 0 1 2.8 0l1.2 1.2a2 2 0 0 1 0 2.8L10 18H6.2L3.7 15.5a2 2 0 0 1 0-2.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>'
+  + '<path d="M8.6 7.8l7.6 7.6M10 18h10.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+
+function eraserToggle(on) {
+  return '<div class="eraser-tool"><button type="button" id="eraser-toggle" class="quiet" aria-pressed="' + on + '">선택지 지우개 ' + (on ? 'ON' : 'OFF') + '</button>'
+    + '<span class="muted">' + (on ? '지울 선택지 오른쪽의 지우개를 누르세요. ' : '') + '선택한 선지를 다시 누르면 선택이 해제됩니다.</span></div>';
+}
+
+// Erasing the chosen choice also withdraws the answer, so every choice has a working button.
+function eraserButton(id, number, erased) {
+  return '<button type="button" class="eraser-btn' + (erased ? ' on' : '') + '" data-erase="' + e(id) + '"'
+    + ' aria-label="' + number + '번 선택지 ' + (erased ? '복원' : '지우기') + '">' + ERASER_ICON + '</button>';
+}
+
 function renderAnswer(q) {
   const locked = isViewing() || attempt.revealed.includes(q.id);
   if (q.type === 'mc') {
     const revealed = isRevealed(q);
+    // The eraser is a scratch aid: it is offered only while the question can still be answered.
+    const eraserOn = !isViewing() && isEraserEnabled(attempt, eraserPreference);
+    const erasing = eraserOn && !locked;
+    const erased = new Set(erasing ? attempt.eliminatedChoices?.[q.id] : []);
     const choices = choiceOrder(q)
       .map((id, i) => {
         const choice = q.choices.find((c) => c.id === id);
@@ -179,12 +227,18 @@ function renderAnswer(q) {
         } else if (revealed && attempt.answers[q.id] === id) {
           classes.push('wrong-choice');
         }
-        return '<label class="' + classes.join(' ') + '"><input name="choice" type="radio" value="' + e(id) + '"'
+        if (erased.has(id)) {
+          classes.push('erased');
+        }
+        const label = '<label class="' + classes.join(' ') + '"><input name="choice" type="radio" value="' + e(id) + '"'
           + (attempt.answers[q.id] === id ? ' checked' : '') + (locked ? ' disabled' : '') + '>'
-          + '<span class="choice-num">' + (i + 1) + '</span><span>' + inline(choice.text) + '</span></label>';
+          + '<span class="choice-num">' + (i + 1) + '</span><span>' + inline(choice.text)
+          + (erased.has(id) ? '<span class="sr-only"> (지운 선택지)</span>' : '') + '</span></label>';
+        return '<div class="choice-row">' + label + (erasing ? eraserButton(id, i + 1, erased.has(id)) : '') + '</div>';
       })
       .join('');
-    return '<fieldset class="choices"><legend class="sr-only">정답 선택</legend>' + choices + '</fieldset>';
+    return (isViewing() ? '' : eraserToggle(eraserOn))
+      + '<fieldset class="choices"><legend class="sr-only">정답 선택</legend>' + choices + '</fieldset>';
   }
   const label = q.type === 'code' ? languageLabel(q) + ' 답안' : q.type === 'essay' ? '나의 설명' : '나의 답';
   let html = '<label class="answer-label" for="answer">' + label + '</label>';
@@ -234,7 +288,7 @@ function explanation(q) {
     html += '<p class="answer-line">모범답안 <b>' + e(q.acceptedAnswers[0]) + '</b>'
       + (hasAnswer(q) ? '<span>내 답 <b>' + e(attempt.answers[q.id]) + '</b></span>' : '') + '</p>';
   }
-  html += '<div class="prose">' + markdown(q.solution) + '</div>';
+  html += '<div class="prose solution">' + markdown(solutionMarkdown(q.solution)) + '</div>';
   if (q.type === 'mc') {
     html += '<div class="choice-reasons">' + choiceOrder(q)
       .map((id, i) => '<div><b>' + (i + 1) + (id === q.correctChoiceId ? ' 정답' : '') + '</b><p>' + inline(q.choiceExplanations[id]) + '</p></div>')
@@ -264,6 +318,17 @@ function checkButton(q) {
     + (auto ? '<p class="muted reveal-help">정답을 확인하면 이 문제의 답은 더 이상 바꿀 수 없습니다.</p>' : '');
 }
 
+// Concept-note links appear while studying and in the review, never during a timed exam run.
+function studyLinksHtml(q) {
+  if (!studyManifest || !(perQuestion() || isViewing())) {
+    return '';
+  }
+  const links = studyLinksFor(studyManifest, exam.track || 'algorithm', q.group, '');
+  return links.length
+    ? '<p class="study-links"><span>관련 개념 노트</span>' + links.map((l) => '<a href="' + e(l.href) + '" target="_blank" rel="noopener">' + e(l.label) + ' ↗</a>').join('') + '</p>'
+    : '';
+}
+
 function questionPanel(q, qs) {
   if (!q) {
     const message = filter === 'wrong' ? '틀린 문제가 없습니다. 모두 맞혔어요.' : '이 조건에 해당하는 문제가 없습니다.';
@@ -281,6 +346,7 @@ function questionPanel(q, qs) {
     + renderAnswer(q)
     + checkButton(q)
     + (isRevealed(q) ? explanation(q) : '')
+    + studyLinksHtml(q)
     + '<div class="question-actions"><button class="quiet" id="prev"' + (attempt.currentIndex === 0 ? ' disabled' : '') + '>← 이전</button>'
     + '<span>' + (attempt.currentIndex + 1) + ' / ' + qs.length + '</span><button class="primary" id="next">' + nextLabel + '</button></div>'
     + '</section>';
@@ -301,6 +367,8 @@ function render() {
     + '<div class="quiz-title"><div><span class="eyebrow">' + e(exam.subtitle || '주제별 연습') + '</span><h1>' + e(exam.title) + '</h1></div>'
     + '<p id="save-status" class="muted" role="status">' + e(saveMessage || '답안은 자동으로 저장됩니다') + '</p></div>'
     + (versionNotice ? '<p class="notice">개정 전 응시 기록입니다. 당시 문제와 답안으로 복습합니다.</p>' : '')
+    + (exam.draft ? '<p class="notice">정답 검증 전 초안입니다. 정답과 해설이 틀릴 수 있으니 개념 노트와 함께 확인하세요.</p>' : '')
+    + (exam.examNotes?.length && !viewing ? '<ul class="notice exam-notes">' + exam.examNotes.map((n) => '<li>' + e(n) + '</li>').join('') + '</ul>' : '')
     + (viewing ? resultSummary() : '')
     + '<div class="quiz-layout">' + sidebar(qs) + questionPanel(q, qs) + '</div>';
 
@@ -363,8 +431,47 @@ function bindEvents(q, qs) {
     }
     render();
   };
+  document.querySelector('#eraser-toggle')?.addEventListener('click', () => {
+    eraserPreference = !isEraserEnabled(attempt, eraserPreference);
+    attempt.eraserEnabled = eraserPreference;
+    writeEraserPreference(prefStorage, eraserPreference);
+    save();
+    render();
+    document.querySelector('#eraser-toggle')?.focus();
+  });
+  root.querySelectorAll('[data-erase]').forEach((button) => {
+    button.onclick = () => {
+      if (!toggleElimination(attempt, q.id, button.dataset.erase)) {
+        return;
+      }
+      save();
+      render();
+      [...root.querySelectorAll('[data-erase]')].find((b) => b.dataset.erase === button.dataset.erase)?.focus();
+    };
+  });
   root.querySelectorAll('input[name=choice]').forEach((input) => {
+    // Clicking the chosen radio again fires no change event, so the stored answer decides: same value means withdraw it.
+    // A new choice reaches this handler before the answer is stored, so it falls through to onchange.
+    const withdraw = () => {
+      delete attempt.answers[q.id];
+      save();
+      render();
+      document.querySelector('input[value="' + input.value + '"]')?.focus();
+    };
+    input.onclick = () => {
+      if (attempt.answers[q.id] === input.value) {
+        withdraw();
+      }
+    };
+    // Space on a checked radio fires no click, so the keyboard withdraws the answer here.
+    input.onkeydown = (ev) => {
+      if (ev.key === ' ' && attempt.answers[q.id] === input.value) {
+        ev.preventDefault();
+        withdraw();
+      }
+    };
     input.onchange = () => {
+      clearElimination(attempt, q.id, input.value);
       attempt.answers[q.id] = input.value;
       save();
       render();
@@ -474,18 +581,21 @@ async function start() {
     }
     const existing = !params.has('new') && !topic && store.listAttempts()
       .find((a) => a.examId === exam.id && a.mode === mode && !a.submittedAt && a.contentVersion === exam.contentVersion && !a.topic);
-    let minutes = Number(params.get('minutes') ?? (mode === 'study' ? 0 : exam.practiceMinutes));
-    if (!Number.isFinite(minutes) || minutes < 0 || minutes > 600) {
-      minutes = exam.practiceMinutes;
-    }
-    attempt = existing || createAttempt(exam, {mode, durationMinutes: minutes, shuffle: params.has('shuffle')});
+    const minutes = effectiveMinutes(topic ? {...exam, fixedPracticeMinutes: false} : exam, mode, params.get('minutes'));
+    attempt = existing || createAttempt(exam, {mode, durationMinutes: minutes, shuffle: params.has('shuffle'), eraserEnabled: isEraserEnabled({}, eraserPreference)});
     attempt.topic = topic || null;
     save();
     history.replaceState(null, '', 'quiz.html?attempt=' + encodeURIComponent(attempt.attemptId));
   }
+  try {
+    studyManifest = await (await fetch(new URL('../data/manifest.json', import.meta.url))).json();
+  } catch {
+    // Without the manifest the questions still work; only the note links are missing.
+  }
   attempt.selfGrades ??= {};
   attempt.overrides ??= {};
   attempt.revealed ??= [];
+  attempt.eliminatedChoices ??= {};
   render();
   setInterval(tick, 1000);
 }

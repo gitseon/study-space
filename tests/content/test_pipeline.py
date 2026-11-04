@@ -118,7 +118,8 @@ class PipelineTests(unittest.TestCase):
             folder=ROOT/"source"/info["dir"]
             self.assertTrue((folder/info["scope"]).exists(),track)
             self.assertTrue(list(folder.glob("*/exam.json")),track)
-        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp"})
+        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp","backend","sqld"})
+        self.assertEqual(m.TRACKS["backend"]["label"],"백엔드 · DB")
 
     def test_ai_scope_defines_both_exam_kinds_and_every_tag_group(self):
         m=self.load("build_data")
@@ -137,6 +138,38 @@ class PipelineTests(unittest.TestCase):
         by_subject={name:sum(scope["groups"][t]["mc"] for t in topics) for name,topics in scope["subjects"].items()}
         self.assertEqual(sorted(by_subject.values()),[10,10,30])
         self.assertEqual(sorted(t for topics in scope["subjects"].values() for t in topics),sorted(scope["topics"]))
+
+    def test_backend_scope_is_one_integrated_subject_exam_with_area_split(self):
+        m=self.load("build_data")
+        scope=m.load_scope(ROOT/"source","backend")
+        self.assertEqual(scope["composition"]["subject"],{"mc":21,"short":9,"essay":2,"code":0})
+        self.assertEqual(len(scope["topics"]),9)
+        self.assertEqual(set(scope["tags"]),set(scope["topics"]))
+        self.assertEqual(set(scope["groups"]),set(scope["topics"]))
+        for kind in ("mc","short"):
+            self.assertEqual(sum(g.get(kind,0) for g in scope["groups"].values()),scope["composition"]["subject"][kind])
+        self.assertEqual(scope["areaComposition"]["subject"],{
+            "backend":{"mc":9,"short":4,"essay":1,"code":0},
+            "db":{"mc":10,"short":4,"essay":1,"code":0},
+            "integration":{"mc":2,"short":1,"essay":0,"code":0}})
+        self.assertEqual(sorted(t for ts in scope["topicAreas"].values() for t in ts),sorted(scope["topics"]))
+        for area,counts in scope["areaComposition"]["subject"].items():
+            for kind in ("mc","short"):
+                self.assertEqual(sum(scope["groups"][t][kind] for t in scope["topicAreas"][area]),counts[kind],(area,kind))
+        self.assertEqual(scope["topicAreas"]["integration"],["jdbc"])
+
+    def test_area_blueprint_flags_a_wrong_area_total(self):
+        m=self.load("validate_questions")
+        scope={"topics":{"a":"x","b":"y"},"tags":{"a":["t"],"b":["t"]},"groups":{"a":{"mc":1},"b":{"mc":1}},
+               "composition":{"subject":{"mc":2,"short":0,"essay":0,"code":0}},
+               "topicAreas":{"one":["a"],"two":["b"]},
+               "areaComposition":{"subject":{"one":{"mc":1,"short":0,"essay":0,"code":0},"two":{"mc":1,"short":0,"essay":0,"code":0}}}}
+        def q(i,group): return {"id":f"x-q{i}","title":"t","stem":"s","solution":"s","revision":1,"difficulty":1,"sourceRefs":["r"],
+                "topics":[group],"group":group,"tags":["t"],"type":"mc","choices":[{"id":c,"text":c} for c in "abcd"],"choiceExplanations":{}}
+        exam=lambda groups:{"id":"x","kind":"subject","track":"backend","counts":{"mc":2,"short":0,"essay":0,"code":0},"questions":[q(i,g) for i,g in enumerate(groups)]}
+        codes=lambda e:[i["code"] for i in m.validate_bank([e],scope,{"backend":scope})]
+        self.assertNotIn("area-blueprint",codes(exam(["a","b"])))
+        self.assertIn("area-blueprint",codes(exam(["a","a"])))
 
     def test_practical_points_must_add_up(self):
         m=self.load("validate_questions")

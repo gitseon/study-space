@@ -1,0 +1,11 @@
+{
+  "id": "backend-03",
+  "revision": 1,
+  "kind": "subject",
+  "track": "backend",
+  "title": "백엔드 · DB 3회",
+  "subtitle": "웹과 SQL 연결하기",
+  "practiceMinutes": 60,
+  "fixedPracticeMinutes": true,
+  "sourceScopeVersion": 1
+}

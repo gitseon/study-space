@@ -1,6 +1,8 @@
 import {store} from './storage.js';
 import {escapeHtml as e, download, typeNames, gradingNames} from './render.js';
 import {summarize} from './grading.js';
+import {effectiveMinutes} from './practice-time.js';
+import {studyLinksFor} from './study-links.js';
 
 const root = document.querySelector('#app');
 const PREF_KEY = 'mock-exam:grading-mode';
@@ -96,17 +98,23 @@ function examCard(exam, attempts, preference) {
     .filter(([, n]) => n > 0)
     .map(([type, n]) => '<span>' + typeNames[type] + ' <b>' + n + '</b></span>')
     .join('');
-  const times = [[exam.practiceMinutes, exam.practiceMinutes + '분'], [30, '30분'], [90, '90분'], [0, '시간 제한 없음']]
+  // Shortest limit first and "no limit" (0) last. The exam's own length stays the preselected choice.
+  // An exam may list its own choices in timeOptions (minutes, 0 for no limit); the other exams keep the common list.
+  const choices = exam.timeOptions || [exam.practiceMinutes, 30, 90, 0];
+  const times = [...new Set(choices)].map((value) => [value, value ? value + '분' : '시간 제한 없음'])
     .filter(([value], i, list) => list.findIndex(([v]) => v === value) === i)
-    .map(([value, label]) => '<option value="' + value + '">' + label + '</option>')
+    .sort(([a], [b]) => (a || Infinity) - (b || Infinity))
+    .map(([value, label]) => '<option value="' + value + '"' + (value === exam.practiceMinutes ? ' selected' : '') + '>' + label + '</option>')
     .join('');
   const modes = Object.entries(gradingNames)
     .map(([value, label]) => '<option value="' + value + '"' + (value === preference ? ' selected' : '') + '>' + label + '</option>')
     .join('');
   return '<article class="exam-card ' + e(exam.kind) + '">'
-    + '<div class="card-top"><span class="pill">' + e(kindNames[exam.kind] || exam.kind) + '</span><span class="card-number">' + String(index).padStart(2, '0') + '</span></div>'
+    + '<div class="card-top"><span class="pill">' + e(kindNames[exam.kind] || exam.kind) + '</span>' + (exam.draft ? '<span class="pill draft">초안</span>' : '') + '<span class="card-number">' + String(index).padStart(2, '0') + '</span></div>'
     + '<h3>' + e(exam.subtitle) + '</h3>'
     + '<p class="card-description">' + e(kindDescriptions[exam.kind] || '') + '</p>'
+    + (exam.examNotes?.length ? '<ul class="exam-notes">' + exam.examNotes.map((n) => '<li>' + e(n) + '</li>').join('') + '</ul>' : '')
+    + (exam.draft ? '<p class="draft-note">정답을 해당 DBMS에서 아직 검증하지 못한 초안입니다. 정답과 해설이 틀릴 수 있습니다.</p>' : '')
     + '<div class="card-types">' + types + '</div>'
     + '<label class="card-setting">채점 방식 <select id="mode-' + e(exam.id) + '">' + modes + '</select></label>'
     + '<label class="card-setting">제한 시간 <select id="time-' + e(exam.id) + '">' + times + '</select></label>'
@@ -171,9 +179,17 @@ function practiceSection() {
     .map(([id, label]) => '<a href="pages/quiz.html?exam=' + e(first.id) + '&mode=study&topic=' + e(id) + '">' + e(label)
       + (counts[id] ? ' <small>' + counts[id] + '</small>' : '') + '</a>')
     .join('');
+  // Topics that have concept-note sections get a second row, so reading can come before the questions.
+  const study = Object.entries(trackTopics())
+    .map(([id, label]) => [label, studyLinksFor(manifest, track, id)])
+    .filter(([, list]) => list.length)
+    .map(([label, list]) => '<li><span>' + e(label) + '</span>'
+      + list.map((l) => '<a href="' + e(l.href) + '" title="' + e(l.label) + '">' + e(l.short) + ' <small aria-hidden="true">↗</small></a>').join('') + '</li>')
+    .join('');
   return '<section class="practice-strip">'
     + '<div><span class="eyebrow">필요한 부분부터</span><h2>주제별로 복습하기</h2><p>객관식 회차에서 같은 주제를 모아 한 문제씩 정답을 확인하며 복습.</p></div>'
     + '<div class="topic-links">' + links + '</div>'
+    + (study ? '<details class="topic-study"><summary>주제별 개념 노트 읽기</summary><ul>' + study + '</ul></details>' : '')
     + '</section>';
 }
 
@@ -253,10 +269,27 @@ function render() {
     b.onclick = () => {
       const id = b.dataset.start;
       const mode = document.getElementById('mode-' + id).value;
-      const minutes = document.getElementById('time-' + id).value;
+      const minutes = effectiveMinutes(manifest.exams.find((x) => x.id === id), mode, document.getElementById('time-' + id).value);
       writePreference(mode);
       location.href = 'pages/quiz.html?exam=' + encodeURIComponent(id) + '&mode=' + mode + '&minutes=' + minutes + '&new=1';
     };
+  });
+  // A fixed-length exam shows its real limit and locks the time choice while the grading mode is exam.
+  manifest.exams.filter((x) => x.fixedPracticeMinutes).forEach((x) => {
+    const mode = document.getElementById('mode-' + x.id);
+    const time = document.getElementById('time-' + x.id);
+    if (!mode || !time) {
+      return;
+    }
+    const sync = () => {
+      const fixed = mode.value === 'exam';
+      time.disabled = fixed;
+      if (fixed) {
+        time.value = String(x.practiceMinutes);
+      }
+    };
+    mode.addEventListener('change', sync);
+    sync();
   });
   document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
   document.querySelector('#import').onchange = (ev) => importBackup(ev, attempts);

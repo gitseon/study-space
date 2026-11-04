@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "track": "backend",
+  "topics": {
+    "web-servlet": "WAS와 Servlet 기초",
+    "mvc-filter": "Front Controller, Filter와 동시성",
+    "jsp-el": "JSP, EL, JSTL과 페이지 이동",
+    "state-session": "Cookie와 Session",
+    "sql-select": "SELECT, NULL, 함수와 집계",
+    "sql-join-subquery": "조인, 집합 연산과 서브쿼리",
+    "db-schema": "DDL, DML, 제약조건과 모델링",
+    "db-tx-index": "트랜잭션과 인덱스",
+    "jdbc": "JDBC와 DAO"
+  },
+  "tags": {
+    "web-servlet": [
+      "servlet-lifecycle",
+      "url-mapping",
+      "request-encoding"
+    ],
+    "mvc-filter": [
+      "shared-field-thread",
+      "filter-chain",
+      "front-controller",
+      "error-page-mapping"
+    ],
+    "jsp-el": [
+      "jsp-translation",
+      "scope-lookup",
+      "jstl-tags",
+      "forward-redirect-prg"
+    ],
+    "state-session": [
+      "session-auth",
+      "cookie-remember-id",
+      "session-lifetime"
+    ],
+    "sql-select": [
+      "null-three-valued",
+      "where-vs-having",
+      "order-limit-concat"
+    ],
+    "sql-join-subquery": [
+      "join-types",
+      "set-operations",
+      "subquery-forms",
+      "view-dml"
+    ],
+    "db-schema": [
+      "constraints",
+      "delete-truncate-drop",
+      "normalization",
+      "modeling-keys"
+    ],
+    "db-tx-index": [
+      "transaction-savepoint",
+      "isolation-level",
+      "index-structure"
+    ],
+    "jdbc": [
+      "prepared-statement",
+      "resultset-resource",
+      "tx-boundary"
+    ]
+  },
+  "groups": {
+    "web-servlet": {
+      "mc": 3,
+      "short": 1
+    },
+    "mvc-filter": {
+      "mc": 2,
+      "short": 1
+    },
+    "jsp-el": {
+      "mc": 2,
+      "short": 1
+    },
+    "state-session": {
+      "mc": 2,
+      "short": 1
+    },
+    "sql-select": {
+      "mc": 3,
+      "short": 1
+    },
+    "sql-join-subquery": {
+      "mc": 3,
+      "short": 1
+    },
+    "db-schema": {
+      "mc": 2,
+      "short": 1
+    },
+    "db-tx-index": {
+      "mc": 2,
+      "short": 1
+    },
+    "jdbc": {
+      "mc": 2,
+      "short": 1
+    }
+  },
+  "composition": {
+    "subject": {
+      "mc": 21,
+      "short": 9,
+      "essay": 2,
+      "code": 0
+    }
+  },
+  "topicAreas": {
+    "backend": [
+      "web-servlet",
+      "mvc-filter",
+      "jsp-el",
+      "state-session"
+    ],
+    "db": [
+      "sql-select",
+      "sql-join-subquery",
+      "db-schema",
+      "db-tx-index"
+    ],
+    "integration": [
+      "jdbc"
+    ]
+  },
+  "areaComposition": {
+    "subject": {
+      "backend": {
+        "mc": 9,
+        "short": 4,
+        "essay": 1,
+        "code": 0
+      },
+      "db": {
+        "mc": 10,
+        "short": 4,
+        "essay": 1,
+        "code": 0
+      },
+      "integration": {
+        "mc": 2,
+        "short": 1,
+        "essay": 0,
+        "code": 0
+      }
+    }
+  },
+  "sources": [
+    "BE-ASSESS-01",
+    "BE-SCOPE-01",
+    "BE-CLASS-01",
+    "BE-LAB-01~10",
+    "DB-L01~09",
+    "DB-D01~07"
+  ],
+  "studyLinks": {
+    "web-servlet": [
+      {
+        "noteId": "backend-concepts",
+        "section": "Part 2. Servlet 기초"
+      }
+    ],
+    "mvc-filter": [
+      {
+        "noteId": "backend-concepts",
+        "section": "Part 3. Front Controller, Filter, Listener, Multi-Thread"
+      }
+    ],
+    "jsp-el": [
+      {
+        "noteId": "backend-concepts",
+        "section": "Part 4. JSP와 MVC 패턴"
+      },
+      {
+        "noteId": "backend-concepts",
+        "section": "Part 5. EL, JSTL, PRG"
+      }
+    ],
+    "state-session": [
+      {
+        "noteId": "backend-concepts",
+        "section": "Part 6. Cookie와 Session"
+      }
+    ],
+    "sql-select": [
+      {
+        "noteId": "db-concepts",
+        "section": "Part 2. SELECT, 조건, NULL과 정렬"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 3. 함수, 집계, GROUP BY와 HAVING"
+      }
+    ],
+    "sql-join-subquery": [
+      {
+        "noteId": "db-concepts",
+        "section": "Part 4. JOIN과 집합 연산"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 5. 서브쿼리와 VIEW"
+      }
+    ],
+    "db-schema": [
+      {
+        "noteId": "db-concepts",
+        "section": "Part 6. DDL, 자료형, 제약조건과 DML"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 9. 모델링, 키, 관계와 정규화"
+      }
+    ],
+    "db-tx-index": [
+      {
+        "noteId": "db-concepts",
+        "section": "Part 7. 트랜잭션, 격리 수준, MVCC와 잠금"
+      },
+      {
+        "noteId": "db-concepts",
+        "section": "Part 8. 인덱스와 실행 계획"
+      }
+    ],
+    "jdbc": [
+      {
+        "noteId": "db-concepts",
+        "section": "Part 10. JDBC와 백엔드 연결"
+      }
+    ]
+  }
+}

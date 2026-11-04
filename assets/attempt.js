@@ -1,6 +1,6 @@
 import {planChoiceOrder} from './choice-order.js';
 
-export function createAttempt(exam, {mode = 'exam', now = Date.now(), durationMinutes = 0, shuffle = false} = {}) {
+export function createAttempt(exam, {mode = 'exam', now = Date.now(), durationMinutes = 0, shuffle = false, eraserEnabled = true} = {}) {
   const plan = shuffle ? planChoiceOrder(exam.questions, now) : null;
   return {
     attemptId: crypto.randomUUID(),
@@ -15,6 +15,8 @@ export function createAttempt(exam, {mode = 'exam', now = Date.now(), durationMi
     selfGrades: {},
     overrides: {},
     revealed: [],
+    eraserEnabled,
+    eliminatedChoices: {},
     submittedAt: null,
     currentIndex: 0,
     snapshot: structuredClone(exam),

@@ -13,7 +13,8 @@
 | 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2) |
 | AI 역량검사 | 필기 검정 1회(객관식 100)와 실기 검정 1회(코드형 8문항, 100점) |
 | ADsP | 객관식 50문항(1과목 10, 2과목 10, 3과목 30) 모의평가 3회 |
-| 백엔드 | 개념 요약 노트(Servlet, JSP, EL과 JSTL, Cookie와 Session, 관통 프로젝트)만 있음. 시험은 추가 예정 |
+| SQLD | 개념 요약 노트(Oracle과 SQL Server 기준)와 객관식 50문항(1과목 10, 2과목 40) 모의고사 1회. 정답을 Oracle과 SQL Server에서 아직 확인하지 못한 초안이며 카드와 풀이 화면에 초안으로 표시됨 |
+| 백엔드 · DB | 개념 노트 2개(Backend, DB)와 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2, 실전 60분) |
 | SW역량테스트 | A형 대비 11문제의 발상과 Java 코드를 예측 우선순위 순서로 정리한 노트(시험 회차 없음) |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
@@ -43,6 +44,7 @@ python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
 python scripts/verify_ai_answers.py
 python scripts/verify_adsp_answers.py
+python scripts/verify_backend_answers.py
 python -m unittest discover -s tests/content
 python -m unittest discover -s tests/sw_test
 npm test
@@ -58,7 +60,7 @@ SITE_DIR=dist npm run test:e2e
 
 문제를 추가하거나 고치기 전에 [AGENTS.md](AGENTS.md)와 [QUESTION_AUTHORING.md](docs/QUESTION_AUTHORING.md)를 읽습니다. 편향 기준의 단일 원본은 QUESTION_AUTHORING.md입니다.
 
-- 원고는 `source/<트랙 폴더>/<회차 ID>/`의 `exam.json`, `questions.md`, `solutions.md`입니다. 트랙 폴더는 자료구조와 알고리즘이 `dsAlgo`, 프론트엔드가 `frontend`, AI 역량검사가 `AI역량검사`, ADsP가 `adsp`입니다.
+- 원고는 `source/<트랙 폴더>/<회차 ID>/`의 `exam.json`, `questions.md`, `solutions.md`입니다. 트랙 폴더는 자료구조와 알고리즘이 `dsAlgo`, 프론트엔드가 `frontend`, AI 역량검사가 `AI역량검사`, ADsP가 `adsp`, 백엔드 · DB가 `backend`, SQLD가 `sqld`입니다.
 - `data/`는 생성물입니다. 직접 고치지 않고 원고를 수정한 뒤 `python scripts/build_data.py`로 다시 만듭니다.
 - 문항을 고치면 해당 문항 메타데이터의 `revision`을 올립니다. 기존 응시 기록은 당시 스냅샷으로 복습되며 새 답으로 다시 해석되지 않습니다.
 - 정답과 해설은 `choiceId`로 연결합니다. 선택지 순서를 바꿔도 해설에 번호가 남지 않게 합니다.
@@ -70,7 +72,7 @@ SITE_DIR=dist npm run test:e2e
 
 ### 새 트랙과 회차 추가
 
-1. 트랙의 범위 파일을 확인합니다. `source/dsAlgo/scope.json`, `source/frontend/scope-frontend.json`, `source/AI역량검사/scope-ai.json`, `source/adsp/scope-adsp.json`이 있습니다. 새 트랙은 `scripts/build_data.py`의 `TRACKS`에 폴더와 범위 파일을 등록합니다.
+1. 트랙의 범위 파일을 확인합니다. `source/dsAlgo/scope.json`, `source/frontend/scope-frontend.json`, `source/AI역량검사/scope-ai.json`, `source/adsp/scope-adsp.json`, `source/backend/scope-backend.json`, `source/sqld/scope-sqld.json`이 있습니다. 새 트랙은 `scripts/build_data.py`의 `TRACKS`에 폴더와 범위 파일을 등록합니다.
 2. 기존 회차 폴더를 참고해 `source/dsAlgo/subject-04/`나 `source/frontend/frontend-04/` 같은 새 폴더를 만듭니다. 프론트엔드 회차는 `exam.json`에 `"track": "frontend"`를 씁니다. 숫자만 바꾼 문제로 회차를 채우지 않습니다.
 3. 위의 검증 명령을 실행하고 PR 템플릿의 콘텐츠 기록 항목을 채웁니다.
 
@@ -80,9 +82,13 @@ SITE_DIR=dist npm run test:e2e
 
 복습 질문 아래에 답을 접어 두려면 질문 줄 바로 아래에 세 칸 들여쓴 `   답: 내용` 줄을 씁니다. 렌더러가 `답 보기` 토글로 바꾸고 기본은 닫힌 상태입니다. 답 줄이 없는 목록은 그대로 표시됩니다.
 
-`Backend 개념` 카드는 백엔드 개념 요약 노트를 엽니다. 원고는 `source/backend/backend개념 요약노트.md`이고 시험 회차가 아직 없어 트랙 버튼 없이 홈의 카드로만 열립니다. 시험을 추가하면 다른 트랙처럼 트랙 안의 노트 버튼으로 바뀝니다. 강의 원본 PDF는 `.gitignore`로 제외합니다.
+`Backend 개념`과 `DB 개념` 카드는 백엔드 · DB 트랙의 개념 요약 노트를 엽니다. 원고는 `source/backend/backend개념 요약노트.md`와 `source/DB/DB개념 요약노트.md`이고 시험 회차가 아직 없어 트랙 버튼 없이 홈의 카드로만 열립니다. 시험을 추가하면 다른 트랙처럼 트랙 안의 노트 버튼으로 바뀝니다. `source/backend/coverage-backend.json`은 범위표의 각 행을 노트의 절과 문항에 연결하며 `validate_questions.py`가 존재하는 절과 문항만 가리키는지 검사합니다. 강의 원본 PDF와 참고 자료는 `.gitignore`로 제외합니다.
+
+`SQLD 개념` 카드는 `source/sqld/SQLD개념 요약노트.md`를 엽니다. 범위 파일의 `studyLinks`는 주제 그룹을 개념 노트의 `##` 제목에 연결합니다. 연결된 제목이 없거나 중복되면 `validate_questions.py`가 오류로 잡고, 홈의 `주제별 개념 노트 읽기`와 학습 모드·복습 화면의 `관련 개념 노트`가 이 연결로 `concepts.html?note=...&section=...`을 엽니다. 시간제한이 있는 시험 풀이 중에는 링크를 보이지 않습니다.
 
 `AI 개념` 버튼은 AI 역량검사의 개념 요약 노트를 엽니다. 원고는 `source/AI역량검사/AI역량 개념 요약노트.md`입니다. AI 역량검사의 강의 원본(PDF, 슬라이드 이미지, 전사본)은 용량과 저작권 때문에 저장소에서 제외하며 `.gitignore`에 들어 있습니다.
+
+`verify_backend_answers.py`는 백엔드 · DB 문항의 SQL을 MySQL 8.4에서, JDBC 코드를 Java와 Connector/J 8.4.0으로 실제 실행해 정답과 비교하고, 쿠키 경로와 HttpOnly처럼 브라우저가 판단하는 동작은 Chromium으로 확인합니다. 접속 정보는 환경 변수 `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`나 git에서 제외된 `private/backend-db/mysql-verify.env`에서 읽으며 저장소에는 넣지 않습니다. 검증 계정은 전용 스키마만 쓸 수 있는 계정을 만들어 씁니다. 실행할 수 없는 문항은 `source/backend/backend-reviews.json`의 재풀이 기록(작성자 검토는 `independent: false`)으로 확인하고, 문항 revision이 바뀌면 기록이 만료됩니다. 접속 정보가 없거나 서버에 닿지 않으면 검증을 건너뛰지 않고 실패합니다. 결과는 `reports/backend-verification.json`에 서버 버전과 `sql_mode` 같은 환경 정보와 함께 남습니다. 이 검증은 MySQL이 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다.
 
 `verify_adsp_answers.py`는 ADsP 계산 문항의 코드를 표준 라이브러리로 실행해 정답 선지와 비교하고, 계산하지 않는 문항은 `source/adsp/adsp-reviews.json`의 재풀이 기록으로 확인합니다. 결과는 `reports/adsp-verification.json`에 남습니다.
 

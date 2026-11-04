@@ -1,5 +1,6 @@
 import {escapeHtml as e} from './render.js';
 import {renderNote} from './note-render.js';
+import {findSectionId} from './study-links.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -22,11 +23,14 @@ async function start() {
   if (!res.ok) {
     throw Error('개념 노트를 불러오지 못했습니다');
   }
-  const {title, toc, html} = renderNote(await res.text());
+  const {title, toc, html} = renderNote(await res.text(), {}, {window: true});
   document.title = (note.title || title) + ' | STUDY SPACE';
   root.innerHTML = '<div class="note-layout">' + tocHtml(toc) + '<article class="note">' + html + '</article></div>';
-  if (location.hash) {
-    document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  // A study link names a section by its heading; an explicit #hash still wins.
+  const sectionId = findSectionId(toc, params.get('section'));
+  const target = location.hash ? location.hash.slice(1) : sectionId;
+  if (target) {
+    document.getElementById(target)?.scrollIntoView();
   }
 }
 

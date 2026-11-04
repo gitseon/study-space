@@ -1,5 +1,5 @@
 import {diagram} from './diagram.js';
-import {highlight, languageNames} from './highlight.js';
+import {codeWindow} from './highlight.js';
 
 export const escapeHtml = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -18,7 +18,8 @@ export function inline(text) {
     .split(/(`[^`]+`|\$[^$]+\$)/g)
     .map((part) => {
       if (part.startsWith('`') && part.endsWith('`') && part.length > 1) {
-        return '<code>' + escapeHtml(part.slice(1, -1)) + '</code>';
+        // Short code stays in one piece; long code may wrap so a phone screen never scrolls sideways.
+        return '<code' + (part.length > 30 ? ' class="long"' : '') + '>' + escapeHtml(part.slice(1, -1)) + '</code>';
       }
       if (part.startsWith('$') && part.endsWith('$') && part.length > 1) {
         return renderMath(part.slice(1, -1));
@@ -42,12 +43,7 @@ export function markdown(text) {
             // An invalid diagram still shows its text form; the build validator reports it.
           }
         }
-        const code = body.trimEnd();
-        if (languageNames[lang]) {
-          return '<figure class="snippet" data-lang="' + lang + '"><figcaption>' + languageNames[lang] + '</figcaption>'
-            + '<pre tabindex="0"><code>' + highlight(lang, code) + '</code></pre></figure>';
-        }
-        return '<pre tabindex="0"><code>' + escapeHtml(code) + '</code></pre>';
+        return codeWindow(lang, body.trimEnd());
       }
       return part
         .trim()
@@ -56,6 +52,16 @@ export function markdown(text) {
         .map((paragraph) => '<p>' + inline(paragraph).replace(/\n/g, ' ') + '</p>')
         .join('');
     })
+    .join('');
+}
+
+// Solutions are written as one paragraph with labels such as "정답 근거:" and "풀이:". Each label starts its own bold line.
+const SOLUTION_LABELS = '정답 근거|흔한 실수|허용 표기|모범답안|풀이|근거|정답|접근|비교';
+export function solutionMarkdown(text) {
+  const label = new RegExp('(^|[.!?]\\s+)(' + SOLUTION_LABELS + '):\\s*', 'g');
+  return String(text || '')
+    .split(/(```[\s\S]*?```)/g)
+    .map((part) => (part.startsWith('```') ? part : part.replace(label, (_, lead, name) => (lead ? lead.trimEnd() + '\n\n' : '') + '**' + name + ':** ')))
     .join('');
 }
 
