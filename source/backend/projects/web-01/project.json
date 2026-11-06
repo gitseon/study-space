@@ -113,6 +113,12 @@
       "requiredInExport": true
     },
     {
+      "path": "src/main/webapp/WEB-INF/web.xml",
+      "language": "xml",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
       "path": "src/main/webapp/error/404.jsp",
       "language": "jsp",
       "editable": false,
@@ -157,12 +163,6 @@
     {
       "path": "src/main/webapp/login-form.jsp",
       "language": "jsp",
-      "editable": true,
-      "requiredInExport": true
-    },
-    {
-      "path": "src/main/webapp/WEB-INF/web.xml",
-      "language": "xml",
       "editable": true,
       "requiredInExport": true
     }

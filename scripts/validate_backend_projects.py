@@ -61,7 +61,7 @@ def list_files(folder: Path) -> list[str]:
 
 def content_hash(project_dir: Path) -> str:
     digest = hashlib.sha256()
-    for path in sorted(p for p in project_dir.rglob("*") if p.is_file()):
+    for path in sorted((p for p in project_dir.rglob("*") if p.is_file()), key=lambda p: p.relative_to(project_dir).as_posix()):
         rel = path.relative_to(project_dir).as_posix()
         if rel in HASH_EXCLUDED:
             continue

@@ -4,7 +4,7 @@
   "title": "도서 관리",
   "revision": 1,
   "track": "backend",
-  "hash": "661744dbf5246155",
+  "hash": "a04d6165927b197e",
   "database": "ssafy_book",
   "environment": {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
@@ -115,6 +115,12 @@
       "requiredInExport": true
     },
     {
+      "path": "src/main/webapp/WEB-INF/web.xml",
+      "language": "xml",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
       "path": "src/main/webapp/error/404.jsp",
       "language": "jsp",
       "editable": false,
@@ -159,12 +165,6 @@
     {
       "path": "src/main/webapp/login-form.jsp",
       "language": "jsp",
-      "editable": true,
-      "requiredInExport": true
-    },
-    {
-      "path": "src/main/webapp/WEB-INF/web.xml",
-      "language": "xml",
       "editable": true,
       "requiredInExport": true
     }

@@ -195,7 +195,7 @@ def _result_rows(checklist: list[dict]) -> str:
 
 def _master_files() -> list[Path]:
     base = MASTER / "files"
-    return sorted(p for p in base.rglob("*") if p.is_file())
+    return sorted((p for p in base.rglob("*") if p.is_file()), key=lambda p: p.relative_to(base).as_posix())
 
 
 def generate_project(pid: str, existing_review: dict | None = None) -> dict[str, str]:
