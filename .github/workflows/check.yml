@@ -34,6 +34,8 @@ jobs:
           python scripts/build_data.py
           git diff --exit-code -- data/
       - run: python scripts/validate_questions.py
+      - run: python scripts/author_backend_projects.py --check
+      - run: python scripts/validate_backend_projects.py
       - run: python scripts/audit_bias.py --strict --report reports/bias.json
       - run: python scripts/verify_code_answers.py --report reports/code-verification.json
       - run: node scripts/verify_frontend_answers.mjs --report reports/frontend-verification.json

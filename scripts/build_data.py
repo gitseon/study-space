@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 
+from build_backend_projects import ProjectError, build_projects
+
 ROOT = Path(__file__).resolve().parents[1]
 
 # Each track keeps its manuscripts, scope file and review records in its own folder under source/.
@@ -137,6 +139,11 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
         sw=build_sw_test(source_root)
         (output_root/"sw-test.json").write_text(json.dumps(sw,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
         manifest["swTest"]={"title":sw["title"],"file":"sw-test.json","count":len(sw["problems"])}
+    if (source_root/"backend"/"projects").is_dir():
+        try:
+            manifest["webProjects"]=build_projects(source_root,output_root)
+        except ProjectError as error:
+            raise ContentError(str(error)) from error
     (output_root/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     return exams
 

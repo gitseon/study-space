@@ -39,6 +39,8 @@ npm run serve
 ```text
 python scripts/build_data.py
 python scripts/validate_questions.py
+python scripts/author_backend_projects.py --check
+python scripts/validate_backend_projects.py
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
@@ -135,3 +137,14 @@ SITE_DIR=dist npm run test:e2e
 - 정기 실행: 매시 17분과 47분에 `main`의 최신 커밋이 배포된 커밋과 다르면 배포합니다. 같으면 검사 없이 끝납니다.
 
 이전 정상 버전으로 되돌릴 때는 문제 커밋을 `git revert`해 `main`에 push합니다. 급한 경우 Actions 탭에서 이전 정상 커밋의 `deploy` 실행을 골라 다시 실행할 수 있습니다.
+
+### 월말평가 Web 프로젝트
+
+`pages/project.html`은 백엔드 · DB 월말평가를 위한 Servlet, JSP, MySQL 프로젝트 구현 연습입니다. 홈에서 백엔드 · DB를 고르고 `월말평가` 탭을 누르면 열립니다. 코드는 브라우저 IndexedDB에만 저장하며 사이트는 코드를 실행하거나 점수를 매기지 않습니다.
+
+- 원고: `source/backend/projects/_master/`가 단일 원본입니다. `python scripts/author_backend_projects.py`가 도메인(`web-01` 캠핑 용품, `web-02` 도서)과 3단계 파일(`starter/`, `stages/`, `reference/`)을 만들고 `--check`가 최신 여부를 검사합니다. 생성된 폴더는 직접 고치지 않습니다.
+- 검증: `python scripts/validate_backend_projects.py`가 표식, 경로, 힌트와 체크리스트 연결, 검증 기록의 최신 여부를 검사합니다. `python scripts/build_data.py`는 `data/backend-projects.json`과 단계별 시작 ZIP을 만듭니다.
+- 실행 검증: 모범답안(`reference/`)은 `javac`와 Jasper 번역까지 확인했습니다. Tomcat과 MySQL에서 실행하는 절차는 프로젝트별 `verification.md`에 있고 결과는 `review.json`에 기록합니다.
+- 새 도메인 추가: `scripts/author_backend_projects.py`의 `DOMAINS`에 대치표를 더하고 필요하면 `_master/domains/<id>/files/`에 덮어쓸 파일(예: SQL)을 둡니다.
+- 구조 도식: `_master/structure.json`이 상자(클래스, 서블릿, JSP), 화살표(호출, forward, redirect), 기능별 경로, 뼈대 코드의 단일 원본입니다. 뼈대에 작성 대상의 본문을 넣으면 `validate_backend_projects.py`가 오류로 잡습니다.
+- ZIP 라이브러리: `assets/vendor/fflate`(fflate 0.8.3, MIT)를 `package.json`에 버전 고정해 사용합니다.

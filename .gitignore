@@ -28,3 +28,7 @@ source/DB/*SQLD*.md
 source/DB/sqld-*.md
 source/DB/images/
 source/backend/backendDB*
+
+# 월말평가 원본 프로젝트와 수업 제공 압축 파일(공개 금지)
+source/backend/backend-monthtest/
+source/WebTest_*.zip

@@ -1,0 +1,95 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {detailHtml, edgeGroups, featureForTab, flowMembers, languageOf, structureHtml} from '../../assets/project-structure.js';
+
+const structure = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-01/project.json', import.meta.url), 'utf8')).structure;
+const book = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-02/project.json', import.meta.url), 'utf8')).structure;
+
+test('the list flow reaches the browser, filters, controller, service, DAO, database and the list page', () => {
+  const {nodes, edges} = flowMembers(structure, 'list');
+  for (const id of ['browser', 'logging', 'session', 'gearctl', 'service', 'dao', 'db', 'list', 'header']) assert.ok(nodes.has(id), id);
+  assert.ok(!nodes.has('memberctl'));
+  assert.ok(edges.has('e-forward-list'));
+  assert.ok(!edges.has('e-logout'));
+});
+
+test('the overview contains every box and every arrow', () => {
+  const {nodes, edges} = flowMembers(structure, 'overview');
+  assert.equal(nodes.size, structure.nodes.length);
+  assert.equal(edges.size, structure.edges.length);
+});
+
+test('every flow only uses arrows and boxes that exist', () => {
+  for (const flowId of Object.keys(structure.flows)) {
+    const {nodes, edges} = flowMembers(structure, flowId);
+    assert.ok(edges.size > 0 && nodes.size > 1, flowId);
+  }
+});
+
+test('arrows that go down hang under their layer and the rest are collected as the way back', () => {
+  const groups = edgeGroups(structure);
+  assert.ok(groups.down.client.some((e) => e.id === 'e-request'));
+  assert.ok(groups.down.dao.some((e) => e.id === 'e-dao-db'));
+  const back = groups.back.map((e) => e.id);
+  for (const id of ['e-forward-list', 'e-redirect-list', 'e-error', 'e-include', 'e-logout']) assert.ok(back.includes(id), id);
+  assert.ok(!back.includes('e-request'));
+});
+
+test('flow tabs map to diagram flows and unknown tabs map to nothing', () => {
+  assert.equal(featureForTab(structure, '등록'), 'regist');
+  assert.equal(featureForTab(structure, '로그인과 로그아웃'), 'auth');
+  assert.equal(featureForTab(structure, '짝으로 기억할 것'), null);
+});
+
+test('the html lists every box once, dims boxes outside the chosen flow and marks the selection', () => {
+  const html = structureHtml(structure, {flow: 'filter', selected: {type: 'node', id: 'session'}});
+  for (const node of structure.nodes) assert.equal(html.split(`data-node="${node.id}"`).length - 1 >= 1, true, node.id);
+  assert.match(html, /data-node="list"[^>]*data-dim="true"/);
+  assert.match(html, /data-node="session"[^>]*data-dim="false"[^>]*aria-pressed="true"/);
+  assert.match(html, /SessionFilter/);
+});
+
+test('node details show the role, the values passed and a skeleton without method bodies', () => {
+  const html = detailHtml(structure, {type: 'node', id: 'gearctl'}, {canOpen: true, targetTitles: {'ctrl-list': '목록 조회 처리'}});
+  assert.match(html, /GearController/);
+  assert.match(html, /받는 값/);
+  assert.match(html, /보내는 값/);
+  assert.match(html, /목록 조회 처리/);
+  assert.match(html, /data-open="src\/main\/java\/com\/ssafy\/sample\/controller\/GearController\.java"/);
+  assert.match(html, /작성 대상/);
+  assert.doesNotMatch(html, /service\.selectAll/);
+  assert.doesNotMatch(html, /request\.setAttribute/);
+  assert.doesNotMatch(detailHtml(structure, {type: 'node', id: 'gearctl'}), /data-open/);
+});
+
+test('provided files are described as not to be edited', () => {
+  assert.match(detailHtml(structure, {type: 'node', id: 'dbutil'}), /제공 파일입니다/);
+});
+
+test('arrow details explain the data and link to both ends', () => {
+  const html = detailHtml(structure, {type: 'edge', id: 'e-redirect-list'});
+  assert.match(html, /redirect/);
+  assert.match(html, /새로고침해도 다시 등록되지 않습니다/);
+  assert.match(html, /data-node="gearctl"/);
+  assert.match(html, /data-node="list"/);
+  assert.match(detailHtml(structure, null), /눌러/);
+});
+
+test('text from the data is escaped', () => {
+  const evil = structuredClone(structure);
+  evil.nodes[0].label = '<img src=x onerror=alert(1)>';
+  evil.nodes[0].skeleton = ['<script>alert(1)</script>'];
+  const html = structureHtml(evil, {selected: {type: 'node', id: evil.nodes[0].id}});
+  assert.doesNotMatch(html, /<img src=x/);
+  assert.doesNotMatch(html, /<script>alert/);
+});
+
+test('skeleton languages follow the file type and the book project uses its own names', () => {
+  assert.equal(languageOf({path: 'a/B.java'}), 'java');
+  assert.equal(languageOf({path: 'a/b.jsp'}), 'jsp');
+  assert.equal(languageOf({path: null}), 'text');
+  const names = book.nodes.map((n) => n.label).join(' ');
+  assert.match(names, /BookController/);
+  assert.doesNotMatch(JSON.stringify(book), /Gear|gear|용품/);
+});

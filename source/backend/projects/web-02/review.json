@@ -1,0 +1,104 @@
+{
+  "projectId": "web-02",
+  "revision": 1,
+  "environmentTarget": {
+    "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
+    "tomcat": "Apache tomcat-11.0.27",
+    "dynamicWebModule": "6.0",
+    "mysql": "8.4.11",
+    "compileRelease": 21
+  },
+  "referenceHash": "fe462408a3337bf6e82876fc437dcd946f313321ae69e9c7ea9ecc53dd19a5a6",
+  "referenceFiles": {
+    "pom.xml": "5334faa90ac90e27106e8ac55a4151243470d94003be42753929e3ce3e6c729f",
+    "src/main/java/com/ssafy/sample/controller/BookController.java": "b0411c54367703bd8999570d498f4e9ab1159e0860f805cebf4bd1dfa7a2ab4d",
+    "src/main/java/com/ssafy/sample/controller/ControllerHelper.java": "9c85b1e2dc3d4e3d08ee1b971de428926caca00280cb09d1bf9aeefffc01833e",
+    "src/main/java/com/ssafy/sample/controller/MemberController.java": "b2a3588aefa58dd529fb5bbdbb3864986f98e5fed4673b2ee6eb95cfa965f274",
+    "src/main/java/com/ssafy/sample/filter/LoggingFilter.java": "7d78c7ece92956852fec25d12f740151003492fc48ca99d45a5ed7a7191bf6c4",
+    "src/main/java/com/ssafy/sample/filter/SessionFilter.java": "5833aac052eb683c42293a3b2279eb3e56686903853a153ed5f3317ff8bb915d",
+    "src/main/java/com/ssafy/sample/model/dao/BookDao.java": "3044e3a57c37014639053e7382c2adefc46c8335763742b76834e63a256e9654",
+    "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java": "0434224d68f3cde3840d70d07e242e5d7d4275d09b3a1f648a315862db98f14e",
+    "src/main/java/com/ssafy/sample/model/dto/Book.java": "97c6f83df24019fa03fffa9167562b347f542be0fc0ea638ea3492c053ce5319",
+    "src/main/java/com/ssafy/sample/model/dto/Member.java": "4faf484d85d1fdd0c846947e9d593495483a64676dc0848a0c09d001a3dda93c",
+    "src/main/java/com/ssafy/sample/model/service/BookService.java": "1997dc2650180762a7d1ae7d023ed0ee2bf5c2f70265321aa5d1bb6756880f4c",
+    "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java": "c417d47aba2832558e9b5620740ced82bd82ef387d835c383b3536725c8e5911",
+    "src/main/java/com/ssafy/sample/model/service/DuplicateCodeException.java": "1d4a420ed8df6d9de155c65f6c7e694e5891f016ce557fc47c56ae70a413d790",
+    "src/main/java/com/ssafy/sample/util/DBUtil.java": "b2d1bdafdf79b795a25af3a2dbb85b34e15d64c82825c764adb4fccae0754e18",
+    "src/main/resources/ssafy_book.sql": "ecc83be1ef94efee4c4848050ecabc77d7195886601363b35055779de69fa4f4",
+    "src/main/webapp/WEB-INF/web.xml": "7bfca9d0af47bc5b7d404c0c551d37f9417965adbe16c8f128a02f76fba751ee",
+    "src/main/webapp/book/detail.jsp": "e642aa81d48a8440a96b011d7dc0df2962fd5c0230e863520e7d07279bc9c562",
+    "src/main/webapp/book/list.jsp": "69ca72aa5e069deaf35acdff00fbd7880f90cb3009dd1fe2a77310b30be8ae8b",
+    "src/main/webapp/book/regist.jsp": "053a7b01ddf1b6917b1ac74fa6e7162140b763e4b8d74554c27a3c454bf254b1",
+    "src/main/webapp/error/404.jsp": "e8cb9379fff8b03f078726e7f5555ce0cde0dbd672dc28a13cea98b98238e92e",
+    "src/main/webapp/error/500.jsp": "88a206e3c3a3d0831bdfaf357700a34de76636bd5fbe04517c2ad2a5b98ca1d0",
+    "src/main/webapp/header.jsp": "4cd033aa0dd502f5055f06d559309ef5ebe8d9a5c6ba624733142e06d7598863",
+    "src/main/webapp/index.jsp": "252e1f3efbffa0961810d80fb04d4034545a1155dd4d121728cc6bc9f4eaaa7f",
+    "src/main/webapp/login-form.jsp": "c482a90931afd8f2bd6d79e047be3d7e5a1e5f561acba38afea12c77c9eac0d4"
+  },
+  "verification": {
+    "javacCompile": {
+      "status": "통과",
+      "note": "reference 전체 Java 13개 클래스 컴파일, 경고는 serial 2건만. stage 2 시작 코드도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-06, Windows 11"
+    },
+    "jspTranslate": {
+      "status": "통과",
+      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-06, Windows 11"
+    },
+    "runtime": {
+      "auth-cookie": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-filter": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-login": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-logout": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-create": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-delete": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-detail": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-invalid": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-list": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-prg": {
+        "status": "미검증",
+        "note": ""
+      },
+      "error-pages": {
+        "status": "미검증",
+        "note": ""
+      },
+      "jsp-render": {
+        "status": "미검증",
+        "note": ""
+      },
+      "run-build": {
+        "status": "미검증",
+        "note": ""
+      }
+    },
+    "verifiedReferenceHash": "fe462408a3337bf6e82876fc437dcd946f313321ae69e9c7ea9ecc53dd19a5a6",
+    "reviewer": null
+  }
+}

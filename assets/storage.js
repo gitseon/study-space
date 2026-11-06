@@ -19,6 +19,7 @@ export function createStore(storage){
     listAttempts(){return structuredClone(memory.attempts).sort((a,b)=>b.startedAt-a.startedAt);},
     exportProgress(){return {...structuredClone(memory),exportedAt:new Date().toISOString()};},
     importProgress(value,replace=false){if(!validateImport(value).valid)return {saved:false,reason:'잘못된 백업 파일입니다'};const map=new Map(memory.attempts.map(a=>[a.attemptId,a]));for(const a of value.attempts)if(replace||!map.has(a.attemptId))map.set(a.attemptId,withMarks(a));memory.attempts=[...map.values()];memory.marks=replace?{...memory.marks,...value.marks}:{...value.marks,...memory.marks};return persist();},
+    restoreSnapshot(value){if(!validateImport(value).valid)return {saved:false,reason:'잘못된 기록입니다'};memory={app:APP,version:1,attempts:value.attempts.map(a=>withMarks(structuredClone(a))),marks:structuredClone(value.marks)};return persist();},
     toggleMark(id){if(memory.marks[id])delete memory.marks[id];else memory.marks[id]=true;return persist();},
     isMarked(id){return !!memory.marks[id];}
   };

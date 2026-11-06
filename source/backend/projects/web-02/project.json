@@ -1,0 +1,1267 @@
+{
+  "id": "web-02",
+  "revision": 1,
+  "track": "backend",
+  "title": "도서 관리",
+  "durationOptions": [
+    90,
+    120,
+    0
+  ],
+  "defaultMinutes": 120,
+  "sourceRefs": [
+    "BE-MONTH-START-01",
+    "BE-MONTH-WORK-01"
+  ],
+  "environment": {
+    "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
+    "tomcat": "Apache tomcat-11.0.27",
+    "dynamicWebModule": "6.0",
+    "mysql": "8.4.11",
+    "compileRelease": 21
+  },
+  "database": "ssafy_book",
+  "files": [
+    {
+      "path": "pom.xml",
+      "language": "xml",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/controller/ControllerHelper.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/filter/LoggingFilter.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDao.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/dto/Book.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/dto/Member.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/service/DuplicateCodeException.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/service/BookService.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/ssafy/sample/util/DBUtil.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/ssafy_book.sql",
+      "language": "sql",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/web.xml",
+      "language": "xml",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/error/404.jsp",
+      "language": "jsp",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/error/500.jsp",
+      "language": "jsp",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/book/detail.jsp",
+      "language": "jsp",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/book/list.jsp",
+      "language": "jsp",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/book/regist.jsp",
+      "language": "jsp",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/header.jsp",
+      "language": "jsp",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/index.jsp",
+      "language": "jsp",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/webapp/login-form.jsp",
+      "language": "jsp",
+      "editable": true,
+      "requiredInExport": true
+    }
+  ],
+  "targets": [
+    {
+      "id": "ctrl-dispatch",
+      "title": "BookController 요청 분기",
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "topicIds": [
+        "web-servlet",
+        "mvc-filter"
+      ],
+      "requirementId": "R-LAYER",
+      "checklistIds": [
+        "run-build",
+        "error-pages"
+      ]
+    },
+    {
+      "id": "ctrl-list",
+      "title": "목록 조회 처리",
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "topicIds": [
+        "web-servlet",
+        "jsp-el"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list"
+      ]
+    },
+    {
+      "id": "ctrl-regist",
+      "title": "등록 처리와 입력 검증",
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "topicIds": [
+        "web-servlet",
+        "jsp-el"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create",
+        "crd-prg",
+        "crd-invalid"
+      ]
+    },
+    {
+      "id": "ctrl-detail",
+      "title": "상세 조회 처리",
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "topicIds": [
+        "web-servlet",
+        "jsp-el"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail"
+      ]
+    },
+    {
+      "id": "ctrl-delete",
+      "title": "삭제 처리",
+      "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+      "topicIds": [
+        "web-servlet"
+      ],
+      "requirementId": "R-DELETE",
+      "checklistIds": [
+        "crd-delete"
+      ]
+    },
+    {
+      "id": "user-login",
+      "title": "로그인과 아이디 기억 쿠키",
+      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
+      "topicIds": [
+        "state-session",
+        "web-servlet"
+      ],
+      "requirementId": "R-LOGIN",
+      "checklistIds": [
+        "auth-login",
+        "auth-cookie"
+      ]
+    },
+    {
+      "id": "user-logout",
+      "title": "로그아웃",
+      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
+      "topicIds": [
+        "state-session"
+      ],
+      "requirementId": "R-LOGOUT",
+      "checklistIds": [
+        "auth-logout"
+      ]
+    },
+    {
+      "id": "filter-session",
+      "title": "로그인 필요 요청 차단",
+      "path": "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+      "topicIds": [
+        "mvc-filter",
+        "state-session"
+      ],
+      "requirementId": "R-FILTER",
+      "checklistIds": [
+        "auth-filter"
+      ]
+    },
+    {
+      "id": "web-errorpage",
+      "title": "오류 페이지 매핑",
+      "path": "src/main/webapp/WEB-INF/web.xml",
+      "topicIds": [
+        "web-servlet"
+      ],
+      "requirementId": "R-ERROR",
+      "checklistIds": [
+        "error-pages"
+      ]
+    },
+    {
+      "id": "svc-methods",
+      "title": "서비스 계층 메서드",
+      "path": "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+      "topicIds": [
+        "jdbc",
+        "mvc-filter"
+      ],
+      "requirementId": "R-LAYER",
+      "checklistIds": [
+        "run-build",
+        "crd-invalid"
+      ]
+    },
+    {
+      "id": "dao-login",
+      "title": "로그인 조회 SQL",
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "topicIds": [
+        "jdbc",
+        "sql-select"
+      ],
+      "requirementId": "R-LOGIN",
+      "checklistIds": [
+        "auth-login"
+      ]
+    },
+    {
+      "id": "dao-select-all",
+      "title": "목록 조회 SQL과 결과 변환",
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "topicIds": [
+        "jdbc",
+        "sql-select"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list"
+      ]
+    },
+    {
+      "id": "dao-insert",
+      "title": "등록 INSERT",
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "topicIds": [
+        "jdbc",
+        "db-schema"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create",
+        "crd-invalid"
+      ]
+    },
+    {
+      "id": "dao-detail",
+      "title": "상세 조회 SQL",
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "topicIds": [
+        "jdbc",
+        "sql-select"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail"
+      ]
+    },
+    {
+      "id": "dao-delete",
+      "title": "삭제 DELETE",
+      "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+      "topicIds": [
+        "jdbc",
+        "db-schema"
+      ],
+      "requirementId": "R-DELETE",
+      "checklistIds": [
+        "crd-delete"
+      ]
+    },
+    {
+      "id": "jsp-header",
+      "title": "로그인 상태에 따른 메뉴",
+      "path": "src/main/webapp/header.jsp",
+      "topicIds": [
+        "jsp-el",
+        "state-session"
+      ],
+      "requirementId": "R-LOGIN",
+      "checklistIds": [
+        "auth-login",
+        "auth-logout",
+        "jsp-render"
+      ]
+    },
+    {
+      "id": "jsp-login",
+      "title": "로그인 form과 이메일 쿠키",
+      "path": "src/main/webapp/login-form.jsp",
+      "topicIds": [
+        "jsp-el",
+        "state-session"
+      ],
+      "requirementId": "R-LOGIN",
+      "checklistIds": [
+        "auth-login",
+        "auth-cookie",
+        "jsp-render"
+      ]
+    },
+    {
+      "id": "jsp-list",
+      "title": "목록 표 출력",
+      "path": "src/main/webapp/book/list.jsp",
+      "topicIds": [
+        "jsp-el"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list",
+        "jsp-render"
+      ]
+    },
+    {
+      "id": "jsp-regist",
+      "title": "등록 form",
+      "path": "src/main/webapp/book/regist.jsp",
+      "topicIds": [
+        "jsp-el"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create",
+        "jsp-render"
+      ]
+    },
+    {
+      "id": "jsp-detail",
+      "title": "상세 출력과 삭제 form",
+      "path": "src/main/webapp/book/detail.jsp",
+      "topicIds": [
+        "jsp-el"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail",
+        "crd-delete",
+        "jsp-render"
+      ]
+    }
+  ],
+  "structure": {
+    "layers": [
+      {
+        "id": "client",
+        "label": "브라우저"
+      },
+      {
+        "id": "view",
+        "label": "화면 (JSP)"
+      },
+      {
+        "id": "filter",
+        "label": "필터"
+      },
+      {
+        "id": "controller",
+        "label": "컨트롤러 (Servlet)"
+      },
+      {
+        "id": "service",
+        "label": "서비스"
+      },
+      {
+        "id": "dao",
+        "label": "DAO"
+      },
+      {
+        "id": "db",
+        "label": "데이터베이스"
+      },
+      {
+        "id": "shared",
+        "label": "함께 쓰는 파일"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "browser",
+        "layer": "client",
+        "label": "브라우저",
+        "kind": "요청",
+        "path": null,
+        "role": "사용자가 링크를 누르거나 form을 제출하면 URL과 action, 입력 값을 서버로 보냅니다. 응답이 redirect이면 주소를 다시 요청합니다.",
+        "receives": [
+          "forward한 JSP가 만든 HTML",
+          "redirect 응답의 새 주소"
+        ],
+        "sends": [
+          "URL (/book, /user)",
+          "action 파라미터",
+          "form 입력의 name=value",
+          "쿠키 JSESSIONID, email"
+        ],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "GET  /book?action=list",
+          "GET  /book?action=detail&code=...",
+          "POST /book   (action=regist, code, name, price, author, category)",
+          "POST /book   (action=delete, code)",
+          "POST /user   (action=login, email, pass, remember-me)",
+          "GET  /user?action=logout"
+        ]
+      },
+      {
+        "id": "index",
+        "layer": "view",
+        "label": "index.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/index.jsp",
+        "role": "메인 화면입니다. header.jsp를 include해 메뉴를 보여줍니다. 제공 파일입니다.",
+        "receives": [
+          "세션 속성 user (header.jsp에서 사용)"
+        ],
+        "sends": [],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "<%@ include file=\"/header.jsp\"%>",
+          "<h1>메인 페이지입니다.</h1>"
+        ]
+      },
+      {
+        "id": "header",
+        "layer": "view",
+        "label": "header.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/header.jsp",
+        "role": "모든 화면이 include하는 머리글입니다. 로그인 여부에 따라 로그인 링크 또는 사용자 이름과 로그아웃 링크를 보여주고 alertMsg가 있으면 안내를 출력합니다.",
+        "receives": [
+          "세션 속성 user",
+          "request 속성 alertMsg"
+        ],
+        "sends": [
+          "링크: /book?action=list, /user?action=login, /user?action=logout"
+        ],
+        "methods": [],
+        "targets": [
+          "jsp-header"
+        ],
+        "skeleton": [
+          "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
+          "<c:set var=\"root\" value=\"${pageContext.servletContext.contextPath}\" />",
+          "<nav> ... 홈, 목록 링크 ...",
+          "    <%-- 작성 대상: 로그인 상태에 따라 달라지는 메뉴 --%>",
+          "</nav>",
+          "<%-- alertMsg 출력 --%>"
+        ]
+      },
+      {
+        "id": "list",
+        "layer": "view",
+        "label": "book/list.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/book/list.jsp",
+        "role": "도서 목록 표를 보여줍니다. 비어 있으면 안내 행을 보여주고 코드는 상세 화면으로 가는 링크입니다.",
+        "receives": [
+          "request 속성 list (List<Book>)"
+        ],
+        "sends": [
+          "링크: /book?action=detail&code=...",
+          "링크: /book?action=regist"
+        ],
+        "methods": [],
+        "targets": [
+          "jsp-list"
+        ],
+        "skeleton": [
+          "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
+          "<%@ include file=\"/header.jsp\"%>",
+          "<table> <thead> ... </thead>",
+          "  <tbody>",
+          "    <%-- 작성 대상: 목록 본문 행 --%>",
+          "  </tbody>",
+          "</table>"
+        ]
+      },
+      {
+        "id": "regist",
+        "layer": "view",
+        "label": "book/regist.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/book/regist.jsp",
+        "role": "도서 등록 form입니다. input의 name이 컨트롤러가 읽는 파라미터 이름이 됩니다.",
+        "receives": [
+          "request 속성 alertMsg (검증 실패, 코드 중복)"
+        ],
+        "sends": [
+          "POST /book (action=regist, code, name, price, author, category)"
+        ],
+        "methods": [],
+        "targets": [
+          "jsp-regist"
+        ],
+        "skeleton": [
+          "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
+          "<%@ include file=\"/header.jsp\"%>",
+          "<h1>등록 페이지</h1>",
+          "<%-- 작성 대상: 등록 form --%>",
+          "<a href=\"${root}/book?action=list\">목록으로</a>"
+        ]
+      },
+      {
+        "id": "detail",
+        "layer": "view",
+        "label": "book/detail.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/book/detail.jsp",
+        "role": "도서 한 건과 삭제 버튼을 보여줍니다. 삭제는 링크가 아니라 POST form입니다.",
+        "receives": [
+          "request 속성 book (Book)"
+        ],
+        "sends": [
+          "POST /book (action=delete, code)"
+        ],
+        "methods": [],
+        "targets": [
+          "jsp-detail"
+        ],
+        "skeleton": [
+          "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
+          "<%@ include file=\"/header.jsp\"%>",
+          "<h1>상세 페이지</h1>",
+          "<%-- 작성 대상: 상세 정보와 삭제 form --%>",
+          "<a href=\"${root}/book?action=list\">목록으로</a>"
+        ]
+      },
+      {
+        "id": "login",
+        "layer": "view",
+        "label": "login-form.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/login-form.jsp",
+        "role": "로그인 form입니다. 저장된 email 쿠키가 있으면 이메일을 채우고 기억하기를 선택해 둡니다.",
+        "receives": [
+          "쿠키 email",
+          "request 속성 alertMsg (로그인 실패)"
+        ],
+        "sends": [
+          "POST /user (action=login, email, pass, remember-me)"
+        ],
+        "methods": [],
+        "targets": [
+          "jsp-login"
+        ],
+        "skeleton": [
+          "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
+          "<%@ include file=\"/header.jsp\"%>",
+          "<h1>로그인 페이지</h1>",
+          "<%-- 작성 대상: 로그인 form --%>"
+        ]
+      },
+      {
+        "id": "error",
+        "layer": "view",
+        "label": "error/404.jsp, 500.jsp",
+        "kind": "JSP",
+        "path": "src/main/webapp/error/404.jsp",
+        "role": "web.xml의 error-page 매핑으로 열리는 오류 화면입니다. 내부 예외 정보는 보여주지 않습니다. 제공 파일입니다.",
+        "receives": [
+          "응답 상태 코드 404, 500"
+        ],
+        "sends": [],
+        "methods": [],
+        "targets": [
+          "web-errorpage"
+        ],
+        "skeleton": [
+          "<%@ page isErrorPage=\"true\" ... %>",
+          "<p>요청한 페이지나 항목을 찾을 수 없습니다.</p>"
+        ]
+      },
+      {
+        "id": "logging",
+        "layer": "filter",
+        "label": "LoggingFilter",
+        "kind": "Filter",
+        "path": "src/main/java/com/ssafy/sample/filter/LoggingFilter.java",
+        "role": "/* 모든 요청의 파라미터를 콘솔에 출력합니다. 비밀번호는 가려서 출력합니다. 제공 파일입니다.",
+        "receives": [
+          "모든 요청"
+        ],
+        "sends": [
+          "chain.doFilter로 다음 단계에 전달"
+        ],
+        "methods": [
+          "doFilter"
+        ],
+        "targets": [],
+        "skeleton": [
+          "@WebFilter(\"/*\")",
+          "public class LoggingFilter extends HttpFilter {",
+          "    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) ...",
+          "}"
+        ]
+      },
+      {
+        "id": "session",
+        "layer": "filter",
+        "label": "SessionFilter",
+        "kind": "Filter",
+        "path": "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+        "role": "/book 요청만 보호합니다. 세션 속성 user가 있으면 통과시키고 없으면 로그인 화면으로 redirect합니다. /user는 대상이 아니라 로그인 요청이 막히지 않습니다.",
+        "receives": [
+          "/book 요청"
+        ],
+        "sends": [
+          "통과: chain.doFilter",
+          "차단: redirect /user?action=login"
+        ],
+        "methods": [
+          "doFilter"
+        ],
+        "targets": [
+          "filter-session"
+        ],
+        "skeleton": [
+          "@WebFilter(\"/book\")",
+          "public class SessionFilter extends HttpFilter {",
+          "    // 작성 대상",
+          "    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) ...",
+          "}"
+        ]
+      },
+      {
+        "id": "bookctl",
+        "layer": "controller",
+        "label": "BookController",
+        "kind": "Servlet",
+        "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
+        "role": "/book 요청의 목록, 등록, 상세, 삭제를 처리합니다. action 파라미터로 메서드를 고르고 서비스를 호출한 뒤 forward 또는 redirect로 응답합니다.",
+        "receives": [
+          "action, code, name, price, author, category 파라미터"
+        ],
+        "sends": [
+          "forward: request 속성 list, book, alertMsg",
+          "redirect: /book?action=list",
+          "sendError: 404, 405"
+        ],
+        "methods": [
+          "doGet",
+          "doPost",
+          "process",
+          "list",
+          "regist",
+          "detail",
+          "delete"
+        ],
+        "targets": [
+          "ctrl-dispatch",
+          "ctrl-list",
+          "ctrl-regist",
+          "ctrl-detail",
+          "ctrl-delete"
+        ],
+        "skeleton": [
+          "@WebServlet(\"/book\")",
+          "public class BookController extends HttpServlet implements ControllerHelper {",
+          "    private final BookService service = BookServiceImpl.getInstance();",
+          "",
+          "    protected void doGet(HttpServletRequest request, HttpServletResponse response) ...   // process 호출",
+          "    protected void doPost(HttpServletRequest request, HttpServletResponse response) ...  // process 호출",
+          "",
+          "    private void process(HttpServletRequest request, HttpServletResponse response) ...  // 작성 대상: action 분기",
+          "    private void list(HttpServletRequest request, HttpServletResponse response) ...     // 작성 대상",
+          "    private void regist(HttpServletRequest request, HttpServletResponse response) ...   // 작성 대상",
+          "    private void detail(HttpServletRequest request, HttpServletResponse response) ...   // 작성 대상",
+          "    private void delete(HttpServletRequest request, HttpServletResponse response) ...   // 작성 대상",
+          "}"
+        ]
+      },
+      {
+        "id": "memberctl",
+        "layer": "controller",
+        "label": "MemberController",
+        "kind": "Servlet",
+        "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
+        "role": "/user 요청의 로그인과 로그아웃을 처리합니다. 로그인하면 세션에 회원을 저장하고 이메일 기억하기 쿠키를 저장하거나 삭제합니다.",
+        "receives": [
+          "action, email, pass, remember-me 파라미터"
+        ],
+        "sends": [
+          "세션 속성 user",
+          "쿠키 email",
+          "forward: request 속성 alertMsg",
+          "redirect: /book?action=list, /"
+        ],
+        "methods": [
+          "doGet",
+          "doPost",
+          "process",
+          "login",
+          "logout"
+        ],
+        "targets": [
+          "user-login",
+          "user-logout"
+        ],
+        "skeleton": [
+          "@WebServlet(\"/user\")",
+          "public class MemberController extends HttpServlet implements ControllerHelper {",
+          "    private final BookService service = BookServiceImpl.getInstance();",
+          "",
+          "    protected void doGet(HttpServletRequest request, HttpServletResponse response) ...",
+          "    protected void doPost(HttpServletRequest request, HttpServletResponse response) ...",
+          "    private void process(HttpServletRequest request, HttpServletResponse response) ...  // login, logout 분기",
+          "",
+          "    private void login(HttpServletRequest request, HttpServletResponse response) ...   // 작성 대상",
+          "    private void logout(HttpServletRequest request, HttpServletResponse response) ...  // 작성 대상",
+          "}"
+        ]
+      },
+      {
+        "id": "service",
+        "layer": "service",
+        "label": "BookService / BookServiceImpl",
+        "kind": "Service",
+        "path": "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+        "role": "컨트롤러와 DAO 사이의 계층입니다. DAO를 호출하고 SQLException을 상위 계층이 다루기 쉬운 예외로 바꿉니다. 중복 키는 DuplicateCodeException이 됩니다.",
+        "receives": [
+          "컨트롤러의 호출"
+        ],
+        "sends": [
+          "DAO 호출",
+          "IllegalStateException(원인 포함)",
+          "DuplicateCodeException"
+        ],
+        "methods": [
+          "login",
+          "selectAll",
+          "insert",
+          "detail",
+          "delete"
+        ],
+        "targets": [
+          "svc-methods"
+        ],
+        "skeleton": [
+          "public interface BookService {      // 제공",
+          "    Member login(String email, String password);",
+          "    List<Book> selectAll();",
+          "    int insert(Book book);",
+          "    Book detail(String code);",
+          "    int delete(String code);",
+          "}",
+          "",
+          "public class BookServiceImpl implements BookService {",
+          "    private final BookDao dao = BookDaoImpl.getInstance();",
+          "    // 작성 대상: 다섯 메서드를 구현",
+          "}"
+        ]
+      },
+      {
+        "id": "dao",
+        "layer": "dao",
+        "label": "BookDao / BookDaoImpl",
+        "kind": "DAO",
+        "path": "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+        "role": "JDBC로 DB를 처리합니다. Connection, PreparedStatement, ResultSet을 쓰고 finally에서 DBUtil.close로 자원을 닫습니다.",
+        "receives": [
+          "서비스의 호출"
+        ],
+        "sends": [
+          "SQL: select, insert, delete",
+          "Book, Member, 삭제된 행 수"
+        ],
+        "methods": [
+          "login",
+          "selectAll",
+          "insert",
+          "detail",
+          "delete"
+        ],
+        "targets": [
+          "dao-login",
+          "dao-select-all",
+          "dao-insert",
+          "dao-detail",
+          "dao-delete"
+        ],
+        "skeleton": [
+          "public interface BookDao {      // 제공",
+          "    Member login(String email, String password) throws SQLException;",
+          "    List<Book> selectAll() throws SQLException;",
+          "    int insert(Book book) throws SQLException;",
+          "    Book detail(String code) throws SQLException;",
+          "    int delete(String code) throws SQLException;",
+          "}",
+          "",
+          "public class BookDaoImpl implements BookDao {",
+          "    // 싱글톤 코드는 제공",
+          "    // 작성 대상: 다섯 메서드의 SQL과 바인딩, 결과 변환",
+          "}"
+        ]
+      },
+      {
+        "id": "db",
+        "layer": "db",
+        "label": "MySQL ssafy_book",
+        "kind": "DB",
+        "path": "src/main/resources/ssafy_book.sql",
+        "role": "member(회원)와 book(도서) 두 테이블이 있습니다. book의 code는 직접 입력하는 문자열 기본키라 중복 등록하면 기본키 오류가 납니다.",
+        "receives": [
+          "PreparedStatement의 SQL"
+        ],
+        "sends": [
+          "ResultSet",
+          "영향받은 행 수"
+        ],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "CREATE TABLE member (mno, name, email, password, role);",
+          "CREATE TABLE book (code PRIMARY KEY, name, price, author, category);"
+        ]
+      },
+      {
+        "id": "helper",
+        "layer": "shared",
+        "label": "ControllerHelper",
+        "kind": "공통",
+        "path": "src/main/java/com/ssafy/sample/controller/ControllerHelper.java",
+        "role": "두 컨트롤러가 함께 쓰는 제공 인터페이스입니다. action 읽기, forward, redirect, 쿠키 저장, 입력 검증 보조 메서드가 있습니다.",
+        "receives": [],
+        "sends": [],
+        "methods": [
+          "getActionParameter",
+          "redirect",
+          "forward",
+          "setupCookie",
+          "cookiePath",
+          "hasText",
+          "parseNonNegativeInt"
+        ],
+        "targets": [],
+        "skeleton": [
+          "public interface ControllerHelper {",
+          "    String getActionParameter(request, response)   // action이 없으면 \"list\"",
+          "    void redirect(request, response, path)",
+          "    void forward(request, response, path)",
+          "    void setupCookie(name, value, maxAge, path, response)",
+          "    String cookiePath(request)",
+          "    boolean hasText(value, maxLength)",
+          "    int parseNonNegativeInt(text)   // 잘못된 값은 -1",
+          "}"
+        ]
+      },
+      {
+        "id": "dbutil",
+        "layer": "shared",
+        "label": "DBUtil",
+        "kind": "공통",
+        "path": "src/main/java/com/ssafy/sample/util/DBUtil.java",
+        "role": "DB 연결을 만들고 자원을 닫는 제공 클래스입니다.",
+        "receives": [],
+        "sends": [
+          "Connection"
+        ],
+        "methods": [
+          "getConnection",
+          "close"
+        ],
+        "targets": [],
+        "skeleton": [
+          "public class DBUtil {",
+          "    public static Connection getConnection() throws SQLException",
+          "    public static void close(AutoCloseable... closeables)",
+          "}"
+        ]
+      },
+      {
+        "id": "dto",
+        "layer": "shared",
+        "label": "Book, Member",
+        "kind": "공통",
+        "path": "src/main/java/com/ssafy/sample/model/dto/Book.java",
+        "role": "화면과 DB 사이에서 값을 나르는 제공 DTO입니다. Book의 필드는 book 테이블의 열과 같습니다.",
+        "receives": [],
+        "sends": [],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "public class Book {",
+          "    String code; String name; Integer price; String author; String category;",
+          "    // getter, setter, 생성자 (제공)",
+          "}",
+          "public class Member { int mno; String name; String email; String role; }"
+        ]
+      },
+      {
+        "id": "webxml",
+        "layer": "shared",
+        "label": "web.xml",
+        "kind": "설정",
+        "path": "src/main/webapp/WEB-INF/web.xml",
+        "role": "요청 인코딩 UTF-8과 환영 파일은 제공되고 404, 500 오류 화면 매핑은 작성 대상입니다.",
+        "receives": [],
+        "sends": [],
+        "methods": [],
+        "targets": [
+          "web-errorpage"
+        ],
+        "skeleton": [
+          "<web-app version=\"6.0\">",
+          "    <request-character-encoding>UTF-8</request-character-encoding>",
+          "    <welcome-file-list> ... </welcome-file-list>",
+          "    <!-- 작성 대상: error-page 404, 500 -->",
+          "</web-app>"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "e-request",
+        "from": "browser",
+        "to": "logging",
+        "kind": "request",
+        "label": "요청",
+        "data": "URL, action 파라미터, form의 name=value가 전달됩니다. 필터는 URL 패턴이 맞는 요청에만 적용됩니다."
+      },
+      {
+        "id": "e-log",
+        "from": "logging",
+        "to": "session",
+        "kind": "call",
+        "label": "chain.doFilter",
+        "data": "LoggingFilter는 항상 다음 단계로 넘깁니다. /book 요청이면 SessionFilter가 이어서 실행됩니다."
+      },
+      {
+        "id": "e-pass",
+        "from": "session",
+        "to": "bookctl",
+        "kind": "call",
+        "label": "통과",
+        "data": "세션 속성 user가 있을 때만 chain.doFilter로 BookController에 넘깁니다."
+      },
+      {
+        "id": "e-block",
+        "from": "session",
+        "to": "memberctl",
+        "kind": "redirect",
+        "label": "로그인 필요",
+        "data": "세션 user가 없으면 chain.doFilter를 호출하지 않고 /user?action=login으로 redirect합니다. 브라우저가 새 GET 요청을 보냅니다."
+      },
+      {
+        "id": "e-log-member",
+        "from": "logging",
+        "to": "memberctl",
+        "kind": "call",
+        "label": "/user는 필터 제외",
+        "data": "/user 요청은 SessionFilter 대상이 아니라 로그인 전에도 MemberController에 도달합니다."
+      },
+      {
+        "id": "e-book-svc",
+        "from": "bookctl",
+        "to": "service",
+        "kind": "call",
+        "label": "서비스 호출",
+        "data": "selectAll, insert, detail, delete를 호출합니다. 입력 검증은 컨트롤러에서 먼저 합니다."
+      },
+      {
+        "id": "e-member-svc",
+        "from": "memberctl",
+        "to": "service",
+        "kind": "call",
+        "label": "login 호출",
+        "data": "email과 pass로 login을 호출해 Member 또는 null을 받습니다."
+      },
+      {
+        "id": "e-svc-dao",
+        "from": "service",
+        "to": "dao",
+        "kind": "call",
+        "label": "DAO 호출",
+        "data": "SQLException을 잡아 IllegalStateException(원인 포함)으로 바꾸고 중복 키는 DuplicateCodeException으로 바꿉니다."
+      },
+      {
+        "id": "e-dao-db",
+        "from": "dao",
+        "to": "db",
+        "kind": "sql",
+        "label": "SQL",
+        "data": "PreparedStatement의 ? 자리에 값을 바인딩해 select, insert, delete를 실행합니다. 조회는 ResultSet, 변경은 영향받은 행 수가 돌아옵니다."
+      },
+      {
+        "id": "e-forward-list",
+        "from": "bookctl",
+        "to": "list",
+        "kind": "forward",
+        "label": "forward",
+        "data": "request 속성 list를 담아 /book/list.jsp로 forward합니다. 같은 요청 안에서 화면이 만들어져 주소는 그대로입니다."
+      },
+      {
+        "id": "e-forward-regist",
+        "from": "bookctl",
+        "to": "regist",
+        "kind": "forward",
+        "label": "forward",
+        "data": "GET이거나 검증 실패, 코드 중복이면 /book/regist.jsp로 forward합니다. 실패 때는 request 속성 alertMsg를 함께 담습니다."
+      },
+      {
+        "id": "e-forward-detail",
+        "from": "bookctl",
+        "to": "detail",
+        "kind": "forward",
+        "label": "forward",
+        "data": "request 속성 book를 담아 /book/detail.jsp로 forward합니다. 없는 코드면 forward하지 않고 404입니다."
+      },
+      {
+        "id": "e-redirect-list",
+        "from": "bookctl",
+        "to": "list",
+        "kind": "redirect",
+        "label": "redirect",
+        "data": "등록과 삭제가 성공하면 /book?action=list로 redirect합니다. 새 GET 요청이라 새로고침해도 다시 등록되지 않습니다."
+      },
+      {
+        "id": "e-error",
+        "from": "bookctl",
+        "to": "error",
+        "kind": "error",
+        "label": "sendError",
+        "data": "알 수 없는 action, 없는 코드, 없는 항목의 삭제는 404, GET 삭제는 405입니다. 404와 500은 web.xml의 error-page가 오류 화면으로 연결합니다."
+      },
+      {
+        "id": "e-forward-login",
+        "from": "memberctl",
+        "to": "login",
+        "kind": "forward",
+        "label": "forward",
+        "data": "GET이거나 로그인에 실패하면 /login-form.jsp로 forward합니다. 실패 때는 alertMsg를 담습니다."
+      },
+      {
+        "id": "e-redirect-login",
+        "from": "memberctl",
+        "to": "list",
+        "kind": "redirect",
+        "label": "로그인 성공",
+        "data": "세션 속성 user에 회원을 저장하고 email 쿠키를 저장하거나 삭제한 뒤 /book?action=list로 redirect합니다."
+      },
+      {
+        "id": "e-logout",
+        "from": "memberctl",
+        "to": "index",
+        "kind": "redirect",
+        "label": "로그아웃",
+        "data": "세션이 있으면 invalidate하고 메인(/)으로 redirect합니다."
+      },
+      {
+        "id": "e-include",
+        "from": "list",
+        "to": "header",
+        "kind": "include",
+        "label": "include",
+        "data": "모든 JSP가 header.jsp를 include해 같은 메뉴와 alertMsg를 보여줍니다. header.jsp가 만든 root 변수를 각 화면이 씁니다."
+      }
+    ],
+    "flows": {
+      "overview": {
+        "label": "전체 흐름",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-block",
+          "e-log-member",
+          "e-book-svc",
+          "e-member-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-forward-list",
+          "e-forward-regist",
+          "e-forward-detail",
+          "e-redirect-list",
+          "e-error",
+          "e-forward-login",
+          "e-redirect-login",
+          "e-logout",
+          "e-include"
+        ]
+      },
+      "list": {
+        "label": "목록",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-book-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-forward-list",
+          "e-include"
+        ]
+      },
+      "regist": {
+        "label": "등록",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-book-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-forward-regist",
+          "e-redirect-list"
+        ]
+      },
+      "detail": {
+        "label": "상세",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-book-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-forward-detail",
+          "e-error"
+        ]
+      },
+      "delete": {
+        "label": "삭제",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-book-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-redirect-list",
+          "e-error"
+        ]
+      },
+      "auth": {
+        "label": "로그인과 로그아웃",
+        "edges": [
+          "e-request",
+          "e-log-member",
+          "e-member-svc",
+          "e-svc-dao",
+          "e-dao-db",
+          "e-forward-login",
+          "e-redirect-login",
+          "e-logout"
+        ]
+      },
+      "filter": {
+        "label": "필터와 오류",
+        "edges": [
+          "e-request",
+          "e-log",
+          "e-pass",
+          "e-block",
+          "e-error"
+        ]
+      }
+    },
+    "flowTabs": {
+      "전체 흐름": "overview",
+      "목록": "list",
+      "등록": "regist",
+      "상세": "detail",
+      "삭제": "delete",
+      "로그인과 로그아웃": "auth",
+      "필터와 오류 처리": "filter"
+    }
+  }
+}
