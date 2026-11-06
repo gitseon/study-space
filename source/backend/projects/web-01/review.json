@@ -1,0 +1,104 @@
+{
+  "projectId": "web-01",
+  "revision": 1,
+  "environmentTarget": {
+    "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
+    "tomcat": "Apache tomcat-11.0.27",
+    "dynamicWebModule": "6.0",
+    "mysql": "8.4.11",
+    "compileRelease": 21
+  },
+  "referenceHash": "8877ca18587e5db40d1ebc1ae22e2400b0465f15be738e84b8e09c31e4081398",
+  "referenceFiles": {
+    "pom.xml": "5334faa90ac90e27106e8ac55a4151243470d94003be42753929e3ce3e6c729f",
+    "src/main/java/com/ssafy/sample/controller/ControllerHelper.java": "9c85b1e2dc3d4e3d08ee1b971de428926caca00280cb09d1bf9aeefffc01833e",
+    "src/main/java/com/ssafy/sample/controller/GearController.java": "da4c1211f2e9f76ab6152be3f6c205c8f19fa733c701d312007029dd80788895",
+    "src/main/java/com/ssafy/sample/controller/MemberController.java": "6b63277eac86559f7b4749347005be269c49ded95e4ea950b3e484c540957ce1",
+    "src/main/java/com/ssafy/sample/filter/LoggingFilter.java": "7d78c7ece92956852fec25d12f740151003492fc48ca99d45a5ed7a7191bf6c4",
+    "src/main/java/com/ssafy/sample/filter/SessionFilter.java": "18b408308bd14cb1bf59390a4fd7ba6575728340f8c0f5163f74a8e724a18be0",
+    "src/main/java/com/ssafy/sample/model/dao/GearDao.java": "e6c89015a2b00ea0da02eb8aa4b36f32d84ec9ac9cd5ac7de80b5c313fc86109",
+    "src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java": "a7be7cbc700da29399e8cd36e540f92d891b8ed3a55d284a88d062f74ee39aae",
+    "src/main/java/com/ssafy/sample/model/dto/Gear.java": "7e72c40eb3e7142a5bce4262fcd8c62e4eb88d5151c9bd44ee7d3f108784056a",
+    "src/main/java/com/ssafy/sample/model/dto/Member.java": "4faf484d85d1fdd0c846947e9d593495483a64676dc0848a0c09d001a3dda93c",
+    "src/main/java/com/ssafy/sample/model/service/DuplicateCodeException.java": "1d4a420ed8df6d9de155c65f6c7e694e5891f016ce557fc47c56ae70a413d790",
+    "src/main/java/com/ssafy/sample/model/service/GearService.java": "4c352b14463a6a735133b64b6017ce2d5847cee78323f1af580f589c1229c9aa",
+    "src/main/java/com/ssafy/sample/model/service/GearServiceImpl.java": "fd4d94094d106f1dc0e25e82561edd7b29ac2a00af20a40e2cd8ce6aaf7c7a42",
+    "src/main/java/com/ssafy/sample/util/DBUtil.java": "43decccca7df863f053e79cbf371abb31bb493e30341aa03f178b7dc37dd5b73",
+    "src/main/resources/ssafy_gear.sql": "618ff86d2cc595ea29c477b53e4ec0883fc494b6a1e0103703e1f588d1a1a3de",
+    "src/main/webapp/WEB-INF/web.xml": "7bfca9d0af47bc5b7d404c0c551d37f9417965adbe16c8f128a02f76fba751ee",
+    "src/main/webapp/error/404.jsp": "e8cb9379fff8b03f078726e7f5555ce0cde0dbd672dc28a13cea98b98238e92e",
+    "src/main/webapp/error/500.jsp": "88a206e3c3a3d0831bdfaf357700a34de76636bd5fbe04517c2ad2a5b98ca1d0",
+    "src/main/webapp/gear/detail.jsp": "6bf37c5a604f8a66fc80bb5051da1032d601ad198d5b82a2e3c33104d5cebc98",
+    "src/main/webapp/gear/list.jsp": "4d96399582159fdc195f5068fc400a0ab9cc098b791eff0a0900cdb453ee512b",
+    "src/main/webapp/gear/regist.jsp": "dff80555c197e6e3c84621d8c170b85a44770c6578cc6c3e554f4518059f958c",
+    "src/main/webapp/header.jsp": "46a92e998df4c1210b3debd4352dd5a9f944409a4a9da8e01b295ae321db61d5",
+    "src/main/webapp/index.jsp": "252e1f3efbffa0961810d80fb04d4034545a1155dd4d121728cc6bc9f4eaaa7f",
+    "src/main/webapp/login-form.jsp": "c482a90931afd8f2bd6d79e047be3d7e5a1e5f561acba38afea12c77c9eac0d4"
+  },
+  "verification": {
+    "javacCompile": {
+      "status": "통과",
+      "note": "reference 전체 Java 13개 클래스 컴파일, 경고는 serial 2건만. stage 2 시작 코드도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-06, Windows 11"
+    },
+    "jspTranslate": {
+      "status": "통과",
+      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-06, Windows 11"
+    },
+    "runtime": {
+      "auth-cookie": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-filter": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-login": {
+        "status": "미검증",
+        "note": ""
+      },
+      "auth-logout": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-create": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-delete": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-detail": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-invalid": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-list": {
+        "status": "미검증",
+        "note": ""
+      },
+      "crd-prg": {
+        "status": "미검증",
+        "note": ""
+      },
+      "error-pages": {
+        "status": "미검증",
+        "note": ""
+      },
+      "jsp-render": {
+        "status": "미검증",
+        "note": ""
+      },
+      "run-build": {
+        "status": "미검증",
+        "note": ""
+      }
+    },
+    "verifiedReferenceHash": "8877ca18587e5db40d1ebc1ae22e2400b0465f15be738e84b8e09c31e4081398",
+    "reviewer": null
+  }
+}

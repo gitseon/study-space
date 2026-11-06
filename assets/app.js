@@ -3,6 +3,11 @@ import {escapeHtml as e, download, typeNames, gradingNames} from './render.js';
 import {summarize} from './grading.js';
 import {effectiveMinutes} from './practice-time.js';
 import {studyLinksFor} from './study-links.js';
+import {renderNote} from './note-render.js';
+import {splitFlow} from './project-flow.js';
+import {featureForTab, mountStructure} from './project-structure.js';
+import {EDITOR_NOTICE, ENV_NOTICE} from './project-notices.js';
+import {projectStore} from './project-store.js';
 
 const root = document.querySelector('#app');
 const PREF_KEY = 'mock-exam:grading-mode';
@@ -157,6 +162,10 @@ function trackSection() {
 function librarySection(attempts) {
   const preference = readPreference();
   const kinds = [['all', '전체'], ...Object.entries(kindNames).filter(([id]) => trackExams().some((x) => x.kind === id))];
+  const projectMode = projectTabAvailable() && kind === 'project';
+  if (projectTabAvailable()) {
+    kinds.push([PROJECT_KIND, '월말평가']);
+  }
   const tabs = kinds
     .map(([id, label]) => '<button data-kind="' + id + '" aria-pressed="' + (id === kind) + '" class="' + (id === kind ? 'active' : '') + '">' + label + '</button>')
     .join('');
@@ -168,8 +177,103 @@ function librarySection(attempts) {
   return '<section class="library">'
     + '<div class="section-heading"><div><span class="eyebrow">내 속도로 준비하기</span><h2>오늘의 문제집</h2></div>'
     + '<div class="tabs" role="group" aria-label="평가 유형">' + tabs + '</div></div>'
-    + '<div class="exam-grid">' + cards + '</div>'
+    + (projectMode
+      ? '<div class="project-env" id="project-env"><p>' + e(ENV_NOTICE) + '</p><p>' + e(EDITOR_NOTICE) + '</p></div><div id="project-area"><p class="loading">월말평가 프로젝트를 불러오고 있습니다</p></div>'
+      : '<div class="exam-grid">' + cards + '</div>')
     + '</section>';
+}
+
+// 백엔드 · DB의 월말평가는 문항이 아니라 직접 구현하는 Web 프로젝트라서 탭 하나로 따로 둡니다.
+const PROJECT_KIND = 'project';
+const projectTabAvailable = () => track === 'backend' && !!manifest.webProjects;
+let projectIndexPromise = null;
+
+async function fetchData(path) {
+  const res = await fetch(new URL('../data/' + path, import.meta.url));
+  if (!res.ok) {
+    throw Error(path);
+  }
+  return res.json();
+}
+
+function projectCard(project, number) {
+  const stages = project.stages.map((s) => '<option value="' + s.id + '">' + s.id + '단계 ' + e(s.label) + '</option>').join('');
+  const times = project.durationOptions
+    .map((m) => '<option value="' + m + '"' + (m === project.defaultMinutes ? ' selected' : '') + '>' + (m ? m + '분' : '시간 제한 없음') + '</option>').join('');
+  return '<article class="exam-card project-card" data-project="' + e(project.id) + '">'
+    + '<div class="card-top"><span class="pill">월말평가 프로젝트</span><span class="card-number">' + String(number).padStart(2, '0') + '</span></div>'
+    + '<h3>' + e(project.title) + '</h3>'
+    + '<p class="card-description">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 등록, 목록, 상세, 삭제와 로그인을 연결합니다. 사이트가 코드를 실행하거나 점수를 매기지는 않습니다.</p>'
+    + '<div class="card-types"><span>작성 대상 <b>' + project.targetCount + '</b></span><span>단계 <b>' + project.stages.length + '</b></span></div>'
+    + '<label class="card-setting">단계 <select id="pstage-' + e(project.id) + '">' + stages + '</select></label>'
+    + '<label class="card-setting">제한 시간 <select id="ptime-' + e(project.id) + '">' + times + '</select></label>'
+    + '<div class="card-actions"><button class="primary" data-project-start="' + e(project.id) + '" aria-label="' + e(project.title) + ' 구현 시작">구현 시작 <span aria-hidden="true">↗</span></button></div>'
+    + '<div class="resume-list" id="presume-' + e(project.id) + '"></div>'
+    + '</article>';
+}
+
+function flowSummary(tabs) {
+  const buttons = tabs.map((t, i) => '<button type="button" role="tab" data-flow="' + i + '" aria-selected="' + (i === 0) + '" class="' + (i === 0 ? 'active' : '') + '">' + e(t.label) + '</button>').join('');
+  return '<section class="project-flow" aria-label="월말평가 구현 흐름"><h3>월말평가 구현 흐름</h3>'
+    + '<div class="tabs" role="tablist" aria-label="흐름 보기">' + buttons + '</div>'
+    + '<div class="project-flow-body" id="project-flow-body">' + renderNote(tabs[0].md).html + '</div>'
+    + '<h4 class="project-structure-title">프로젝트 구조</h4><p class="project-structure-help">상자나 화살표를 누르면 역할과 뼈대 코드가 나옵니다.</p><div id="project-structure"></div></section>';
+}
+
+async function fillProjectArea() {
+  const area = document.querySelector('#project-area');
+  if (!area) {
+    return;
+  }
+  try {
+    projectIndexPromise ||= fetchData(manifest.webProjects.file);
+    const index = await projectIndexPromise;
+    const detail = await fetchData(index.projects[0].project);
+    if (!area.isConnected) {
+      return;
+    }
+    const tabs = splitFlow(detail.flow);
+    area.innerHTML = flowSummary(tabs) + '<div class="exam-grid">' + index.projects.map((p, i) => projectCard(p, i + 1)).join('') + '</div>';
+    const diagram = detail.structure
+      ? mountStructure(area.querySelector('#project-structure'), detail.structure, {showFlows: false, targetTitles: Object.fromEntries(detail.targets.map((x) => [x.id, x.title]))})
+      : null;
+    area.querySelectorAll('[data-flow]').forEach((b) => {
+      b.onclick = () => {
+        const tab = tabs[Number(b.dataset.flow)];
+        const feature = diagram && featureForTab(detail.structure, tab.label);
+        if (feature) {
+          diagram.setFlow(feature);
+        }
+        area.querySelectorAll('[data-flow]').forEach((x) => {
+          x.classList.toggle('active', x === b);
+          x.setAttribute('aria-selected', String(x === b));
+        });
+        area.querySelector('#project-flow-body').innerHTML = renderNote(tab.md).html;
+      };
+    });
+    area.querySelectorAll('[data-project-start]').forEach((b) => {
+      b.onclick = () => {
+        const id = b.dataset.projectStart;
+        location.href = 'pages/project.html?project=' + encodeURIComponent(id)
+          + '&stage=' + document.getElementById('pstage-' + id).value + '&minutes=' + document.getElementById('ptime-' + id).value;
+      };
+    });
+    try {
+      const names = {'in-progress': '진행 중', 'time-ended': '시간 종료', review: '작성 마침'};
+      for (const a of await projectStore.list()) {
+        const box = document.getElementById('presume-' + a.projectId);
+        if (box) {
+          box.insertAdjacentHTML('beforeend', '<a href="pages/project.html?attempt=' + encodeURIComponent(a.attemptId) + '">' + a.stageId + '단계 ' + names[a.status] + ' · 이어서 보기 →</a>');
+        }
+      }
+    } catch {
+      // 저장소를 열 수 없으면 이어서 하기 목록만 비웁니다.
+    }
+  } catch {
+    if (area.isConnected) {
+      area.innerHTML = '<div class="empty">월말평가 프로젝트를 불러오지 못했습니다. 연결을 확인하고 다시 시도해 주세요.</div>';
+    }
+  }
 }
 
 function practiceSection() {
@@ -291,6 +395,9 @@ function render() {
     mode.addEventListener('change', sync);
     sync();
   });
+  if (kind === PROJECT_KIND) {
+    fillProjectArea();
+  }
   document.querySelector('#export').onclick = () => download('mock-exam-backup.json', JSON.stringify(store.exportProgress(), null, 2));
   document.querySelector('#import').onchange = (ev) => importBackup(ev, attempts);
 }

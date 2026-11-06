@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "track": "backend",
+  "projects": [
+    {
+      "id": "web-01",
+      "title": "캠핑 용품 관리",
+      "revision": 1,
+      "hash": "790da5d58b73c51d",
+      "durationOptions": [
+        90,
+        120,
+        0
+      ],
+      "defaultMinutes": 120,
+      "environment": {
+        "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
+        "tomcat": "Apache tomcat-11.0.27",
+        "dynamicWebModule": "6.0",
+        "mysql": "8.4.11",
+        "compileRelease": 21
+      },
+      "targetCount": 20,
+      "project": "backend-projects/web-01/project.json",
+      "referenceFile": "backend-projects/web-01/reference.json",
+      "stages": [
+        {
+          "id": 1,
+          "label": "빈칸 채우기",
+          "file": "backend-projects/web-01/stage-1.json",
+          "zip": "backend-projects/web-01/stage-1.zip"
+        },
+        {
+          "id": 2,
+          "label": "메서드와 JSP 블록 작성",
+          "file": "backend-projects/web-01/stage-2.json",
+          "zip": "backend-projects/web-01/stage-2.zip"
+        },
+        {
+          "id": 3,
+          "label": "구현 대상 전체 작성",
+          "file": "backend-projects/web-01/stage-3.json",
+          "zip": "backend-projects/web-01/stage-3.zip"
+        }
+      ]
+    },
+    {
+      "id": "web-02",
+      "title": "도서 관리",
+      "revision": 1,
+      "hash": "661744dbf5246155",
+      "durationOptions": [
+        90,
+        120,
+        0
+      ],
+      "defaultMinutes": 120,
+      "environment": {
+        "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
+        "tomcat": "Apache tomcat-11.0.27",
+        "dynamicWebModule": "6.0",
+        "mysql": "8.4.11",
+        "compileRelease": 21
+      },
+      "targetCount": 20,
+      "project": "backend-projects/web-02/project.json",
+      "referenceFile": "backend-projects/web-02/reference.json",
+      "stages": [
+        {
+          "id": 1,
+          "label": "빈칸 채우기",
+          "file": "backend-projects/web-02/stage-1.json",
+          "zip": "backend-projects/web-02/stage-1.zip"
+        },
+        {
+          "id": 2,
+          "label": "메서드와 JSP 블록 작성",
+          "file": "backend-projects/web-02/stage-2.json",
+          "zip": "backend-projects/web-02/stage-2.zip"
+        },
+        {
+          "id": 3,
+          "label": "구현 대상 전체 작성",
+          "file": "backend-projects/web-02/stage-3.json",
+          "zip": "backend-projects/web-02/stage-3.zip"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "stages": [
+    {
+      "id": 1,
+      "label": "빈칸 채우기",
+      "files": [
+        "src/main/java/com/ssafy/sample/controller/BookController.java",
+        "src/main/java/com/ssafy/sample/controller/MemberController.java",
+        "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+        "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+        "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+        "src/main/webapp/WEB-INF/web.xml",
+        "src/main/webapp/book/detail.jsp",
+        "src/main/webapp/book/list.jsp",
+        "src/main/webapp/book/regist.jsp",
+        "src/main/webapp/header.jsp",
+        "src/main/webapp/login-form.jsp"
+      ],
+      "hints": {
+        "ctrl-dispatch": [
+          "doGet과 doPost는 모두 process를 호출합니다. process는 action 파라미터 값 하나로 어떤 메서드를 실행할지 고릅니다.",
+          "정의되지 않은 action은 응답 상태 코드 404로 처리합니다. sendError와 HttpServletResponse의 상수를 사용합니다."
+        ],
+        "ctrl-list": [
+          "조회한 목록은 request 속성에 담고 forward로 JSP에 넘깁니다. redirect하면 request 속성이 사라집니다.",
+          "JSP의 ${list}와 setAttribute의 첫 번째 인수 이름이 같아야 합니다."
+        ],
+        "ctrl-regist": [
+          "GET은 화면 표시, POST는 저장으로 나눕니다. request.getMethod()로 구분합니다.",
+          "저장에 성공하면 redirect로 목록 GET 요청을 새로 보내야 새로고침해도 다시 등록되지 않습니다.",
+          "검증 실패와 코드 중복은 같은 등록 화면으로 forward하고 alertMsg 속성에 안내를 담습니다."
+        ],
+        "ctrl-detail": [
+          "조회 결과가 null이면 빈 상세 화면을 보여주지 않고 404로 응답합니다.",
+          "JSP에서 ${book.code}로 읽으려면 속성 이름이 book여야 합니다."
+        ],
+        "ctrl-delete": [
+          "데이터를 바꾸는 요청은 POST로만 받습니다. 링크로 여는 GET 요청은 405로 응답합니다.",
+          "서비스가 돌려준 삭제 행 수가 0이면 없는 항목이므로 404로 응답합니다."
+        ],
+        "user-login": [
+          "세션에는 객체를 저장할 수 있고 쿠키에는 문자열만 저장합니다. 로그인한 회원은 세션 속성 user에 저장합니다.",
+          "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. setupCookie와 cookiePath를 사용합니다.",
+          "로그인 성공 직후 changeSessionId로 세션 ID를 바꾸면 세션 고정 공격을 줄입니다."
+        ],
+        "user-logout": [
+          "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
+        ],
+        "filter-session": [
+          "이 필터는 /book에만 적용됩니다. 로그인 요청은 /user로 가므로 필터에 다시 걸리지 않습니다.",
+          "허용할 때만 chain.doFilter를 호출합니다. 거부하면 호출하지 않고 로그인 화면으로 redirect합니다."
+        ],
+        "web-errorpage": [
+          "error-page 요소는 error-code와 location을 한 쌍으로 가집니다. location은 컨텍스트 루트 기준 경로입니다."
+        ],
+        "svc-methods": [
+          "서비스는 DAO를 호출하고 SQLException을 상위 계층이 다루기 쉬운 예외로 바꿉니다. 원인(cause)을 함께 전달합니다.",
+          "중복 키는 SQLIntegrityConstraintViolationException으로 오므로 SQLException보다 먼저 catch합니다."
+        ],
+        "dao-login": [
+          "조건 두 개를 and로 묶고 값은 PreparedStatement의 ? 자리에 순서대로 바인딩합니다.",
+          "행을 하나만 기대하므로 rs.next()를 if로 확인합니다."
+        ],
+        "dao-select-all": [
+          "여러 행은 while (rs.next())로 순회하며 행마다 DTO를 만들어 목록에 추가합니다.",
+          "정수 열은 getInt, 문자열 열은 getString으로 읽습니다."
+        ],
+        "dao-insert": [
+          "INSERT의 열 순서와 ? 바인딩 번호가 일치해야 합니다. 번호는 1부터 시작합니다.",
+          "INSERT, DELETE는 executeUpdate를 쓰고 영향받은 행 수를 반환합니다."
+        ],
+        "dao-detail": [
+          "기본키 열 하나로 where 조건을 만들고 결과가 없으면 null을 반환합니다."
+        ],
+        "dao-delete": [
+          "where 조건 없이 delete를 실행하면 모든 행이 지워집니다. 기본키 조건을 반드시 확인합니다.",
+          "executeUpdate의 반환값이 삭제된 행 수입니다."
+        ],
+        "jsp-header": [
+          "EL에서 세션 속성은 sessionScope.user로 읽습니다. empty로 값이 없는지 확인합니다.",
+          "사용자 이름처럼 외부 입력이 들어올 수 있는 값은 c:out으로 출력합니다."
+        ],
+        "jsp-login": [
+          "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
+          "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다."
+        ],
+        "jsp-list": [
+          "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",
+          "링크의 쿼리 문자열은 c:url과 c:param으로 만들면 값이 안전하게 인코딩됩니다."
+        ],
+        "jsp-regist": [
+          "데이터를 보내는 form은 POST를 쓰고, 어떤 동작인지는 hidden action 값으로 알려줍니다.",
+          "input name이 서버에서 읽는 파라미터 이름입니다. 오타가 나면 값이 null로 읽힙니다."
+        ],
+        "jsp-detail": [
+          "삭제는 링크가 아니라 POST form으로 보냅니다. 삭제할 코드는 hidden input에 담습니다.",
+          "EL 값은 c:out으로 감싸 HTML 특수문자가 그대로 실행되지 않게 합니다."
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "label": "메서드와 JSP 블록 작성",
+      "files": [
+        "src/main/java/com/ssafy/sample/controller/BookController.java",
+        "src/main/java/com/ssafy/sample/controller/MemberController.java",
+        "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+        "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+        "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+        "src/main/webapp/WEB-INF/web.xml",
+        "src/main/webapp/book/detail.jsp",
+        "src/main/webapp/book/list.jsp",
+        "src/main/webapp/book/regist.jsp",
+        "src/main/webapp/header.jsp",
+        "src/main/webapp/login-form.jsp"
+      ],
+      "hints": {
+        "ctrl-dispatch": [
+          "doGet과 doPost는 모두 process를 호출합니다. process는 action 파라미터 값 하나로 어떤 메서드를 실행할지 고릅니다.",
+          "정의되지 않은 action은 응답 상태 코드 404로 처리합니다. sendError와 HttpServletResponse의 상수를 사용합니다."
+        ],
+        "ctrl-list": [
+          "조회한 목록은 request 속성에 담고 forward로 JSP에 넘깁니다. redirect하면 request 속성이 사라집니다.",
+          "JSP의 ${list}와 setAttribute의 첫 번째 인수 이름이 같아야 합니다."
+        ],
+        "ctrl-regist": [
+          "GET은 화면 표시, POST는 저장으로 나눕니다. request.getMethod()로 구분합니다.",
+          "저장에 성공하면 redirect로 목록 GET 요청을 새로 보내야 새로고침해도 다시 등록되지 않습니다.",
+          "검증 실패와 코드 중복은 같은 등록 화면으로 forward하고 alertMsg 속성에 안내를 담습니다."
+        ],
+        "ctrl-detail": [
+          "조회 결과가 null이면 빈 상세 화면을 보여주지 않고 404로 응답합니다.",
+          "JSP에서 ${book.code}로 읽으려면 속성 이름이 book여야 합니다."
+        ],
+        "ctrl-delete": [
+          "데이터를 바꾸는 요청은 POST로만 받습니다. 링크로 여는 GET 요청은 405로 응답합니다.",
+          "서비스가 돌려준 삭제 행 수가 0이면 없는 항목이므로 404로 응답합니다."
+        ],
+        "user-login": [
+          "세션에는 객체를 저장할 수 있고 쿠키에는 문자열만 저장합니다. 로그인한 회원은 세션 속성 user에 저장합니다.",
+          "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. setupCookie와 cookiePath를 사용합니다.",
+          "로그인 성공 직후 changeSessionId로 세션 ID를 바꾸면 세션 고정 공격을 줄입니다."
+        ],
+        "user-logout": [
+          "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
+        ],
+        "filter-session": [
+          "이 필터는 /book에만 적용됩니다. 로그인 요청은 /user로 가므로 필터에 다시 걸리지 않습니다.",
+          "허용할 때만 chain.doFilter를 호출합니다. 거부하면 호출하지 않고 로그인 화면으로 redirect합니다."
+        ],
+        "web-errorpage": [
+          "error-page 요소는 error-code와 location을 한 쌍으로 가집니다. location은 컨텍스트 루트 기준 경로입니다."
+        ],
+        "svc-methods": [
+          "서비스는 DAO를 호출하고 SQLException을 상위 계층이 다루기 쉬운 예외로 바꿉니다. 원인(cause)을 함께 전달합니다.",
+          "중복 키는 SQLIntegrityConstraintViolationException으로 오므로 SQLException보다 먼저 catch합니다."
+        ],
+        "dao-login": [
+          "조건 두 개를 and로 묶고 값은 PreparedStatement의 ? 자리에 순서대로 바인딩합니다.",
+          "행을 하나만 기대하므로 rs.next()를 if로 확인합니다."
+        ],
+        "dao-select-all": [
+          "여러 행은 while (rs.next())로 순회하며 행마다 DTO를 만들어 목록에 추가합니다.",
+          "정수 열은 getInt, 문자열 열은 getString으로 읽습니다."
+        ],
+        "dao-insert": [
+          "INSERT의 열 순서와 ? 바인딩 번호가 일치해야 합니다. 번호는 1부터 시작합니다.",
+          "INSERT, DELETE는 executeUpdate를 쓰고 영향받은 행 수를 반환합니다."
+        ],
+        "dao-detail": [
+          "기본키 열 하나로 where 조건을 만들고 결과가 없으면 null을 반환합니다."
+        ],
+        "dao-delete": [
+          "where 조건 없이 delete를 실행하면 모든 행이 지워집니다. 기본키 조건을 반드시 확인합니다.",
+          "executeUpdate의 반환값이 삭제된 행 수입니다."
+        ],
+        "jsp-header": [
+          "EL에서 세션 속성은 sessionScope.user로 읽습니다. empty로 값이 없는지 확인합니다.",
+          "사용자 이름처럼 외부 입력이 들어올 수 있는 값은 c:out으로 출력합니다."
+        ],
+        "jsp-login": [
+          "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
+          "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다."
+        ],
+        "jsp-list": [
+          "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",
+          "링크의 쿼리 문자열은 c:url과 c:param으로 만들면 값이 안전하게 인코딩됩니다."
+        ],
+        "jsp-regist": [
+          "데이터를 보내는 form은 POST를 쓰고, 어떤 동작인지는 hidden action 값으로 알려줍니다.",
+          "input name이 서버에서 읽는 파라미터 이름입니다. 오타가 나면 값이 null로 읽힙니다."
+        ],
+        "jsp-detail": [
+          "삭제는 링크가 아니라 POST form으로 보냅니다. 삭제할 코드는 hidden input에 담습니다.",
+          "EL 값은 c:out으로 감싸 HTML 특수문자가 그대로 실행되지 않게 합니다."
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "label": "구현 대상 전체 작성",
+      "files": [
+        "src/main/java/com/ssafy/sample/controller/BookController.java",
+        "src/main/java/com/ssafy/sample/controller/MemberController.java",
+        "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
+        "src/main/java/com/ssafy/sample/model/dao/BookDaoImpl.java",
+        "src/main/java/com/ssafy/sample/model/service/BookServiceImpl.java",
+        "src/main/webapp/WEB-INF/web.xml",
+        "src/main/webapp/book/detail.jsp",
+        "src/main/webapp/book/list.jsp",
+        "src/main/webapp/book/regist.jsp",
+        "src/main/webapp/header.jsp",
+        "src/main/webapp/login-form.jsp"
+      ],
+      "hints": {
+        "ctrl-dispatch": [
+          "doGet과 doPost는 모두 process를 호출합니다. process는 action 파라미터 값 하나로 어떤 메서드를 실행할지 고릅니다.",
+          "정의되지 않은 action은 응답 상태 코드 404로 처리합니다. sendError와 HttpServletResponse의 상수를 사용합니다."
+        ],
+        "ctrl-list": [
+          "조회한 목록은 request 속성에 담고 forward로 JSP에 넘깁니다. redirect하면 request 속성이 사라집니다.",
+          "JSP의 ${list}와 setAttribute의 첫 번째 인수 이름이 같아야 합니다."
+        ],
+        "ctrl-regist": [
+          "GET은 화면 표시, POST는 저장으로 나눕니다. request.getMethod()로 구분합니다.",
+          "저장에 성공하면 redirect로 목록 GET 요청을 새로 보내야 새로고침해도 다시 등록되지 않습니다.",
+          "검증 실패와 코드 중복은 같은 등록 화면으로 forward하고 alertMsg 속성에 안내를 담습니다."
+        ],
+        "ctrl-detail": [
+          "조회 결과가 null이면 빈 상세 화면을 보여주지 않고 404로 응답합니다.",
+          "JSP에서 ${book.code}로 읽으려면 속성 이름이 book여야 합니다."
+        ],
+        "ctrl-delete": [
+          "데이터를 바꾸는 요청은 POST로만 받습니다. 링크로 여는 GET 요청은 405로 응답합니다.",
+          "서비스가 돌려준 삭제 행 수가 0이면 없는 항목이므로 404로 응답합니다."
+        ],
+        "user-login": [
+          "세션에는 객체를 저장할 수 있고 쿠키에는 문자열만 저장합니다. 로그인한 회원은 세션 속성 user에 저장합니다.",
+          "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. setupCookie와 cookiePath를 사용합니다.",
+          "로그인 성공 직후 changeSessionId로 세션 ID를 바꾸면 세션 고정 공격을 줄입니다."
+        ],
+        "user-logout": [
+          "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
+        ],
+        "filter-session": [
+          "이 필터는 /book에만 적용됩니다. 로그인 요청은 /user로 가므로 필터에 다시 걸리지 않습니다.",
+          "허용할 때만 chain.doFilter를 호출합니다. 거부하면 호출하지 않고 로그인 화면으로 redirect합니다."
+        ],
+        "web-errorpage": [
+          "error-page 요소는 error-code와 location을 한 쌍으로 가집니다. location은 컨텍스트 루트 기준 경로입니다."
+        ],
+        "svc-methods": [
+          "서비스는 DAO를 호출하고 SQLException을 상위 계층이 다루기 쉬운 예외로 바꿉니다. 원인(cause)을 함께 전달합니다.",
+          "중복 키는 SQLIntegrityConstraintViolationException으로 오므로 SQLException보다 먼저 catch합니다."
+        ],
+        "dao-login": [
+          "조건 두 개를 and로 묶고 값은 PreparedStatement의 ? 자리에 순서대로 바인딩합니다.",
+          "행을 하나만 기대하므로 rs.next()를 if로 확인합니다."
+        ],
+        "dao-select-all": [
+          "여러 행은 while (rs.next())로 순회하며 행마다 DTO를 만들어 목록에 추가합니다.",
+          "정수 열은 getInt, 문자열 열은 getString으로 읽습니다."
+        ],
+        "dao-insert": [
+          "INSERT의 열 순서와 ? 바인딩 번호가 일치해야 합니다. 번호는 1부터 시작합니다.",
+          "INSERT, DELETE는 executeUpdate를 쓰고 영향받은 행 수를 반환합니다."
+        ],
+        "dao-detail": [
+          "기본키 열 하나로 where 조건을 만들고 결과가 없으면 null을 반환합니다."
+        ],
+        "dao-delete": [
+          "where 조건 없이 delete를 실행하면 모든 행이 지워집니다. 기본키 조건을 반드시 확인합니다.",
+          "executeUpdate의 반환값이 삭제된 행 수입니다."
+        ],
+        "jsp-header": [
+          "EL에서 세션 속성은 sessionScope.user로 읽습니다. empty로 값이 없는지 확인합니다.",
+          "사용자 이름처럼 외부 입력이 들어올 수 있는 값은 c:out으로 출력합니다."
+        ],
+        "jsp-login": [
+          "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
+          "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다."
+        ],
+        "jsp-list": [
+          "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",
+          "링크의 쿼리 문자열은 c:url과 c:param으로 만들면 값이 안전하게 인코딩됩니다."
+        ],
+        "jsp-regist": [
+          "데이터를 보내는 form은 POST를 쓰고, 어떤 동작인지는 hidden action 값으로 알려줍니다.",
+          "input name이 서버에서 읽는 파라미터 이름입니다. 오타가 나면 값이 null로 읽힙니다."
+        ],
+        "jsp-detail": [
+          "삭제는 링크가 아니라 POST form으로 보냅니다. 삭제할 코드는 hidden input에 담습니다.",
+          "EL 값은 c:out으로 감싸 HTML 특수문자가 그대로 실행되지 않게 합니다."
+        ]
+      }
+    }
+  ]
+}

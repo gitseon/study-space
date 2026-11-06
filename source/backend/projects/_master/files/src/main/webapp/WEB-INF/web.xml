@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+    id="WebApp_ID" version="6.0">
+    <display-name>sample</display-name>
+
+    <request-character-encoding>UTF-8</request-character-encoding>
+    <response-character-encoding>UTF-8</response-character-encoding>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!--@@target web-errorpage-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.jsp</location>
+    </error-page>
+    <!--@@stage 1-->
+    <error-page>
+        <error-code>____</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>____</location>
+    </error-page>
+    <!--@@stage 2-->
+    <!-- TODO: 404와 500 오류 코드를 각각 /error/404.jsp와 /error/500.jsp에 연결하세요. -->
+    <!--@@stage 3-->
+    <!-- 오류 페이지 매핑을 직접 작성하세요. 요구사항 R-ERROR를 참고합니다. -->
+    <!--@@end-->
+</web-app>

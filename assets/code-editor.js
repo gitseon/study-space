@@ -28,11 +28,11 @@ function shiftLines({value, start, end}, outdent) {
   };
 }
 
-function enter({value, start, end}) {
+function enter({value, start, end}, braces = true) {
   const ls = lineStart(value, start);
   const head = value.slice(ls, start);
   const base = head.match(/^ */)[0];
-  const opens = head.trimEnd().endsWith('{');
+  const opens = braces && head.trimEnd().endsWith('{');
   const closes = value.slice(end).match(/^ *}/);
   if (opens && closes) {
     const caret = start + 1 + base.length + INDENT.length;
@@ -55,7 +55,9 @@ function closeBrace({value, start, end}) {
   return {value: value.slice(0, ls) + kept + '}' + value.slice(end), start: caret, end: caret};
 }
 
-export function editKey(state, key, shift = false) {
+// options.braces는 중괄호를 자동으로 닫을지 정합니다. Java가 아닌 파일(JSP, XML, SQL)에서는 false로 둡니다.
+export function editKey(state, key, shift = false, options = {}) {
+  const braces = options.braces !== false;
   const {value, start, end} = state;
   if (key === 'Tab') {
     if (shift || value.slice(start, end).includes('\n')) {
@@ -65,7 +67,10 @@ export function editKey(state, key, shift = false) {
     return {value: value.slice(0, start) + INDENT + value.slice(end), start: caret, end: caret};
   }
   if (key === 'Enter') {
-    return enter(state);
+    return enter(state, braces);
+  }
+  if (!braces) {
+    return null;
   }
   if (key === '{') {
     // The closing brace is added at once. A selection is wrapped instead of replaced.
@@ -87,12 +92,12 @@ export function editKey(state, key, shift = false) {
 }
 
 // Wires the rules to a textarea. onChange runs after every edit the rules make, so the caller can save the text.
-export function attachEditor(area, onChange = () => {}) {
+export function attachEditor(area, onChange = () => {}, options = {}) {
   area.addEventListener('keydown', (ev) => {
     if (ev.isComposing || ev.ctrlKey || ev.metaKey || ev.altKey) {
       return;
     }
-    const result = editKey({value: area.value, start: area.selectionStart, end: area.selectionEnd}, ev.key, ev.shiftKey);
+    const result = editKey({value: area.value, start: area.selectionStart, end: area.selectionEnd}, ev.key, ev.shiftKey, options);
     if (!result) {
       return;
     }

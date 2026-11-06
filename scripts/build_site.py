@@ -4,7 +4,7 @@ import tempfile
 from pathlib import Path
 from build_data import ROOT, build_data
 
-PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html","pages/sw-test.html"]
+PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html","pages/sw-test.html","pages/project.html"]
 
 def build_site(output_dir: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:
@@ -14,6 +14,12 @@ def build_site(output_dir: Path) -> None:
             read=(lambda p:json.loads(p.read_text(encoding="utf-8"))) if generated.suffix==".json" else (lambda p:p.read_text(encoding="utf-8"))
             if not current.exists() or read(current)!=read(generated):
                 raise SystemExit(f"data/{generated.name} is stale. Run python scripts/build_data.py first.")
+        fresh_projects=fresh/"backend-projects"; current_projects=ROOT/"data"/"backend-projects"
+        expected={f.relative_to(fresh_projects).as_posix():f.read_bytes() for f in fresh_projects.rglob("*") if f.is_file()} if fresh_projects.is_dir() else {}
+        actual={f.relative_to(current_projects).as_posix():f.read_bytes() for f in current_projects.rglob("*") if f.is_file()} if current_projects.is_dir() else {}
+        if expected!=actual:
+            stale=sorted(k for k in set(expected)|set(actual) if expected.get(k)!=actual.get(k))
+            raise SystemExit(f"data/backend-projects/{stale[0]} is stale. Run python scripts/build_data.py first.")
     if output_dir.exists(): shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
     for page in PAGES:
