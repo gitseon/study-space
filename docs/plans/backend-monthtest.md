@@ -427,10 +427,26 @@ git diff --check
 | 항목 | 내용 |
 | --- | --- |
 | 구성 | 컨트롤러 하나(`GearController`, `/gear`)가 목록, 등록, 상세, 로그인, 로그아웃을 처리한다. 서비스와 DAO의 메서드는 `login`, `selectAll`, `insert`, `detail` 네 개다 |
-| 제거 | 삭제 기능(`ctrl-delete`, `dao-delete`), `SessionFilter`와 로그인 필요 요청 차단, `MemberController`(`/user`), 이메일 기억 쿠키, `DuplicateCodeException`, 입력 검증 보조 메서드, 오류 매핑 작성 대상(`web-errorpage`). `web.xml`은 제공 파일로 남긴다 |
+| 제거 | 삭제 기능(`ctrl-delete`, `dao-delete`), `SessionFilter`와 로그인 필요 요청 차단, `MemberController`(`/user`), `DuplicateCodeException`, 입력 검증 보조 메서드, 오류 매핑 작성 대상(`web-errorpage`). `web.xml`은 제공 파일로 남긴다 |
 | 이름 변경 | `user-login`, `user-logout`은 `ctrl-login`, `ctrl-logout`으로 바꿔 `GearController`에 둔다 |
 | 계약 변경 | `GearService.insert`는 코드 중복을 예외 대신 반환값 0으로 알린다. 컨트롤러는 0이면 `alertMsg`와 함께 등록 화면으로 되돌린다 |
 | 수치 | 작성 대상 20개에서 16개, 체크리스트 14개에서 10개, 흐름 탭 8개에서 6개, 모범답안 Java 13개에서 10개. 목록 표는 코드, 용품명, 가격, 색상 네 열이다 |
 | 버전 | 프로젝트 `revision`을 2로 올렸다. 이전에 시작한 응시는 시작 당시의 스냅샷으로 열린다 |
 | 검증 | `javac --release 21`(Servlet API 6.0.0)과 Jasper JspC(Tomcat 11.0.27, JSTL 3.0.1)로 두 도메인의 모범답안과 2단계 시작 코드를 확인했다. Tomcat 기동과 MySQL 실행은 확인하지 않았고 `review.json`의 실행 항목은 미검증이다 |
 | 원본 취급 | 갱신본의 코드와 문구를 옮기지 않고 구성, 기능, 작성 위치만 반영해 직접 작성했다. 원본은 저장소에 두지 않고 비공개로 보관한다 |
+
+## 14. 로그인 아이디 기억하기 쿠키 반영 (2026-11-09 사용자 요청)
+
+13절에서 이메일 기억 쿠키를 뺐지만 갱신본(`BE-MONTH-WEBTEST-01`)의 로그인 화면에는 `아이디 기억하기` 체크박스(`remember-me`)가 있고 사용자가 작성한 풀이는 이를 쿠키로 처리한다. 쿠키가 없는 연습 프로젝트는 그 풀이와 달라 쿠키 처리까지 반영했다.
+
+| 항목 | 내용 |
+| --- | --- |
+| 반영 위치 | 새 작성 대상을 만들지 않고 기존 `ctrl-login`(로그인과 아이디 기억하기 쿠키)과 `jsp-login`(로그인 form과 이메일 쿠키)에 포함했다. 작성 대상은 16개 그대로다 |
+| 컨트롤러 | 로그인에 성공하면 세션 속성 `user`를 저장하고, `remember-me`가 `on`이면 `email` 쿠키에 이메일을 30일 동안 저장하고 아니면 같은 이름과 path로 지운다. 저장과 삭제의 path는 같게 쓰고 루트 컨텍스트(`getContextPath()`가 빈 문자열)는 `/`로 바꾼다(7절 위험 항목의 후속 확인). 저장과 삭제는 제공 파일의 `setupCookie`를 쓴다 |
+| 로그인 화면 | `email` 쿠키가 있으면 이메일 칸을 그 값으로 채우고 체크박스를 `checked`로 그린다. 쿠키 값은 사용자가 바꿀 수 있으므로 `c:out`으로 출력한다 |
+| 체크리스트 | `auth-cookie`(아이디 기억하기 켜기, 끄기, 다시 열기)를 더해 10개에서 11개가 됐다. `auth-login`의 확인 항목은 그대로다 |
+| 문서와 도식 | 요구사항에 쿠키 약속과 로그인 항목, 흐름 문서의 로그인 흐름과 짝, 검증 절차의 쿠키 속성 확인, 도식의 `GearController`와 `login-form.jsp` 설명을 고쳤다 |
+| 되살리지 않은 것 | `SessionFilter`, `MemberController`, 삭제 기능, 오류 매핑 작성 대상은 13절 그대로 제외한다 |
+| 버전 | 프로젝트 `revision`을 3으로 올렸다. 이전에 시작한 응시는 시작 당시의 스냅샷으로 열린다 |
+| 검증 | `javac --release 21`과 Jasper JspC로 두 도메인의 모범답안과 2단계 시작 코드를 다시 확인했다. Tomcat 11.0.27의 쿠키 처리기로 `email` 쿠키 헤더(저장은 컨텍스트 경로 Path와 30일, 삭제는 같은 Path, `@` 허용)를 확인했다. Tomcat 기동과 MySQL 실행은 확인하지 않았고 `review.json`의 실행 항목(`auth-cookie` 포함)은 미검증이다 |
+| 원본 취급 | 사용자 풀이의 코드와 문구를 옮기지 않고 동작(쿠키 이름 `email`, 체크박스 이름 `remember-me`, 저장과 삭제)만 반영해 직접 작성했다 |

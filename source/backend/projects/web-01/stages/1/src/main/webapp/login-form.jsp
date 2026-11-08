@@ -15,12 +15,18 @@
         <fieldset>
             <div>
                 <label>이메일
-                    <input type="email" name="____" required>
+                    <input type="email" name="____" value="<c:out value='${____.email.value}' />" required>
                 </label>
             </div>
             <div>
                 <label>비밀번호
                     <input type="password" name="____" required>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" name="____" ${empty cookie.email.value ? '' : '____'}>
+                    아이디 기억하기
                 </label>
             </div>
             <input type="submit" value="로그인">

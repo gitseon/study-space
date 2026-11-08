@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "projectId": "web-02",
-  "revision": 2,
-  "hash": "39c90763c629ebfd",
+  "revision": 3,
+  "hash": "6adece56499741da",
   "stage": {
     "id": 1,
     "label": "빈칸 채우기"
@@ -18,7 +18,7 @@
       "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
       "language": "java",
       "editable": true,
-      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Book;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.BookService;\nimport com.ssafy.sample.model.service.BookServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/book\")\npublic class BookController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final BookService service = BookServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    private void process(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        String action = getActionParameter(request, response);\n        switch (____) {\n        case \"list\":\n            list(request, response);\n            break;\n        case \"regist\":\n            ____(request, response);\n            break;\n        case \"detail\":\n            detail(request, response);\n            break;\n        case \"login\":\n            login(request, response);\n            break;\n        case \"logout\":\n            ____(request, response);\n            break;\n        default:\n            response.sendError(HttpServletResponse.____);\n        }\n    }\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    private void list(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        List<Book> list = service.____();\n        request.____(\"list\", list);\n        forward(request, response, \"____\");\n    }\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    private void regist(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        if (\"GET\".equalsIgnoreCase(request.getMethod())) {\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        Book book = new Book();\n        book.setCode(request.getParameter(\"code\"));\n        book.setName(request.getParameter(\"____\"));\n        book.setAuthor(request.getParameter(\"author\"));\n        book.setCategory(request.getParameter(\"category\"));\n        try {\n            book.setPrice(Integer.____(request.getParameter(\"price\")));\n        } catch (____ e) {\n            request.setAttribute(\"alertMsg\", \"가격은 숫자로 입력하세요.\");\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        if (service.____(book) == 0) {\n            request.setAttribute(\"alertMsg\", \"등록하지 못했습니다. 이미 있는 코드인지 확인하세요.\");\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        ____(request, response, \"/book?action=list\");\n    }\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    private void detail(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        String code = request.getParameter(\"code\");\n        Book book = code == null ? null : service.____(code);\n        if (book == null) {\n            response.sendError(HttpServletResponse.____);\n            return;\n        }\n        request.setAttribute(\"____\", book);\n        forward(request, response, \"/book/detail.jsp\");\n    }\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-login:start\n    private void login(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        if (\"GET\".equalsIgnoreCase(request.getMethod())) {\n            forward(request, response, \"/login-form.jsp\");\n            return;\n        }\n        Member member = service.____(request.getParameter(\"email\"), request.getParameter(\"pass\"));\n        if (member == null) {\n            request.setAttribute(\"alertMsg\", \"이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.\");\n            forward(request, response, \"/login-form.jsp\");\n            return;\n        }\n        request.getSession().____(\"user\", member);\n        redirect(request, response, \"____\");\n    }\n    // study-target:ctrl-login:end\n\n    // study-target:ctrl-logout:start\n    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {\n        HttpSession session = request.getSession(____);\n        if (session != null) {\n            session.____();\n        }\n        redirect(request, response, \"/\");\n    }\n    // study-target:ctrl-logout:end\n}\n"
+      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Book;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.BookService;\nimport com.ssafy.sample.model.service.BookServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/book\")\npublic class BookController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final BookService service = BookServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    private void process(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        String action = getActionParameter(request, response);\n        switch (____) {\n        case \"list\":\n            list(request, response);\n            break;\n        case \"regist\":\n            ____(request, response);\n            break;\n        case \"detail\":\n            detail(request, response);\n            break;\n        case \"login\":\n            login(request, response);\n            break;\n        case \"logout\":\n            ____(request, response);\n            break;\n        default:\n            response.sendError(HttpServletResponse.____);\n        }\n    }\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    private void list(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        List<Book> list = service.____();\n        request.____(\"list\", list);\n        forward(request, response, \"____\");\n    }\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    private void regist(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        if (\"GET\".equalsIgnoreCase(request.getMethod())) {\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        Book book = new Book();\n        book.setCode(request.getParameter(\"code\"));\n        book.setName(request.getParameter(\"____\"));\n        book.setAuthor(request.getParameter(\"author\"));\n        book.setCategory(request.getParameter(\"category\"));\n        try {\n            book.setPrice(Integer.____(request.getParameter(\"price\")));\n        } catch (____ e) {\n            request.setAttribute(\"alertMsg\", \"가격은 숫자로 입력하세요.\");\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        if (service.____(book) == 0) {\n            request.setAttribute(\"alertMsg\", \"등록하지 못했습니다. 이미 있는 코드인지 확인하세요.\");\n            forward(request, response, \"/book/regist.jsp\");\n            return;\n        }\n        ____(request, response, \"/book?action=list\");\n    }\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    private void detail(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        String code = request.getParameter(\"code\");\n        Book book = code == null ? null : service.____(code);\n        if (book == null) {\n            response.sendError(HttpServletResponse.____);\n            return;\n        }\n        request.setAttribute(\"____\", book);\n        forward(request, response, \"/book/detail.jsp\");\n    }\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-login:start\n    private void login(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        if (\"GET\".equalsIgnoreCase(request.getMethod())) {\n            forward(request, response, \"/login-form.jsp\");\n            return;\n        }\n        String email = request.getParameter(\"email\");\n        Member member = service.____(email, request.getParameter(\"pass\"));\n        if (member == null) {\n            request.setAttribute(\"alertMsg\", \"이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.\");\n            forward(request, response, \"/login-form.jsp\");\n            return;\n        }\n        request.getSession().____(\"user\", member);\n        String path = request.getContextPath().isEmpty() ? \"____\" : request.getContextPath();\n        if (\"on\".equals(request.getParameter(\"____\"))) {\n            ____(\"email\", email, 60 * 60 * 24 * 30, path, response);\n        } else {\n            setupCookie(\"email\", \"\", ____, path, response);\n        }\n        redirect(request, response, \"____\");\n    }\n    // study-target:ctrl-login:end\n\n    // study-target:ctrl-logout:start\n    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {\n        HttpSession session = request.getSession(____);\n        if (session != null) {\n            session.____();\n        }\n        redirect(request, response, \"/\");\n    }\n    // study-target:ctrl-logout:end\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/controller/ControllerHelper.java",
@@ -132,7 +132,7 @@
       "path": "src/main/webapp/login-form.jsp",
       "language": "jsp",
       "editable": true,
-      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>로그인 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>로그인 페이지</h1>\n    <%-- study-target:jsp-login:start --%>\n    <form action=\"${root}/____\" method=\"____\">\n        <input type=\"hidden\" name=\"action\" value=\"____\">\n        <fieldset>\n            <div>\n                <label>이메일\n                    <input type=\"email\" name=\"____\" required>\n                </label>\n            </div>\n            <div>\n                <label>비밀번호\n                    <input type=\"password\" name=\"____\" required>\n                </label>\n            </div>\n            <input type=\"submit\" value=\"로그인\">\n        </fieldset>\n    </form>\n    <%-- study-target:jsp-login:end --%>\n</body>\n</html>\n"
+      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>로그인 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>로그인 페이지</h1>\n    <%-- study-target:jsp-login:start --%>\n    <form action=\"${root}/____\" method=\"____\">\n        <input type=\"hidden\" name=\"action\" value=\"____\">\n        <fieldset>\n            <div>\n                <label>이메일\n                    <input type=\"email\" name=\"____\" value=\"<c:out value='${____.email.value}' />\" required>\n                </label>\n            </div>\n            <div>\n                <label>비밀번호\n                    <input type=\"password\" name=\"____\" required>\n                </label>\n            </div>\n            <div>\n                <label>\n                    <input type=\"checkbox\" name=\"____\" ${empty cookie.email.value ? '' : '____'}>\n                    아이디 기억하기\n                </label>\n            </div>\n            <input type=\"submit\" value=\"로그인\">\n        </fieldset>\n    </form>\n    <%-- study-target:jsp-login:end --%>\n</body>\n</html>\n"
     }
   ],
   "targets": [
@@ -192,7 +192,7 @@
     },
     {
       "id": "ctrl-login",
-      "title": "로그인 처리",
+      "title": "로그인과 아이디 기억하기 쿠키",
       "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
       "topicIds": [
         "web-servlet",
@@ -200,7 +200,8 @@
       ],
       "requirementId": "R-LOGIN",
       "checklistIds": [
-        "auth-login"
+        "auth-login",
+        "auth-cookie"
       ]
     },
     {
@@ -299,7 +300,7 @@
     },
     {
       "id": "jsp-login",
-      "title": "로그인 form",
+      "title": "로그인 form과 이메일 쿠키",
       "path": "src/main/webapp/login-form.jsp",
       "topicIds": [
         "jsp-el",
@@ -308,6 +309,7 @@
       "requirementId": "R-LOGIN",
       "checklistIds": [
         "auth-login",
+        "auth-cookie",
         "jsp-render"
       ]
     },
@@ -372,7 +374,9 @@
     "ctrl-login": [
       "GET은 로그인 화면 표시, POST는 로그인 처리로 나눕니다. 입력 이름은 email과 pass입니다.",
       "세션에는 객체를 저장할 수 있습니다. 로그인한 회원은 session.setAttribute(\"user\", member)로 저장하고 메인(/)으로 redirect합니다.",
-      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다."
+      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다.",
+      "쿠키에는 문자열만 저장할 수 있고 브라우저에 남습니다. 체크박스 remember-me를 체크하면 값이 \"on\"으로 오고 체크하지 않으면 null입니다. 체크했을 때 ControllerHelper의 setupCookie로 email 쿠키를 저장합니다.",
+      "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. 루트 컨텍스트에서는 getContextPath()가 빈 문자열이므로 path를 \"/\"로 바꿔 씁니다."
     ],
     "ctrl-logout": [
       "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
@@ -402,7 +406,9 @@
     ],
     "jsp-login": [
       "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
-      "로그인 요청도 /book로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다."
+      "로그인 요청도 /book로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다.",
+      "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다.",
+      "아이디 기억하기 체크박스는 email 쿠키가 있을 때만 checked를 붙입니다. 쿠키 값은 사용자가 바꿀 수 있으므로 c:out으로 출력합니다."
     ],
     "jsp-list": [
       "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",

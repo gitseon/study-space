@@ -1,6 +1,6 @@
 {
   "projectId": "web-01",
-  "revision": 2,
+  "revision": 3,
   "environmentTarget": {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
     "tomcat": "Apache tomcat-11.0.27",
@@ -8,11 +8,11 @@
     "mysql": "8.4.11",
     "compileRelease": 21
   },
-  "referenceHash": "618c91be53c8d016ecff8ec282c8e16e510b5bf58fb405a0b2ff65a2e4bf6721",
+  "referenceHash": "1f9dd28aa5284e16a341d5923ff34d068444a42355eceb5a4ad547632b305bc9",
   "referenceFiles": {
     "pom.xml": "5334faa90ac90e27106e8ac55a4151243470d94003be42753929e3ce3e6c729f",
     "src/main/java/com/ssafy/sample/controller/ControllerHelper.java": "0656721a40ae5a61b1ebc1383b0aaf0e715d60e36569b86a6ca4f3c72c7eb42d",
-    "src/main/java/com/ssafy/sample/controller/GearController.java": "3cc4cf206019e87e8c57e6f1827f2cf8e93a8b9dc08b6ef05dbdbf3bdad064db",
+    "src/main/java/com/ssafy/sample/controller/GearController.java": "aa3b00c84f5425f44d2f93f7ea2157ade6080026a3dd26b4e420143076cae5c0",
     "src/main/java/com/ssafy/sample/filter/LoggingFilter.java": "7d78c7ece92956852fec25d12f740151003492fc48ca99d45a5ed7a7191bf6c4",
     "src/main/java/com/ssafy/sample/model/dao/GearDao.java": "a818061067b57d7c8ed79f6daf13a8f42c9989369d7ddfca50f2e2d62d409b59",
     "src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java": "847fc0b1baf73b507047b9e4b658bf885e1a06bc610fef0c5a1808fb569e44ef",
@@ -30,18 +30,22 @@
     "src/main/webapp/gear/regist.jsp": "dff80555c197e6e3c84621d8c170b85a44770c6578cc6c3e554f4518059f958c",
     "src/main/webapp/header.jsp": "599e52b887aa6ab79597a95fa090554cb558926d1d2762464f5d9c6f22f4db0f",
     "src/main/webapp/index.jsp": "252e1f3efbffa0961810d80fb04d4034545a1155dd4d121728cc6bc9f4eaaa7f",
-    "src/main/webapp/login-form.jsp": "b182a9a09dfd66e64a906717a5d7636cbce3dfbb21a9dfb11bc921f980f62664"
+    "src/main/webapp/login-form.jsp": "9d3473f55f117868d228b0b588a2697d3303118bc081dc82e2e47cc7263b98d3"
   },
   "verification": {
     "javacCompile": {
       "status": "통과",
-      "note": "reference 전체 Java 10개 클래스 컴파일. stage 2 시작 코드(starter와 stages/2)도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-08, Windows 11"
+      "note": "reference 전체 Java 10개 클래스 컴파일. stage 2 시작 코드(starter와 stages/2)도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-09, Windows 11"
     },
     "jspTranslate": {
       "status": "통과",
-      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-08, Windows 11"
+      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-09, Windows 11"
     },
     "runtime": {
+      "auth-cookie": {
+        "status": "미검증",
+        "note": "STS 실행 전. Tomcat 11.0.27 쿠키 처리기로 헤더만 확인함: 저장은 Path가 컨텍스트 경로(루트는 /), 삭제는 같은 Path. 이메일의 @는 허용됨"
+      },
       "auth-login": {
         "status": "미검증",
         "note": ""
@@ -79,7 +83,7 @@
         "note": ""
       }
     },
-    "verifiedReferenceHash": "618c91be53c8d016ecff8ec282c8e16e510b5bf58fb405a0b2ff65a2e4bf6721",
+    "verifiedReferenceHash": "1f9dd28aa5284e16a341d5923ff34d068444a42355eceb5a4ad547632b305bc9",
     "reviewer": null
   }
 }

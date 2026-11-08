@@ -165,17 +165,17 @@ test('finishing locks the code, keeps check states across a reload and never gra
   await page.locator('#pj-finish').click();
   await expect(page.locator('#pj-timer')).toHaveText('작성 마침');
   await expect(page.locator('#pj-mode-write')).toBeDisabled();
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 0/10');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 0/11');
   await expect(page.locator('#pj-sidebody')).toContainText('점수나 합격 판정은 없습니다');
   await page.locator('[data-act="check"][data-id="crd-list"][data-state="confirmed"]').click();
   await page.locator('[data-act="check"][data-id="crd-create"][data-state="needs-work"]').click();
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/10');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/11');
   await expect(page.locator('#pj-save')).toHaveText('저장됨', {timeout: 5000});
   await page.reload();
   await page.getByRole('tab', {name: '점검'}).click();
   await expect(page.locator('[data-act="check"][data-id="crd-list"][data-state="confirmed"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-act="check"][data-id="crd-create"][data-state="needs-work"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/10');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/11');
 });
 
 test('the draft check reports possible gaps only and does not change the check states', async ({page}) => {
@@ -185,7 +185,7 @@ test('the draft check reports possible gaps only and does not change the check s
   const items = page.locator('#pj-findings li');
   await expect(items).toHaveCount(16);
   await expect(items.first()).toContainText('가능성');
-  await expect(page.locator('#pj-progress')).toContainText('확인함 0/10');
+  await expect(page.locator('#pj-progress')).toContainText('확인함 0/11');
 });
 
 test('hints and the model answer are explicit and recorded as help', async ({page}) => {
@@ -200,7 +200,7 @@ test('hints and the model answer are explicit and recorded as help', async ({pag
   await expect(page.locator('.pj-ref')).toBeVisible();
   await page.getByRole('tab', {name: '점검'}).click();
   await expect(page.locator('#pj-sidebody')).toContainText('도움 사용: 힌트 1곳, 모범답안');
-  await expect(page.locator('#pj-progress')).toContainText('확인함 0/10');
+  await expect(page.locator('#pj-progress')).toContainText('확인함 0/11');
 });
 
 test('the timer expires, keeps the code, locks editing and continues as a new unlimited attempt', async ({page}) => {

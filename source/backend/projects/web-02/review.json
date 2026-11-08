@@ -1,6 +1,6 @@
 {
   "projectId": "web-02",
-  "revision": 2,
+  "revision": 3,
   "environmentTarget": {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
     "tomcat": "Apache tomcat-11.0.27",
@@ -8,10 +8,10 @@
     "mysql": "8.4.11",
     "compileRelease": 21
   },
-  "referenceHash": "d1139f5ef9bf2fcbad01bf7f415fb4f5c080d4c77ae0236c289401e4c24c81da",
+  "referenceHash": "670cbbaa66cae58f32ba4d3550742d15472f355321324171bb9375d7e7d37ecd",
   "referenceFiles": {
     "pom.xml": "5334faa90ac90e27106e8ac55a4151243470d94003be42753929e3ce3e6c729f",
-    "src/main/java/com/ssafy/sample/controller/BookController.java": "91dac9a18be153e76a8005d44d68bafb13337428c57e4ff2a3a0001632163ced",
+    "src/main/java/com/ssafy/sample/controller/BookController.java": "1635bff4b1d37d881f3d67ed5a89e9069f8f3c40cd29385ee9b6a4e59244cb45",
     "src/main/java/com/ssafy/sample/controller/ControllerHelper.java": "0656721a40ae5a61b1ebc1383b0aaf0e715d60e36569b86a6ca4f3c72c7eb42d",
     "src/main/java/com/ssafy/sample/filter/LoggingFilter.java": "7d78c7ece92956852fec25d12f740151003492fc48ca99d45a5ed7a7191bf6c4",
     "src/main/java/com/ssafy/sample/model/dao/BookDao.java": "842832c38a03acdd7d68d118f3c1affc975121a67114cbdaed2ebb58ee889da0",
@@ -30,18 +30,22 @@
     "src/main/webapp/error/500.jsp": "88a206e3c3a3d0831bdfaf357700a34de76636bd5fbe04517c2ad2a5b98ca1d0",
     "src/main/webapp/header.jsp": "af0fd1b1bd0338244738e5ae29706b0e04c6449d8530e1c7888b9aada32bb964",
     "src/main/webapp/index.jsp": "252e1f3efbffa0961810d80fb04d4034545a1155dd4d121728cc6bc9f4eaaa7f",
-    "src/main/webapp/login-form.jsp": "49bc982a424de90c14e14ffab0446da947c809aa776a376f11568e13b5b975d8"
+    "src/main/webapp/login-form.jsp": "0627a6ddc72b8591a3a1c857fd8218352d503dc0a1ca87a9c26f33d3a4bffcb8"
   },
   "verification": {
     "javacCompile": {
       "status": "통과",
-      "note": "reference 전체 Java 10개 클래스 컴파일. stage 2 시작 코드(starter와 stages/2)도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-08, Windows 11"
+      "note": "reference 전체 Java 10개 클래스 컴파일. stage 2 시작 코드(starter와 stages/2)도 컴파일됨. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-09, Windows 11"
     },
     "jspTranslate": {
       "status": "통과",
-      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-08, Windows 11"
+      "note": "reference의 JSP 8개 번역과 컴파일 오류 0건. DB·서버 기동 없이 번역만 확인. javac 25.0.3 (--release 21, jakarta.servlet-api 6.0.0), Tomcat 11.0.27 Jasper JspC(-compile, JSTL 3.0.1), 2026-11-09, Windows 11"
     },
     "runtime": {
+      "auth-cookie": {
+        "status": "미검증",
+        "note": "STS 실행 전. Tomcat 11.0.27 쿠키 처리기로 헤더만 확인함: 저장은 Path가 컨텍스트 경로(루트는 /), 삭제는 같은 Path. 이메일의 @는 허용됨"
+      },
       "auth-login": {
         "status": "미검증",
         "note": ""
@@ -79,7 +83,7 @@
         "note": ""
       }
     },
-    "verifiedReferenceHash": "d1139f5ef9bf2fcbad01bf7f415fb4f5c080d4c77ae0236c289401e4c24c81da",
+    "verifiedReferenceHash": "670cbbaa66cae58f32ba4d3550742d15472f355321324171bb9375d7e7d37ecd",
     "reviewer": null
   }
 }
