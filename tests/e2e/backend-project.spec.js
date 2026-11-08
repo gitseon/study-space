@@ -494,8 +494,8 @@ test('pressing the selected structure box again folds its detail back to the hin
 test('the write-only toggle hides provided boxes and the write boxes carry a mark', async ({page}) => {
   await openMonthly(page);
   const nodes = page.locator('#project-structure .st-node');
-  const all = await nodes.count();
   await expect(page.locator('#project-structure .st-node[data-write="true"] .st-write').first()).toBeVisible();
+  const all = await nodes.count();
   const toggle = page.locator('#project-structure [data-writeonly]');
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-pressed', 'true');
@@ -529,6 +529,7 @@ test('the architecture picture shows a summary on hover and jumps to the detail 
 test('the architecture picture follows the write-only toggle', async ({page}) => {
   await openMonthly(page);
   const boxes = page.locator('#project-structure .ar-box');
+  await expect(boxes.first()).toBeVisible();
   const all = await boxes.count();
   expect(all).toBeGreaterThanOrEqual(15);
   await page.locator('#project-structure [data-writeonly]').click();
