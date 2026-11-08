@@ -6,7 +6,6 @@
   "title": "백엔드 · DB 2회",
   "subtitle": "오류의 원인 찾기",
   "practiceMinutes": 60,
-  "fixedPracticeMinutes": true,
   "sourceScopeVersion": 1,
   "questions": [
     {
@@ -1488,5 +1487,5 @@
       "d"
     ]
   },
-  "contentVersion": "d3f8ff6519e3fcfe"
+  "contentVersion": "10ce1c98ae020763"
 }

@@ -35,41 +35,45 @@ test('other tracks do not offer the backend notes and the note pages keep their 
 });
 
 for (const id of ['backend-01', 'backend-02', 'backend-03']) {
-  test('exam mode is fixed at 60 minutes while study mode lets the learner choose in ' + id, async ({page}) => {
+  test('both grading modes let the learner choose the time limit with 60 minutes preselected in ' + id, async ({page}) => {
     await openBackend(page);
     const time = page.locator('#time-' + id);
-    await page.locator('#mode-' + id).selectOption({label: '모두 풀고 한 번에 채점'});
-    await expect(time).toBeDisabled();
+    await expect(time).toBeEnabled();
     await expect(time).toHaveValue('60');
+    await page.locator('#mode-' + id).selectOption({label: '모두 풀고 한 번에 채점'});
+    await expect(time).toBeEnabled();
+    await time.selectOption('90');
+    await expect(time).toHaveValue('90');
     await page.locator('#mode-' + id).selectOption({label: '한 문제씩 정답 확인'});
     await expect(time).toBeEnabled();
+    await expect(time).toHaveValue('90');
     await time.selectOption('0');
     await page.locator('#mode-' + id).selectOption({label: '모두 풀고 한 번에 채점'});
-    await expect(time).toHaveValue('60');
+    await expect(time).toBeEnabled();
+    await expect(time).toHaveValue('0');
   });
 }
 
-test('starting from the card and tampering with the address both give a 60 minute exam', async ({page}) => {
+test('the chosen time limit applies when starting an exam-mode attempt from the card', async ({page}) => {
   await openBackend(page);
   await page.locator('#mode-backend-01').selectOption({label: '모두 풀고 한 번에 채점'});
-  await page.getByRole('button', {name: '백엔드 · DB 1회 시작', exact: true}).click();
-  await expect(page.locator('.question-panel')).toBeVisible();
   const minutes = () => page.evaluate(() => {
     const attempts = JSON.parse(localStorage.getItem('algorithm-notes:v1')).attempts;
     const a = attempts[attempts.length - 1];
-    return Math.round((a.deadlineAt - a.startedAt) / 60000);
+    return a.deadlineAt === null ? 0 : Math.round((a.deadlineAt - a.startedAt) / 60000);
   });
+  await page.getByRole('button', {name: '백엔드 · DB 1회 시작', exact: true}).click();
+  await expect(page.locator('.question-panel')).toBeVisible();
   expect(await minutes()).toBe(60);
+  await openBackend(page);
+  await page.locator('#mode-backend-01').selectOption({label: '모두 풀고 한 번에 채점'});
+  await page.locator('#time-backend-01').selectOption('90');
+  await page.getByRole('button', {name: '백엔드 · DB 1회 시작', exact: true}).click();
+  await expect(page.locator('.question-panel')).toBeVisible();
+  expect(await minutes()).toBe(90);
   await page.goto('pages/quiz.html?exam=backend-01&mode=exam&minutes=0&new=1');
   await expect(page.locator('.question-panel')).toBeVisible();
-  expect(await minutes()).toBe(60);
-  await page.goto('pages/quiz.html?exam=backend-01&mode=study&minutes=0&new=1');
-  await expect(page.locator('.question-panel')).toBeVisible();
-  const study = await page.evaluate(() => {
-    const attempts = JSON.parse(localStorage.getItem('algorithm-notes:v1')).attempts;
-    return attempts[attempts.length - 1].deadlineAt;
-  });
-  expect(study).toBeNull();
+  expect(await minutes()).toBe(0);
 });
 
 test('every topic practice set holds only backend questions of that topic', async ({page}) => {
