@@ -156,7 +156,29 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
     }).join('');
   }
 
+  // 파일마다 스크롤 위치를 기억한다. 다른 파일로 가거나 읽기와 작성 모드를 바꾸면 화면이 다시 그려지므로,
+  // 다시 그리기 직전에 화면에 있던 파일의 위치를 저장하고 그린 뒤에 새로 보이는 파일의 위치를 되살린다(처음 여는 파일은 맨 위).
+  const scrolls = new Map();
+  let shown = null;
+
+  function rememberScroll() {
+    if (!shown) return;
+    const el = shown.editing ? input : view;
+    scrolls.set(shown.path, {top: el.scrollTop, left: el.scrollLeft});
+  }
+
+  function restoreScroll() {
+    const el = isEditing() ? input : view;
+    const saved = scrolls.get(state.path) || {top: 0, left: 0};
+    el.scrollTop = saved.top;
+    el.scrollLeft = saved.left;
+    gutter.scrollTop = saved.top;
+    syncHl();
+    shown = {path: state.path, editing: isEditing()};
+  }
+
   function render() {
+    rememberScroll();
     root.dataset.mode = isEditing() ? 'write' : 'read';
     root.dataset.wrap = state.wrap ? 'on' : 'off';
     root.style.setProperty('--pe-font', `${state.fontSize}px`);
@@ -187,6 +209,7 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
     }
     detach();
     detach = editing ? bind(info.language) : () => {};
+    restoreScroll();
   }
 
   function bind(language) {
