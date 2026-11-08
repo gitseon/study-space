@@ -106,7 +106,7 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
     + '<div class="pe-pathbar"><span class="pe-path-text"></span><span class="pe-badge"></span></div>'
     + '<p class="pe-keyhint" id="pe-keyhint">입력 칸에서 Esc를 누른 뒤 Tab을 누르면 입력 칸을 벗어납니다. Tab만 누르면 들여쓰기입니다.</p>'
     + '<div class="pe-body"><pre class="pe-gutter" aria-hidden="true"></pre>'
-    + '<textarea class="pe-input code-editor" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="코드 입력" aria-describedby="pe-keyhint"></textarea>'
+    + '<div class="pe-stack"><pre class="pe-hl" aria-hidden="true"><code></code></pre><textarea class="pe-input code-editor" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-label="코드 입력" aria-describedby="pe-keyhint"></textarea></div>'
     + '<pre class="pe-view" tabindex="0" aria-label="코드 읽기"><code></code></pre></div></div>';
   const root = container.firstElementChild;
   const tabs = root.querySelector('.pe-tabs');
@@ -115,6 +115,9 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
   const gutter = root.querySelector('.pe-gutter');
   const input = root.querySelector('.pe-input');
   const view = root.querySelector('.pe-view');
+  const stack = root.querySelector('.pe-stack');
+  const hlCode = root.querySelector('.pe-hl code');
+  const hl = root.querySelector('.pe-hl');
   const viewCode = view.querySelector('code');
 
   const isEditing = () => !!state.path && meta.get(state.path)?.editable && !state.readOnly && state.mode === 'write';
@@ -123,6 +126,25 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
 
   function paintGutter(text) {
     gutter.textContent = withLineNumbers(lineCount(text));
+  }
+
+  // 작성 모드의 색: 글자는 투명한 textarea가 입력을 받고, 같은 글자를 색 입힌 채로 바로 아래 층(.pe-hl)이 보여 준다.
+  function syncHl() {
+    hl.scrollTop = input.scrollTop;
+    hl.scrollLeft = input.scrollLeft;
+  }
+
+  // textarea에 스크롤바가 생기면 글자 영역이 좁아지므로 같은 만큼 색 층의 여백을 늘려 줄바꿈과 위치를 맞춘다.
+  function fitHl() {
+    if (input.hidden) return;
+    hl.style.paddingRight = `${12 + (input.offsetWidth - input.clientWidth)}px`;
+    hl.style.paddingBottom = `${12 + (input.offsetHeight - input.clientHeight)}px`;
+  }
+
+  function paintHl(language) {
+    hlCode.innerHTML = highlight(language, input.value) + '\n';
+    fitHl();
+    syncHl();
   }
 
   function paintTabs() {
@@ -146,6 +168,7 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
     }
     const info = meta.get(state.path);
     const text = texts.get(state.path);
+    root.dataset.lang = info.language;
     pathText.textContent = `${state.path} · ${windowLabel(info.language)}`;
     badge.textContent = info.editable ? (state.readOnly ? '잠김' : '작성 파일') : '제공 파일 · 읽기 전용';
     badge.dataset.kind = info.editable ? (state.readOnly ? 'locked' : 'editable') : 'provided';
@@ -153,10 +176,12 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
     gutter.hidden = state.wrap;
     const editing = isEditing();
     input.hidden = !editing;
+    stack.hidden = !editing;
     view.hidden = editing;
     if (editing) {
       if (input.value !== text) input.value = text;
       input.wrap = state.wrap ? 'soft' : 'off';
+      paintHl(info.language);
     } else {
       viewCode.innerHTML = highlight(info.language, text);
     }
@@ -190,7 +215,13 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
       setSelectionRange: (a, b) => input.setSelectionRange(a, b),
     };
     attachEditor(proxy, handler, languageOptions(language));
-    input.addEventListener('scroll', () => { gutter.scrollTop = input.scrollTop; }, {signal: controller.signal});
+    input.addEventListener('scroll', () => { gutter.scrollTop = input.scrollTop; syncHl(); }, {signal: controller.signal});
+    input.addEventListener('input', () => paintHl(language), {signal: controller.signal});
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver(() => { fitHl(); syncHl(); });
+      observer.observe(input);
+      controller.signal.addEventListener('abort', () => observer.disconnect());
+    }
     return () => controller.abort();
   }
 
@@ -292,4 +323,9 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
       container.innerHTML = '';
     },
   };
+}
+
+// 패널 너비를 min과 max 사이로 맞춘다. max가 min보다 작으면 min을 쓴다.
+export function clampPanelWidth(width, min, max) {
+  return Math.round(Math.min(Math.max(width, min), Math.max(min, max)));
 }

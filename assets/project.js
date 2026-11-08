@@ -14,7 +14,7 @@ import {checkProjectDraft} from './project-checks.js';
 import {buildProjectZip, exportRoot} from './project-export.js';
 import {EDITOR_NOTICE, ENV_NOTICE} from './project-notices.js';
 import {mountStructure} from './project-structure.js';
-import {buildTree, layoutFor, mountProjectEditor, targetStates, findRegion} from './project-editor.js';
+import {buildTree, clampPanelWidth, layoutFor, mountProjectEditor, targetStates, findRegion} from './project-editor.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -236,12 +236,12 @@ function renderRun() {
   S.mode = layout === 'mobile' || locked() ? 'read' : 'write';
   const needsSave = !S.browse;
   root.innerHTML = `<div class="pj" id="pj" data-layout="${layout}" data-panel="code" data-files="open" data-side="${layout === 'tablet' ? 'closed' : 'open'}">`
-    + '<div class="pj-top"><h1>' + e(view.title) + `</h1><span class="meta">${view.stageId}단계 ${e(view.stageLabel)}</span><span class="spacer"></span>`
+    + '<div class="pj-top"><span class="pj-collapse pj-collapse-left"><button type="button" class="pj-btn small" id="pj-toggle-files" aria-pressed="false">파일 접기</button></span><h1>' + e(view.title) + `</h1><span class="meta">${view.stageId}단계 ${e(view.stageLabel)}</span><span class="spacer"></span>`
     + (S.browse ? '<span class="pj-timer" id="pj-timer">둘러보기 · 시간 기록 없음</span>' : '<span class="pj-timer" id="pj-timer" role="timer"></span>')
     + (needsSave ? '<span class="pj-save" id="pj-save" role="status" data-state="saved"></span>' : '')
     + '<button type="button" class="pj-btn small" id="pj-zip">프로젝트 내려받기(ZIP)</button>'
     + (needsSave ? '<button type="button" class="pj-btn small" id="pj-record">기록 백업(JSON)</button>' : '')
-    + '<span class="pj-collapse"><button type="button" class="pj-btn small" id="pj-toggle-files" aria-pressed="false">파일 접기</button><button type="button" class="pj-btn small" id="pj-toggle-side">요구사항 접기</button></span>'
+    + '<span class="pj-collapse"><button type="button" class="pj-btn small" id="pj-toggle-side">요구사항 접기</button></span>'
     + '</div><div id="pj-banners"></div>'
     + '<div class="pj-segment" role="group" aria-label="화면 전환"><button type="button" data-panel="files">파일</button><button type="button" data-panel="code" aria-pressed="true">코드</button><button type="button" data-panel="side">요구사항과 점검</button></div>'
     + '<div class="pj-grid">'
@@ -256,6 +256,7 @@ function renderRun() {
     + (S.browse ? '' : '<div class="group"><button type="button" id="pj-finish" class="primary">작성 마치기</button></div>')
     + '</div><div class="pj-editor" id="pj-editor"></div></section>'
     + '<aside class="pj-panel pj-side" aria-label="요구사항과 점검"><header><span>요구사항 · 점검</span></header><div class="pj-side-body"><div class="pj-sidetabs" role="tablist" id="pj-sidetabs"></div><div id="pj-sidebody"></div></div></aside>'
+    + '<div class="pj-resizer" id="pj-resizer" role="separator" aria-orientation="vertical" aria-label="요구사항 영역 너비 조절 (방향키, Home, End, Enter로 처음 크기)" tabindex="0"></div>'
     + '</div></div>';
 
   const files = view.files.map((f) => ({path: f.path, language: f.language, editable: f.editable, text: currentFiles()[f.path]}));
@@ -293,13 +294,17 @@ function wireRun() {
     const collapsed = pj.dataset.files === 'collapsed';
     pj.dataset.files = collapsed ? 'open' : 'collapsed';
     $('#pj-toggle-files').textContent = collapsed ? '파일 접기' : '파일 펼치기';
+    $('#pj-toggle-files').setAttribute('aria-pressed', String(!collapsed));
+    reclampSide();
   };
   $('#pj-toggle-side').onclick = () => {
     const tablet = pj.dataset.layout === 'tablet';
     const open = pj.dataset.side === 'open';
     pj.dataset.side = open ? (tablet ? 'closed' : 'collapsed') : 'open';
     $('#pj-toggle-side').textContent = open ? '요구사항 펼치기' : '요구사항 접기';
+    reclampSide();
   };
+  setupSideResize(pj);
   $('#pj-mode-read').onclick = () => setMode('read');
   $('#pj-mode-write').onclick = () => setMode('write');
   $('#pj-font-down').onclick = () => S.editor.setFontSize(S.editor.fontSize() - 1);
@@ -341,6 +346,7 @@ function wireRun() {
   $('#pj-sidebody').addEventListener('click', onSideClick);
   $('#pj-sidebody').addEventListener('change', onSideChange);
   window.addEventListener('resize', applyLayout);
+  window.addEventListener('resize', reclampSide);
   window.visualViewport?.addEventListener('resize', () => document.documentElement.style.setProperty('--vvh', `${window.visualViewport.height}px`));
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveNow(); });
   window.addEventListener('pagehide', () => saveNow());
@@ -357,6 +363,120 @@ function setPanel(name) {
   const pj = root.querySelector('#pj');
   pj.dataset.panel = name;
   pj.querySelectorAll('.pj-segment [data-panel]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.panel === name)));
+}
+
+// 요구사항·구조 패널의 너비. 사용자가 끌어서 바꾸면 브라우저에 저장하고, 코드 칸이 너무 좁아지지 않게 범위를 제한한다.
+const SIDE_KEY = 'study-space:project-side-width';
+const SIDE_MIN = 280;
+const CODE_MIN = 320;
+const GAP = 10;
+
+function readSideWidth() {
+  try {
+    const value = Number(localStorage.getItem(SIDE_KEY));
+    return Number.isFinite(value) && value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSideWidth(value) {
+  try {
+    if (value == null) localStorage.removeItem(SIDE_KEY);
+    else localStorage.setItem(SIDE_KEY, String(Math.round(value)));
+  } catch {
+    // 저장할 수 없어도 이번 화면에서는 바꾼 너비가 그대로 쓰인다.
+  }
+}
+
+function sideBounds(pj) {
+  const grid = pj.querySelector('.pj-grid');
+  const filesOpen = pj.dataset.files !== 'collapsed';
+  const filesWidth = filesOpen ? pj.querySelector('.pj-files').getBoundingClientRect().width : 0;
+  const gaps = (filesOpen ? 2 : 1) * GAP;
+  return {min: SIDE_MIN, max: Math.max(SIDE_MIN, grid.getBoundingClientRect().width - filesWidth - gaps - CODE_MIN)};
+}
+
+function currentSideWidth(pj) {
+  return Math.round(pj.querySelector('.pj-side').getBoundingClientRect().width);
+}
+
+function updateResizer(pj) {
+  const handle = pj.querySelector('#pj-resizer');
+  if (!handle || getComputedStyle(handle).display === 'none') return;
+  const {min, max} = sideBounds(pj);
+  handle.setAttribute('aria-valuemin', String(min));
+  handle.setAttribute('aria-valuemax', String(Math.round(max)));
+  handle.setAttribute('aria-valuenow', String(currentSideWidth(pj)));
+}
+
+// width가 null이면 처음 크기(화면 너비에 비례)로 돌아간다.
+function applySideWidth(pj, width) {
+  if (width == null) {
+    pj.style.removeProperty('--pj-side-user');
+  } else {
+    const {min, max} = sideBounds(pj);
+    pj.style.setProperty('--pj-side-user', `${clampPanelWidth(width, min, max)}px`);
+  }
+  updateResizer(pj);
+}
+
+// 창 크기나 패널 접기가 바뀌면 저장한 너비를 새 범위 안으로 다시 맞춘다(저장 값은 그대로 둔다).
+function reclampSide() {
+  const pj = root.querySelector('#pj');
+  if (!pj) return;
+  const stored = readSideWidth();
+  if (stored) applySideWidth(pj, stored);
+  updateResizer(pj);
+}
+
+function setupSideResize(pj) {
+  const handle = pj.querySelector('#pj-resizer');
+  const stored = readSideWidth();
+  if (stored) applySideWidth(pj, stored);
+  updateResizer(pj);
+  let dragging = false;
+  handle.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    handle.setPointerCapture(event.pointerId);
+    dragging = true;
+    pj.dataset.resizing = 'true';
+  });
+  handle.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    // 손잡이 가운데가 패널의 왼쪽 경계이므로 패널 너비는 격자 오른쪽 끝에서 손잡이 가운데까지다.
+    applySideWidth(pj, pj.querySelector('.pj-grid').getBoundingClientRect().right - event.clientX - GAP / 2);
+  });
+  const finish = () => {
+    if (!dragging) return;
+    dragging = false;
+    delete pj.dataset.resizing;
+    writeSideWidth(currentSideWidth(pj));
+  };
+  handle.addEventListener('pointerup', finish);
+  handle.addEventListener('pointercancel', finish);
+  handle.addEventListener('keydown', (event) => {
+    const step = event.shiftKey ? 72 : 24;
+    const now = currentSideWidth(pj);
+    const {min, max} = sideBounds(pj);
+    let next;
+    if (event.key === 'ArrowLeft') next = now + step;
+    else if (event.key === 'ArrowRight') next = now - step;
+    else if (event.key === 'Home') next = min;
+    else if (event.key === 'End') next = max;
+    else if (event.key === 'Enter') next = null;
+    else return;
+    event.preventDefault();
+    applySideWidth(pj, next);
+    writeSideWidth(next == null ? null : currentSideWidth(pj));
+    updateResizer(pj);
+  });
+  handle.addEventListener('dblclick', () => {
+    applySideWidth(pj, null);
+    writeSideWidth(null);
+    updateResizer(pj);
+  });
 }
 
 function applyLayout() {
