@@ -769,3 +769,70 @@ test('the editor colours Java, JSP and XML like Eclipse in write mode and in rea
   await page.locator('[data-file="src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java"]').click();
   expect(await style('.pe-view .tok-k')).toEqual(['rgb(127, 0, 85)', '700', 'normal']);
 });
+
+test('the model answer lists only the files to write', async ({page}) => {
+  await start(page, {stage: 1, minutes: 0});
+  await page.getByRole('tab', {name: '모범답안'}).click();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.locator('[data-act="open-ref"]').click();
+  const select = page.locator('select[data-act="ref-file"]');
+  await expect(select).toBeVisible();
+  const paths = await select.locator('option').evaluateAll((options) => options.map((o) => o.value).sort());
+  expect(paths).toEqual([
+    'src/main/java/com/ssafy/sample/controller/GearController.java',
+    'src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java',
+    'src/main/java/com/ssafy/sample/model/service/GearServiceImpl.java',
+    'src/main/webapp/gear/detail.jsp',
+    'src/main/webapp/gear/list.jsp',
+    'src/main/webapp/gear/regist.jsp',
+    'src/main/webapp/header.jsp',
+    'src/main/webapp/login-form.jsp',
+  ]);
+  await select.selectOption('src/main/webapp/login-form.jsp');
+  await expect(page.locator('.pj-ref')).toContainText('remember-me');
+});
+
+test('each file remembers its own scroll position across file and mode changes', async ({page}) => {
+  await start(page, {stage: 2, minutes: 0});
+  const controller = 'src/main/java/com/ssafy/sample/controller/GearController.java';
+  const dao = 'src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java';
+  const helper = 'src/main/java/com/ssafy/sample/controller/ControllerHelper.java';
+  const scrollOf = (selector) => page.locator(selector).evaluate((el) => Math.round(el.scrollTop));
+  const open = (path) => page.locator(`[data-file="${path}"]`).click();
+  await expect(page.locator('.pe-path-text')).toContainText('GearController.java');
+  await page.locator('.pe-input').evaluate((el) => { el.scrollTop = 400; });
+  await expect.poll(() => scrollOf('.pe-gutter')).toBe(400);
+
+  await open(dao);
+  await expect(page.locator('.pe-path-text')).toContainText('GearDaoImpl.java');
+  expect(await scrollOf('.pe-input')).toBe(0);
+  expect(await scrollOf('.pe-gutter')).toBe(0);
+  expect(await scrollOf('.pe-hl')).toBe(0);
+  await page.locator('.pe-input').evaluate((el) => { el.scrollTop = 120; });
+  await expect.poll(() => scrollOf('.pe-gutter')).toBe(120);
+
+  await open(controller);
+  await expect(page.locator('.pe-path-text')).toContainText('GearController.java');
+  expect(await scrollOf('.pe-input')).toBe(400);
+  expect(await scrollOf('.pe-gutter')).toBe(400);
+  expect(await scrollOf('.pe-hl')).toBe(400);
+  await open(dao);
+  expect(await scrollOf('.pe-input')).toBe(120);
+
+  await page.locator('#pj-mode-read').click();
+  await expect(page.locator('.pe-input')).toBeHidden();
+  expect(await scrollOf('.pe-view')).toBe(120);
+  await page.locator('.pe-view').evaluate((el) => { el.scrollTop = 150; });
+  await open(helper);
+  await expect(page.locator('.pe-path-text')).toContainText('ControllerHelper.java');
+  expect(await scrollOf('.pe-view')).toBe(0);
+  await page.locator('.pe-view').evaluate((el) => { el.scrollTop = 100; });
+  await open(dao);
+  await expect.poll(() => scrollOf('.pe-view')).toBe(150);
+  await open(helper);
+  await expect.poll(() => scrollOf('.pe-view')).toBe(100);
+  await open(controller);
+  await page.locator('#pj-mode-write').click();
+  await expect(page.locator('.pe-input')).toBeVisible();
+  expect(await scrollOf('.pe-input')).toBe(400);
+});

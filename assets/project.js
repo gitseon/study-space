@@ -855,6 +855,12 @@ function draftCheckHtml(view) {
   return `<div class="pj-target"><h3>작성 점검</h3><p>작성하지 않은 영역이 있을 가능성만 알려줍니다. 컴파일이나 실행 결과가 아니며 점검 상태를 바꾸지 않습니다.</p><p><button type="button" class="pj-btn small" data-act="draft-check">작성 점검 실행</button></p>${result}</div>`;
 }
 
+// 모범답안은 직접 작성하는 파일만 보여 준다. 제공 파일은 그대로 쓰면 되므로 비교할 것이 없다.
+function writableReferenceFiles() {
+  const writable = new Set(viewModel().files.filter((f) => f.editable).map((f) => f.path));
+  return S.ref.files.filter((f) => writable.has(f.path));
+}
+
 function refHtml() {
   if (S.browse) return '<p class="pj-progress">응시를 시작한 뒤 열 수 있습니다.</p>';
   if (!S.entry) return '<p class="pj-progress">원고가 바뀌어 모범답안을 찾을 수 없습니다.</p>';
@@ -865,10 +871,12 @@ function refHtml() {
     return '<p class="pj-progress">모범답안은 정답 판정이 아니라 비교용입니다. 열람하면 기록에 도움 사용으로 표시되고 점검 상태는 바뀌지 않습니다. 다른 구현도 올바를 수 있습니다.</p>'
       + '<button type="button" class="pj-btn" data-act="open-ref">모범답안 열기</button>';
   }
-  const path = S.refPath || S.ref.files[0].path;
-  const file = S.ref.files.find((f) => f.path === path) || S.ref.files[0];
+  const refFiles = writableReferenceFiles();
+  if (!refFiles.length) return '<p class="pj-progress">보여 줄 모범답안 파일이 없습니다.</p>';
+  const path = S.refPath || refFiles[0].path;
+  const file = refFiles.find((f) => f.path === path) || refFiles[0];
   const mine = currentFiles()[file.path] ?? '';
-  return `<div class="pj-ref"><label>파일 <select data-act="ref-file">${S.ref.files.map((f) => `<option value="${e(f.path)}"${f.path === file.path ? ' selected' : ''}>${e(f.path)}</option>`).join('')}</select></label>`
+  return `<div class="pj-ref"><label>작성 파일 <select data-act="ref-file">${refFiles.map((f) => `<option value="${e(f.path)}"${f.path === file.path ? ' selected' : ''}>${e(f.path)}</option>`).join('')}</select></label>`
     + `<h3>모범답안</h3>${codeWindow(file.language, file.text)}<h3>내 코드</h3>${codeWindow(file.language, mine)}</div>`;
 }
 
