@@ -123,3 +123,32 @@ for (const id of ['backend-01', 'backend-02', 'backend-03']) {
     }
   });
 }
+
+test('the explanation of a SELECT question shows the result tables of its queries above the text', async ({page}) => {
+  await page.goto('pages/quiz.html?exam=backend-01&mode=study&minutes=0&new=1');
+  await expect(page.locator('.question-panel')).toBeVisible();
+  await page.locator('[data-nav="12"]').click();
+  await expect(page.locator('.question-panel')).toContainText('LEFT JOIN');
+  await page.locator('.question-panel input[type=radio], .question-panel .choice').first().click();
+  await page.locator('#reveal').click();
+  const tables = page.locator('.explanation .result-tables .rt');
+  await expect(tables).toHaveCount(2);
+  await expect(tables.nth(0)).toContainText('쿼리 A');
+  await expect(tables.nth(0).locator('tbody tr')).toHaveCount(1);
+  await expect(tables.nth(1).locator('tbody tr')).toHaveCount(3);
+  await expect(tables.nth(1).locator('td.rt-null')).toHaveCount(2);
+  const order = await page.evaluate(() => {
+    const box = document.querySelector('.explanation .result-tables');
+    return box.compareDocumentPosition(document.querySelector('.explanation .solution')) & Node.DOCUMENT_POSITION_FOLLOWING;
+  });
+  expect(order).toBeTruthy();
+});
+
+test('a question without a SELECT result has no result table', async ({page}) => {
+  await page.goto('pages/quiz.html?exam=backend-01&mode=study&minutes=0&new=1');
+  await expect(page.locator('.question-panel')).toBeVisible();
+  await page.locator('.question-panel input[type=radio], .question-panel .choice').first().click();
+  await page.locator('#reveal').click();
+  await expect(page.locator('.explanation')).toBeVisible();
+  await expect(page.locator('.explanation .result-tables')).toHaveCount(0);
+});

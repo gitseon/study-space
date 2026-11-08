@@ -55,6 +55,26 @@ export function markdown(text) {
     .join('');
 }
 
+// 쿼리 실행 결과 표. NULL 셀은 회색 이탤릭으로, 숫자 셀은 오른쪽 정렬로 보이고, 행이 없으면 빈 결과라고 알려 준다.
+const NUMBER_CELL = /^-?\d+(\.\d+)?$/;
+export function resultTablesHtml(tables) {
+  if (!Array.isArray(tables) || !tables.length) {
+    return '';
+  }
+  const cell = (value) => (value === 'NULL'
+    ? '<td class="rt-null">NULL</td>'
+    : '<td' + (NUMBER_CELL.test(value) ? ' class="rt-num"' : '') + '>' + escapeHtml(value) + '</td>');
+  return '<div class="result-tables" role="group" aria-label="쿼리 실행 결과">' + tables.map((table) => {
+    const head = table.columns.map((c) => '<th scope="col">' + escapeHtml(c) + '</th>').join('');
+    const body = table.rows.length
+      ? table.rows.map((row) => '<tr>' + row.map(cell).join('') + '</tr>').join('')
+      : '<tr><td class="rt-empty" colspan="' + table.columns.length + '">결과 없음</td></tr>';
+    return '<figure class="rt"><figcaption>' + escapeHtml(table.title) + '<span>' + table.rows.length + '행</span></figcaption>'
+      + '<div class="rt-scroll"><table><thead><tr>' + head + '</tr></thead><tbody>' + body + '</tbody></table></div>'
+      + (table.note ? '<p class="rt-note">' + escapeHtml(table.note) + '</p>' : '') + '</figure>';
+  }).join('') + '</div>';
+}
+
 // Solutions are written as one paragraph with labels such as "정답 근거:" and "풀이:". Each label starts its own bold line.
 const SOLUTION_LABELS = '정답 근거|흔한 실수|허용 표기|모범답안|풀이|근거|정답|접근|비교';
 export function solutionMarkdown(text) {

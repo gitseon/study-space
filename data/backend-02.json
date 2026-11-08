@@ -461,7 +461,31 @@
         "b": "두 함수의 NULL 처리가 반대로 설명되어 있다.",
         "c": "`CONCAT`은 NULL이 하나만 있어도 NULL이고 `CONCAT_WS`는 NULL을 건너뛰어 나무만 남는다.",
         "d": "`CONCAT_WS`는 NULL 인자를 건너뛰므로 쿼리 B가 NULL이 되지 않는다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (CONCAT)",
+          "columns": [
+            "CONCAT(name, '/', nick)"
+          ],
+          "rows": [
+            [
+              "NULL"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (CONCAT_WS)",
+          "columns": [
+            "CONCAT_WS('/', name, nick)"
+          ],
+          "rows": [
+            [
+              "나무"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "WHERE에 쓴 집계 함수",
@@ -507,7 +531,22 @@
         "b": "`WHERE`는 그룹 전에 `HAVING`은 그룹 뒤에 실행되므로 집계 조건은 `HAVING`에 쓴다.",
         "c": "`GROUP BY dept`가 있으므로 `dept`를 `SELECT`에 쓸 수 있다.",
         "d": "`>=`는 `WHERE`에서 쓸 수 있는 연산자다. 오류의 원인은 집계 함수다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "HAVING으로 고치면",
+          "columns": [
+            "dept",
+            "cnt"
+          ],
+          "rows": [
+            [
+              "개발",
+              "2"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "NULL을 찾는 세 가지 조건",
@@ -553,7 +592,42 @@
         "b": "`= NULL`로는 NULL 행을 찾을 수 없다. 쿼리 A가 2가 될 수 없다.",
         "c": "`<=>`는 NULL끼리 같다고 보므로 쿼리 B는 0이 아니라 2이다.",
         "d": "`IS NULL`이 NULL 행을 찾으므로 쿼리 C는 0이 아니다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (= NULL)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (<=> NULL)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "2"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 C (IS NULL)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "2"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "중복 키가 있는 조인의 행 수",
@@ -599,7 +673,31 @@
         "b": "LEFT JOIN은 짝이 없는 왼쪽 행을 NULL과 함께 남기므로 쿼리 B가 4에서 그치지 않는다.",
         "c": "같은 키 2행과 2행이 4가지 조합을 만들고 LEFT JOIN은 짝 없는 2를 하나 더한다.",
         "d": "INNER JOIN의 결과가 2행이 될 수 없다. 4개의 조합이 모두 나온다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (INNER JOIN)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "4"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (LEFT JOIN)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "5"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "EXCEPT와 INTERSECT의 결과",
@@ -645,7 +743,35 @@
         "b": "기본 동작은 중복 제거라서 펜이 두 번 나오지 않는다. 쿼리 B는 3행이 아니다.",
         "c": "INTERSECT 결과에 펜이 두 번 들어가지 않는다. 쿼리 B는 2행이다.",
         "d": "EXCEPT의 결과는 `shop_b`에 없는 값뿐이다. 3행이 나올 수 없다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (EXCEPT)",
+          "columns": [
+            "item"
+          ],
+          "rows": [
+            [
+              "노트"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (INTERSECT)",
+          "columns": [
+            "item"
+          ],
+          "rows": [
+            [
+              "펜"
+            ],
+            [
+              "자"
+            ]
+          ],
+          "note": "ORDER BY가 없어 행 순서는 달라질 수 있습니다."
+        }
+      ]
     },
     {
       "title": "빈 서브쿼리와 ALL과 ANY",
@@ -691,7 +817,31 @@
         "b": "ALL은 빈 서브쿼리에서 참이므로 쿼리 A가 0이 될 수 없다.",
         "c": "비교 대상이 없으면 ALL은 참이고 ANY는 거짓이다.",
         "d": "ANY는 빈 서브쿼리에서 거짓이므로 쿼리 B가 4가 될 수 없다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (ALL)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "4"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (ANY)",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "0"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "ON DELETE SET NULL의 결과",
@@ -737,7 +887,30 @@
         "b": "자식 행까지 함께 삭제하는 규칙은 `CASCADE`이다. `SET NULL`은 행을 지우지 않는다.",
         "c": "삭제를 거부하는 것은 기본 규칙이다. 지정한 규칙은 삭제를 허용한다.",
         "d": "부모가 사라졌는데 자식이 존재하지 않는 id 1을 계속 가리킬 수는 없다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "삭제 뒤 emp",
+          "columns": [
+            "id",
+            "dept_id"
+          ],
+          "rows": [
+            [
+              "10",
+              "NULL"
+            ],
+            [
+              "11",
+              "NULL"
+            ],
+            [
+              "12",
+              "2"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "AUTO_INCREMENT와 DELETE, TRUNCATE",
@@ -783,7 +956,31 @@
         "b": "`DELETE`는 카운터를 되돌리지 않으므로 (가)는 1이 아니라 4이다.",
         "c": "`TRUNCATE`는 카운터를 초기화하므로 (나)는 5가 아니라 1이다.",
         "d": "두 문장의 카운터 처리가 모두 반대로 설명되어 있다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "(가) DELETE 뒤 새로 넣은 행",
+          "columns": [
+            "id"
+          ],
+          "rows": [
+            [
+              "4"
+            ]
+          ]
+        },
+        {
+          "title": "(나) TRUNCATE 뒤 새로 넣은 행",
+          "columns": [
+            "id"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "저장점이 둘일 때의 롤백",
@@ -830,7 +1027,23 @@
         "b": "`ROLLBACK TO s1`이 실행되었으므로 행 2와 행 3은 남지 않는다.",
         "c": "`ROLLBACK TO`는 트랜잭션 전체를 취소하지 않는다. 행 1은 남는다.",
         "d": "`s1` 뒤의 행 2와 행 3이 취소되고 행 1과 새로 삽입한 행 4가 남는다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "커밋 뒤 t",
+          "columns": [
+            "n"
+          ],
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "복합 인덱스의 열 순서",
@@ -1106,7 +1319,20 @@
       "stem": "아래 쿼리가 반환하는 값을 쓰시오. 값이 아니라 NULL이면 NULL이라고 쓰시오.\n```text\nscore_log\nid | score\n1  | NULL\n2  | NULL\n```\n```sql\nSELECT SUM(score) FROM score_log;\n```",
       "solution": "정답: NULL. 허용 표기: 대소문자는 구분하지 않는다. 근거: 집계 함수는 NULL을 무시하고 계산하는데 계산할 값이 하나도 없으면 `SUM`은 0이 아니라 NULL을 반환한다. 0으로 바꾸려면 `COALESCE(SUM(score), 0)`을 쓴다.",
       "choices": [],
-      "choiceExplanations": {}
+      "choiceExplanations": {},
+      "resultTables": [
+        {
+          "title": "실행 결과",
+          "columns": [
+            "SUM(score)"
+          ],
+          "rows": [
+            [
+              "NULL"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "있는 뷰를 바꿔 다시 만들기",
@@ -1487,5 +1713,5 @@
       "d"
     ]
   },
-  "contentVersion": "10ce1c98ae020763"
+  "contentVersion": "b5e040deb136b4e1"
 }

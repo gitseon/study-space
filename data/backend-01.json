@@ -507,7 +507,61 @@
         "b": "`COUNT(bonus)`는 NULL을 빼고 AVG도 NULL을 제외한 값으로 계산한다.",
         "c": "AVG는 NULL을 0으로 보지 않고 제외한다. 개발의 평균은 150이다.",
         "d": "`HAVING`이 행이 1개인 그룹을 걸러내므로 디자인 행은 결과에 없다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "실행 결과",
+          "columns": [
+            "dept",
+            "cnt",
+            "paid",
+            "avg_bonus"
+          ],
+          "rows": [
+            [
+              "개발",
+              "3",
+              "2",
+              "150.0000"
+            ],
+            [
+              "운영",
+              "2",
+              "1",
+              "300.0000"
+            ]
+          ]
+        },
+        {
+          "title": "HAVING을 빼면",
+          "columns": [
+            "dept",
+            "cnt",
+            "paid",
+            "avg_bonus"
+          ],
+          "rows": [
+            [
+              "개발",
+              "3",
+              "2",
+              "150.0000"
+            ],
+            [
+              "디자인",
+              "1",
+              "0",
+              "NULL"
+            ],
+            [
+              "운영",
+              "2",
+              "1",
+              "300.0000"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "NULL과 동점이 있는 정렬과 OFFSET",
@@ -553,7 +607,52 @@
         "b": "동점의 두 번째 기준을 오름차순으로 읽은 결과다. 지정한 것은 `runner DESC`다.",
         "c": "`OFFSET`을 적용하지 않은 결과다. 첫 행 `다솜`을 건너뛰어야 한다.",
         "d": "NULL이 맨 앞이라 `다솜`을 건너뛰고 동점은 이름 내림차순이라 라온이 먼저다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "정렬한 전체 순서",
+          "columns": [
+            "runner",
+            "secs"
+          ],
+          "rows": [
+            [
+              "다솜",
+              "NULL"
+            ],
+            [
+              "라온",
+              "48"
+            ],
+            [
+              "나래",
+              "48"
+            ],
+            [
+              "가온",
+              "52"
+            ],
+            [
+              "마루",
+              "55"
+            ]
+          ]
+        },
+        {
+          "title": "LIMIT 2 OFFSET 1을 적용한 결과",
+          "columns": [
+            "runner"
+          ],
+          "rows": [
+            [
+              "라온"
+            ],
+            [
+              "나래"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "ON 조건과 WHERE 조건의 위치",
@@ -599,7 +698,44 @@
         "b": "`WHERE`가 거르는 것을 무시한 계산이다. 조인 결과 4행에서 `PAID`만 남으면 1행이다.",
         "c": "`ON`의 조건은 왼쪽 행을 없애지 않는다. B는 모든 고객이 남아 1행이 아니다.",
         "d": "A는 WHERE에서 NULL 행이 걸러진다. 쿼리의 조건이 B와 같지 않으므로 행 수도 다르다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (WHERE에 조건)",
+          "columns": [
+            "name",
+            "status"
+          ],
+          "rows": [
+            [
+              "모아",
+              "PAID"
+            ]
+          ]
+        },
+        {
+          "title": "쿼리 B (ON에 조건)",
+          "columns": [
+            "name",
+            "status"
+          ],
+          "rows": [
+            [
+              "모아",
+              "PAID"
+            ],
+            [
+              "보라",
+              "NULL"
+            ],
+            [
+              "소라",
+              "NULL"
+            ]
+          ],
+          "note": "ORDER BY가 없어 행 순서는 달라질 수 있습니다."
+        }
+      ]
     },
     {
       "title": "UNION과 UNION ALL이 섞인 결과",
@@ -645,7 +781,30 @@
         "b": "앞의 두 결과가 중복 제거된 3행에 `UNION ALL`의 서울이 붙어 4행이다.",
         "c": "앞의 `UNION`이 `club_a`와 `club_b`의 중복을 제거한다. 6행이 될 수 없다.",
         "d": "앞의 `UNION`이 중복을 제거하므로 두 결과의 중복이 유지되지 않는다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "실행 결과",
+          "columns": [
+            "city"
+          ],
+          "rows": [
+            [
+              "서울"
+            ],
+            [
+              "부산"
+            ],
+            [
+              "대구"
+            ],
+            [
+              "서울"
+            ]
+          ],
+          "note": "ORDER BY가 없어 행 순서는 달라질 수 있습니다."
+        }
+      ]
     },
     {
       "title": "NOT IN과 NOT EXISTS의 차이",
@@ -691,7 +850,31 @@
         "b": "NOT IN은 NULL 때문에 3과 4를 반환하지 못한다. 두 쿼리의 결과가 같지 않다.",
         "c": "NOT EXISTS가 0행이 되려면 모든 사람에게 부하가 있어야 한다. 3과 4는 부하가 없다.",
         "d": "NOT EXISTS는 3과 4의 2행이고 NOT IN은 0행이다. 3행이나 1행이 나오지 않는다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "쿼리 A (NOT IN)",
+          "columns": [
+            "id"
+          ],
+          "rows": []
+        },
+        {
+          "title": "쿼리 B (NOT EXISTS)",
+          "columns": [
+            "id"
+          ],
+          "rows": [
+            [
+              "3"
+            ],
+            [
+              "4"
+            ]
+          ],
+          "note": "ORDER BY가 없어 행 순서는 달라질 수 있습니다."
+        }
+      ]
     },
     {
       "title": "외래키가 걸린 삭제와 TRUNCATE",
@@ -831,7 +1014,23 @@
         "b": "전체 되돌리기가 되려면 DDL이 없어야 한다. 이 트랜잭션은 DDL에서 이미 커밋되었다.",
         "c": "DDL의 암묵적 커밋으로 두 INSERT가 확정되어 이후의 `ROLLBACK`이 효과가 없다.",
         "d": "행 2만 남기려면 행 1만 되돌려야 하고 그런 동작은 없다. 두 행 모두 확정되었다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "ROLLBACK 뒤 log_t",
+          "columns": [
+            "n"
+          ],
+          "rows": [
+            [
+              "1"
+            ],
+            [
+              "2"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "REPEATABLE READ의 두 가지 읽기",
@@ -878,7 +1077,31 @@
         "b": "스냅샷을 읽는 일반 조회는 100이고 최신 값을 읽는 잠금 조회는 150이다.",
         "c": "일반 조회는 첫 조회의 스냅샷을 유지하므로 150으로 바뀌지 않는다.",
         "d": "두 읽기의 값이 반대다. 일반 조회가 스냅샷의 100이고 잠금 조회가 150이다."
-      }
+      },
+      "resultTables": [
+        {
+          "title": "T1의 일반 SELECT",
+          "columns": [
+            "balance"
+          ],
+          "rows": [
+            [
+              "100"
+            ]
+          ]
+        },
+        {
+          "title": "T1의 SELECT ... FOR UPDATE",
+          "columns": [
+            "balance"
+          ],
+          "rows": [
+            [
+              "150"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "따옴표 안의 물음표",
@@ -1110,7 +1333,20 @@
       "stem": "`ticket` 테이블에 대해 아래 쿼리가 반환하는 값을 숫자로 쓰시오.\n```text\nticket\nid | grade\n1  | A\n2  | B\n3  | NULL\n4  | NULL\n5  | A\n```\n```sql\nSELECT COUNT(*)\nFROM (SELECT DISTINCT grade FROM ticket) t;\n```",
       "solution": "정답: 3. 근거: `DISTINCT`는 NULL끼리 같은 값으로 보고 하나로 합친다. 서로 다른 값은 `A`, `B`, NULL의 3개이고 바깥 `COUNT(*)`가 이 3행을 센다. 비교 연산자 `=`는 NULL끼리도 UNKNOWN이지만 `DISTINCT`와 `GROUP BY`는 NULL을 한 묶음으로 본다.",
       "choices": [],
-      "choiceExplanations": {}
+      "choiceExplanations": {},
+      "resultTables": [
+        {
+          "title": "실행 결과",
+          "columns": [
+            "COUNT(*)"
+          ],
+          "rows": [
+            [
+              "3"
+            ]
+          ]
+        }
+      ]
     },
     {
       "title": "뷰의 조건을 지키는 옵션",
@@ -1486,5 +1722,5 @@
       "d"
     ]
   },
-  "contentVersion": "6e7df9a0f132a8b6"
+  "contentVersion": "c76e7b103bdd3f86"
 }
