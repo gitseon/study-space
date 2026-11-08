@@ -627,3 +627,145 @@ test('the pair table of the flow note keeps its two columns apart', async ({page
   });
   expect(fills).toBe(true);
 });
+
+const boxOf = (page, selector) => page.locator(selector).evaluate((el) => {
+  const r = el.getBoundingClientRect();
+  return {left: r.left, right: r.right, top: r.top, width: Math.round(r.width)};
+});
+
+test('the file toggle sits at the left of the top bar and folding the files keeps the code panel wide', async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await start(page, {stage: 2, minutes: 0});
+  const toggle = await boxOf(page, '#pj-toggle-files');
+  const title = await boxOf(page, '.pj-top h1');
+  const sideToggle = await boxOf(page, '#pj-toggle-side');
+  expect(toggle.left).toBeLessThan(title.left);
+  expect(sideToggle.left).toBeGreaterThan(title.right);
+  const before = await boxOf(page, '.pj-code');
+  await page.locator('#pj-toggle-files').click();
+  await expect(page.locator('#pj-toggle-files')).toHaveText('파일 펼치기');
+  await expect(page.locator('.pj-files')).toBeHidden();
+  const folded = await boxOf(page, '.pj-code');
+  expect(folded.width).toBeGreaterThan(before.width);
+  expect(folded.width).toBeGreaterThan(500);
+  expect(Math.abs((await boxOf(page, '.pj-side')).top - folded.top)).toBeLessThan(2);
+  await page.locator('#pj-toggle-side').click();
+  await expect(page.locator('.pj-side')).toBeHidden();
+  expect((await boxOf(page, '.pj-code')).width).toBeGreaterThan(1300);
+  await page.locator('#pj-toggle-files').click();
+  await page.locator('#pj-toggle-side').click();
+  await expect(page.locator('.pj-files')).toBeVisible();
+  await expect(page.locator('.pj-side')).toBeVisible();
+  expect((await boxOf(page, '.pj-code')).width).toBe(before.width);
+});
+
+for (const [width, expected] of [[1280, 461], [1440, 518], [1920, 600]]) {
+  test(`the requirements panel starts wide enough to read the model answer at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width, height: 900});
+    await start(page, {stage: 2, minutes: 0});
+    const side = await boxOf(page, '.pj-side');
+    expect(Math.abs(side.width - expected)).toBeLessThanOrEqual(2);
+    expect(side.width).toBeGreaterThan(340);
+    expect(Math.abs((await boxOf(page, '.pj-code')).top - side.top)).toBeLessThan(2);
+  });
+}
+
+test('the requirements panel is resized by dragging and with the keyboard and the width is remembered', async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await start(page, {stage: 2, minutes: 0});
+  const handle = page.locator('#pj-resizer');
+  const sideWidth = async () => (await boxOf(page, '.pj-side')).width;
+  const codeWidth = async () => (await boxOf(page, '.pj-code')).width;
+  await expect(handle).toHaveAttribute('role', 'separator');
+  const initial = await sideWidth();
+  const box = await handle.boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 - 120, box.y + 100, {steps: 5});
+  await page.mouse.up();
+  expect(Math.abs((await sideWidth()) - (initial + 120))).toBeLessThanOrEqual(3);
+  await expect(handle).toHaveAttribute('aria-valuenow', String(await sideWidth()));
+  const saved = await sideWidth();
+  await page.reload();
+  await expect(page.getByTestId('project-editor')).toBeVisible();
+  expect(Math.abs((await sideWidth()) - saved)).toBeLessThanOrEqual(1);
+
+  await handle.focus();
+  await page.keyboard.press('ArrowLeft');
+  expect(Math.abs((await sideWidth()) - (saved + 24))).toBeLessThanOrEqual(2);
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('ArrowRight');
+  expect(Math.abs((await sideWidth()) - (saved - 24))).toBeLessThanOrEqual(2);
+  await page.keyboard.press('Home');
+  expect(await sideWidth()).toBe(280);
+  await expect(handle).toHaveAttribute('aria-valuemin', '280');
+  await page.keyboard.press('End');
+  expect(await codeWidth()).toBeGreaterThanOrEqual(318);
+  expect(await sideWidth()).toBeGreaterThan(600);
+  await page.keyboard.press('Enter');
+  expect(Math.abs((await sideWidth()) - initial)).toBeLessThanOrEqual(2);
+  expect(await page.evaluate(() => localStorage.getItem('study-space:project-side-width'))).toBeNull();
+
+  const again = await handle.boundingBox();
+  await page.mouse.move(again.x + again.width / 2, again.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(again.x + again.width / 2 + 800, again.y + 100, {steps: 4});
+  await page.mouse.up();
+  expect(await sideWidth()).toBe(280);
+  await handle.dblclick();
+  expect(Math.abs((await sideWidth()) - initial)).toBeLessThanOrEqual(2);
+});
+
+test('on a tablet and a phone there is no drag handle and nothing overflows sideways', async ({page}) => {
+  await page.setViewportSize({width: 1024, height: 800});
+  await start(page, {stage: 2, minutes: 0});
+  await page.locator('#pj-toggle-side').click();
+  await expect(page.locator('.pj-side')).toBeVisible();
+  await expect(page.locator('#pj-resizer')).toBeHidden();
+  expect((await boxOf(page, '.pj-side')).top).toBeGreaterThan((await boxOf(page, '.pj-code')).top + 100);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.setViewportSize({width: 390, height: 844});
+  await expect(page.locator('#pj-resizer')).toBeHidden();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('the editor colours Java, JSP and XML like Eclipse in write mode and in read mode', async ({page}) => {
+  await start(page, {stage: 2, minutes: 0});
+  const style = (selector) => page.locator(selector).first().evaluate((el) => {
+    const c = getComputedStyle(el);
+    return [c.color, c.fontWeight, c.fontStyle];
+  });
+  await expect(page.locator('.pe-input')).toBeVisible();
+  await expect(page.locator('.pe-hl .tok-k').first()).toBeVisible();
+  expect(await style('.pe-hl .tok-k')).toEqual(['rgb(127, 0, 85)', '700', 'normal']);
+  expect(await style('.pe-hl .tok-s')).toEqual(['rgb(42, 0, 255)', '400', 'normal']);
+  expect(await style('.pe-hl .tok-a')).toEqual(['rgb(100, 100, 100)', '400', 'normal']);
+  expect(await style('.pe-hl .tok-c')).toEqual(['rgb(63, 127, 95)', '400', 'normal']);
+  const sameText = await page.evaluate(() => document.querySelector('.pe-hl code').textContent === `${document.querySelector('.pe-input').value}\n`);
+  expect(sameText).toBe(true);
+  const sameMetrics = await page.evaluate(() => {
+    const a = getComputedStyle(document.querySelector('.pe-input'));
+    const h = getComputedStyle(document.querySelector('.pe-hl'));
+    return ['fontSize', 'lineHeight', 'paddingLeft', 'paddingTop', 'tabSize', 'whiteSpace'].every((k) => a[k] === h[k]);
+  });
+  expect(sameMetrics).toBe(true);
+
+  await page.locator('.pe-input').click();
+  await page.keyboard.press('Control+End');
+  await page.keyboard.type('// my-note');
+  await expect(page.locator('.pe-hl .tok-c', {hasText: 'my-note'})).toHaveCount(1);
+  await page.locator('.pe-input').evaluate((el) => { el.scrollTop = 150; });
+  await expect.poll(() => page.locator('.pe-hl').evaluate((el) => Math.round(el.scrollTop))).toBe(150);
+
+  await page.locator('[data-file="src/main/webapp/login-form.jsp"]').click();
+  expect(await style('.pe-hl .tok-t')).toEqual(['rgb(63, 127, 127)', '400', 'normal']);
+  expect(await style('.pe-hl .tok-a')).toEqual(['rgb(127, 0, 127)', '400', 'normal']);
+  expect(await style('.pe-hl .tok-s')).toEqual(['rgb(42, 0, 255)', '400', 'italic']);
+  await page.locator('#pj-mode-read').click();
+  await expect(page.locator('.pe-input')).toBeHidden();
+  expect(await style('.pe-view .tok-t')).toEqual(['rgb(63, 127, 127)', '400', 'normal']);
+  await page.locator('[data-file="pom.xml"]').click();
+  expect(await style('.pe-view .tok-t')).toEqual(['rgb(63, 127, 127)', '400', 'normal']);
+  await page.locator('[data-file="src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java"]').click();
+  expect(await style('.pe-view .tok-k')).toEqual(['rgb(127, 0, 85)', '700', 'normal']);
+});

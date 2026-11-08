@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  buildTree, findNext, findRegion, languageOptions, layoutFor, lineCount, regionBody, targetStates, withLineNumbers,
+  buildTree, clampPanelWidth, findNext, findRegion, languageOptions, layoutFor, lineCount, regionBody, targetStates, withLineNumbers,
 } from '../../assets/project-editor.js';
 import {editKey} from '../../assets/code-editor.js';
 
@@ -92,4 +92,12 @@ test('line numbers and counts follow the text', () => {
   assert.equal(lineCount('a\nb'), 2);
   assert.equal(lineCount('a\nb\n'), 3);
   assert.equal(withLineNumbers(3), '1\n2\n3');
+});
+
+test('a panel width stays between its minimum and maximum and a maximum below the minimum gives the minimum', () => {
+  assert.equal(clampPanelWidth(100, 280, 520), 280);
+  assert.equal(clampPanelWidth(400.4, 280, 520), 400);
+  assert.equal(clampPanelWidth(900, 280, 520), 520);
+  assert.equal(clampPanelWidth(900, 280, 200), 280);
+  assert.equal(clampPanelWidth(280, 280, 520), 280);
 });

@@ -37,7 +37,7 @@ main.pj-main{max-width:none;padding:0 16px 40px}
 .pj-segment{display:none;gap:6px}
 .pj-segment button{flex:1;padding:8px 6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;font-size:13px;cursor:pointer}
 .pj-segment button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.pj-grid{display:grid;gap:10px;align-items:stretch;grid-template-columns:var(--pj-files,240px) minmax(0,1fr) var(--pj-side,340px)}
+.pj-grid{display:grid;gap:10px;align-items:stretch;grid-template-columns:var(--pj-files,240px) minmax(0,1fr) var(--pj-side,var(--pj-side-user,clamp(360px,36vw,600px)))}
 .pj-panel{min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
 .pj-panel>header{padding:8px 12px;border-bottom:1px solid var(--line-soft);font-size:12px;color:var(--copy);display:flex;gap:8px;align-items:center;justify-content:space-between}
 .pj-files-body,.pj-side-body{overflow:auto;padding:8px 6px;max-height:calc(100vh - 220px);min-height:200px}
@@ -87,17 +87,31 @@ main.pj-main{max-width:none;padding:0 16px 40px}
 .pj-check ol{margin:4px 0;padding-left:18px;font-size:12px}
 .pj-progress{font-size:12px;color:var(--copy);margin:0 0 6px}
 .pj-hints{margin:6px 0 0;padding-left:18px;font-size:12px}
-.pj-ref{margin-top:8px}.pj-ref select{max-width:100%;margin-bottom:8px}.pj-ref pre{max-height:320px;overflow:auto;margin:0 0 8px;padding:8px;background:var(--code-bg);border:1px solid var(--code-line);border-radius:8px;font:12px/1.55 Consolas,"D2Coding",monospace}
+.pj-ref{margin-top:8px}.pj-ref select{max-width:100%;margin-bottom:8px}.pj-ref pre{max-height:min(560px,65vh);overflow:auto;margin:0 0 8px;padding:8px;background:var(--code-bg);border:1px solid var(--code-line);border-radius:8px;font:12px/1.55 Consolas,"D2Coding",monospace}
 
 /* 데스크톱: 패널 접기 */
 .pj[data-files="collapsed"]{--pj-files:0px}.pj[data-files="collapsed"] .pj-files{display:none}
 .pj[data-side="collapsed"]{--pj-side:0px}.pj[data-side="collapsed"] .pj-side{display:none}
 .pj-collapse{display:inline-flex;gap:6px}
+.pj-collapse-left{margin-right:2px}
+/* 패널은 자기 칸에 직접 놓는다. 파일을 접어도 코드 패널이 0px 칸으로 밀려나지 않고, 접은 칸은 코드가 이어서 차지한다 */
+.pj-files{grid-column:1;grid-row:1}.pj-code{grid-column:2;grid-row:1}.pj-side{grid-column:3;grid-row:1}
+.pj[data-files="collapsed"] .pj-code{grid-column:1/3;grid-row:1}
+.pj[data-side="collapsed"] .pj-code{grid-column:2/4;grid-row:1}
+.pj[data-files="collapsed"][data-side="collapsed"] .pj-code{grid-column:1/4;grid-row:1}
+/* 요구사항 패널 너비 손잡이: 코드 패널과 요구사항 패널 사이 틈에 놓는다 */
+.pj-resizer{grid-column:3;grid-row:1;justify-self:start;width:10px;margin-left:-10px;z-index:3;cursor:col-resize;touch-action:none;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.pj-resizer::before{content:"";width:3px;height:44px;border-radius:2px;background:var(--line);transition:background .15s}
+.pj-resizer:hover::before,.pj-resizer:focus-visible::before,.pj[data-resizing="true"] .pj-resizer::before{background:var(--accent)}
+.pj-resizer:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.pj[data-resizing="true"]{user-select:none;cursor:col-resize}
+.pj[data-side="collapsed"] .pj-resizer{display:none}
 
 /* 태블릿: 파일 + 코드, 요구사항은 열고 닫는 패널 */
 @media(max-width:1199px){
+  .pj-resizer{display:none}
   .pj-grid{grid-template-columns:var(--pj-files,220px) minmax(0,1fr)}
-  .pj[data-layout="tablet"] .pj-side{grid-column:1/-1;display:none}
+  .pj[data-layout="tablet"] .pj-side{grid-column:1/-1;grid-row:2;display:none}
   .pj[data-layout="tablet"][data-side="open"] .pj-side{display:flex}
   .pj[data-layout="tablet"][data-side="open"] .pj-side-body{max-height:420px}
 }
@@ -109,8 +123,44 @@ main.pj-main{max-width:none;padding:0 16px 40px}
   .pj[data-layout="mobile"] .pj-files,.pj[data-layout="mobile"] .pj-code,.pj[data-layout="mobile"] .pj-side{display:none}
   .pj[data-layout="mobile"][data-panel="files"] .pj-files,.pj[data-layout="mobile"][data-panel="code"] .pj-code,.pj[data-layout="mobile"][data-panel="side"] .pj-side{display:flex}
   .pj-collapse{display:none}
+  .pj[data-layout="mobile"] .pj-files,.pj[data-layout="mobile"] .pj-code,.pj[data-layout="mobile"] .pj-side{grid-column:1;grid-row:1}
   .pe-body{height:calc(var(--vvh,100dvh) - 300px);min-height:260px}
   .pj-toolbar input[type="search"]{width:100px}
   .pj-files-body,.pj-side-body{max-height:none}
 }
 @media(min-width:768px){.pj-only-mobile{display:none}}
+
+/* 편집기: 작성 모드의 색 입힌 층. 투명한 textarea 아래에 같은 글꼴과 여백으로 겹쳐 그린다 */
+.pe-stack{position:relative;flex:1;min-width:0;display:flex}
+.pe-stack[hidden]{display:none}
+.pe-hl{position:absolute;inset:0;margin:0;padding:12px;border:0;overflow:hidden;pointer-events:none;background:transparent;color:var(--ink);font:var(--pe-font)/1.6 Consolas,"D2Coding",monospace!important;font-size:var(--pe-font)!important;line-height:1.6;tab-size:4;white-space:pre;word-break:normal;overflow-wrap:normal}
+.pe-hl code{font:inherit}
+.pe[data-wrap="on"] .pe-hl{white-space:pre-wrap;overflow-wrap:anywhere}
+.pe-stack .pe-input{position:relative;z-index:1;color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ink)}
+.pe-input::selection{background:rgba(70,130,230,.35);-webkit-text-fill-color:transparent}
+
+/* Eclipse 편집기 색. Java와 SQL: 키워드 자주색 굵게, 문자열 파랑, 주석 초록, Javadoc 청회색, 애노테이션 회색, 숫자는 본문색 */
+.pe[data-lang="java"] .tok-k,.pe[data-lang="sql"] .tok-k{color:#7f0055;font-weight:700}
+.pe[data-lang="java"] .tok-s,.pe[data-lang="sql"] .tok-s{color:#2a00ff}
+.pe[data-lang="java"] .tok-c,.pe[data-lang="sql"] .tok-c{color:#3f7f5f;font-style:normal}
+.pe[data-lang="java"] .tok-d{color:#3f5fbf;font-style:normal}
+.pe[data-lang="java"] .tok-a{color:#646464}
+.pe[data-lang="java"] .tok-n,.pe[data-lang="sql"] .tok-n{color:inherit}
+/* JSP, XML, HTML: 태그 청록, 속성 이름 자주, 속성 값 파랑 기울임, 주석 청회색, JSP 구분자(<% %>)는 노란 바탕 */
+.pe[data-lang="jsp"] .tok-t,.pe[data-lang="xml"] .tok-t,.pe[data-lang="html"] .tok-t{color:#3f7f7f}
+.pe[data-lang="jsp"] .tok-a,.pe[data-lang="xml"] .tok-a,.pe[data-lang="html"] .tok-a{color:#7f007f}
+.pe[data-lang="jsp"] .tok-s,.pe[data-lang="xml"] .tok-s,.pe[data-lang="html"] .tok-s{color:#2a00ff;font-style:italic}
+.pe[data-lang="jsp"] .tok-c,.pe[data-lang="xml"] .tok-c,.pe[data-lang="html"] .tok-c{color:#3f5fbf;font-style:normal}
+.pe[data-lang="jsp"] .tok-k{color:#000;font-weight:400;background:rgba(255,236,120,.55)}
+/* 어두운 테마는 Eclipse 어두운 테마의 색을 따른다 */
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-k,:root[data-theme="dark"] .pe[data-lang="sql"] .tok-k{color:#cc7832}
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-s,:root[data-theme="dark"] .pe[data-lang="sql"] .tok-s{color:#6a8759}
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-c,:root[data-theme="dark"] .pe[data-lang="sql"] .tok-c{color:#808080}
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-d{color:#629755}
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-a{color:#bbb529}
+:root[data-theme="dark"] .pe[data-lang="java"] .tok-n,:root[data-theme="dark"] .pe[data-lang="sql"] .tok-n{color:#6897bb}
+:root[data-theme="dark"] .pe[data-lang="jsp"] .tok-t,:root[data-theme="dark"] .pe[data-lang="xml"] .tok-t,:root[data-theme="dark"] .pe[data-lang="html"] .tok-t{color:#e8bf6a}
+:root[data-theme="dark"] .pe[data-lang="jsp"] .tok-a,:root[data-theme="dark"] .pe[data-lang="xml"] .tok-a,:root[data-theme="dark"] .pe[data-lang="html"] .tok-a{color:#9876aa}
+:root[data-theme="dark"] .pe[data-lang="jsp"] .tok-s,:root[data-theme="dark"] .pe[data-lang="xml"] .tok-s,:root[data-theme="dark"] .pe[data-lang="html"] .tok-s{color:#6a8759}
+:root[data-theme="dark"] .pe[data-lang="jsp"] .tok-c,:root[data-theme="dark"] .pe[data-lang="xml"] .tok-c,:root[data-theme="dark"] .pe[data-lang="html"] .tok-c{color:#808080}
+:root[data-theme="dark"] .pe[data-lang="jsp"] .tok-k{color:#ffc66d;background:rgba(255,198,109,.16)}
