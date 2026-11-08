@@ -470,3 +470,68 @@ test('on a phone a diagram box opens the file and returns to the code', async ({
   await expect(page.locator('.pj-code')).toBeVisible();
   await expect(page.locator('.pe-pathbar')).toContainText('GearController.java');
 });
+
+test('pressing the selected structure box again folds its detail back to the hint', async ({page}) => {
+  await openMonthly(page);
+  const box = page.locator('#project-structure [data-node="gearctl"].st-node');
+  const detail = page.locator('#project-structure .st-detail');
+  await box.click();
+  await expect(detail).toContainText('GearController');
+  await expect(box).toHaveAttribute('aria-pressed', 'true');
+  await box.click();
+  await expect(detail).toContainText('상자나 화살표를 눌러');
+  await expect(box).toHaveAttribute('aria-pressed', 'false');
+  const edge = page.locator('#project-structure [data-edge="e-redirect-list"]');
+  await edge.click();
+  await expect(detail).toContainText('→');
+  await edge.click();
+  await expect(detail).toContainText('상자나 화살표를 눌러');
+  await box.click();
+  await page.locator('#project-structure [data-node="service"].st-node').click();
+  await expect(detail).toContainText('GearService');
+});
+
+test('the write-only toggle hides provided boxes and the write boxes carry a mark', async ({page}) => {
+  await openMonthly(page);
+  const nodes = page.locator('#project-structure .st-node');
+  const all = await nodes.count();
+  await expect(page.locator('#project-structure .st-node[data-write="true"] .st-write').first()).toBeVisible();
+  const toggle = page.locator('#project-structure [data-writeonly]');
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  const writeOnly = await nodes.count();
+  expect(writeOnly).toBeLessThan(all);
+  expect(await page.locator('#project-structure .st-node[data-write="false"]').count()).toBe(0);
+  await toggle.click();
+  await expect(nodes).toHaveCount(all);
+});
+
+test('the architecture picture shows a summary on hover and jumps to the detail on click', async ({page}) => {
+  await openMonthly(page);
+  const box = page.locator('#project-structure [data-arch-node="gearctl"]');
+  const tip = page.locator('#project-structure .ar-tip');
+  await expect(box).toBeVisible();
+  await box.hover();
+  await expect(tip).toBeVisible();
+  await expect(tip).toContainText('GearController');
+  await expect(tip).toContainText('구현 필요');
+  await page.mouse.move(0, 0);
+  await expect(tip).toBeHidden();
+  await box.click();
+  const detail = page.locator('#project-structure .st-detail');
+  await expect(detail).toContainText('@WebServlet("/gear")');
+  await expect(page.locator('#project-structure [data-arch-node="gearctl"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(detail).toBeInViewport();
+  await page.locator('#project-structure [data-arch-edge="e-gear-svc"]').click();
+  await expect(detail).toContainText('GearController → GearService');
+});
+
+test('the architecture picture follows the write-only toggle', async ({page}) => {
+  await openMonthly(page);
+  const boxes = page.locator('#project-structure .ar-box');
+  const all = await boxes.count();
+  expect(all).toBeGreaterThanOrEqual(15);
+  await page.locator('#project-structure [data-writeonly]').click();
+  expect(await boxes.count()).toBeLessThan(all);
+  expect(await page.locator('#project-structure .ar-box[data-write="false"]').count()).toBe(0);
+});

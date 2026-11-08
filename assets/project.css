@@ -73,7 +73,7 @@ main.pj-main{max-width:none;padding:0 16px 40px}
 .pe-view code{font:inherit}
 
 .pj-sidetabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
-.pj-sidetabs button{padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:12px;cursor:pointer}
+.pj-sidetabs button{padding:5px 10px;border:1px solid var(--line);border-radius:14px;line-height:1.4;overflow-wrap:anywhere;background:var(--surface);color:var(--ink);font-size:12px;cursor:pointer}
 .pj-sidetabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .pj-doc{font-size:13px}.pj-doc h1,.pj-doc h2{font-size:15px;margin:14px 0 6px}.pj-doc h1:first-child{margin-top:0}.pj-doc table{font-size:12px}
 .pj-target,.pj-check{padding:10px 0;border-top:1px solid var(--line-soft)}.pj-target:first-child,.pj-check:first-child{border-top:0}
