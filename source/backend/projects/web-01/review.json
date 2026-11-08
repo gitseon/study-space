@@ -1,6 +1,6 @@
 {
   "projectId": "web-01",
-  "revision": 3,
+  "revision": 4,
   "environmentTarget": {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
     "tomcat": "Apache tomcat-11.0.27",
@@ -8,11 +8,11 @@
     "mysql": "8.4.11",
     "compileRelease": 21
   },
-  "referenceHash": "1f9dd28aa5284e16a341d5923ff34d068444a42355eceb5a4ad547632b305bc9",
+  "referenceHash": "90f3db28e0ef8cbdf53e3b13003cf8823b4e5760e3eb94dc220f572fc80a957f",
   "referenceFiles": {
     "pom.xml": "5334faa90ac90e27106e8ac55a4151243470d94003be42753929e3ce3e6c729f",
     "src/main/java/com/ssafy/sample/controller/ControllerHelper.java": "0656721a40ae5a61b1ebc1383b0aaf0e715d60e36569b86a6ca4f3c72c7eb42d",
-    "src/main/java/com/ssafy/sample/controller/GearController.java": "aa3b00c84f5425f44d2f93f7ea2157ade6080026a3dd26b4e420143076cae5c0",
+    "src/main/java/com/ssafy/sample/controller/GearController.java": "bf8211cf7cbc9cc9afff4b8cacfcf8cc8a01f73f99591f44042c357d10863203",
     "src/main/java/com/ssafy/sample/filter/LoggingFilter.java": "7d78c7ece92956852fec25d12f740151003492fc48ca99d45a5ed7a7191bf6c4",
     "src/main/java/com/ssafy/sample/model/dao/GearDao.java": "a818061067b57d7c8ed79f6daf13a8f42c9989369d7ddfca50f2e2d62d409b59",
     "src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java": "847fc0b1baf73b507047b9e4b658bf885e1a06bc610fef0c5a1808fb569e44ef",
@@ -44,7 +44,7 @@
     "runtime": {
       "auth-cookie": {
         "status": "미검증",
-        "note": "STS 실행 전. Tomcat 11.0.27 쿠키 처리기로 헤더만 확인함: 저장은 Path가 컨텍스트 경로(루트는 /), 삭제는 같은 Path. 이메일의 @는 허용됨"
+        "note": "STS 실행 전. Tomcat 11.0.27 쿠키 처리기로 헤더만 확인함: 저장은 Path가 컨텍스트 경로(루트는 /)이고 Max-Age 31536000초(1년), 삭제는 같은 Path. 이메일의 @는 허용됨"
       },
       "auth-login": {
         "status": "미검증",
@@ -83,7 +83,7 @@
         "note": ""
       }
     },
-    "verifiedReferenceHash": "1f9dd28aa5284e16a341d5923ff34d068444a42355eceb5a4ad547632b305bc9",
+    "verifiedReferenceHash": "90f3db28e0ef8cbdf53e3b13003cf8823b4e5760e3eb94dc220f572fc80a957f",
     "reviewer": null
   }
 }

@@ -70,6 +70,12 @@ function edgeButton(structure, edge, members, selected) {
     + `<span>${escapeHtml(from.label)} → ${escapeHtml(to.label)}</span><span class="st-label">${escapeHtml(edge.label)}</span></button>`;
 }
 
+// 영역 제목을 접기/펼치기 버튼으로 만든다. 접힌 영역의 본문은 hidden이라 화면과 보조 기기에서 모두 빠진다.
+function foldButton(key, label, open, controls) {
+  return `<button type="button" class="st-fold" data-fold="${key}" aria-expanded="${open}" aria-controls="${controls}">`
+    + `<span class="st-fold-icon" aria-hidden="true">${open ? '▾' : '▸'}</span><span>${label}</span></button>`;
+}
+
 // 한눈에 보는 구조 그림. 요청이 지나는 길(브라우저 → 필터 → 컨트롤러 → 서비스 → DAO → DB)을 세로로 잇고,
 // 화면(JSP)은 옆에, 함께 쓰는 파일은 아래에 둔다. 상자와 화살표는 아래 목록형 도식과 같은 선택 상태를 쓴다.
 const ARCH_MAIN = ['client', 'filter', 'controller', 'service', 'dao', 'db'];
@@ -100,7 +106,7 @@ function archBox(node, members, selected) {
     + `<span class="ar-name">${escapeHtml(node.label)}</span><span class="ar-kind">${escapeHtml(node.kind)}</span>${write ? '<span class="st-write">✎ 구현 필요</span>' : ''}</button>`;
 }
 
-export function archHtml(structure, {flow = 'overview', selected = null, writeOnly = false} = {}) {
+export function archHtml(structure, {flow = 'overview', selected = null, writeOnly = false, collapsed = false} = {}) {
   const members = flowMembers(structure, flow);
   const shown = (node) => !writeOnly || isWriteNode(node);
   const rowsOf = (ids) => ids.map((id) => ({layer: structure.layers.find((l) => l.id === id), nodes: structure.nodes.filter((n) => n.layer === id && shown(n))})).filter((r) => r.layer && r.nodes.length);
@@ -123,13 +129,13 @@ export function archHtml(structure, {flow = 'overview', selected = null, writeOn
   const sideHtml = side.length
     ? `<div class="ar-side">${side.map(row).join('')}<p class="ar-note">컨트롤러가 ${escapeHtml(kinds.join(' · '))}으로 보내는 화면</p></div>` : '';
   const footHtml = foot.length ? `<div class="ar-foot">${foot.map(row).join('')}</div>` : '';
-  return `<div class="ar" role="group" aria-label="한눈에 보는 구조"><h4 class="ar-title">한눈에 보는 구조</h4>`
+  return `<div class="ar" role="group" aria-label="한눈에 보는 구조" data-collapsed="${collapsed}"><h4 class="ar-title">${foldButton('arch', '한눈에 보는 구조', !collapsed, 'ar-body')}</h4>`
+    + `<div class="ar-body" id="ar-body"${collapsed ? ' hidden' : ''}>`
     + '<p class="ar-help">상자에 커서를 올리면 요약이 보이고, 누르면 아래 설명으로 이동합니다. 터치 화면에서는 한 번 누르면 요약, 한 번 더 누르면 이동합니다.</p>'
-    + `<div class="ar-grid"><div class="ar-chain">${chain}</div>${sideHtml}</div>${footHtml}<div class="ar-tip" id="ar-tip" role="tooltip" hidden></div></div>`
-    + '<h4 class="st-sub">계층별로 자세히 보기</h4>';
+    + `<div class="ar-grid"><div class="ar-chain">${chain}</div>${sideHtml}</div>${footHtml}</div><div class="ar-tip" id="ar-tip" role="tooltip" hidden></div></div>`;
 }
 
-export function structureHtml(structure, {flow = 'overview', selected = null, showFlows = true, writeOnly = false} = {}) {
+export function structureHtml(structure, {flow = 'overview', selected = null, showFlows = true, writeOnly = false, collapsed = {}} = {}) {
   const members = flowMembers(structure, flow);
   const groups = edgeGroups(structure);
   const flows = showFlows
@@ -161,10 +167,20 @@ export function structureHtml(structure, {flow = 'overview', selected = null, sh
   const back = backEdges.length
     ? `<section class="st-layer st-back"><h4>응답과 같은 계층 안의 연결</h4><div class="st-edges" role="group" aria-label="응답 방식">${backEdges.map((e) => edgeButton(structure, e, members, selected)).join('')}</div>${slot(selEdge && backEdges.some((e) => e.id === selEdge.id))}</section>`
     : '';
-  return `<div class="st" data-active-flow="${escapeHtml(flow)}" data-write-only="${writeOnly}">${flows}${toggle}${archHtml(structure, {flow, selected, writeOnly})}<div class="st-diagram">${rows}${back}</div>${placed ? '' : detail}</div>`;
+  return `<div class="st" data-active-flow="${escapeHtml(flow)}" data-write-only="${writeOnly}">${flows}${toggle}${archHtml(structure, {flow, selected, writeOnly, collapsed: !!collapsed.arch})}`
+    + `<h4 class="st-sub">${foldButton('layers', '계층별로 자세히 보기', !collapsed.layers, 'st-layers')}</h4>`
+    + `<div class="st-layers" id="st-layers"${collapsed.layers ? ' hidden' : ''}><div class="st-diagram">${rows}${back}</div>${placed ? '' : detail}</div></div>`;
 }
 
-export function detailHtml(structure, selected, {canOpen = false, targetTitles = {}} = {}) {
+// 설명 상자 안의 접을 수 있는 영역(뼈대, 모범답안)
+function section(key, title, open, body) {
+  return `<div class="st-sec"><h4 class="st-sec-head">${foldButton(key, title, open, 'st-sec-' + key)}</h4>`
+    + `<div class="st-sec-body" id="st-sec-${key}"${open ? '' : ' hidden'}>${body}</div></div>`;
+}
+
+// reference: {경로: {language, text}}. 홈의 구현 흐름에서만 넘긴다. collapsed.skeleton과 collapsed.reference로 각 영역을 접는다.
+// 모범답안은 collapsed.reference가 false일 때만 펼쳐 두므로 따로 펼치기 전까지 접혀 있다.
+export function detailHtml(structure, selected, {canOpen = false, targetTitles = {}, reference = null, collapsed = {}} = {}) {
   if (!selected) return '<p class="st-hint">상자나 화살표를 눌러 역할과 뼈대 코드를 확인하세요.</p>';
   if (selected.type === 'edge') {
     const edge = edgeById(structure, selected.id);
@@ -178,6 +194,8 @@ export function detailHtml(structure, selected, {canOpen = false, targetTitles =
   const node = nodeById(structure, selected.id);
   if (!node) return '';
   const list = (items) => (items.length ? `<ul>${items.map((i) => `<li>${escapeHtml(i)}</li>`).join('')}</ul>` : '<p class="st-none">없음</p>');
+  // 모범답안은 구현해야 하는 파일에만 있다. 제공 파일은 그대로 쓰면 되므로 모범답안이 없다.
+  const answer = node.targets.length && node.path ? reference?.[node.path] : null;
   const targets = node.targets.length
     ? `<p class="st-targets">작성 대상: ${node.targets.map((t) => `<span class="st-chip">${escapeHtml(targetTitles[t] || t)}</span>`).join('')}</p>`
     : '<p class="st-targets">제공 파일입니다. 수정하지 않습니다.</p>';
@@ -186,20 +204,23 @@ export function detailHtml(structure, selected, {canOpen = false, targetTitles =
     + (node.path ? `<p class="st-path">${escapeHtml(node.path)}${canOpen ? ` <button type="button" class="st-link" data-open="${escapeHtml(node.path)}">이 파일 열기</button>` : ''}</p>` : '')
     + targets
     + `<div class="st-io"><div><h4>받는 값</h4>${list(node.receives)}</div><div><h4>보내는 값</h4>${list(node.sends)}</div></div>`
-    + `<h4>뼈대</h4>${codeWindow(languageOf(node), node.skeleton.join('\n'))}`;
+    + section('skeleton', '뼈대', !collapsed.skeleton, codeWindow(languageOf(node), node.skeleton.join('\n')))
+    + (answer ? section('reference', '모범답안', collapsed.reference === false,
+      '<p class="st-answer-note">모범답안은 정답 판정이 아니라 비교용입니다. 다른 구현도 올바를 수 있습니다.</p>'
+      + codeWindow(answer.language || languageOf(node), answer.text)) : '');
 }
 
 // container에 도식을 그리고 눌림을 처리합니다. onOpenFile이 있으면 상자의 파일을 열 수 있습니다.
-export function mountStructure(container, structure, {flow = 'overview', selected = null, writeOnly = false, showFlows = true, onOpenFile = null, canOpenFile = () => true, targetTitles = {}, onChange = () => {}} = {}) {
-  const state = {flow, selected, writeOnly};
+export function mountStructure(container, structure, {flow = 'overview', selected = null, writeOnly = false, collapsed = {}, reference = null, showFlows = true, onOpenFile = null, canOpenFile = () => true, targetTitles = {}, onChange = () => {}} = {}) {
+  const state = {flow, selected, writeOnly, collapsed: {arch: !!collapsed.arch, layers: !!collapsed.layers, skeleton: !!collapsed.skeleton, reference: collapsed.reference ?? true}};
   const controller = new AbortController();
 
   function paint() {
     tipFor = null;
-    container.innerHTML = structureHtml(structure, {flow: state.flow, selected: state.selected, showFlows, writeOnly: state.writeOnly});
+    container.innerHTML = structureHtml(structure, {flow: state.flow, selected: state.selected, showFlows, writeOnly: state.writeOnly, collapsed: state.collapsed});
     const detail = container.querySelector('.st-detail');
     const path = state.selected?.type === 'node' ? nodeById(structure, state.selected.id)?.path : null;
-    detail.innerHTML = detailHtml(structure, state.selected, {canOpen: !!onOpenFile && !!path && canOpenFile(path), targetTitles});
+    detail.innerHTML = detailHtml(structure, state.selected, {canOpen: !!onOpenFile && !!path && canOpenFile(path), targetTitles, reference, collapsed: state.collapsed});
   }
 
   // 마우스를 올리거나 키보드 포커스가 오면 요약 말풍선을 띄운다.
@@ -249,9 +270,21 @@ export function mountStructure(container, structure, {flow = 'overview', selecte
   }
 
   container.addEventListener('click', (event) => {
+    // 영역 제목을 누르면 그 영역만 접거나 펼친다. 다시 그린 뒤에도 같은 버튼에 포커스를 둔다.
+    const foldTarget = event.target.closest('[data-fold]');
+    if (foldTarget) {
+      const key = foldTarget.dataset.fold;
+      state.collapsed = {...state.collapsed, [key]: !state.collapsed[key]};
+      paint();
+      onChange({...state});
+      container.querySelector(`[data-fold="${key}"]`)?.focus({preventScroll: true});
+      return;
+    }
     const arch = archTarget(event.target);
     if (arch) {
       if (touchLike(event) && tipFor !== archKey(arch)) { showTip(arch); return; }
+      // 설명 상자는 계층별 영역 안에 있으므로 접혀 있으면 펼쳐서 이동할 곳을 보이게 한다.
+      if (state.collapsed.layers) state.collapsed = {...state.collapsed, layers: false};
       state.selected = arch.dataset.archNode ? {type: 'node', id: arch.dataset.archNode} : {type: 'edge', id: arch.dataset.archEdge};
       paint();
       onChange({...state});

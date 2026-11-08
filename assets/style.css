@@ -338,7 +338,7 @@
 .st-node[data-write="false"]{border-style:dashed}
 
 .ar{container-type:inline-size;position:relative;margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.ar-title{margin:0 0 4px;font-size:13px;color:var(--ink)}.ar-help{margin:0 0 10px;font-size:11px;line-height:1.5;color:var(--muted)}
+.ar-title{margin:0 0 4px;font-size:13px;color:var(--ink)}.ar[data-collapsed="true"]{padding-top:6px;padding-bottom:6px}.ar[data-collapsed="true"] .ar-title{margin:0}.ar-help{margin:0 0 10px;font-size:11px;line-height:1.5;color:var(--muted)}
 .ar-grid{display:grid;gap:12px}.ar-chain{display:flex;flex-direction:column;align-items:stretch;min-width:0}
 .ar-row{padding:6px 0;min-width:0}.ar-cap{display:block;margin-bottom:4px;font-size:11px;color:var(--copy);text-align:center}
 .ar-boxes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
@@ -355,7 +355,7 @@
 .ar-foot{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
 .ar-tip{position:absolute;z-index:5;width:max-content;max-width:min(270px,calc(100% - 16px));padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.2);font-size:12px;line-height:1.5;pointer-events:none}
 .ar-tip[hidden]{display:none}.ar-tip strong{margin-right:6px;font-size:13px}.ar-tip span{white-space:nowrap;font-size:11px;color:var(--accent);font-weight:700}.ar-tip p{margin:3px 0 0;overflow-wrap:anywhere}.ar-tip em{display:block;margin-top:4px;font-size:11px;font-style:normal;color:var(--muted)}
-.st-sub{margin:4px 0 8px;font-size:12px;color:var(--copy)}.st-detail{scroll-margin-top:72px}.st-detail:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.st-sub{margin:0 0 8px;padding:2px 6px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.st-detail{scroll-margin-top:72px}.st-detail:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 @container (min-width:560px){.ar-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start}}
 
 .result-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;margin:0 0 14px}
@@ -367,3 +367,16 @@
 .rt thead th{border-top:0;background:var(--table-head);color:var(--copy);font-size:12px;font-weight:700;border-bottom:1px solid var(--line)}
 .rt td.rt-num{font-variant-numeric:tabular-nums}.rt-null{color:var(--muted);font-style:italic}.rt-empty{text-align:center;color:var(--muted)}
 .rt-note{margin:0;padding:5px 12px;border-top:1px dashed var(--line);font-size:11px;line-height:1.5;color:var(--muted)}
+
+.st-fold{display:flex;align-items:center;gap:8px;width:100%;padding:6px 6px;border:0;border-radius:8px;background:none;color:var(--ink);font-size:13px;font-weight:700;line-height:1.4;text-align:left;cursor:pointer}
+.st-fold:hover{background:var(--hover)}.st-fold:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.st-fold-icon{flex:none;width:1em;color:var(--accent);text-align:center}
+.ar-body[hidden],.st-layers[hidden]{display:none}
+.st-sec-body[hidden]{display:none}.st-sec-head{margin:10px 0 4px}.st-sec-head .st-fold{padding:4px 6px;font-size:12px;color:var(--copy)}
+.st-answer-note{margin:0 0 6px;font-size:12px;color:var(--muted)}
+/* 구현 흐름과 시험 화면의 요구사항·흐름 문서 표: 칸 사이를 넓히고 구분선을 둔다 */
+.project-flow-body table,.pj-doc table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px;line-height:1.6}
+.project-flow-body th,.project-flow-body td,.pj-doc th,.pj-doc td{padding:8px 20px 8px 12px;border:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.project-flow-body th,.pj-doc th{background:var(--table-head);white-space:nowrap}
+.project-flow-body td code,.pj-doc td code{overflow-wrap:anywhere}
+@media(max-width:480px){.project-flow-body th,.project-flow-body td,.pj-doc th,.pj-doc td{padding:7px 9px}.project-flow-body table,.pj-doc table{font-size:11.5px}}

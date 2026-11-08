@@ -536,3 +536,94 @@ test('the architecture picture follows the write-only toggle', async ({page}) =>
   expect(await boxes.count()).toBeLessThan(all);
   expect(await page.locator('#project-structure .ar-box[data-write="false"]').count()).toBe(0);
 });
+
+test('the overview and the layer list fold and unfold on their own, and picking an overview box unfolds the layers', async ({page}) => {
+  await openMonthly(page);
+  const arch = page.locator('#project-structure [data-fold="arch"]');
+  const layers = page.locator('#project-structure [data-fold="layers"]');
+  const overviewBox = page.locator('#project-structure [data-arch-node="gearctl"]');
+  const layerBox = page.locator('#project-structure .st-node').first();
+  await expect(arch).toHaveAttribute('aria-expanded', 'true');
+  await expect(layers).toHaveAttribute('aria-expanded', 'true');
+  await expect(overviewBox).toBeVisible();
+  await arch.click();
+  await expect(arch).toHaveAttribute('aria-expanded', 'false');
+  await expect(overviewBox).toBeHidden();
+  await expect(layerBox).toBeVisible();
+  await layers.click();
+  await expect(layers).toHaveAttribute('aria-expanded', 'false');
+  await expect(layerBox).toBeHidden();
+  await arch.click();
+  await expect(overviewBox).toBeVisible();
+  await overviewBox.click();
+  await expect(layers).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#project-structure .st-detail')).toContainText('@WebServlet("/gear")');
+  await expect(page.locator('#project-structure .st-detail')).toBeInViewport();
+});
+
+test('on the home flow a model answer sits under the skeleton and both fold', async ({page}) => {
+  await openMonthly(page);
+  await page.locator('#project-structure [data-node="gearctl"].st-node').click();
+  const detail = page.locator('#project-structure .st-detail');
+  const skeleton = detail.locator('[data-fold="skeleton"]');
+  const answer = detail.locator('[data-fold="reference"]');
+  await expect(skeleton).toHaveAttribute('aria-expanded', 'true');
+  await expect(answer).toHaveAttribute('aria-expanded', 'false');
+  await expect(detail.locator('#st-sec-reference')).toBeHidden();
+  const below = await page.evaluate(() => {
+    const a = document.querySelector('#project-structure [data-fold="skeleton"]');
+    const b = document.querySelector('#project-structure [data-fold="reference"]');
+    return !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+  expect(below).toBe(true);
+  await answer.click();
+  await expect(answer).toHaveAttribute('aria-expanded', 'true');
+  const body = detail.locator('#st-sec-reference');
+  await expect(body).toBeVisible();
+  await expect(body).toContainText('int oneYear = 60 * 60 * 24 * 365;');
+  await expect(body).toContainText('단위는 초');
+  await skeleton.click();
+  await expect(skeleton).toHaveAttribute('aria-expanded', 'false');
+  await expect(detail.locator('#st-sec-skeleton')).toBeHidden();
+  await expect(body).toBeVisible();
+  await skeleton.click();
+  await expect(detail.locator('#st-sec-skeleton')).toBeVisible();
+  await page.locator('#project-structure [data-node="login"].st-node').click();
+  await expect(page.locator('#project-structure .st-detail [data-fold="reference"]')).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#project-structure .st-detail #st-sec-reference')).toContainText('remember-me');
+  await page.locator('#project-structure [data-node="dbutil"].st-node').click();
+  await expect(page.locator('#project-structure .st-detail [data-fold="reference"]')).toHaveCount(0);
+  await expect(page.locator('#project-structure .st-detail [data-fold="skeleton"]')).toHaveCount(1);
+});
+
+test('inside the project screen the diagram folds but the model answer stays behind the help record', async ({page}) => {
+  await start(page, {stage: 2, minutes: 0});
+  await page.getByRole('tab', {name: '구조'}).click();
+  await page.locator('#pj-sidebody [data-node="gearctl"]').click();
+  await expect(page.locator('#pj-sidebody [data-fold="skeleton"]')).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#pj-sidebody [data-fold="reference"]')).toHaveCount(0);
+  await expect(page.locator('#pj-sidebody .st-detail')).not.toContainText('oneYear');
+  await page.locator('#pj-sidebody [data-fold="arch"]').click();
+  await page.getByRole('tab', {name: '요구사항'}).click();
+  await page.getByRole('tab', {name: '구조'}).click();
+  await expect(page.locator('#pj-sidebody [data-fold="arch"]')).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('the pair table of the flow note keeps its two columns apart', async ({page}) => {
+  await openMonthly(page);
+  await page.getByRole('tab', {name: '짝으로 기억할 것'}).click();
+  const cell = page.locator('#project-flow-body td').first();
+  await expect(cell).toBeVisible();
+  const pad = await cell.evaluate((td) => {
+    const s = getComputedStyle(td);
+    return {left: parseFloat(s.paddingLeft), right: parseFloat(s.paddingRight), border: parseFloat(s.borderLeftWidth)};
+  });
+  expect(pad.left).toBeGreaterThanOrEqual(12);
+  expect(pad.right).toBeGreaterThanOrEqual(16);
+  expect(pad.border).toBeGreaterThan(0);
+  const fills = await page.evaluate(() => {
+    const table = document.querySelector('#project-flow-body table');
+    return table.getBoundingClientRect().width >= table.parentElement.getBoundingClientRect().width - 2;
+  });
+  expect(fills).toBe(true);
+});

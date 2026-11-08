@@ -162,3 +162,58 @@ test('the hover summary is short, marks the write boxes and escapes the data', (
   evil.nodes[0].role = '<img src=x onerror=alert(1)>';
   assert.doesNotMatch(tipHtml(evil, 'node', evil.nodes[0].id), /<img/);
 });
+
+test('both areas of the diagram start unfolded and fold with a button that reports its state', () => {
+  const open = structureHtml(structure, {});
+  assert.match(open, /data-fold="arch" aria-expanded="true" aria-controls="ar-body"/);
+  assert.match(open, /data-fold="layers" aria-expanded="true" aria-controls="st-layers"/);
+  assert.doesNotMatch(open, /id="ar-body" hidden/);
+  assert.doesNotMatch(open, /id="st-layers" hidden/);
+  const folded = structureHtml(structure, {collapsed: {arch: true, layers: true}});
+  assert.match(folded, /data-fold="arch" aria-expanded="false"/);
+  assert.match(folded, /data-fold="layers" aria-expanded="false"/);
+  assert.match(folded, /id="ar-body" hidden/);
+  assert.match(folded, /id="st-layers" hidden/);
+  assert.match(folded, /data-collapsed="true"/);
+  const onlyArch = structureHtml(structure, {collapsed: {arch: true}});
+  assert.match(onlyArch, /id="ar-body" hidden/);
+  assert.doesNotMatch(onlyArch, /id="st-layers" hidden/);
+});
+
+test('the detail box shows the skeleton unfolded and folds it on request', () => {
+  const html = detailHtml(structure, {type: 'node', id: 'gearctl'});
+  assert.match(html, /data-fold="skeleton" aria-expanded="true" aria-controls="st-sec-skeleton"/);
+  assert.doesNotMatch(html, /id="st-sec-skeleton" hidden/);
+  const folded = detailHtml(structure, {type: 'node', id: 'gearctl'}, {collapsed: {skeleton: true}});
+  assert.match(folded, /data-fold="skeleton" aria-expanded="false"/);
+  assert.match(folded, /id="st-sec-skeleton" hidden/);
+});
+
+const referenceFiles = {
+  'src/main/java/com/ssafy/sample/controller/GearController.java': {language: 'java', text: 'int oneYear = 60 * 60 * 24 * 365; // <b>x</b>'},
+  'src/main/java/com/ssafy/sample/util/DBUtil.java': {language: 'java', text: 'class DBUtil {}'},
+};
+
+test('a file to implement gets a model answer under the skeleton, folded until opened', () => {
+  const html = detailHtml(structure, {type: 'node', id: 'gearctl'}, {reference: referenceFiles});
+  assert.ok(html.indexOf('data-fold="skeleton"') < html.indexOf('data-fold="reference"'));
+  assert.match(html, /data-fold="reference" aria-expanded="false" aria-controls="st-sec-reference"/);
+  assert.match(html, /id="st-sec-reference" hidden/);
+  assert.ok(html.replace(/<[^>]+>/g, '').includes('int oneYear = 60 * 60 * 24 * 365;'));
+  assert.match(html, /정답 판정이 아니라 비교용/);
+  const open = detailHtml(structure, {type: 'node', id: 'gearctl'}, {reference: referenceFiles, collapsed: {reference: false}});
+  assert.match(open, /data-fold="reference" aria-expanded="true"/);
+  assert.doesNotMatch(open, /id="st-sec-reference" hidden/);
+});
+
+test('there is no model answer without the data, for a provided file or for a path the data lacks', () => {
+  assert.doesNotMatch(detailHtml(structure, {type: 'node', id: 'gearctl'}), /data-fold="reference"/);
+  assert.doesNotMatch(detailHtml(structure, {type: 'node', id: 'dbutil'}, {reference: referenceFiles}), /data-fold="reference"/);
+  assert.doesNotMatch(detailHtml(structure, {type: 'node', id: 'service'}, {reference: referenceFiles}), /data-fold="reference"/);
+  assert.doesNotMatch(detailHtml(structure, {type: 'edge', id: 'e-gear-svc'}, {reference: referenceFiles}), /data-fold=/);
+});
+
+test('model answer code is escaped', () => {
+  const html = detailHtml(structure, {type: 'node', id: 'gearctl'}, {reference: referenceFiles, collapsed: {reference: false}});
+  assert.doesNotMatch(html, /<b>x<\/b>/);
+});
