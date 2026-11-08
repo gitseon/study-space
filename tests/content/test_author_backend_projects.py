@@ -139,3 +139,28 @@ class GeneratedTreeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class CookieLifetimeTests(unittest.TestCase):
+    ROOT = Path(__file__).resolve().parents[2] / "source" / "backend" / "projects"
+
+    def controller(self, pid, part):
+        name = "GearController.java" if pid == "web-01" else "BookController.java"
+        return (self.ROOT / pid / part / "src/main/java/com/ssafy/sample/controller" / name).read_text(encoding="utf-8")
+
+    def test_the_cookie_lasts_one_year_and_the_code_says_why(self):
+        for pid in ("web-01", "web-02"):
+            for part in ("reference", "stages/1"):
+                code = self.controller(pid, part)
+                self.assertIn("int oneYear = 60 * 60 * 24 * 365;", code, (pid, part))
+                self.assertIn("단위는 초", code, (pid, part))
+                self.assertIn("31,536,000초이고 이것이 1년", code, (pid, part))
+                self.assertNotIn("60 * 60 * 24 * 30", code, (pid, part))
+            self.assertIn("60 * 60 * 24 * 365", self.controller(pid, "stages/2"))
+            self.assertNotIn("oneYear", self.controller(pid, "stages/2"))
+
+    def test_the_documents_agree_on_one_year(self):
+        for pid in ("web-01", "web-02"):
+            text = (self.ROOT / pid / "requirements.md").read_text(encoding="utf-8")
+            self.assertIn("유효 기간 1년", text)
+            self.assertNotIn("30일", text)
+            self.assertNotIn("30일", (self.ROOT / pid / "verification.md").read_text(encoding="utf-8"))

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "projectId": "web-02",
-  "revision": 3,
-  "hash": "6adece56499741da",
+  "revision": 4,
+  "hash": "a6e7d5f61dcd1186",
   "stage": {
     "id": 3,
     "label": "구현 대상 전체 작성"
@@ -376,6 +376,7 @@
       "세션에는 객체를 저장할 수 있습니다. 로그인한 회원은 session.setAttribute(\"user\", member)로 저장하고 메인(/)으로 redirect합니다.",
       "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다.",
       "쿠키에는 문자열만 저장할 수 있고 브라우저에 남습니다. 체크박스 remember-me를 체크하면 값이 \"on\"으로 오고 체크하지 않으면 null입니다. 체크했을 때 ControllerHelper의 setupCookie로 email 쿠키를 저장합니다.",
+      "쿠키 유효 기간(maxAge)의 단위는 초입니다. 1년은 60초 × 60분 × 24시간 × 365일이므로 60 * 60 * 24 * 365로 계산합니다.",
       "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. 루트 컨텍스트에서는 getContextPath()가 빈 문자열이므로 path를 \"/\"로 바꿔 씁니다."
     ],
     "ctrl-logout": [

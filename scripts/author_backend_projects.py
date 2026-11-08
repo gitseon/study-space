@@ -24,7 +24,7 @@ OUT = ROOT / "source" / "backend" / "projects"
 STAGES = ("1", "2", "3")
 STAGE_LABELS = {"1": "빈칸 채우기", "2": "메서드와 JSP 블록 작성", "3": "구현 대상 전체 작성"}
 SOURCE_REFS = ["BE-MONTH-START-01", "BE-MONTH-WORK-01", "BE-MONTH-WEBTEST-01"]
-REVISION = 3
+REVISION = 4
 ENVIRONMENT = {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
     "tomcat": "Apache tomcat-11.0.27",

@@ -231,8 +231,10 @@ public class GearController extends HttpServlet implements ControllerHelper {
         request.getSession().setAttribute("user", member);
         // 쿠키는 저장할 때와 지울 때 이름과 path가 같아야 합니다. 루트 컨텍스트는 getContextPath()가 빈 문자열이라 "/"로 바꿉니다.
         String path = request.getContextPath().isEmpty() ? "/" : request.getContextPath();
+        // maxAge의 단위는 초입니다. 60초 * 60분 * 24시간 * 365일 = 31,536,000초이고 이것이 1년입니다.
+        int oneYear = 60 * 60 * 24 * 365;
         if ("on".equals(request.getParameter("remember-me"))) {
-            setupCookie("email", email, 60 * 60 * 24 * 30, path, response);
+            setupCookie("email", email, oneYear, path, response);
         } else {
             setupCookie("email", "", 0, path, response);
         }
@@ -254,8 +256,10 @@ public class GearController extends HttpServlet implements ControllerHelper {
         }
         request.getSession().____("user", member);
         String path = request.getContextPath().isEmpty() ? "____" : request.getContextPath();
+        // maxAge의 단위는 초입니다. 60초 * 60분 * 24시간 * 365일 = 31,536,000초이고 이것이 1년입니다.
+        int oneYear = 60 * 60 * 24 * 365;
         if ("on".equals(request.getParameter("____"))) {
-            ____("email", email, 60 * 60 * 24 * 30, path, response);
+            ____("email", email, oneYear, path, response);
         } else {
             setupCookie("email", "", ____, path, response);
         }
@@ -268,7 +272,8 @@ public class GearController extends HttpServlet implements ControllerHelper {
         // POST 요청이면 email, pass 파라미터로 서비스 login을 호출합니다.
         //  - 실패(null): request 속성 alertMsg에 안내를 담고 로그인 화면으로 forward
         //  - 성공: 세션 속성 "user"에 회원을 저장합니다.
-        //    아이디 기억하기(remember-me)를 체크했으면 email 쿠키를 30일 동안 저장하고, 체크하지 않았으면 같은 path로 지웁니다.
+        //    아이디 기억하기(remember-me)를 체크했으면 email 쿠키를 1년 동안 저장하고, 체크하지 않았으면 같은 path로 지웁니다.
+        //    쿠키 유효 기간(maxAge)의 단위는 초이므로 1년은 60 * 60 * 24 * 365초입니다.
         //    쿠키 저장과 삭제에는 ControllerHelper의 setupCookie를 씁니다. 끝나면 메인(/)으로 redirect
     }
     //@@stage 3

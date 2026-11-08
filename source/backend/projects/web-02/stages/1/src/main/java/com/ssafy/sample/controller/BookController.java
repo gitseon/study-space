@@ -126,8 +126,10 @@ public class BookController extends HttpServlet implements ControllerHelper {
         }
         request.getSession().____("user", member);
         String path = request.getContextPath().isEmpty() ? "____" : request.getContextPath();
+        // maxAge의 단위는 초입니다. 60초 * 60분 * 24시간 * 365일 = 31,536,000초이고 이것이 1년입니다.
+        int oneYear = 60 * 60 * 24 * 365;
         if ("on".equals(request.getParameter("____"))) {
-            ____("email", email, 60 * 60 * 24 * 30, path, response);
+            ____("email", email, oneYear, path, response);
         } else {
             setupCookie("email", "", ____, path, response);
         }

@@ -5,8 +5,8 @@
     {
       "id": "web-01",
       "title": "캠핑 용품 관리",
-      "revision": 3,
-      "hash": "dca6c667e37b5071",
+      "revision": 4,
+      "hash": "be580b8f41c5ca4a",
       "durationOptions": [
         90,
         120,
@@ -47,8 +47,8 @@
     {
       "id": "web-02",
       "title": "도서 관리",
-      "revision": 3,
-      "hash": "6adece56499741da",
+      "revision": 4,
+      "hash": "a6e7d5f61dcd1186",
       "durationOptions": [
         90,
         120,

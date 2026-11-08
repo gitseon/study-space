@@ -228,14 +228,20 @@ async function fillProjectArea() {
   try {
     projectIndexPromise ||= fetchData(manifest.webProjects.file);
     const index = await projectIndexPromise;
-    const detail = await fetchData(index.projects[0].project);
+    // 구현 흐름의 도식은 구현해야 하는 파일의 모범답안도 보여 준다. 모범답안을 받지 못해도 도식은 그대로 쓴다.
+    const first = index.projects[0];
+    const [detail, answerFile] = await Promise.all([
+      fetchData(first.project),
+      first.referenceFile ? fetchData(first.referenceFile).catch(() => null) : null,
+    ]);
+    const reference = answerFile?.files ? Object.fromEntries(answerFile.files.map((f) => [f.path, {language: f.language, text: f.text}])) : null;
     if (!area.isConnected) {
       return;
     }
     const tabs = splitFlow(detail.flow);
     area.innerHTML = flowSummary(tabs) + '<div class="exam-grid">' + index.projects.map((p, i) => projectCard(p, i + 1)).join('') + '</div>';
     const diagram = detail.structure
-      ? mountStructure(area.querySelector('#project-structure'), detail.structure, {showFlows: false, targetTitles: Object.fromEntries(detail.targets.map((x) => [x.id, x.title]))})
+      ? mountStructure(area.querySelector('#project-structure'), detail.structure, {showFlows: false, reference, targetTitles: Object.fromEntries(detail.targets.map((x) => [x.id, x.title]))})
       : null;
     area.querySelectorAll('[data-flow]').forEach((b) => {
       b.onclick = () => {

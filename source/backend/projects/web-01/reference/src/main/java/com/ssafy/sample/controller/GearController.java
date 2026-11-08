@@ -118,8 +118,10 @@ public class GearController extends HttpServlet implements ControllerHelper {
         request.getSession().setAttribute("user", member);
         // 쿠키는 저장할 때와 지울 때 이름과 path가 같아야 합니다. 루트 컨텍스트는 getContextPath()가 빈 문자열이라 "/"로 바꿉니다.
         String path = request.getContextPath().isEmpty() ? "/" : request.getContextPath();
+        // maxAge의 단위는 초입니다. 60초 * 60분 * 24시간 * 365일 = 31,536,000초이고 이것이 1년입니다.
+        int oneYear = 60 * 60 * 24 * 365;
         if ("on".equals(request.getParameter("remember-me"))) {
-            setupCookie("email", email, 60 * 60 * 24 * 30, path, response);
+            setupCookie("email", email, oneYear, path, response);
         } else {
             setupCookie("email", "", 0, path, response);
         }
