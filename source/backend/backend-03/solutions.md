@@ -288,8 +288,16 @@ NULL이었다면 `wasNull()`이 true를 돌려준다. false가 아니다.
 
 ## question: backend-03-q31
 ### solution
-Filter를 `/auth/*` 패턴에 매핑하면 이 경로로 오는 모든 요청이 Servlet에 닿기 전에 Filter를 먼저 거친다. Filter는 `getSession(false)`로 세션을 얻어 `loginUser` 속성이 있는지 확인한다. 세션이나 속성이 없으면 로그인 폼으로 redirect하고 `chain.doFilter()`를 호출하지 않아 요청이 Servlet까지 가지 못한다. 속성이 있으면 `chain.doFilter()`를 호출해 다음 단계로 넘긴다. 각 Servlet에 검사를 넣으면 같은 코드가 반복되고 새 Servlet에서 검사를 빠뜨릴 수 있지만 Filter 하나에 모으면 보호 경로 전체가 같은 규칙을 따른다.
+**(1)** Filter를 `/auth/*` 패턴에 매핑하면 이 경로로 오는 모든 요청이 Servlet에 닿기 전에 Filter를 먼저 거친다.
+
+**(2)** Filter는 `getSession(false)`로 세션을 얻어 `loginUser` 속성이 있는지 확인한다. 세션이나 속성이 없으면 로그인 폼으로 redirect하고 `chain.doFilter()`를 호출하지 않아 요청이 Servlet까지 가지 못한다. 속성이 있으면 `chain.doFilter()`를 호출해 다음 단계로 넘긴다.
+
+**(3)** 각 Servlet에 검사를 넣으면 같은 코드가 반복되고 새 Servlet에서 검사를 빠뜨릴 수 있지만 Filter 하나에 모으면 보호 경로 전체가 같은 규칙을 따른다.
 
 ## question: backend-03-q32
 ### solution
-`post_id`가 `writer_id`를 정하고 `writer_id`가 `writer_name`과 `writer_email`을 정하므로 기본키가 아닌 `writer_id`를 거쳐 다른 속성이 결정되는 이행 종속이 있다. 기본키가 아닌 속성이 다른 비키 속성을 결정하는 구조이므로 3정규형을 위반한다. 작성자 정보를 `member` 테이블로 분리하고 `post`에는 `writer_id`를 외래키로 남기면 해결된다. 분리하기 전에는 같은 작성자의 이름과 이메일이 게시글마다 반복 저장되어 이름을 바꾸면 여러 행을 모두 고쳐야 했지만 분리한 뒤에는 한 행만 고치면 된다.
+**(1)** `post_id`가 `writer_id`를 정하고 `writer_id`가 `writer_name`과 `writer_email`을 정하므로 기본키가 아닌 `writer_id`를 거쳐 다른 속성이 결정되는 이행 종속이 있다. 기본키가 아닌 속성이 다른 비키 속성을 결정하는 구조이므로 3정규형을 위반한다.
+
+**(2)** 작성자 정보를 `member` 테이블로 분리하고 `post`에는 `writer_id`를 외래키로 남기면 해결된다.
+
+**(3)** 분리하기 전에는 같은 작성자의 이름과 이메일이 게시글마다 반복 저장되어 이름을 바꾸면 여러 행을 모두 고쳐야 했지만 분리한 뒤에는 한 행만 고치면 된다.
