@@ -88,6 +88,15 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "dept",
+            "cnt",
+            "paid",
+            "avg_bonus"
+          ]
         }
       },
       {
@@ -114,6 +123,15 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "HAVING을 빼면",
+          "columns": [
+            "dept",
+            "cnt",
+            "paid",
+            "avg_bonus"
+          ]
         }
       },
       {
@@ -149,6 +167,41 @@
     ],
     "steps": [
       {
+        "sql": "SELECT runner, secs FROM race ORDER BY secs ASC, runner DESC",
+        "expect": {
+          "rows": [
+            [
+              "다솜",
+              "NULL"
+            ],
+            [
+              "라온",
+              "48"
+            ],
+            [
+              "나래",
+              "48"
+            ],
+            [
+              "가온",
+              "52"
+            ],
+            [
+              "마루",
+              "55"
+            ]
+          ],
+          "ordered": true
+        },
+        "show": {
+          "title": "정렬한 전체 순서",
+          "columns": [
+            "runner",
+            "secs"
+          ]
+        }
+      },
+      {
         "sql": "SELECT runner FROM race ORDER BY secs ASC, runner DESC LIMIT 2 OFFSET 1",
         "expect": {
           "rows": [
@@ -160,6 +213,12 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "LIMIT 2 OFFSET 1을 적용한 결과",
+          "columns": [
+            "runner"
+          ]
         }
       },
       {
@@ -233,6 +292,13 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (WHERE에 조건)",
+          "columns": [
+            "name",
+            "status"
+          ]
         }
       },
       {
@@ -253,6 +319,13 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (ON에 조건)",
+          "columns": [
+            "name",
+            "status"
+          ]
         }
       },
       {
@@ -307,6 +380,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "city"
+          ]
         }
       },
       {
@@ -372,6 +451,12 @@
         "expect": {
           "rows": [],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (NOT IN)",
+          "columns": [
+            "id"
+          ]
         }
       },
       {
@@ -386,6 +471,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (NOT EXISTS)",
+          "columns": [
+            "id"
+          ]
         }
       }
     ],
@@ -497,6 +588,12 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "ROLLBACK 뒤 log_t",
+          "columns": [
+            "n"
+          ]
         }
       }
     ],
@@ -559,7 +656,13 @@
           ],
           "ordered": false
         },
-        "session": "t1"
+        "session": "t1",
+        "show": {
+          "title": "T1의 일반 SELECT",
+          "columns": [
+            "balance"
+          ]
+        }
       },
       {
         "sql": "SELECT balance FROM account WHERE id = 1 FOR UPDATE",
@@ -571,7 +674,13 @@
           ],
           "ordered": false
         },
-        "session": "t1"
+        "session": "t1",
+        "show": {
+          "title": "T1의 SELECT ... FOR UPDATE",
+          "columns": [
+            "balance"
+          ]
+        }
       },
       {
         "sql": "COMMIT",
@@ -603,6 +712,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -710,6 +825,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (CONCAT)",
+          "columns": [
+            "CONCAT(name, '/', nick)"
+          ]
         }
       },
       {
@@ -721,6 +842,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (CONCAT_WS)",
+          "columns": [
+            "CONCAT_WS('/', name, nick)"
+          ]
         }
       },
       {
@@ -766,6 +893,13 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "HAVING으로 고치면",
+          "columns": [
+            "dept",
+            "cnt"
+          ]
         }
       }
     ],
@@ -793,6 +927,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (= NULL)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -804,6 +944,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (<=> NULL)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -815,6 +961,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 C (IS NULL)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -845,6 +997,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (INNER JOIN)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -856,6 +1014,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (LEFT JOIN)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -887,6 +1051,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (EXCEPT)",
+          "columns": [
+            "item"
+          ]
         }
       },
       {
@@ -901,6 +1071,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (INTERSECT)",
+          "columns": [
+            "item"
+          ]
         }
       },
       {
@@ -957,6 +1133,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (ALL)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -968,6 +1150,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (ANY)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -1023,6 +1211,13 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "삭제 뒤 emp",
+          "columns": [
+            "id",
+            "dept_id"
+          ]
         }
       }
     ],
@@ -1062,6 +1257,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "(가) DELETE 뒤 새로 넣은 행",
+          "columns": [
+            "id"
+          ]
         }
       },
       {
@@ -1081,6 +1282,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "(나) TRUNCATE 뒤 새로 넣은 행",
+          "columns": [
+            "id"
+          ]
         }
       }
     ],
@@ -1157,6 +1364,12 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "커밋 뒤 t",
+          "columns": [
+            "n"
+          ]
         }
       }
     ],
@@ -1184,6 +1397,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "SUM(score)"
+          ]
         }
       },
       {
@@ -1309,6 +1528,13 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "dept",
+            "AVG(sal)"
+          ]
         }
       },
       {
@@ -1389,6 +1615,13 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "LENGTH('가나')",
+            "CHAR_LENGTH('가나')"
+          ]
         }
       }
     ],
@@ -1417,6 +1650,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 A (=)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -1428,6 +1667,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "쿼리 B (<=>)",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -1447,6 +1692,37 @@
       "INSERT INTO emp VALUES (1,'가온',NULL),(2,'나래',1),(3,'다솜',1),(4,'라온',2)"
     ],
     "steps": [
+      {
+        "sql": "SELECT e.name, m.name FROM emp e LEFT JOIN emp m ON e.mgr = m.id ORDER BY e.id",
+        "expect": {
+          "rows": [
+            [
+              "가온",
+              "NULL"
+            ],
+            [
+              "나래",
+              "가온"
+            ],
+            [
+              "다솜",
+              "가온"
+            ],
+            [
+              "라온",
+              "나래"
+            ]
+          ],
+          "ordered": true
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "e.name",
+            "m.name"
+          ]
+        }
+      },
       {
         "sql": "SELECT m.name FROM emp e LEFT JOIN emp m ON e.mgr = m.id ORDER BY e.id",
         "expect": {
@@ -1543,6 +1819,13 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "실행 결과",
+          "columns": [
+            "name"
+          ],
+          "note": "문제의 쿼리에는 ORDER BY가 없어 행 순서는 달라질 수 있습니다."
         }
       },
       {
@@ -1684,6 +1967,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "(가) DELETE를 롤백한 뒤",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       },
       {
@@ -1707,6 +1996,12 @@
             ]
           ],
           "ordered": false
+        },
+        "show": {
+          "title": "(나) TRUNCATE를 롤백한 뒤",
+          "columns": [
+            "COUNT(*)"
+          ]
         }
       }
     ],
@@ -1755,7 +2050,13 @@
           ],
           "ordered": false
         },
-        "session": "t1"
+        "session": "t1",
+        "show": {
+          "title": "READ UNCOMMITTED에서 T1의 SELECT",
+          "columns": [
+            "balance"
+          ]
+        }
       },
       {
         "sql": "COMMIT",
@@ -1782,7 +2083,13 @@
           ],
           "ordered": false
         },
-        "session": "t3"
+        "session": "t3",
+        "show": {
+          "title": "READ COMMITTED에서 T1의 SELECT",
+          "columns": [
+            "balance"
+          ]
+        }
       },
       {
         "sql": "COMMIT",
@@ -1860,6 +2167,12 @@
             ]
           ],
           "ordered": true
+        },
+        "show": {
+          "title": "ROLLBACK 뒤 t",
+          "columns": [
+            "n"
+          ]
         }
       }
     ],

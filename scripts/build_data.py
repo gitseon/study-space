@@ -85,6 +85,39 @@ def blocks(path):
         raise ContentError(f"{path}: unclosed code fence")
     return {key: {s: "\n".join(lines).strip() for s, lines in value.items()} for key,value in result.items()}
 
+def attach_result_tables(source_dir, exam, questions):
+    """Adds `resultTables` to the questions whose SQL check has `show` steps.
+
+    The rows come from the same checks that verify_backend_answers.py runs on MySQL, so the table in an explanation is the
+    verified result. A step shows its table when it carries `show`: {title, columns, note?}.
+    """
+    path = source_dir.parent / f"{exam.get('track')}-checks.json"
+    if not path.is_file():
+        return
+    by_id = {q["id"]: q for q in questions}
+    for check in json.loads(path.read_text(encoding="utf-8-sig")):
+        if check.get("kind") != "sql" or check["questionId"] not in by_id:
+            continue
+        q = by_id[check["questionId"]]
+        for number, step in enumerate(check["steps"], start=1):
+            show = step.get("show")
+            if show is None:
+                continue
+            where = f"{q['id']} step {number}"
+            expect = step.get("expect", {})
+            rows, columns = expect.get("rows"), show.get("columns")
+            if check.get("revision") != q.get("revision"):
+                raise ContentError(f"{where}: check is for revision {check.get('revision')} but the question is at {q.get('revision')}")
+            if not str(show.get("title", "")).strip() or not isinstance(columns, list) or not columns or not all(isinstance(c, str) and c for c in columns):
+                raise ContentError(f"{where}: show needs a title and column names")
+            if not isinstance(rows, list) or not all(isinstance(r, list) and len(r) == len(columns) and all(isinstance(v, str) for v in r) for r in rows):
+                raise ContentError(f"{where}: show needs expected rows of text cells with one cell per column")
+            table = {"title": show["title"], "columns": columns, "rows": rows}
+            note = show.get("note") or ("ORDER BY가 없어 행 순서는 달라질 수 있습니다." if len(rows) > 1 and not expect.get("ordered") else None)
+            if note:
+                table["note"] = note
+            q.setdefault("resultTables", []).append(table)
+
 def parse_exam(source_dir):
     exam = json.loads((source_dir/"exam.json").read_text(encoding="utf-8-sig"))
     raw, solutions = blocks(source_dir/"questions.md"), blocks(source_dir/"solutions.md")
@@ -106,6 +139,7 @@ def parse_exam(source_dir):
             if len(ids)!=4 or len(set(ids))!=4 or q.get("correctChoiceId") not in ids or set(ids)!=set(q["choiceExplanations"]):
                 raise ContentError(f"{qid}: invalid choice/answer/explanation IDs")
         questions.append(q)
+    attach_result_tables(source_dir, exam, questions)
     exam["questions"]=questions
     exam["questionIds"]=[q["id"] for q in questions]
     exam["counts"]={t:sum(q["type"]==t for q in questions) for t in ("mc","short","essay","code")}

@@ -5,7 +5,7 @@ import {effectiveMinutes} from './practice-time.js';
 import {studyLinksFor} from './study-links.js';
 import {summarizeSqld} from './sqld-result.js';
 import {toggleElimination, clearElimination, isEraserEnabled, readEraserPreference, writeEraserPreference} from './choice-eraser.js';
-import {escapeHtml as e, inline, markdown, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
+import {escapeHtml as e, inline, markdown, resultTablesHtml, solutionMarkdown, loadExam, download, typeNames, gradingNames} from './render.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -288,6 +288,7 @@ function explanation(q) {
     html += '<p class="answer-line">모범답안 <b>' + e(q.acceptedAnswers[0]) + '</b>'
       + (hasAnswer(q) ? '<span>내 답 <b>' + e(attempt.answers[q.id]) + '</b></span>' : '') + '</p>';
   }
+  html += resultTablesHtml(q.resultTables);
   html += '<div class="prose solution">' + markdown(solutionMarkdown(q.solution)) + '</div>';
   if (q.type === 'mc') {
     html += '<div class="choice-reasons">' + choiceOrder(q)
