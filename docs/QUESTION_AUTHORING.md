@@ -138,7 +138,7 @@ ADsP 문항은 `exam.json`에 `"track": "adsp"`를 쓰고 회차 종류(`kind`)�
 - `source/backend/coverage-backend.json`은 범위표(B01~I01)의 각 행을 노트의 절과 문항에 연결한다. `coverageProfile`이 `pilot`이면 행마다 문항 1개 이상, `full`이면 모든 키워드에 문항 1개 이상이 필요하다. 3회가 모두 모인 지금은 `full`이며 새 회차나 수정으로 키워드의 문항이 사라지면 검증이 실패한다.
 - SQL 정답은 MySQL 8.4에서 실행해 확인한다. SQLite 통과로 대신하지 않으며 `ORDER BY`가 없으면 행 순서가 아닌 집합으로 비교한다. NULL, 중복 값, 빈 결과, 외부 조인의 미매칭 행을 포함한다. 인덱스가 항상 빠르다고 출제하지 않는다.
 - 실행해 확인할 수 있는 문항(SQL, JDBC, 브라우저 동작)은 `source/backend/backend-checks.json`에 문항 ID와 revision을 가리켜 쓰고 `scripts/verify_backend_answers.py`가 MySQL과 Java로 실행한다. 실행할 수 없는 문항은 `source/backend/backend-reviews.json`에 재풀이 기록을 두며 작성자의 검토를 독립 검토로 적지 않는다(`independent: false`). 검증 환경(MySQL 8.4.x, JDK 25, Connector/J 8.4.0)의 값은 보고서에 남는다. 시간대나 현재 시각에 따라 결과가 달라지는 문항은 내지 않는다.
-- `exam.json`의 `fixedPracticeMinutes: true`는 모의 실전 시간을 고정한다. 채점 방식이 `모두 풀고 한 번에 채점`이면 주소의 `minutes`나 카드의 시간 선택과 관계없이 `practiceMinutes`(60분)가 적용되고 학습 모드(`한 문제씩 정답 확인`)만 시간을 고를 수 있다.
+- `exam.json`의 `fixedPracticeMinutes: true`는 모의 실전 시간을 고정하는 선택 기능이다. 채점 방식이 `모두 풀고 한 번에 채점`이면 주소의 `minutes`나 카드의 시간 선택과 관계없이 `practiceMinutes`가 적용되고 학습 모드(`한 문제씩 정답 확인`)만 시간을 고를 수 있다. 백엔드 · DB 회차는 이 설정을 쓰지 않으며 두 채점 방식 모두 시간을 고를 수 있고 `practiceMinutes`(60분)가 기본 선택값이다.
 - 인라인 코드가 한 줄로 길어지면 360px 화면에서 가로로 넘친다. 긴 문장을 백틱으로 감싸지 않고 짧은 식별자만 감싼다. `tests/e2e/backend.spec.js`가 32문항 전체를 360px에서 검사한다.
 - 이 저장소의 MySQL 규칙을 SQLD 문항에 적용하지 않는다. SQLD는 별도 `sqld` 트랙이다.
 - `sourceRefs`에는 공개 자료 ID(`DB-L05`, `BE-LAB-03` 등)와 절·쪽을 적는다. 원본 파일명, 절대 경로, 해시는 적지 않는다. 강의의 문구, 데이터, 정답 코드는 옮기지 않는다.

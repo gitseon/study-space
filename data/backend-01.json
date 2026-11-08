@@ -6,7 +6,6 @@
   "title": "백엔드 · DB 1회",
   "subtitle": "요청 흐름과 SQL 읽기",
   "practiceMinutes": 60,
-  "fixedPracticeMinutes": true,
   "sourceScopeVersion": 1,
   "questions": [
     {
@@ -1487,5 +1486,5 @@
       "d"
     ]
   },
-  "contentVersion": "61f2b5b6994f4508"
+  "contentVersion": "6e7df9a0f132a8b6"
 }
