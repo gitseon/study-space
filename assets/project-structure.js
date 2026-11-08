@@ -72,18 +72,27 @@ export function structureHtml(structure, {flow = 'overview', selected = null, sh
     ? '<div class="st-flows" role="group" aria-label="기능 선택">'
       + Object.entries(structure.flows).map(([id, f]) => `<button type="button" data-flow="${escapeHtml(id)}" aria-pressed="${id === flow}">${escapeHtml(f.label)}</button>`).join('') + '</div>'
     : '';
+  // 설명 상자는 하나만 두고, 누른 버튼이 속한 묶음 바로 아래에 둔다. 선택이 없으면 도식 맨 아래에 안내 문구로 둔다.
+  const detail = `<div class="st-detail" aria-live="polite">${detailHtml(structure, selected)}</div>`;
+  const selNode = selected?.type === 'node' ? nodeById(structure, selected.id) : null;
+  const selEdge = selected?.type === 'edge' ? edgeById(structure, selected.id) : null;
+  let placed = false;
+  const slot = (here) => { if (here && !placed) { placed = true; return detail; } return ''; };
   const rows = structure.layers.map((layer) => {
     const nodes = structure.nodes.filter((n) => n.layer === layer.id);
     if (!nodes.length) return '';
-    const downs = (groups.down[layer.id] || []).map((e) => edgeButton(structure, e, members, selected)).join('');
+    const downEdges = groups.down[layer.id] || [];
+    const downs = downEdges.map((e) => edgeButton(structure, e, members, selected)).join('');
     return `<section class="st-layer" data-layer="${escapeHtml(layer.id)}"><h4>${escapeHtml(layer.label)}</h4>`
       + `<div class="st-nodes">${nodes.map((n) => nodeButton(n, members, selected)).join('')}</div>`
-      + (downs ? `<div class="st-edges" role="group" aria-label="${escapeHtml(layer.label)}에서 다음 단계로">${downs}</div>` : '') + '</section>';
+      + slot(selNode?.layer === layer.id)
+      + (downs ? `<div class="st-edges" role="group" aria-label="${escapeHtml(layer.label)}에서 다음 단계로">${downs}</div>` : '')
+      + slot(selEdge && downEdges.some((e) => e.id === selEdge.id)) + '</section>';
   }).join('');
   const back = groups.back.length
-    ? `<section class="st-layer st-back"><h4>응답과 같은 계층 안의 연결</h4><div class="st-edges" role="group" aria-label="응답 방식">${groups.back.map((e) => edgeButton(structure, e, members, selected)).join('')}</div></section>`
+    ? `<section class="st-layer st-back"><h4>응답과 같은 계층 안의 연결</h4><div class="st-edges" role="group" aria-label="응답 방식">${groups.back.map((e) => edgeButton(structure, e, members, selected)).join('')}</div>${slot(selEdge && groups.back.some((e) => e.id === selEdge.id))}</section>`
     : '';
-  return `<div class="st" data-active-flow="${escapeHtml(flow)}">${flows}<div class="st-diagram">${rows}${back}</div><div class="st-detail" aria-live="polite">${detailHtml(structure, selected)}</div></div>`;
+  return `<div class="st" data-active-flow="${escapeHtml(flow)}">${flows}<div class="st-diagram">${rows}${back}</div>${placed ? '' : detail}</div>`;
 }
 
 export function detailHtml(structure, selected, {canOpen = false, targetTitles = {}} = {}) {

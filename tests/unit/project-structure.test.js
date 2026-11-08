@@ -93,3 +93,17 @@ test('skeleton languages follow the file type and the book project uses its own 
   assert.match(names, /BookController/);
   assert.doesNotMatch(JSON.stringify(book), /Gear|gear|용품/);
 });
+
+test('the detail box sits directly under the group of the chosen button', () => {
+  const node = structure.nodes.find((n) => n.id === 'gearctl');
+  const nodeHtml = structureHtml(structure, {selected: {type: 'node', id: node.id}});
+  assert.equal(nodeHtml.split('class="st-detail"').length - 1, 1);
+  const layer = nodeHtml.split('<section class="st-layer"').find((s) => s.includes(`data-layer="${node.layer}"`));
+  assert.match(layer, /<\/div><div class="st-detail"/);
+  const edge = Object.values(edgeGroups(structure).down).flat()[0];
+  const edgeHtml = structureHtml(structure, {selected: {type: 'edge', id: edge.id}});
+  assert.equal(edgeHtml.split('class="st-detail"').length - 1, 1);
+  assert.match(edgeHtml, /class="st-edges"[^]*?<\/div><div class="st-detail"/);
+  const none = structureHtml(structure, {});
+  assert.match(none, /<\/section><\/div><div class="st-detail"/);
+});
