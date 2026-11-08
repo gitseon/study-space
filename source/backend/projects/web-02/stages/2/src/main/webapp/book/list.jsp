@@ -22,14 +22,13 @@ table, th, td {
                 <th>코드</th>
                 <th>도서명</th>
                 <th>가격</th>
-                <th>저자</th>
                 <th>분류</th>
             </tr>
         </thead>
         <tbody>
             <%-- study-target:jsp-list:start --%>
             <%-- TODO: request 속성 list가 비어 있으면 "등록된 도서가 없습니다." 행을 보여주세요.
-                 목록이 있으면 도서마다 한 행씩 코드, 도서명, 가격, 저자, 분류를 출력하세요.
+                 목록이 있으면 도서마다 한 행씩 코드, 도서명, 가격, 분류를 출력하세요.
                  코드는 /book?action=detail&code=코드 링크로 만들고 출력값은 c:out으로 감쌉니다. --%>
             <%-- study-target:jsp-list:end --%>
         </tbody>

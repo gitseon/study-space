@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.sample.model.dto.Gear;
-import com.ssafy.sample.model.service.DuplicateCodeException;
+import com.ssafy.sample.model.dto.Member;
 import com.ssafy.sample.model.service.GearService;
 import com.ssafy.sample.model.service.GearServiceImpl;
 
@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/gear")
 public class GearController extends HttpServlet implements ControllerHelper {
@@ -45,8 +46,11 @@ public class GearController extends HttpServlet implements ControllerHelper {
         case "detail":
             detail(request, response);
             break;
-        case "delete":
-            delete(request, response);
+        case "login":
+            login(request, response);
+            break;
+        case "logout":
+            logout(request, response);
             break;
         default:
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -66,21 +70,20 @@ public class GearController extends HttpServlet implements ControllerHelper {
             forward(request, response, "/gear/regist.jsp");
             return;
         }
-        String code = request.getParameter("code");
-        String name = request.getParameter("name");
-        String brand = request.getParameter("brand");
-        String color = request.getParameter("color");
-        int price = parseNonNegativeInt(request.getParameter("price"));
-        if (!hasText(code, 30) || !hasText(name, 50) || price < 0 || !hasText(brand, 30) || !hasText(color, 30)) {
-            request.setAttribute("alertMsg", "모든 항목을 입력하고 가격은 0 이상의 정수로 입력하세요.");
+        Gear gear = new Gear();
+        gear.setCode(request.getParameter("code"));
+        gear.setName(request.getParameter("name"));
+        gear.setBrand(request.getParameter("brand"));
+        gear.setColor(request.getParameter("color"));
+        try {
+            gear.setPrice(Integer.parseInt(request.getParameter("price")));
+        } catch (NumberFormatException e) {
+            request.setAttribute("alertMsg", "가격은 숫자로 입력하세요.");
             forward(request, response, "/gear/regist.jsp");
             return;
         }
-        Gear gear = new Gear(code.trim(), name.trim(), price, brand.trim(), color.trim());
-        try {
-            service.insert(gear);
-        } catch (DuplicateCodeException e) {
-            request.setAttribute("alertMsg", "이미 등록된 코드입니다. 다른 코드를 입력하세요.");
+        if (service.insert(gear) == 0) {
+            request.setAttribute("alertMsg", "등록하지 못했습니다. 이미 있는 코드인지 확인하세요.");
             forward(request, response, "/gear/regist.jsp");
             return;
         }
@@ -90,7 +93,7 @@ public class GearController extends HttpServlet implements ControllerHelper {
     private void detail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String code = request.getParameter("code");
-        Gear gear = hasText(code, 30) ? service.detail(code) : null;
+        Gear gear = code == null ? null : service.detail(code);
         if (gear == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -99,18 +102,27 @@ public class GearController extends HttpServlet implements ControllerHelper {
         forward(request, response, "/gear/detail.jsp");
     }
 
-    private void delete(HttpServletRequest request, HttpServletResponse response)
+    private void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!"POST".equalsIgnoreCase(request.getMethod())) {
-            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            forward(request, response, "/login-form.jsp");
             return;
         }
-        String code = request.getParameter("code");
-        int deleted = hasText(code, 30) ? service.delete(code) : 0;
-        if (deleted == 0) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        Member member = service.login(request.getParameter("email"), request.getParameter("pass"));
+        if (member == null) {
+            request.setAttribute("alertMsg", "이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.");
+            forward(request, response, "/login-form.jsp");
             return;
         }
-        redirect(request, response, "/gear?action=list");
+        request.getSession().setAttribute("user", member);
+        redirect(request, response, "/");
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        redirect(request, response, "/");
     }
 }

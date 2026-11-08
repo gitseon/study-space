@@ -22,7 +22,6 @@ table, th, td {
                 <th>코드</th>
                 <th>도서명</th>
                 <th>가격</th>
-                <th>저자</th>
                 <th>분류</th>
             </tr>
         </thead>

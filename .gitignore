@@ -7,28 +7,5 @@ __pycache__/
 *.pyc
 .superpowers/
 .venv/
-source/AI역량검사/md/
-source/AI역량검사/images/
-source/AI역량검사/pdf/
-source/AI역량검사/*.jpg
-source/AI역량검사/AI역량검사소스.md
-source/AI역량검사/AI 역량 평가_실기검정_*
-source/AI역량검사/모의평가_생성계획.md
-source/AI역량검사/files/
-source/backend/*.pdf
-
-# 개인 학습 자료(공개 금지)
 private/
-
-# DB 강의 원본(공개 금지)
-source/DB/**/*.pdf
-
-# DB 자격 대비 원본과 수업 평가 자료(공개 금지)
-source/DB/*SQLD*.md
-source/DB/sqld-*.md
-source/DB/images/
-source/backend/backendDB*
-
-# 월말평가 원본 프로젝트와 수업 제공 압축 파일(공개 금지)
-source/backend/backend-monthtest/
-source/WebTest_*.zip
+*.pdf

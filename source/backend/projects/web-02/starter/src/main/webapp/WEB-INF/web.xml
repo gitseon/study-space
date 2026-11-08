@@ -12,7 +12,12 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- study-target:web-errorpage:start -->
-    <!-- 오류 페이지 매핑을 직접 작성하세요. 요구사항 R-ERROR를 참고합니다. -->
-    <!-- study-target:web-errorpage:end -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.jsp</location>
+    </error-page>
 </web-app>

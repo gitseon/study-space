@@ -22,6 +22,6 @@ public class GearServiceImpl implements GearService {
     }
 
     // study-target:svc-methods:start
-    // GearService의 다섯 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.
+    // GearService의 네 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.
     // study-target:svc-methods:end
 }

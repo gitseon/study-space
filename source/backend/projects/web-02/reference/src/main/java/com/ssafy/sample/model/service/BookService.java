@@ -11,11 +11,8 @@ public interface BookService {
 
     List<Book> selectAll();
 
-    /** 코드가 이미 있으면 DuplicateCodeException을 던집니다. */
+    /** 저장한 행 수를 반환합니다. 코드가 이미 있어 저장하지 못하면 0입니다. */
     int insert(Book book);
 
     Book detail(String code);
-
-    /** 삭제된 행 수를 반환합니다. 없는 코드는 0입니다. */
-    int delete(String code);
 }

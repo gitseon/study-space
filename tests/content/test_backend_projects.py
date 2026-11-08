@@ -58,7 +58,7 @@ class ProjectBuildTests(BuildCase):
         for pid in ("web-01", "web-02"):
             project = json.loads((self.out / "backend-projects" / pid / "project.json").read_text(encoding="utf-8"))
             ids = [t["id"] for t in project["targets"]]
-            self.assertEqual(len(ids), 20)
+            self.assertEqual(len(ids), 16)
             for number in (1, 2, 3):
                 stage = json.loads((self.out / "backend-projects" / pid / f"stage-{number}.json").read_text(encoding="utf-8"))
                 text_by_path = {f["path"]: f["text"] for f in stage["files"]}
@@ -143,10 +143,10 @@ class ProjectBuildTests(BuildCase):
             self.build()
 
     def test_missing_end_marker_fails(self):
-        path = self.project_dir() / "stages" / "3" / MAIN_JAVA / "controller/MemberController.java"
-        text = path.read_text(encoding="utf-8").replace("study-target:user-logout:end", "removed")
+        path = self.project_dir() / "stages" / "3" / MAIN_JAVA / "controller/GearController.java"
+        text = path.read_text(encoding="utf-8").replace("study-target:ctrl-logout:end", "removed")
         path.write_text(text, encoding="utf-8")
-        with self.assertRaisesRegex(bp.ProjectError, "user-logout"):
+        with self.assertRaisesRegex(bp.ProjectError, "ctrl-logout"):
             self.build()
 
     def test_local_absolute_path_is_rejected(self):

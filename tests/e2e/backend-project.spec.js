@@ -117,7 +117,7 @@ test('the flow summary switches between the overview and each feature', async ({
   await openBackendHome(page);
   await page.getByRole('group', {name: '평가 유형'}).getByRole('button', {name: '월말평가'}).click();
   const tabs = page.getByRole('tablist', {name: '흐름 보기'}).getByRole('tab');
-  await expect(tabs).toHaveCount(8);
+  await expect(tabs).toHaveCount(6);
   await expect(page.locator('#project-flow-body')).toContainText('JSP의 form이나 링크가 URL');
   await tabs.filter({hasText: '등록'}).click();
   await expect(page.locator('#project-flow-body')).toContainText('GearService.insert');
@@ -165,17 +165,17 @@ test('finishing locks the code, keeps check states across a reload and never gra
   await page.locator('#pj-finish').click();
   await expect(page.locator('#pj-timer')).toHaveText('작성 마침');
   await expect(page.locator('#pj-mode-write')).toBeDisabled();
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 0/14');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 0/10');
   await expect(page.locator('#pj-sidebody')).toContainText('점수나 합격 판정은 없습니다');
   await page.locator('[data-act="check"][data-id="crd-list"][data-state="confirmed"]').click();
   await page.locator('[data-act="check"][data-id="crd-create"][data-state="needs-work"]').click();
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/14');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/10');
   await expect(page.locator('#pj-save')).toHaveText('저장됨', {timeout: 5000});
   await page.reload();
   await page.getByRole('tab', {name: '점검'}).click();
   await expect(page.locator('[data-act="check"][data-id="crd-list"][data-state="confirmed"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-act="check"][data-id="crd-create"][data-state="needs-work"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/14');
+  await expect(page.locator('#pj-sidebody')).toContainText('확인함 1/10');
 });
 
 test('the draft check reports possible gaps only and does not change the check states', async ({page}) => {
@@ -183,9 +183,9 @@ test('the draft check reports possible gaps only and does not change the check s
   await page.getByRole('tab', {name: '점검'}).click();
   await page.locator('[data-act="draft-check"]').click();
   const items = page.locator('#pj-findings li');
-  await expect(items).toHaveCount(20);
+  await expect(items).toHaveCount(16);
   await expect(items.first()).toContainText('가능성');
-  await expect(page.locator('#pj-progress')).toContainText('확인함 0/14');
+  await expect(page.locator('#pj-progress')).toContainText('확인함 0/10');
 });
 
 test('hints and the model answer are explicit and recorded as help', async ({page}) => {
@@ -200,7 +200,7 @@ test('hints and the model answer are explicit and recorded as help', async ({pag
   await expect(page.locator('.pj-ref')).toBeVisible();
   await page.getByRole('tab', {name: '점검'}).click();
   await expect(page.locator('#pj-sidebody')).toContainText('도움 사용: 힌트 1곳, 모범답안');
-  await expect(page.locator('#pj-progress')).toContainText('확인함 0/14');
+  await expect(page.locator('#pj-progress')).toContainText('확인함 0/10');
 });
 
 test('the timer expires, keeps the code, locks editing and continues as a new unlimited attempt', async ({page}) => {
@@ -400,19 +400,19 @@ test('choosing a flow tab highlights only that path in the diagram', async ({pag
   await page.getByRole('tablist', {name: '흐름 보기'}).getByRole('tab', {name: '등록'}).click();
   await expect(page.locator('#project-structure [data-node="gearctl"]')).toHaveAttribute('data-dim', 'false');
   await expect(page.locator('#project-structure [data-node="regist"]')).toHaveAttribute('data-dim', 'false');
-  await expect(page.locator('#project-structure [data-node="memberctl"]')).toHaveAttribute('data-dim', 'true');
+  await expect(page.locator('#project-structure [data-node="login"]')).toHaveAttribute('data-dim', 'true');
   await expect(page.locator('#project-structure [data-edge="e-logout"]')).toHaveAttribute('data-dim', 'true');
   await page.getByRole('tablist', {name: '흐름 보기'}).getByRole('tab', {name: '전체 흐름'}).click();
-  await expect(page.locator('#project-structure [data-node="memberctl"]')).toHaveAttribute('data-dim', 'false');
+  await expect(page.locator('#project-structure [data-node="login"]')).toHaveAttribute('data-dim', 'false');
 });
 
 test('the diagram can be used with the keyboard', async ({page}) => {
   await openMonthly(page);
-  const node = page.locator('#project-structure [data-node="session"]');
+  const node = page.locator('#project-structure [data-node="gearctl"]');
   await node.focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('#project-structure .st-detail')).toContainText('SessionFilter');
-  await expect(page.locator('#project-structure [data-node="session"]')).toBeFocused();
+  await expect(page.locator('#project-structure .st-detail')).toContainText('GearController');
+  await expect(page.locator('#project-structure [data-node="gearctl"]')).toBeFocused();
 });
 
 for (const width of [360, 768, 1440]) {
@@ -442,7 +442,7 @@ test('in the project screen a diagram box opens the real file in the editor', as
 test('the diagram shows only skeletons, never the answer, even for a stage 1 attempt', async ({page}) => {
   await start(page, {stage: 1, minutes: 0});
   await page.getByRole('tab', {name: '구조'}).click();
-  for (const id of ['gearctl', 'service', 'dao', 'list', 'session', 'login']) {
+  for (const id of ['gearctl', 'service', 'dao', 'list', 'header', 'login']) {
     await page.locator(`#pj-sidebody [data-node="${id}"]`).click();
     const text = await page.locator('#pj-sidebody .st-detail').innerText();
     expect(text).not.toContain('pstmt.executeUpdate');
@@ -465,8 +465,8 @@ test('on a phone a diagram box opens the file and returns to the code', async ({
   await start(page, {stage: 2, minutes: 0});
   await page.getByRole('button', {name: '요구사항과 점검'}).click();
   await page.getByRole('tab', {name: '구조'}).click();
-  await page.locator('#pj-sidebody [data-node="memberctl"]').click();
+  await page.locator('#pj-sidebody [data-node="gearctl"]').click();
   await page.locator('#pj-sidebody [data-open]').click();
   await expect(page.locator('.pj-code')).toBeVisible();
-  await expect(page.locator('.pe-pathbar')).toContainText('MemberController.java');
+  await expect(page.locator('.pe-pathbar')).toContainText('GearController.java');
 });

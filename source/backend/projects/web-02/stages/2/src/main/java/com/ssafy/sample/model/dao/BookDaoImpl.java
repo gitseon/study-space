@@ -58,12 +58,4 @@ public class BookDaoImpl implements BookDao {
         return null;
     }
     // study-target:dao-detail:end
-
-    // study-target:dao-delete:start
-    @Override
-    public int delete(String code) throws SQLException {
-        // TODO: code가 일치하는 도서를 삭제하고 삭제된 행 수를 반환하세요.
-        return 0;
-    }
-    // study-target:dao-delete:end
 }

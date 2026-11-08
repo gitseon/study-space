@@ -118,19 +118,4 @@ public class BookDaoImpl implements BookDao {
         }
         return book;
     }
-
-    @Override
-    public int delete(String code) throws SQLException {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        String sql = "delete from book where code = ?";
-        try {
-            conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, code);
-            return pstmt.executeUpdate();
-        } finally {
-            DBUtil.close(pstmt, conn);
-        }
-    }
 }

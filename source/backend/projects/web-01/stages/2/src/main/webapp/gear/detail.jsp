@@ -10,8 +10,7 @@
     <%@ include file="/header.jsp"%>
     <h1>상세 페이지</h1>
     <%-- study-target:jsp-detail:start --%>
-    <%-- TODO: request 속성 gear의 코드, 용품명, 가격, 브랜드, 색상을 c:out으로 출력하세요.
-         삭제 버튼은 /gear로 POST 전송하는 form으로 만들고 hidden action=delete와 hidden code를 둡니다. --%>
+    <%-- TODO: request 속성 gear의 코드, 용품명, 가격, 브랜드, 색상을 c:out으로 한 줄씩 출력하세요. --%>
     <%-- study-target:jsp-detail:end --%>
     <a href="${root}/gear?action=list">목록으로</a>
 </body>

@@ -23,7 +23,8 @@ MASTER = ROOT / "source" / "backend" / "projects" / "_master"
 OUT = ROOT / "source" / "backend" / "projects"
 STAGES = ("1", "2", "3")
 STAGE_LABELS = {"1": "빈칸 채우기", "2": "메서드와 JSP 블록 작성", "3": "구현 대상 전체 작성"}
-SOURCE_REFS = ["BE-MONTH-START-01", "BE-MONTH-WORK-01"]
+SOURCE_REFS = ["BE-MONTH-START-01", "BE-MONTH-WORK-01", "BE-MONTH-WEBTEST-01"]
+REVISION = 2
 ENVIRONMENT = {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
     "tomcat": "Apache tomcat-11.0.27",
@@ -250,7 +251,7 @@ def generate_project(pid: str, existing_review: dict | None = None) -> dict[str,
 
     project = {
         "id": pid,
-        "revision": 1,
+        "revision": REVISION,
         "track": "backend",
         "title": domain["title"],
         "durationOptions": [90, 120, 0],
@@ -291,7 +292,7 @@ def generate_project(pid: str, existing_review: dict | None = None) -> dict[str,
     combined = _sha256("\n".join(f"{p}:{h}" for p, h in reference_hashes.items()))
     review = {
         "projectId": pid,
-        "revision": 1,
+        "revision": REVISION,
         "environmentTarget": ENVIRONMENT,
         "referenceHash": combined,
         "referenceFiles": reference_hashes,

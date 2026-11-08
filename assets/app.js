@@ -203,7 +203,7 @@ function projectCard(project, number) {
   return '<article class="exam-card project-card" data-project="' + e(project.id) + '">'
     + '<div class="card-top"><span class="pill">월말평가 프로젝트</span><span class="card-number">' + String(number).padStart(2, '0') + '</span></div>'
     + '<h3>' + e(project.title) + '</h3>'
-    + '<p class="card-description">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 등록, 목록, 상세, 삭제와 로그인을 연결합니다. 사이트가 코드를 실행하거나 점수를 매기지는 않습니다.</p>'
+    + '<p class="card-description">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 목록, 등록, 상세와 로그인, 로그아웃을 연결합니다. 사이트가 코드를 실행하거나 점수를 매기지는 않습니다.</p>'
     + '<div class="card-types"><span>작성 대상 <b>' + project.targetCount + '</b></span><span>단계 <b>' + project.stages.length + '</b></span></div>'
     + '<label class="card-setting">단계 <select id="pstage-' + e(project.id) + '">' + stages + '</select></label>'
     + '<label class="card-setting">제한 시간 <select id="ptime-' + e(project.id) + '">' + times + '</select></label>'

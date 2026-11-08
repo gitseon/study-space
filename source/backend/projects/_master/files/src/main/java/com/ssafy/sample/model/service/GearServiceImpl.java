@@ -45,7 +45,7 @@ public class GearServiceImpl implements GearService {
         try {
             return dao.insert(gear);
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new DuplicateCodeException(gear.getCode(), e);
+            return 0;
         } catch (SQLException e) {
             throw new IllegalStateException("용품 등록 중 오류가 발생했습니다.", e);
         }
@@ -57,15 +57,6 @@ public class GearServiceImpl implements GearService {
             return dao.detail(code);
         } catch (SQLException e) {
             throw new IllegalStateException("용품 상세 조회 중 오류가 발생했습니다.", e);
-        }
-    }
-
-    @Override
-    public int delete(String code) {
-        try {
-            return dao.delete(code);
-        } catch (SQLException e) {
-            throw new IllegalStateException("용품 삭제 중 오류가 발생했습니다.", e);
         }
     }
     //@@stage 1
@@ -92,7 +83,7 @@ public class GearServiceImpl implements GearService {
         try {
             return dao.insert(gear);
         } catch (____ e) {
-            throw new DuplicateCodeException(gear.getCode(), e);
+            return 0;
         } catch (SQLException e) {
             throw new IllegalStateException("용품 등록 중 오류가 발생했습니다.", e);
         }
@@ -101,18 +92,9 @@ public class GearServiceImpl implements GearService {
     @Override
     public Gear detail(String code) {
         try {
-            return dao.detail(code);
-        } catch (SQLException e) {
-            throw new IllegalStateException("용품 상세 조회 중 오류가 발생했습니다.", e);
-        }
-    }
-
-    @Override
-    public int delete(String code) {
-        try {
             return dao.____(code);
         } catch (SQLException e) {
-            throw new IllegalStateException("용품 삭제 중 오류가 발생했습니다.", e);
+            throw new IllegalStateException("용품 상세 조회 중 오류가 발생했습니다.", e);
         }
     }
     //@@stage 2
@@ -131,7 +113,7 @@ public class GearServiceImpl implements GearService {
     @Override
     public int insert(Gear gear) {
         // TODO: dao.insert를 호출하세요.
-        // 중복 키(SQLIntegrityConstraintViolationException)는 DuplicateCodeException으로 바꿉니다.
+        // 중복 키(SQLIntegrityConstraintViolationException)는 저장하지 못한 것이므로 0을 반환합니다.
         // 그 밖의 SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
         return 0;
     }
@@ -141,13 +123,7 @@ public class GearServiceImpl implements GearService {
         // TODO: dao.detail을 호출하세요. SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
         return null;
     }
-
-    @Override
-    public int delete(String code) {
-        // TODO: dao.delete를 호출해 삭제된 행 수를 반환하세요. SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
-        return 0;
-    }
     //@@stage 3
-    // GearService의 다섯 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.
+    // GearService의 네 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.
     //@@end
 }

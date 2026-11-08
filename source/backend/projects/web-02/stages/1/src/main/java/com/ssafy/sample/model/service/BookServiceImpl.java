@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
         try {
             return dao.insert(book);
         } catch (____ e) {
-            throw new DuplicateCodeException(book.getCode(), e);
+            return 0;
         } catch (SQLException e) {
             throw new IllegalStateException("도서 등록 중 오류가 발생했습니다.", e);
         }
@@ -54,18 +54,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book detail(String code) {
         try {
-            return dao.detail(code);
-        } catch (SQLException e) {
-            throw new IllegalStateException("도서 상세 조회 중 오류가 발생했습니다.", e);
-        }
-    }
-
-    @Override
-    public int delete(String code) {
-        try {
             return dao.____(code);
         } catch (SQLException e) {
-            throw new IllegalStateException("도서 삭제 중 오류가 발생했습니다.", e);
+            throw new IllegalStateException("도서 상세 조회 중 오류가 발생했습니다.", e);
         }
     }
     // study-target:svc-methods:end

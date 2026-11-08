@@ -6,10 +6,10 @@ import {detailHtml, edgeGroups, featureForTab, flowMembers, languageOf, structur
 const structure = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-01/project.json', import.meta.url), 'utf8')).structure;
 const book = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-02/project.json', import.meta.url), 'utf8')).structure;
 
-test('the list flow reaches the browser, filters, controller, service, DAO, database and the list page', () => {
+test('the list flow reaches the browser, filter, controller, service, DAO, database and the list page', () => {
   const {nodes, edges} = flowMembers(structure, 'list');
-  for (const id of ['browser', 'logging', 'session', 'gearctl', 'service', 'dao', 'db', 'list', 'header']) assert.ok(nodes.has(id), id);
-  assert.ok(!nodes.has('memberctl'));
+  for (const id of ['browser', 'logging', 'gearctl', 'service', 'dao', 'db', 'list', 'header']) assert.ok(nodes.has(id), id);
+  assert.ok(!nodes.has('login'));
   assert.ok(edges.has('e-forward-list'));
   assert.ok(!edges.has('e-logout'));
 });
@@ -43,11 +43,11 @@ test('flow tabs map to diagram flows and unknown tabs map to nothing', () => {
 });
 
 test('the html lists every box once, dims boxes outside the chosen flow and marks the selection', () => {
-  const html = structureHtml(structure, {flow: 'filter', selected: {type: 'node', id: 'session'}});
+  const html = structureHtml(structure, {flow: 'list', selected: {type: 'node', id: 'gearctl'}});
   for (const node of structure.nodes) assert.equal(html.split(`data-node="${node.id}"`).length - 1 >= 1, true, node.id);
-  assert.match(html, /data-node="list"[^>]*data-dim="true"/);
-  assert.match(html, /data-node="session"[^>]*data-dim="false"[^>]*aria-pressed="true"/);
-  assert.match(html, /SessionFilter/);
+  assert.match(html, /data-node="login"[^>]*data-dim="true"/);
+  assert.match(html, /data-node="gearctl"[^>]*data-dim="false"[^>]*aria-pressed="true"/);
+  assert.match(html, /GearController/);
 });
 
 test('node details show the role, the values passed and a skeleton without method bodies', () => {

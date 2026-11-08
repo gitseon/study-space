@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "projectId": "web-01",
-  "revision": 1,
-  "hash": "1c4e04b3dd6d4177",
+  "revision": 2,
+  "hash": "e947000630413bbe",
   "stage": {
     "id": 3,
     "label": "구현 대상 전체 작성"
@@ -18,19 +18,13 @@
       "path": "src/main/java/com/ssafy/sample/controller/ControllerHelper.java",
       "language": "java",
       "editable": false,
-      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\n\nimport jakarta.servlet.RequestDispatcher;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.Cookie;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\n\n/** 제공 코드입니다. 수정하지 않습니다. action이 없으면 \"list\"로 간주합니다. */\npublic interface ControllerHelper {\n    default String getActionParameter(HttpServletRequest request, HttpServletResponse response) {\n        String action = request.getParameter(\"action\");\n        if (action == null || action.isBlank()) {\n            action = \"list\";\n        }\n        return action;\n    }\n\n    default void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {\n        response.sendRedirect(request.getContextPath() + path);\n    }\n\n    default void forward(HttpServletRequest request, HttpServletResponse response, String path)\n            throws ServletException, IOException {\n        RequestDispatcher dispatcher = request.getRequestDispatcher(path);\n        dispatcher.forward(request, response);\n    }\n\n    /** 쿠키를 저장하거나 삭제합니다. 삭제할 때는 저장할 때와 같은 이름과 path를 쓰고 maxAge를 0으로 둡니다. */\n    default void setupCookie(String name, String value, int maxAge, String path, HttpServletResponse response) {\n        Cookie cookie = new Cookie(name, value);\n        cookie.setMaxAge(maxAge);\n        cookie.setPath(path);\n        response.addCookie(cookie);\n    }\n\n    /** 컨텍스트 루트가 비어 있으면 \"/\"를 반환합니다. */\n    default String cookiePath(HttpServletRequest request) {\n        String contextPath = request.getContextPath();\n        return contextPath.isEmpty() ? \"/\" : contextPath;\n    }\n\n    /** 값이 null이 아니고 공백만이 아니며 길이가 maxLength 이하이면 true입니다. */\n    default boolean hasText(String value, int maxLength) {\n        return value != null && !value.isBlank() && value.trim().length() <= maxLength;\n    }\n\n    /** 0 이상의 정수 문자열이면 그 값을, 비어 있거나 숫자가 아니거나 범위를 벗어나면 -1을 반환합니다. */\n    default int parseNonNegativeInt(String text) {\n        if (text == null) {\n            return -1;\n        }\n        try {\n            int value = Integer.parseInt(text.trim());\n            return value < 0 ? -1 : value;\n        } catch (NumberFormatException e) {\n            return -1;\n        }\n    }\n}\n"
+      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\n\nimport jakarta.servlet.RequestDispatcher;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.http.Cookie;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\n\n/** 제공 코드입니다. 수정하지 않습니다. action이 없으면 \"list\"로 간주합니다. */\npublic interface ControllerHelper {\n    default String getActionParameter(HttpServletRequest request, HttpServletResponse response) {\n        String action = request.getParameter(\"action\");\n        if (action == null || action.isBlank()) {\n            action = \"list\";\n        }\n        return action;\n    }\n\n    default void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {\n        response.sendRedirect(request.getContextPath() + path);\n    }\n\n    default void forward(HttpServletRequest request, HttpServletResponse response, String path)\n            throws ServletException, IOException {\n        RequestDispatcher dispatcher = request.getRequestDispatcher(path);\n        dispatcher.forward(request, response);\n    }\n\n    /** 쿠키를 저장하거나 삭제합니다. 삭제할 때는 저장할 때와 같은 이름과 path를 쓰고 maxAge를 0으로 둡니다. */\n    default void setupCookie(String name, String value, int maxAge, String path, HttpServletResponse response) {\n        Cookie cookie = new Cookie(name, value);\n        cookie.setMaxAge(maxAge);\n        cookie.setPath(path);\n        response.addCookie(cookie);\n    }\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "language": "java",
       "editable": true,
-      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.service.DuplicateCodeException;\nimport com.ssafy.sample.model.service.GearService;\nimport com.ssafy.sample.model.service.GearServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\n\n@WebServlet(\"/gear\")\npublic class GearController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final GearService service = GearServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    // doGet과 doPost가 호출하는 process(request, response) 메서드를 직접 작성하세요.\n    // 요구사항 R-LAYER를 참고합니다.\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    // list 메서드를 직접 작성하세요. 요구사항 R-LIST를 참고합니다.\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    // regist 메서드를 직접 작성하세요. 요구사항 R-REGIST를 참고합니다.\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-delete:start\n    // delete 메서드를 직접 작성하세요. 요구사항 R-DELETE를 참고합니다.\n    // study-target:ctrl-delete:end\n}\n"
-    },
-    {
-      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
-      "language": "java",
-      "editable": true,
-      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\n\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.GearService;\nimport com.ssafy.sample.model.service.GearServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/user\")\npublic class MemberController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final GearService service = GearServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    private void process(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        String action = getActionParameter(request, response);\n        switch (action) {\n        case \"login\":\n            login(request, response);\n            break;\n        case \"logout\":\n            logout(request, response);\n            break;\n        default:\n            response.sendError(HttpServletResponse.SC_NOT_FOUND);\n        }\n    }\n\n    // study-target:user-login:start\n    // login 메서드를 직접 작성하세요. 요구사항 R-LOGIN을 참고합니다.\n    // study-target:user-login:end\n\n    // study-target:user-logout:start\n    // logout 메서드를 직접 작성하세요. 요구사항 R-LOGOUT을 참고합니다.\n    // study-target:user-logout:end\n}\n"
+      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.GearService;\nimport com.ssafy.sample.model.service.GearServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/gear\")\npublic class GearController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final GearService service = GearServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    // doGet과 doPost가 호출하는 process(request, response) 메서드를 직접 작성하세요.\n    // 요구사항 R-LAYER를 참고합니다.\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    // list 메서드를 직접 작성하세요. 요구사항 R-LIST를 참고합니다.\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    // regist 메서드를 직접 작성하세요. 요구사항 R-REGIST를 참고합니다.\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-login:start\n    // login 메서드를 직접 작성하세요. 요구사항 R-LOGIN을 참고합니다.\n    // study-target:ctrl-login:end\n\n    // study-target:ctrl-logout:start\n    // logout 메서드를 직접 작성하세요. 요구사항 R-LOGOUT을 참고합니다.\n    // study-target:ctrl-logout:end\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/filter/LoggingFilter.java",
@@ -39,22 +33,16 @@
       "text": "package com.ssafy.sample.filter;\n\nimport java.io.IOException;\nimport java.util.Arrays;\nimport java.util.Set;\n\nimport jakarta.servlet.FilterChain;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.ServletRequest;\nimport jakarta.servlet.ServletResponse;\nimport jakarta.servlet.annotation.WebFilter;\nimport jakarta.servlet.http.HttpFilter;\n\n/** 제공 코드입니다. 수정하지 않습니다. 비밀번호 파라미터는 값을 가려서 출력합니다. */\n@WebFilter(\"/*\")\npublic class LoggingFilter extends HttpFilter {\n    private static final long serialVersionUID = 1L;\n    private static final Set<String> SECRET_NAMES = Set.of(\"pass\", \"password\");\n\n    @Override\n    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)\n            throws IOException, ServletException {\n        System.out.println(\"[요청 파라미터]\");\n        request.getParameterMap().forEach((name, values) -> {\n            String shown = SECRET_NAMES.contains(name) ? \"****\" : Arrays.toString(values);\n            System.out.printf(\"name: %s, value: %s%n\", name, shown);\n        });\n        chain.doFilter(request, response);\n    }\n}\n"
     },
     {
-      "path": "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
-      "language": "java",
-      "editable": true,
-      "text": "package com.ssafy.sample.filter;\n\nimport java.io.IOException;\n\nimport jakarta.servlet.FilterChain;\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.ServletRequest;\nimport jakarta.servlet.ServletResponse;\nimport jakarta.servlet.annotation.WebFilter;\nimport jakarta.servlet.http.HttpFilter;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n/** /gear 요청만 보호합니다. 로그인은 /user가 처리하므로 이 필터에 걸리지 않습니다. */\n@WebFilter(\"/gear\")\npublic class SessionFilter extends HttpFilter {\n    private static final long serialVersionUID = 1L;\n\n    // study-target:filter-session:start\n    // doFilter 메서드를 직접 작성하세요. 요구사항 R-FILTER를 참고합니다.\n    // study-target:filter-session:end\n}\n"
-    },
-    {
       "path": "src/main/java/com/ssafy/sample/model/dao/GearDao.java",
       "language": "java",
       "editable": false,
-      "text": "package com.ssafy.sample.model.dao;\n\nimport java.sql.SQLException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\n/** 제공 코드입니다. 수정하지 않습니다. */\npublic interface GearDao {\n    /** 이메일과 비밀번호가 모두 일치하는 회원을 반환하고 없으면 null을 반환합니다. */\n    Member login(String email, String password) throws SQLException;\n\n    /** 모든 용품을 코드 순서로 반환합니다. 없으면 빈 목록입니다. */\n    List<Gear> selectAll() throws SQLException;\n\n    /** 용품 한 건을 추가하고 영향받은 행 수를 반환합니다. 코드가 중복되면 SQLException이 발생합니다. */\n    int insert(Gear gear) throws SQLException;\n\n    /** 코드에 해당하는 용품을 반환하고 없으면 null을 반환합니다. */\n    Gear detail(String code) throws SQLException;\n\n    /** 코드에 해당하는 용품을 삭제하고 삭제된 행 수를 반환합니다. */\n    int delete(String code) throws SQLException;\n}\n"
+      "text": "package com.ssafy.sample.model.dao;\n\nimport java.sql.SQLException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\n/** 제공 코드입니다. 수정하지 않습니다. */\npublic interface GearDao {\n    /** 이메일과 비밀번호가 모두 일치하는 회원을 반환하고 없으면 null을 반환합니다. */\n    Member login(String email, String password) throws SQLException;\n\n    /** 모든 용품을 코드 순서로 반환합니다. 없으면 빈 목록입니다. */\n    List<Gear> selectAll() throws SQLException;\n\n    /** 용품 한 건을 추가하고 영향받은 행 수를 반환합니다. 코드가 중복되면 SQLIntegrityConstraintViolationException이 발생합니다. */\n    int insert(Gear gear) throws SQLException;\n\n    /** 코드에 해당하는 용품을 반환하고 없으면 null을 반환합니다. */\n    Gear detail(String code) throws SQLException;\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java",
       "language": "java",
       "editable": true,
-      "text": "package com.ssafy.sample.model.dao;\n\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport java.util.ArrayList;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.util.DBUtil;\n\npublic class GearDaoImpl implements GearDao {\n\n    private GearDaoImpl() {\n    }\n\n    private static final GearDao instance = new GearDaoImpl();\n\n    public static GearDao getInstance() {\n        return instance;\n    }\n\n    // study-target:dao-login:start\n    // login 메서드를 직접 작성하세요. 요구사항 R-LOGIN을 참고합니다.\n    // study-target:dao-login:end\n\n    // study-target:dao-select-all:start\n    // selectAll 메서드를 직접 작성하세요. 요구사항 R-LIST를 참고합니다.\n    // study-target:dao-select-all:end\n\n    // study-target:dao-insert:start\n    // insert 메서드를 직접 작성하세요. 요구사항 R-REGIST를 참고합니다.\n    // study-target:dao-insert:end\n\n    // study-target:dao-detail:start\n    // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.\n    // study-target:dao-detail:end\n\n    // study-target:dao-delete:start\n    // delete 메서드를 직접 작성하세요. 요구사항 R-DELETE를 참고합니다.\n    // study-target:dao-delete:end\n}\n"
+      "text": "package com.ssafy.sample.model.dao;\n\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport java.util.ArrayList;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.util.DBUtil;\n\npublic class GearDaoImpl implements GearDao {\n\n    private GearDaoImpl() {\n    }\n\n    private static final GearDao instance = new GearDaoImpl();\n\n    public static GearDao getInstance() {\n        return instance;\n    }\n\n    // study-target:dao-login:start\n    // login 메서드를 직접 작성하세요. 요구사항 R-LOGIN을 참고합니다.\n    // study-target:dao-login:end\n\n    // study-target:dao-select-all:start\n    // selectAll 메서드를 직접 작성하세요. 요구사항 R-LIST를 참고합니다.\n    // study-target:dao-select-all:end\n\n    // study-target:dao-insert:start\n    // insert 메서드를 직접 작성하세요. 요구사항 R-REGIST를 참고합니다.\n    // study-target:dao-insert:end\n\n    // study-target:dao-detail:start\n    // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.\n    // study-target:dao-detail:end\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/model/dto/Gear.java",
@@ -69,22 +57,16 @@
       "text": "package com.ssafy.sample.model.dto;\n\n/** 제공 코드입니다. 수정하지 않습니다. 비밀번호는 보관하지 않습니다. */\npublic class Member {\n    private int mno;\n    private String name;\n    private String email;\n    private String role;\n\n    public Member() {\n    }\n\n    public int getMno() {\n        return mno;\n    }\n\n    public void setMno(int mno) {\n        this.mno = mno;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public void setName(String name) {\n        this.name = name;\n    }\n\n    public String getEmail() {\n        return email;\n    }\n\n    public void setEmail(String email) {\n        this.email = email;\n    }\n\n    public String getRole() {\n        return role;\n    }\n\n    public void setRole(String role) {\n        this.role = role;\n    }\n\n    @Override\n    public String toString() {\n        return \"Member [mno=\" + mno + \", name=\" + name + \", email=\" + email + \", role=\" + role + \"]\";\n    }\n}\n"
     },
     {
-      "path": "src/main/java/com/ssafy/sample/model/service/DuplicateCodeException.java",
-      "language": "java",
-      "editable": false,
-      "text": "package com.ssafy.sample.model.service;\n\n/** 제공 코드입니다. 수정하지 않습니다. 사용자가 고칠 수 있는 중복 코드 상황을 나타냅니다. */\npublic class DuplicateCodeException extends RuntimeException {\n    private static final long serialVersionUID = 1L;\n\n    public DuplicateCodeException(String code, Throwable cause) {\n        super(\"이미 등록된 코드입니다: \" + code, cause);\n    }\n}\n"
-    },
-    {
       "path": "src/main/java/com/ssafy/sample/model/service/GearService.java",
       "language": "java",
       "editable": false,
-      "text": "package com.ssafy.sample.model.service;\n\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\n/** 제공 코드입니다. 수정하지 않습니다. */\npublic interface GearService {\n    Member login(String email, String password);\n\n    List<Gear> selectAll();\n\n    /** 코드가 이미 있으면 DuplicateCodeException을 던집니다. */\n    int insert(Gear gear);\n\n    Gear detail(String code);\n\n    /** 삭제된 행 수를 반환합니다. 없는 코드는 0입니다. */\n    int delete(String code);\n}\n"
+      "text": "package com.ssafy.sample.model.service;\n\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\n/** 제공 코드입니다. 수정하지 않습니다. */\npublic interface GearService {\n    Member login(String email, String password);\n\n    List<Gear> selectAll();\n\n    /** 저장한 행 수를 반환합니다. 코드가 이미 있어 저장하지 못하면 0입니다. */\n    int insert(Gear gear);\n\n    Gear detail(String code);\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/model/service/GearServiceImpl.java",
       "language": "java",
       "editable": true,
-      "text": "package com.ssafy.sample.model.service;\n\nimport java.sql.SQLException;\nimport java.sql.SQLIntegrityConstraintViolationException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dao.GearDao;\nimport com.ssafy.sample.model.dao.GearDaoImpl;\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\npublic class GearServiceImpl implements GearService {\n\n    private GearServiceImpl() {\n    }\n\n    private final GearDao dao = GearDaoImpl.getInstance();\n    private static final GearService instance = new GearServiceImpl();\n\n    public static GearService getInstance() {\n        return instance;\n    }\n\n    // study-target:svc-methods:start\n    // GearService의 다섯 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.\n    // study-target:svc-methods:end\n}\n"
+      "text": "package com.ssafy.sample.model.service;\n\nimport java.sql.SQLException;\nimport java.sql.SQLIntegrityConstraintViolationException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dao.GearDao;\nimport com.ssafy.sample.model.dao.GearDaoImpl;\nimport com.ssafy.sample.model.dto.Gear;\nimport com.ssafy.sample.model.dto.Member;\n\npublic class GearServiceImpl implements GearService {\n\n    private GearServiceImpl() {\n    }\n\n    private final GearDao dao = GearDaoImpl.getInstance();\n    private static final GearService instance = new GearServiceImpl();\n\n    public static GearService getInstance() {\n        return instance;\n    }\n\n    // study-target:svc-methods:start\n    // GearService의 네 메서드를 직접 구현하세요. 요구사항 R-LAYER를 참고합니다.\n    // study-target:svc-methods:end\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/util/DBUtil.java",
@@ -101,8 +83,8 @@
     {
       "path": "src/main/webapp/WEB-INF/web.xml",
       "language": "xml",
-      "editable": true,
-      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd\"\n    id=\"WebApp_ID\" version=\"6.0\">\n    <display-name>sample</display-name>\n\n    <request-character-encoding>UTF-8</request-character-encoding>\n    <response-character-encoding>UTF-8</response-character-encoding>\n\n    <welcome-file-list>\n        <welcome-file>index.jsp</welcome-file>\n    </welcome-file-list>\n\n    <!-- study-target:web-errorpage:start -->\n    <!-- 오류 페이지 매핑을 직접 작성하세요. 요구사항 R-ERROR를 참고합니다. -->\n    <!-- study-target:web-errorpage:end -->\n</web-app>\n"
+      "editable": false,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<web-app xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd\"\n    id=\"WebApp_ID\" version=\"6.0\">\n    <display-name>sample</display-name>\n\n    <request-character-encoding>UTF-8</request-character-encoding>\n    <response-character-encoding>UTF-8</response-character-encoding>\n\n    <welcome-file-list>\n        <welcome-file>index.jsp</welcome-file>\n    </welcome-file-list>\n\n    <error-page>\n        <error-code>404</error-code>\n        <location>/error/404.jsp</location>\n    </error-page>\n    <error-page>\n        <error-code>500</error-code>\n        <location>/error/500.jsp</location>\n    </error-page>\n</web-app>\n"
     },
     {
       "path": "src/main/webapp/error/404.jsp",
@@ -120,13 +102,13 @@
       "path": "src/main/webapp/gear/detail.jsp",
       "language": "jsp",
       "editable": true,
-      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>정보 상세 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>상세 페이지</h1>\n    <%-- study-target:jsp-detail:start --%>\n    <%-- 상세 정보와 삭제 form을 직접 작성하세요. 요구사항 R-DETAIL과 R-DELETE를 참고합니다. --%>\n    <%-- study-target:jsp-detail:end --%>\n    <a href=\"${root}/gear?action=list\">목록으로</a>\n</body>\n</html>\n"
+      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>정보 상세 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>상세 페이지</h1>\n    <%-- study-target:jsp-detail:start --%>\n    <%-- 상세 정보를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다. --%>\n    <%-- study-target:jsp-detail:end --%>\n    <a href=\"${root}/gear?action=list\">목록으로</a>\n</body>\n</html>\n"
     },
     {
       "path": "src/main/webapp/gear/list.jsp",
       "language": "jsp",
       "editable": true,
-      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>목록 조회 페이지</title>\n<style>\ntable, th, td {\n    border: 1px solid black;\n    border-collapse: collapse;\n}\n</style>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>목록 조회 페이지</h1>\n    <a href=\"${root}/gear?action=regist\">등록하기</a>\n    <table>\n        <thead>\n            <tr>\n                <th>코드</th>\n                <th>용품명</th>\n                <th>가격</th>\n                <th>브랜드</th>\n                <th>색상</th>\n            </tr>\n        </thead>\n        <tbody>\n            <%-- study-target:jsp-list:start --%>\n            <%-- 목록 본문 행을 직접 작성하세요. 요구사항 R-LIST를 참고합니다. --%>\n            <%-- study-target:jsp-list:end --%>\n        </tbody>\n    </table>\n</body>\n</html>\n"
+      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>목록 조회 페이지</title>\n<style>\ntable, th, td {\n    border: 1px solid black;\n    border-collapse: collapse;\n}\n</style>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>목록 조회 페이지</h1>\n    <a href=\"${root}/gear?action=regist\">등록하기</a>\n    <table>\n        <thead>\n            <tr>\n                <th>코드</th>\n                <th>용품명</th>\n                <th>가격</th>\n                <th>색상</th>\n            </tr>\n        </thead>\n        <tbody>\n            <%-- study-target:jsp-list:start --%>\n            <%-- 목록 본문 행을 직접 작성하세요. 요구사항 R-LIST를 참고합니다. --%>\n            <%-- study-target:jsp-list:end --%>\n        </tbody>\n    </table>\n</body>\n</html>\n"
     },
     {
       "path": "src/main/webapp/gear/regist.jsp",
@@ -164,8 +146,7 @@
       ],
       "requirementId": "R-LAYER",
       "checklistIds": [
-        "run-build",
-        "error-pages"
+        "run-build"
       ]
     },
     {
@@ -183,7 +164,7 @@
     },
     {
       "id": "ctrl-regist",
-      "title": "등록 처리와 입력 검증",
+      "title": "등록 처리",
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "topicIds": [
         "web-servlet",
@@ -210,66 +191,28 @@
       ]
     },
     {
-      "id": "ctrl-delete",
-      "title": "삭제 처리",
+      "id": "ctrl-login",
+      "title": "로그인 처리",
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "topicIds": [
-        "web-servlet"
-      ],
-      "requirementId": "R-DELETE",
-      "checklistIds": [
-        "crd-delete"
-      ]
-    },
-    {
-      "id": "user-login",
-      "title": "로그인과 아이디 기억 쿠키",
-      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
-      "topicIds": [
-        "state-session",
-        "web-servlet"
+        "web-servlet",
+        "state-session"
       ],
       "requirementId": "R-LOGIN",
       "checklistIds": [
-        "auth-login",
-        "auth-cookie"
+        "auth-login"
       ]
     },
     {
-      "id": "user-logout",
-      "title": "로그아웃",
-      "path": "src/main/java/com/ssafy/sample/controller/MemberController.java",
+      "id": "ctrl-logout",
+      "title": "로그아웃 처리",
+      "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "topicIds": [
         "state-session"
       ],
       "requirementId": "R-LOGOUT",
       "checklistIds": [
         "auth-logout"
-      ]
-    },
-    {
-      "id": "filter-session",
-      "title": "로그인 필요 요청 차단",
-      "path": "src/main/java/com/ssafy/sample/filter/SessionFilter.java",
-      "topicIds": [
-        "mvc-filter",
-        "state-session"
-      ],
-      "requirementId": "R-FILTER",
-      "checklistIds": [
-        "auth-filter"
-      ]
-    },
-    {
-      "id": "web-errorpage",
-      "title": "오류 페이지 매핑",
-      "path": "src/main/webapp/WEB-INF/web.xml",
-      "topicIds": [
-        "web-servlet"
-      ],
-      "requirementId": "R-ERROR",
-      "checklistIds": [
-        "error-pages"
       ]
     },
     {
@@ -340,19 +283,6 @@
       ]
     },
     {
-      "id": "dao-delete",
-      "title": "삭제 DELETE",
-      "path": "src/main/java/com/ssafy/sample/model/dao/GearDaoImpl.java",
-      "topicIds": [
-        "jdbc",
-        "db-schema"
-      ],
-      "requirementId": "R-DELETE",
-      "checklistIds": [
-        "crd-delete"
-      ]
-    },
-    {
       "id": "jsp-header",
       "title": "로그인 상태에 따른 메뉴",
       "path": "src/main/webapp/header.jsp",
@@ -369,7 +299,7 @@
     },
     {
       "id": "jsp-login",
-      "title": "로그인 form과 이메일 쿠키",
+      "title": "로그인 form",
       "path": "src/main/webapp/login-form.jsp",
       "topicIds": [
         "jsp-el",
@@ -378,7 +308,6 @@
       "requirementId": "R-LOGIN",
       "checklistIds": [
         "auth-login",
-        "auth-cookie",
         "jsp-render"
       ]
     },
@@ -410,7 +339,7 @@
     },
     {
       "id": "jsp-detail",
-      "title": "상세 출력과 삭제 form",
+      "title": "상세 출력",
       "path": "src/main/webapp/gear/detail.jsp",
       "topicIds": [
         "jsp-el"
@@ -418,7 +347,6 @@
       "requirementId": "R-DETAIL",
       "checklistIds": [
         "crd-detail",
-        "crd-delete",
         "jsp-render"
       ]
     }
@@ -426,7 +354,7 @@
   "hints": {
     "ctrl-dispatch": [
       "doGet과 doPost는 모두 process를 호출합니다. process는 action 파라미터 값 하나로 어떤 메서드를 실행할지 고릅니다.",
-      "정의되지 않은 action은 응답 상태 코드 404로 처리합니다. sendError와 HttpServletResponse의 상수를 사용합니다."
+      "목록, 등록, 상세, 로그인, 로그아웃 다섯 가지 action을 case로 나누고 정의되지 않은 action은 default에서 404로 응답합니다."
     ],
     "ctrl-list": [
       "조회한 목록은 request 속성에 담고 forward로 JSP에 넘깁니다. redirect하면 request 속성이 사라집니다.",
@@ -434,35 +362,24 @@
     ],
     "ctrl-regist": [
       "GET은 화면 표시, POST는 저장으로 나눕니다. request.getMethod()로 구분합니다.",
-      "저장에 성공하면 redirect로 목록 GET 요청을 새로 보내야 새로고침해도 다시 등록되지 않습니다.",
-      "검증 실패와 코드 중복은 같은 등록 화면으로 forward하고 alertMsg 속성에 안내를 담습니다."
+      "가격은 문자열로 오므로 Integer.parseInt로 바꿉니다. 숫자가 아니면 NumberFormatException이 나므로 잡아서 등록 화면으로 되돌립니다.",
+      "서비스 insert가 0을 돌려주면 저장되지 않은 것입니다. 성공하면 redirect로 목록 GET 요청을 새로 보내야 새로고침해도 다시 등록되지 않습니다."
     ],
     "ctrl-detail": [
       "조회 결과가 null이면 빈 상세 화면을 보여주지 않고 404로 응답합니다.",
       "JSP에서 ${gear.code}로 읽으려면 속성 이름이 gear여야 합니다."
     ],
-    "ctrl-delete": [
-      "데이터를 바꾸는 요청은 POST로만 받습니다. 링크로 여는 GET 요청은 405로 응답합니다.",
-      "서비스가 돌려준 삭제 행 수가 0이면 없는 항목이므로 404로 응답합니다."
+    "ctrl-login": [
+      "GET은 로그인 화면 표시, POST는 로그인 처리로 나눕니다. 입력 이름은 email과 pass입니다.",
+      "세션에는 객체를 저장할 수 있습니다. 로그인한 회원은 session.setAttribute(\"user\", member)로 저장하고 메인(/)으로 redirect합니다.",
+      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다."
     ],
-    "user-login": [
-      "세션에는 객체를 저장할 수 있고 쿠키에는 문자열만 저장합니다. 로그인한 회원은 세션 속성 user에 저장합니다.",
-      "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. setupCookie와 cookiePath를 사용합니다.",
-      "로그인 성공 직후 changeSessionId로 세션 ID를 바꾸면 세션 고정 공격을 줄입니다."
-    ],
-    "user-logout": [
+    "ctrl-logout": [
       "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
-    ],
-    "filter-session": [
-      "이 필터는 /gear에만 적용됩니다. 로그인 요청은 /user로 가므로 필터에 다시 걸리지 않습니다.",
-      "허용할 때만 chain.doFilter를 호출합니다. 거부하면 호출하지 않고 로그인 화면으로 redirect합니다."
-    ],
-    "web-errorpage": [
-      "error-page 요소는 error-code와 location을 한 쌍으로 가집니다. location은 컨텍스트 루트 기준 경로입니다."
     ],
     "svc-methods": [
       "서비스는 DAO를 호출하고 SQLException을 상위 계층이 다루기 쉬운 예외로 바꿉니다. 원인(cause)을 함께 전달합니다.",
-      "중복 키는 SQLIntegrityConstraintViolationException으로 오므로 SQLException보다 먼저 catch합니다."
+      "중복 키는 SQLIntegrityConstraintViolationException으로 오므로 SQLException보다 먼저 catch합니다. 이 경우 insert는 0을 반환합니다."
     ],
     "dao-login": [
       "조건 두 개를 and로 묶고 값은 PreparedStatement의 ? 자리에 순서대로 바인딩합니다.",
@@ -474,14 +391,10 @@
     ],
     "dao-insert": [
       "INSERT의 열 순서와 ? 바인딩 번호가 일치해야 합니다. 번호는 1부터 시작합니다.",
-      "INSERT, DELETE는 executeUpdate를 쓰고 영향받은 행 수를 반환합니다."
+      "INSERT는 executeUpdate를 쓰고 영향받은 행 수를 반환합니다."
     ],
     "dao-detail": [
       "기본키 열 하나로 where 조건을 만들고 결과가 없으면 null을 반환합니다."
-    ],
-    "dao-delete": [
-      "where 조건 없이 delete를 실행하면 모든 행이 지워집니다. 기본키 조건을 반드시 확인합니다.",
-      "executeUpdate의 반환값이 삭제된 행 수입니다."
     ],
     "jsp-header": [
       "EL에서 세션 속성은 sessionScope.user로 읽습니다. empty로 값이 없는지 확인합니다.",
@@ -489,7 +402,7 @@
     ],
     "jsp-login": [
       "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
-      "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다."
+      "로그인 요청도 /gear로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다."
     ],
     "jsp-list": [
       "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",
@@ -500,8 +413,8 @@
       "input name이 서버에서 읽는 파라미터 이름입니다. 오타가 나면 값이 null로 읽힙니다."
     ],
     "jsp-detail": [
-      "삭제는 링크가 아니라 POST form으로 보냅니다. 삭제할 코드는 hidden input에 담습니다.",
-      "EL 값은 c:out으로 감싸 HTML 특수문자가 그대로 실행되지 않게 합니다."
+      "EL 값은 c:out으로 감싸 HTML 특수문자가 그대로 실행되지 않게 합니다.",
+      "request 속성 이름이 gear이므로 ${gear.code}처럼 속성 이름에 이어 필드 이름을 씁니다."
     ]
   }
 }

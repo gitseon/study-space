@@ -419,3 +419,18 @@ git diff --check
 | 구현 | `assets/project-structure.js`. 계층별 줄에 상자 버튼을 놓고 줄 아래에 아래 방향 화살표, 도식 아래에 돌아가는 길을 모은 HTML 도식이라 360px에서도 가로로 넘치지 않고 키보드와 스크린 리더로 쓸 수 있다 |
 
 구현 기록: `tests/unit/project-structure.test.js`, 검증기 `check_structure`, `tests/e2e/backend-project.spec.js`의 도식 시나리오로 확인했다.
+
+## 13. 갱신된 월말평가 프로젝트 반영 (2026-11-08 사용자 요청)
+
+사용자가 제공한 갱신본(`BE-MONTH-WEBTEST-01`)의 구성에 연습 프로젝트를 맞췄다. 11절의 인증 범위 확정 내용은 아래 표로 대체한다.
+
+| 항목 | 내용 |
+| --- | --- |
+| 구성 | 컨트롤러 하나(`GearController`, `/gear`)가 목록, 등록, 상세, 로그인, 로그아웃을 처리한다. 서비스와 DAO의 메서드는 `login`, `selectAll`, `insert`, `detail` 네 개다 |
+| 제거 | 삭제 기능(`ctrl-delete`, `dao-delete`), `SessionFilter`와 로그인 필요 요청 차단, `MemberController`(`/user`), 이메일 기억 쿠키, `DuplicateCodeException`, 입력 검증 보조 메서드, 오류 매핑 작성 대상(`web-errorpage`). `web.xml`은 제공 파일로 남긴다 |
+| 이름 변경 | `user-login`, `user-logout`은 `ctrl-login`, `ctrl-logout`으로 바꿔 `GearController`에 둔다 |
+| 계약 변경 | `GearService.insert`는 코드 중복을 예외 대신 반환값 0으로 알린다. 컨트롤러는 0이면 `alertMsg`와 함께 등록 화면으로 되돌린다 |
+| 수치 | 작성 대상 20개에서 16개, 체크리스트 14개에서 10개, 흐름 탭 8개에서 6개, 모범답안 Java 13개에서 10개. 목록 표는 코드, 용품명, 가격, 색상 네 열이다 |
+| 버전 | 프로젝트 `revision`을 2로 올렸다. 이전에 시작한 응시는 시작 당시의 스냅샷으로 열린다 |
+| 검증 | `javac --release 21`(Servlet API 6.0.0)과 Jasper JspC(Tomcat 11.0.27, JSTL 3.0.1)로 두 도메인의 모범답안과 2단계 시작 코드를 확인했다. Tomcat 기동과 MySQL 실행은 확인하지 않았고 `review.json`의 실행 항목은 미검증이다 |
+| 원본 취급 | 갱신본의 코드와 문구를 옮기지 않고 구성, 기능, 작성 위치만 반영해 직접 작성했다. 원본은 저장소에 두지 않고 비공개로 보관한다 |

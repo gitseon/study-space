@@ -84,7 +84,7 @@ function renderStart(message = '') {
   };
   const timeNote = choice.fallback ? '<p class="pj-notice" role="status">주소의 시간 값이 올바르지 않아 120분으로 안내합니다.</p>' : '';
   root.innerHTML = '<div class="pj-start"><h1>월말평가 구현 연습</h1>'
-    + '<p class="pj-lead">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 등록, 목록, 상세, 삭제와 로그인을 연결합니다. 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인하세요.</p>'
+    + '<p class="pj-lead">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 목록, 등록, 상세와 로그인, 로그아웃을 연결합니다. 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인하세요.</p>'
     + `<div class="pj-env" id="pj-env"><p>${e(ENV_NOTICE)}</p><p>${e(EDITOR_NOTICE)}</p></div>`
     + (message ? `<p class="pj-notice" role="status">${e(message)}</p>` : '') + timeNote
     + '<fieldset class="pj-fieldset"><legend>프로젝트</legend><div class="pj-options">'

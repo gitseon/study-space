@@ -37,7 +37,7 @@ public class GearServiceImpl implements GearService {
     @Override
     public int insert(Gear gear) {
         // TODO: dao.insert를 호출하세요.
-        // 중복 키(SQLIntegrityConstraintViolationException)는 DuplicateCodeException으로 바꿉니다.
+        // 중복 키(SQLIntegrityConstraintViolationException)는 저장하지 못한 것이므로 0을 반환합니다.
         // 그 밖의 SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
         return 0;
     }
@@ -46,12 +46,6 @@ public class GearServiceImpl implements GearService {
     public Gear detail(String code) {
         // TODO: dao.detail을 호출하세요. SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
         return null;
-    }
-
-    @Override
-    public int delete(String code) {
-        // TODO: dao.delete를 호출해 삭제된 행 수를 반환하세요. SQLException은 원인을 보존해 IllegalStateException으로 바꿔 던집니다.
-        return 0;
     }
     // study-target:svc-methods:end
 }

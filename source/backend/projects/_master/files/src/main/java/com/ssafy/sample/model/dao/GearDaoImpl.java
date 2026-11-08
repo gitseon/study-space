@@ -260,44 +260,4 @@ public class GearDaoImpl implements GearDao {
     //@@stage 3
     // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.
     //@@end
-
-    //@@target dao-delete
-    @Override
-    public int delete(String code) throws SQLException {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        String sql = "delete from gear where code = ?";
-        try {
-            conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, code);
-            return pstmt.executeUpdate();
-        } finally {
-            DBUtil.close(pstmt, conn);
-        }
-    }
-    //@@stage 1
-    @Override
-    public int delete(String code) throws SQLException {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        String sql = "delete from gear where ____ = ?";
-        try {
-            conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, code);
-            return pstmt.____();
-        } finally {
-            DBUtil.close(pstmt, conn);
-        }
-    }
-    //@@stage 2
-    @Override
-    public int delete(String code) throws SQLException {
-        // TODO: code가 일치하는 용품을 삭제하고 삭제된 행 수를 반환하세요.
-        return 0;
-    }
-    //@@stage 3
-    // delete 메서드를 직접 작성하세요. 요구사항 R-DELETE를 참고합니다.
-    //@@end
 }

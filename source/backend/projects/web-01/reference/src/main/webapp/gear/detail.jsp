@@ -14,12 +14,6 @@
     <div>가격: <c:out value="${gear.price}" />원</div>
     <div>브랜드: <c:out value="${gear.brand}" /></div>
     <div>색상: <c:out value="${gear.color}" /></div>
-
-    <form action="${root}/gear" method="post">
-        <input type="hidden" name="action" value="delete">
-        <input type="hidden" name="code" value="<c:out value='${gear.code}' />">
-        <input type="submit" value="삭제하기">
-    </form>
     <a href="${root}/gear?action=list">목록으로</a>
 </body>
 </html>

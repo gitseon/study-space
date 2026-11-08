@@ -44,7 +44,7 @@ public class GearServiceImpl implements GearService {
         try {
             return dao.insert(gear);
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new DuplicateCodeException(gear.getCode(), e);
+            return 0;
         } catch (SQLException e) {
             throw new IllegalStateException("용품 등록 중 오류가 발생했습니다.", e);
         }
@@ -56,15 +56,6 @@ public class GearServiceImpl implements GearService {
             return dao.detail(code);
         } catch (SQLException e) {
             throw new IllegalStateException("용품 상세 조회 중 오류가 발생했습니다.", e);
-        }
-    }
-
-    @Override
-    public int delete(String code) {
-        try {
-            return dao.delete(code);
-        } catch (SQLException e) {
-            throw new IllegalStateException("용품 삭제 중 오류가 발생했습니다.", e);
         }
     }
 }

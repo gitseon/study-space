@@ -126,21 +126,4 @@ public class GearDaoImpl implements GearDao {
         return ____;
     }
     // study-target:dao-detail:end
-
-    // study-target:dao-delete:start
-    @Override
-    public int delete(String code) throws SQLException {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        String sql = "delete from gear where ____ = ?";
-        try {
-            conn = DBUtil.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, code);
-            return pstmt.____();
-        } finally {
-            DBUtil.close(pstmt, conn);
-        }
-    }
-    // study-target:dao-delete:end
 }

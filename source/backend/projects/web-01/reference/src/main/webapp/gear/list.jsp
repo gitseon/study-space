@@ -22,7 +22,6 @@ table, th, td {
                 <th>코드</th>
                 <th>용품명</th>
                 <th>가격</th>
-                <th>브랜드</th>
                 <th>색상</th>
             </tr>
         </thead>
@@ -30,7 +29,7 @@ table, th, td {
             <c:choose>
                 <c:when test="${empty list}">
                     <tr>
-                        <td colspan="5">등록된 용품이 없습니다.</td>
+                        <td colspan="4">등록된 용품이 없습니다.</td>
                     </tr>
                 </c:when>
                 <c:otherwise>
@@ -43,7 +42,6 @@ table, th, td {
                             <td><a href="${detailUrl}"><c:out value="${dto.code}" /></a></td>
                             <td><c:out value="${dto.name}" /></td>
                             <td><c:out value="${dto.price}" /></td>
-                            <td><c:out value="${dto.brand}" /></td>
                             <td><c:out value="${dto.color}" /></td>
                         </tr>
                     </c:forEach>

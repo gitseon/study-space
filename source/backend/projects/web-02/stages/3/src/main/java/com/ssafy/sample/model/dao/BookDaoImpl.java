@@ -37,8 +37,4 @@ public class BookDaoImpl implements BookDao {
     // study-target:dao-detail:start
     // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.
     // study-target:dao-detail:end
-
-    // study-target:dao-delete:start
-    // delete 메서드를 직접 작성하세요. 요구사항 R-DELETE를 참고합니다.
-    // study-target:dao-delete:end
 }

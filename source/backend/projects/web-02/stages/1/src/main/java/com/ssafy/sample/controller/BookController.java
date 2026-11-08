@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.sample.model.dto.Book;
-import com.ssafy.sample.model.service.DuplicateCodeException;
+import com.ssafy.sample.model.dto.Member;
 import com.ssafy.sample.model.service.BookService;
 import com.ssafy.sample.model.service.BookServiceImpl;
 
@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/book")
 public class BookController extends HttpServlet implements ControllerHelper {
@@ -46,8 +47,11 @@ public class BookController extends HttpServlet implements ControllerHelper {
         case "detail":
             detail(request, response);
             break;
-        case "delete":
-            delete(request, response);
+        case "login":
+            login(request, response);
+            break;
+        case "logout":
+            ____(request, response);
             break;
         default:
             response.sendError(HttpServletResponse.____);
@@ -71,21 +75,20 @@ public class BookController extends HttpServlet implements ControllerHelper {
             forward(request, response, "/book/regist.jsp");
             return;
         }
-        String code = request.getParameter("code");
-        String name = request.getParameter("name");
-        String author = request.getParameter("author");
-        String category = request.getParameter("category");
-        int price = parseNonNegativeInt(request.getParameter("____"));
-        if (!hasText(code, 30) || !hasText(name, 50) || price < 0 || !hasText(author, 30) || !hasText(category, 30)) {
-            request.setAttribute("alertMsg", "모든 항목을 입력하고 가격은 0 이상의 정수로 입력하세요.");
+        Book book = new Book();
+        book.setCode(request.getParameter("code"));
+        book.setName(request.getParameter("____"));
+        book.setAuthor(request.getParameter("author"));
+        book.setCategory(request.getParameter("category"));
+        try {
+            book.setPrice(Integer.____(request.getParameter("price")));
+        } catch (____ e) {
+            request.setAttribute("alertMsg", "가격은 숫자로 입력하세요.");
             forward(request, response, "/book/regist.jsp");
             return;
         }
-        Book book = new Book(code.trim(), name.trim(), price, author.trim(), category.trim());
-        try {
-            service.____(book);
-        } catch (____ e) {
-            request.setAttribute("alertMsg", "이미 등록된 코드입니다. 다른 코드를 입력하세요.");
+        if (service.____(book) == 0) {
+            request.setAttribute("alertMsg", "등록하지 못했습니다. 이미 있는 코드인지 확인하세요.");
             forward(request, response, "/book/regist.jsp");
             return;
         }
@@ -97,7 +100,7 @@ public class BookController extends HttpServlet implements ControllerHelper {
     private void detail(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String code = request.getParameter("code");
-        Book book = hasText(code, 30) ? service.____(code) : null;
+        Book book = code == null ? null : service.____(code);
         if (book == null) {
             response.sendError(HttpServletResponse.____);
             return;
@@ -107,20 +110,31 @@ public class BookController extends HttpServlet implements ControllerHelper {
     }
     // study-target:ctrl-detail:end
 
-    // study-target:ctrl-delete:start
-    private void delete(HttpServletRequest request, HttpServletResponse response)
+    // study-target:ctrl-login:start
+    private void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!"____".equalsIgnoreCase(request.getMethod())) {
-            response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            forward(request, response, "/login-form.jsp");
             return;
         }
-        String code = request.getParameter("code");
-        int deleted = hasText(code, 30) ? service.____(code) : 0;
-        if (deleted == 0) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        Member member = service.____(request.getParameter("email"), request.getParameter("pass"));
+        if (member == null) {
+            request.setAttribute("alertMsg", "이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.");
+            forward(request, response, "/login-form.jsp");
             return;
         }
-        redirect(request, response, "/book?action=____");
+        request.getSession().____("user", member);
+        redirect(request, response, "____");
     }
-    // study-target:ctrl-delete:end
+    // study-target:ctrl-login:end
+
+    // study-target:ctrl-logout:start
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(____);
+        if (session != null) {
+            session.____();
+        }
+        redirect(request, response, "/");
+    }
+    // study-target:ctrl-logout:end
 }

@@ -35,28 +35,4 @@ public interface ControllerHelper {
         cookie.setPath(path);
         response.addCookie(cookie);
     }
-
-    /** 컨텍스트 루트가 비어 있으면 "/"를 반환합니다. */
-    default String cookiePath(HttpServletRequest request) {
-        String contextPath = request.getContextPath();
-        return contextPath.isEmpty() ? "/" : contextPath;
-    }
-
-    /** 값이 null이 아니고 공백만이 아니며 길이가 maxLength 이하이면 true입니다. */
-    default boolean hasText(String value, int maxLength) {
-        return value != null && !value.isBlank() && value.trim().length() <= maxLength;
-    }
-
-    /** 0 이상의 정수 문자열이면 그 값을, 비어 있거나 숫자가 아니거나 범위를 벗어나면 -1을 반환합니다. */
-    default int parseNonNegativeInt(String text) {
-        if (text == null) {
-            return -1;
-        }
-        try {
-            int value = Integer.parseInt(text.trim());
-            return value < 0 ? -1 : value;
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
 }

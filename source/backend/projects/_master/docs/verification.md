@@ -2,7 +2,7 @@
 
 이 문서는 모범답안(`reference/`)이 실제 환경에서 동작하는지 Spring Tools for Eclipse(STS)에서 확인하는 절차입니다. 구현 코드는 `reference/` 폴더에 따로 있고, 단계별 연습 시작 파일은 `starter/`와 `stages/`에 있습니다. 이 문서는 학습자에게 공개하는 자료가 아닙니다.
 
-검증 대상 환경은 OpenJDK25U-jdk hotspot 25.0.3_9, Apache tomcat-11.0.27, Dynamic web module version 6.0, mysql 8.4.11입니다. 이 문서를 만든 시점에는 `javac` 컴파일(Java 21 릴리스, Servlet API 6.0.0)만 확인했고 JSP 번역, Tomcat 기동, DB 연결은 확인하지 않았습니다. 아래 결과표를 채워 알려 주세요.
+검증 대상 환경은 OpenJDK25U-jdk hotspot 25.0.3_9, Apache tomcat-11.0.27, Dynamic web module version 6.0, mysql 8.4.11입니다. 이 문서를 만든 시점에는 `javac` 컴파일(Java 21 릴리스, Servlet API 6.0.0)과 Jasper JSP 번역과 컴파일까지 확인했고 Tomcat 기동과 DB 연결은 확인하지 않았습니다. 아래 결과표를 채워 알려 주세요.
 
 ## 1. 준비
 
@@ -25,11 +25,8 @@
 | 확인 | 방법 | 기대 결과 |
 | --- | --- | --- |
 | 한글 POST | 한글 이름과 한글 브랜드로 등록 | 목록에서 글자가 깨지지 않음 |
-| 가격 경계 | 0, 2147483647, 2147483648 입력 | 앞의 두 값은 등록, 마지막은 안내 문구 |
-| 길이 초과 | 코드 31자 입력 | 안내 문구, DB 변경 없음 |
+| 문자 가격 | 개발자 도구로 `price` 값을 `abc`로 바꿔 등록 | 500 오류 없이 안내 문구와 등록 화면, DB 변경 없음 |
 | 콘솔 로그 | 로그인 시 서버 콘솔 확인 | 비밀번호 값이 `****`로 가려짐 |
-| 세션 ID 변경 | 로그인 전후 JSESSIONID 쿠키 값 비교 | 값이 바뀜 |
-| 쿠키 path | 개발자 도구 Application > Cookies | `email` 쿠키 path가 컨텍스트 경로(루트면 `/`) |
 
 ## 4. 결과표
 

@@ -5,8 +5,8 @@
     {
       "id": "web-01",
       "title": "캠핑 용품 관리",
-      "revision": 1,
-      "hash": "1c4e04b3dd6d4177",
+      "revision": 2,
+      "hash": "e947000630413bbe",
       "durationOptions": [
         90,
         120,
@@ -20,7 +20,7 @@
         "mysql": "8.4.11",
         "compileRelease": 21
       },
-      "targetCount": 20,
+      "targetCount": 16,
       "project": "backend-projects/web-01/project.json",
       "referenceFile": "backend-projects/web-01/reference.json",
       "stages": [
@@ -47,8 +47,8 @@
     {
       "id": "web-02",
       "title": "도서 관리",
-      "revision": 1,
-      "hash": "a04d6165927b197e",
+      "revision": 2,
+      "hash": "39c90763c629ebfd",
       "durationOptions": [
         90,
         120,
@@ -62,7 +62,7 @@
         "mysql": "8.4.11",
         "compileRelease": 21
       },
-      "targetCount": 20,
+      "targetCount": 16,
       "project": "backend-projects/web-02/project.json",
       "referenceFile": "backend-projects/web-02/reference.json",
       "stages": [

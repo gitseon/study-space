@@ -22,7 +22,6 @@ table, th, td {
                 <th>코드</th>
                 <th>용품명</th>
                 <th>가격</th>
-                <th>브랜드</th>
                 <th>색상</th>
             </tr>
         </thead>
@@ -31,7 +30,7 @@ table, th, td {
             <c:choose>
                 <c:when test="${empty list}">
                     <tr>
-                        <td colspan="5">등록된 용품이 없습니다.</td>
+                        <td colspan="4">등록된 용품이 없습니다.</td>
                     </tr>
                 </c:when>
                 <c:otherwise>
@@ -44,7 +43,6 @@ table, th, td {
                             <td><a href="${detailUrl}"><c:out value="${dto.code}" /></a></td>
                             <td><c:out value="${dto.name}" /></td>
                             <td><c:out value="${dto.price}" /></td>
-                            <td><c:out value="${dto.brand}" /></td>
                             <td><c:out value="${dto.color}" /></td>
                         </tr>
                     </c:forEach>
@@ -54,7 +52,7 @@ table, th, td {
             <c:choose>
                 <c:when test="${____ list}">
                     <tr>
-                        <td colspan="5">등록된 용품이 없습니다.</td>
+                        <td colspan="4">등록된 용품이 없습니다.</td>
                     </tr>
                 </c:when>
                 <c:otherwise>
@@ -67,7 +65,6 @@ table, th, td {
                             <td><a href="${detailUrl}"><c:out value="${dto.code}" /></a></td>
                             <td><c:out value="${dto.name}" /></td>
                             <td><c:out value="${dto.____}" /></td>
-                            <td><c:out value="${dto.brand}" /></td>
                             <td><c:out value="${dto.color}" /></td>
                         </tr>
                     </c:forEach>
@@ -75,7 +72,7 @@ table, th, td {
             </c:choose>
             <%--@@stage 2--%>
             <%-- TODO: request 속성 list가 비어 있으면 "등록된 용품이 없습니다." 행을 보여주세요.
-                 목록이 있으면 용품마다 한 행씩 코드, 용품명, 가격, 브랜드, 색상을 출력하세요.
+                 목록이 있으면 용품마다 한 행씩 코드, 용품명, 가격, 색상을 출력하세요.
                  코드는 /gear?action=detail&code=코드 링크로 만들고 출력값은 c:out으로 감쌉니다. --%>
             <%--@@stage 3--%>
             <%-- 목록 본문 행을 직접 작성하세요. 요구사항 R-LIST를 참고합니다. --%>

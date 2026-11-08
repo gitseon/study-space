@@ -22,7 +22,6 @@ table, th, td {
                 <th>코드</th>
                 <th>용품명</th>
                 <th>가격</th>
-                <th>브랜드</th>
                 <th>색상</th>
             </tr>
         </thead>

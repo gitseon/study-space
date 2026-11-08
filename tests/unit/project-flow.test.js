@@ -49,7 +49,7 @@ test('a flow without the expected headings still yields one overview tab', () =>
 test('the real flow note has every feature tab', () => {
   const source = readFileSync(new URL('../../source/backend/projects/web-01/flow.md', import.meta.url), 'utf8');
   const labels = splitFlow(source).map((t) => t.label);
-  assert.deepEqual(labels, ['전체 흐름', '목록', '등록', '상세', '삭제', '로그인과 로그아웃', '필터와 오류 처리', '짝으로 기억할 것']);
+  assert.deepEqual(labels, ['전체 흐름', '목록', '등록', '상세', '로그인과 로그아웃', '짝으로 기억할 것']);
 });
 
 test('the two notices keep their fixed wording', () => {

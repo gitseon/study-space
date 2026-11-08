@@ -7,11 +7,11 @@
     <%-- study-target:jsp-header:start --%>
     <c:choose>
         <c:when test="${____ sessionScope.user}">
-            <a href="${root}/user?action=____">로그인</a>
+            <a href="${root}/book?action=____">로그인</a>
         </c:when>
         <c:otherwise>
             <c:out value="${sessionScope.user.____}" /> 님 |
-            <a href="${root}/user?action=logout">로그아웃</a>
+            <a href="${root}/book?action=logout">로그아웃</a>
         </c:otherwise>
     </c:choose>
     <%-- study-target:jsp-header:end --%>

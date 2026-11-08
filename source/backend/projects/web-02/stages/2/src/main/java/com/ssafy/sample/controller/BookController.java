@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.sample.model.dto.Book;
-import com.ssafy.sample.model.service.DuplicateCodeException;
+import com.ssafy.sample.model.dto.Member;
 import com.ssafy.sample.model.service.BookService;
 import com.ssafy.sample.model.service.BookServiceImpl;
 
@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/book")
 public class BookController extends HttpServlet implements ControllerHelper {
@@ -35,7 +36,7 @@ public class BookController extends HttpServlet implements ControllerHelper {
     // study-target:ctrl-dispatch:start
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO: action 값에 따라 list, regist, detail, delete 메서드를 호출하세요.
+        // TODO: action 값에 따라 list, regist, detail, login, logout 메서드를 호출하세요.
         // 정의되지 않은 action은 404로 응답합니다.
     }
     // study-target:ctrl-dispatch:end
@@ -51,9 +52,9 @@ public class BookController extends HttpServlet implements ControllerHelper {
     private void regist(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // TODO: GET 요청이면 등록 화면(/book/regist.jsp)으로 forward하세요.
-        // POST 요청이면 code, name, price, author, category를 읽어 검증합니다.
-        //  - 검증 실패: request 속성 alertMsg에 안내를 담고 등록 화면으로 forward
-        //  - 코드 중복(DuplicateCodeException): 안내 후 등록 화면으로 forward
+        // POST 요청이면 code, name, price, author, category를 읽어 Book를 만듭니다.
+        //  - 가격이 숫자가 아니면: request 속성 alertMsg에 안내를 담고 등록 화면으로 forward
+        //  - 서비스 insert가 0을 반환하면(코드 중복): 안내를 담고 등록 화면으로 forward
         //  - 성공: 저장 후 /book?action=list로 redirect
     }
     // study-target:ctrl-regist:end
@@ -66,11 +67,19 @@ public class BookController extends HttpServlet implements ControllerHelper {
     }
     // study-target:ctrl-detail:end
 
-    // study-target:ctrl-delete:start
-    private void delete(HttpServletRequest request, HttpServletResponse response)
+    // study-target:ctrl-login:start
+    private void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO: POST 요청일 때만 삭제합니다. 다른 방식은 405로 응답하세요.
-        // 삭제된 행이 없으면 404로 응답하고 삭제에 성공하면 /book?action=list로 redirect합니다.
+        // TODO: GET 요청이면 로그인 화면(/login-form.jsp)으로 forward하세요.
+        // POST 요청이면 email, pass 파라미터로 서비스 login을 호출합니다.
+        //  - 실패(null): request 속성 alertMsg에 안내를 담고 로그인 화면으로 forward
+        //  - 성공: 세션 속성 "user"에 회원을 저장하고 메인(/)으로 redirect
     }
-    // study-target:ctrl-delete:end
+    // study-target:ctrl-login:end
+
+    // study-target:ctrl-logout:start
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // TODO: 세션이 있으면 무효화하고 메인(/)으로 redirect하세요. 세션을 새로 만들지 않습니다.
+    }
+    // study-target:ctrl-logout:end
 }

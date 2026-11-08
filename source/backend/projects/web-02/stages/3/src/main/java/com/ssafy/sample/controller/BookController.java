@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.sample.model.dto.Book;
-import com.ssafy.sample.model.service.DuplicateCodeException;
+import com.ssafy.sample.model.dto.Member;
 import com.ssafy.sample.model.service.BookService;
 import com.ssafy.sample.model.service.BookServiceImpl;
 
@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/book")
 public class BookController extends HttpServlet implements ControllerHelper {
@@ -49,7 +50,11 @@ public class BookController extends HttpServlet implements ControllerHelper {
     // detail 메서드를 직접 작성하세요. 요구사항 R-DETAIL을 참고합니다.
     // study-target:ctrl-detail:end
 
-    // study-target:ctrl-delete:start
-    // delete 메서드를 직접 작성하세요. 요구사항 R-DELETE를 참고합니다.
-    // study-target:ctrl-delete:end
+    // study-target:ctrl-login:start
+    // login 메서드를 직접 작성하세요. 요구사항 R-LOGIN을 참고합니다.
+    // study-target:ctrl-login:end
+
+    // study-target:ctrl-logout:start
+    // logout 메서드를 직접 작성하세요. 요구사항 R-LOGOUT을 참고합니다.
+    // study-target:ctrl-logout:end
 }
