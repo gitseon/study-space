@@ -1118,7 +1118,7 @@ InnoDB 인덱스가 사용하는 균형 트리 구조의 이름을 영문으로 
   "group": "mvc-filter",
   "type": "essay",
   "id": "backend-03-q31",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "BE-LAB-01 Front Controller와 Filter",
     "backend-concepts Part 3"
@@ -1146,11 +1146,17 @@ InnoDB 인덱스가 사용하는 균형 트리 구조의 이름을 영문으로 
       "points": 1
     }
   ],
-  "modelAnswer": "Filter를 `/auth/*` 패턴에 매핑하면 이 경로로 오는 모든 요청이 Servlet에 닿기 전에 Filter를 먼저 거친다. Filter는 `getSession(false)`로 세션을 얻어 `loginUser` 속성이 있는지 확인한다. 세션이나 속성이 없으면 로그인 폼으로 redirect하고 `chain.doFilter()`를 호출하지 않아 요청이 Servlet까지 가지 못한다. 속성이 있으면 `chain.doFilter()`를 호출해 다음 단계로 넘긴다. 각 Servlet에 검사를 넣으면 같은 코드가 반복되고 새 Servlet에서 검사를 빠뜨릴 수 있지만 Filter 하나에 모으면 보호 경로 전체가 같은 규칙을 따른다."
+  "modelAnswer": "**(1)** Filter를 `/auth/*` 패턴에 매핑하면 이 경로로 오는 모든 요청이 Servlet에 닿기 전에 Filter를 먼저 거친다.\n\n**(2)** Filter는 `getSession(false)`로 세션을 얻어 `loginUser` 속성이 있는지 확인한다. 세션이나 속성이 없으면 로그인 폼으로 redirect하고 `chain.doFilter()`를 호출하지 않아 요청이 Servlet까지 가지 못한다. 속성이 있으면 `chain.doFilter()`를 호출해 다음 단계로 넘긴다.\n\n**(3)** 각 Servlet에 검사를 넣으면 같은 코드가 반복되고 새 Servlet에서 검사를 빠뜨릴 수 있지만 Filter 하나에 모으면 보호 경로 전체가 같은 규칙을 따른다."
 }
 ```
 ### stem
-게시판에서 `/auth/*` 경로는 로그인한 사용자만 쓸 수 있어야 한다. 이 검사를 Filter로 구현하는 방법을 (1) Filter의 매핑과 적용 범위 (2) 로그인하지 않은 요청과 로그인한 요청의 처리 (3) 각 Servlet에 검사 코드를 넣는 방식과 비교한 장점의 세 가지를 포함해 서술하시오.
+게시판에서 `/auth/*` 경로는 로그인한 사용자만 쓸 수 있어야 한다. 이 검사를 Filter로 구현하는 방법을 다음 순서로 서술하시오.
+
+(1) Filter의 매핑과 적용 범위
+
+(2) 로그인하지 않은 요청과 로그인한 요청의 처리
+
+(3) 각 Servlet에 검사 코드를 넣는 방식과 비교한 장점
 
 ## question: backend-03-q32
 ```json
@@ -1165,7 +1171,7 @@ InnoDB 인덱스가 사용하는 균형 트리 구조의 이름을 영문으로 
   "group": "db-schema",
   "type": "essay",
   "id": "backend-03-q32",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "DB-L06 제약조건",
     "DB-L08 모델링과 정규화",
@@ -1194,11 +1200,20 @@ InnoDB 인덱스가 사용하는 균형 트리 구조의 이름을 영문으로 
       "points": 1
     }
   ],
-  "modelAnswer": "`post_id`가 `writer_id`를 정하고 `writer_id`가 `writer_name`과 `writer_email`을 정하므로 기본키가 아닌 `writer_id`를 거쳐 다른 속성이 결정되는 이행 종속이 있다. 기본키가 아닌 속성이 다른 비키 속성을 결정하는 구조이므로 3정규형을 위반한다. 작성자 정보를 `member` 테이블로 분리하고 `post`에는 `writer_id`를 외래키로 남기면 해결된다. 분리하기 전에는 같은 작성자의 이름과 이메일이 게시글마다 반복 저장되어 이름을 바꾸면 여러 행을 모두 고쳐야 했지만 분리한 뒤에는 한 행만 고치면 된다."
+  "modelAnswer": "**(1)** `post_id`가 `writer_id`를 정하고 `writer_id`가 `writer_name`과 `writer_email`을 정하므로 기본키가 아닌 `writer_id`를 거쳐 다른 속성이 결정되는 이행 종속이 있다. 기본키가 아닌 속성이 다른 비키 속성을 결정하는 구조이므로 3정규형을 위반한다.\n\n**(2)** 작성자 정보를 `member` 테이블로 분리하고 `post`에는 `writer_id`를 외래키로 남기면 해결된다.\n\n**(3)** 분리하기 전에는 같은 작성자의 이름과 이메일이 게시글마다 반복 저장되어 이름을 바꾸면 여러 행을 모두 고쳐야 했지만 분리한 뒤에는 한 행만 고치면 된다."
 }
 ```
 ### stem
-게시글 테이블 `post`의 열은 아래와 같고 기본키는 `post_id`이다. `writer_id`가 정해지면 `writer_name`과 `writer_email`이 정해진다. (1) 이 테이블이 가진 종속 관계와 위반하는 정규형 (2) 개선한 테이블 구성 (3) 분리했을 때 줄어드는 문제를 서술하시오.
+게시글 테이블 `post`의 열은 아래와 같고 기본키는 `post_id`이다. `writer_id`가 정해지면 `writer_name`과 `writer_email`이 정해진다.
+
 ```text
 post(post_id, title, writer_id, writer_name, writer_email)
 ```
+
+다음을 서술하시오.
+
+(1) 이 테이블이 가진 종속 관계와 위반하는 정규형
+
+(2) 개선한 테이블 구성
+
+(3) 분리했을 때 줄어드는 문제

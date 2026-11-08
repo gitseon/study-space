@@ -145,21 +145,21 @@
   },
   {
     "questionId": "backend-01-q31",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "Front Controller의 목적과 처리 흐름과 없는 action의 처리를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "Front Controller의 목적과 처리 흐름과 없는 action의 처리를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   },
   {
     "questionId": "backend-01-q32",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "다대다 관계의 연결 테이블과 복합 기본키와 연결 속성의 위치를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "다대다 관계의 연결 테이블과 복합 기본키와 연결 속성의 위치를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   },
   {
     "questionId": "backend-02-q01",
@@ -298,21 +298,21 @@
   },
   {
     "questionId": "backend-02-q31",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "forward와 redirect의 요청 횟수와 주소창과 request 공유와 새로고침 동작을 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "forward와 redirect의 요청 횟수와 주소창과 request 공유와 새로고침 동작을 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   },
   {
     "questionId": "backend-02-q32",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "갱신 손실과 트랜잭션 묶기와 행 잠금과 커밋 롤백 경계를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "갱신 손실과 트랜잭션 묶기와 행 잠금과 커밋 롤백 경계를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   },
   {
     "questionId": "backend-03-q01",
@@ -433,20 +433,20 @@
   },
   {
     "questionId": "backend-03-q31",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "Filter의 매핑과 로그인 판단과 통과 및 차단과 중복 제거를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "Filter의 매핑과 로그인 판단과 통과 및 차단과 중복 제거를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   },
   {
     "questionId": "backend-03-q32",
-    "revision": 1,
+    "revision": 2,
     "method": "정답을 가리고 다시 도출",
     "reviewer": "Claude(작성자)",
     "independent": false,
     "reviewedAt": "2026-11-03",
-    "note": "이행 종속과 3정규형 위반과 분해 결과와 수정 이상 감소를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다."
+    "note": "이행 종속과 3정규형 위반과 분해 결과와 수정 이상 감소를 채점 기준 4개로 나누고 모범답안이 모든 기준을 담는지 대조했다. 번호별 문단으로 나눈 revision 2에서 번호마다 채점 기준과 모범답안이 일치하는지 다시 대조했다."
   }
 ]
