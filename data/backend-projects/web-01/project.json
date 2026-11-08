@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "web-01",
   "title": "캠핑 용품 관리",
-  "revision": 2,
+  "revision": 3,
   "track": "backend",
-  "hash": "e947000630413bbe",
+  "hash": "dca6c667e37b5071",
   "database": "ssafy_gear",
   "environment": {
     "jdk": "OpenJDK25U-jdk hotspot 25.0.3_9",
@@ -209,7 +209,7 @@
     },
     {
       "id": "ctrl-login",
-      "title": "로그인 처리",
+      "title": "로그인과 아이디 기억하기 쿠키",
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "topicIds": [
         "web-servlet",
@@ -217,7 +217,8 @@
       ],
       "requirementId": "R-LOGIN",
       "checklistIds": [
-        "auth-login"
+        "auth-login",
+        "auth-cookie"
       ]
     },
     {
@@ -316,7 +317,7 @@
     },
     {
       "id": "jsp-login",
-      "title": "로그인 form",
+      "title": "로그인 form과 이메일 쿠키",
       "path": "src/main/webapp/login-form.jsp",
       "topicIds": [
         "jsp-el",
@@ -325,6 +326,7 @@
       "requirementId": "R-LOGIN",
       "checklistIds": [
         "auth-login",
+        "auth-cookie",
         "jsp-render"
       ]
     },
@@ -558,12 +560,13 @@
         "label": "login-form.jsp",
         "kind": "JSP",
         "path": "src/main/webapp/login-form.jsp",
-        "role": "로그인 form입니다. 입력한 이메일과 비밀번호를 POST로 보냅니다.",
+        "role": "로그인 form입니다. email 쿠키가 있으면 이메일 칸을 채우고 아이디 기억하기를 체크해 두며, 입력한 이메일과 비밀번호와 기억하기 선택을 POST로 보냅니다.",
         "receives": [
-          "request 속성 alertMsg (로그인 실패)"
+          "request 속성 alertMsg (로그인 실패)",
+          "쿠키 email (아이디 기억하기)"
         ],
         "sends": [
-          "POST /gear (action=login, email, pass)"
+          "POST /gear (action=login, email, pass, remember-me)"
         ],
         "methods": [],
         "targets": [
@@ -573,7 +576,7 @@
           "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
           "<%@ include file=\"/header.jsp\"%>",
           "<h1>로그인 페이지</h1>",
-          "<%-- 작성 대상: 로그인 form --%>"
+          "<%-- 작성 대상: 로그인 form과 아이디 기억하기 --%>"
         ]
       },
       {
@@ -624,14 +627,15 @@
         "label": "GearController",
         "kind": "Servlet",
         "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
-        "role": "/gear 요청의 목록, 등록, 상세, 로그인, 로그아웃을 처리합니다. action 파라미터로 메서드를 고르고 서비스를 호출한 뒤 forward 또는 redirect로 응답합니다.",
+        "role": "/gear 요청의 목록, 등록, 상세, 로그인, 로그아웃을 처리합니다. action 파라미터로 메서드를 고르고 서비스를 호출한 뒤 forward 또는 redirect로 응답합니다. 로그인에서는 아이디 기억하기에 따라 email 쿠키를 저장하거나 지웁니다.",
         "receives": [
-          "action, code, name, price, brand, color, email, pass 파라미터"
+          "action, code, name, price, brand, color, email, pass, remember-me 파라미터"
         ],
         "sends": [
           "forward: request 속성 list, gear, alertMsg",
           "redirect: /gear?action=list, /",
           "세션 속성 user",
+          "쿠키 email (아이디 기억하기: 저장 또는 삭제)",
           "sendError: 404"
         ],
         "methods": [
@@ -950,7 +954,7 @@
         "to": "index",
         "kind": "redirect",
         "label": "로그인 성공",
-        "data": "세션 속성 user에 회원을 저장하고 메인(/)으로 redirect합니다."
+        "data": "세션 속성 user에 회원을 저장하고 아이디 기억하기에 따라 email 쿠키를 저장하거나 지운 뒤 메인(/)으로 redirect합니다."
       },
       {
         "id": "e-logout",
@@ -1047,8 +1051,8 @@
       "로그인과 로그아웃": "auth"
     }
   },
-  "requirements": "# 요구사항\n\n이 프로젝트는 용품 정보를 등록하고 목록과 상세로 조회하며 로그인과 로그아웃을 처리하는 Servlet, JSP, MySQL 웹 프로젝트입니다. 모든 요청은 컨트롤러 하나(`GearController`)가 받습니다. 제공 파일은 수정하지 않고 작성 대상 파일의 표시된 영역만 채웁니다. 실행 환경은 OpenJDK25U-jdk hotspot 25.0.3_9, Apache tomcat-11.0.27, Dynamic web module version 6.0, mysql 8.4.11입니다.\n\n## 공통 약속\n\n| 항목 | 값 |\n| --- | --- |\n| URL | `/gear` (컨트롤러 `GearController`) |\n| 요청 구분 | 파라미터 `action`. 값이 없으면 `list` |\n| 세션 속성 | `user`(로그인한 `Member`) |\n| 요청 속성 | `list`(용품 목록), `gear`(용품 한 건), `alertMsg`(화면에 보일 안내) |\n| 시작 데이터 | 용품 4건, 회원 2명(`manager@study.test`, `learner@study.test`, 비밀번호 `1234`) |\n\n## R-LAYER 계층 연결\n\n- `GearController`의 `doGet`과 `doPost`는 같은 `process`로 모입니다. `process`는 `action`에 따라 `list`, `regist`, `detail`, `login`, `logout`을 호출합니다. 정의되지 않은 값은 404입니다.\n- `GearServiceImpl`은 DAO를 호출합니다. `SQLException`은 원인을 보존해 `IllegalStateException`으로 바꿉니다. 코드 중복(`SQLIntegrityConstraintViolationException`)은 저장하지 못한 것이므로 `insert`가 0을 반환합니다.\n\n## R-LIST 목록\n\n- `/gear` 또는 `/gear?action=list`는 용품을 코드 순서로 모두 보여줍니다. 시작 데이터에서는 4행이고 열은 코드, 용품명, 가격, 색상입니다.\n- 데이터가 없으면 표 대신 \"등록된 용품이 없습니다.\" 행을 보여줍니다.\n- 코드는 상세 화면으로 가는 링크입니다. 출력하는 모든 값은 `c:out`으로 감쌉니다.\n\n## R-REGIST 등록\n\n- `GET /gear?action=regist`는 등록 화면을 보여줍니다.\n- `POST /gear`(`action=regist`)는 `code`, `name`, `price`, `brand`, `color`를 읽어 저장합니다.\n- 가격이 숫자가 아니거나 코드가 중복되어 저장하지 못하면 `alertMsg`를 담아 등록 화면으로 forward합니다.\n- 저장에 성공하면 목록으로 redirect합니다. 새로고침해도 같은 항목이 다시 등록되지 않습니다.\n\n## R-DETAIL 상세\n\n- `GET /gear?action=detail&code=코드`는 용품 한 건(코드, 용품명, 가격, 브랜드, 색상)을 보여줍니다.\n- 코드가 없거나 해당 용품이 없으면 404 오류 화면입니다. 빈 상세 화면을 보여주지 않습니다.\n\n## R-LOGIN 로그인\n\n- `GET /gear?action=login`은 로그인 화면입니다. `POST /gear`(`action=login`, `email`, `pass`)로 로그인합니다.\n- 실패하면 `alertMsg`를 담아 로그인 화면으로 forward합니다. 성공하면 세션 속성 `user`에 회원을 저장하고 메인(`/`)으로 redirect합니다.\n- 머리글은 로그인 전에는 로그인 링크를, 로그인 후에는 사용자 이름과 로그아웃 링크를 보여줍니다.\n\n## R-LOGOUT 로그아웃\n\n- `GET /gear?action=logout`은 세션이 있으면 무효화하고 메인으로 redirect합니다. 세션을 새로 만들지 않습니다.\n\n## 이 연습의 범위 밖\n\n- 삭제와 수정은 다루지 않습니다.\n- 로그인하지 않아도 모든 화면을 볼 수 있습니다. 로그인 여부는 머리글의 메뉴만 바꿉니다.\n",
-  "flow": "# 월말평가 구현 흐름\n\n## 전체 흐름\n\n1. JSP의 form이나 링크가 URL, `action`, 입력 값을 보냅니다.\n2. 컨트롤러가 `action`으로 처리할 메서드를 고르고 입력을 읽어 서비스를 호출합니다.\n3. 서비스가 DAO를 호출합니다. DAO는 Connection, PreparedStatement, ResultSet으로 DB를 처리합니다.\n4. 조회 결과는 request 속성에 담아 JSP로 forward합니다.\n5. 등록이 성공하면 redirect로 새 GET 요청을 보내 목록을 다시 읽습니다.\n6. JSP는 EL과 JSTL로 결과와 로그인 상태를 표시합니다.\n\n## 기능별 흐름\n\n### 목록\n\n`/gear` → GearController.process → list → GearService.selectAll → GearDao.selectAll → request 속성 `list` → forward `/gear/list.jsp`\n\n### 등록\n\n- 화면: `/gear?action=regist` (GET) → forward `/gear/regist.jsp`\n- 저장: form POST `/gear` (`action=regist`) → GearService.insert → GearDao.insert → redirect `/gear?action=list`\n\nform의 `name` 속성과 `getParameter`의 이름이 같아야 값이 전달됩니다. 가격이 숫자가 아니거나 코드가 중복되면 `alertMsg`를 담아 등록 화면으로 forward합니다.\n\n### 상세\n\n링크 `/gear?action=detail&code=...` → GearService.detail → 없으면 404 / 있으면 request 속성 `gear` → forward `/gear/detail.jsp`\n\n### 로그인과 로그아웃\n\n- 화면: `/gear?action=login` (GET) → forward `/login-form.jsp`\n- 로그인: form POST `/gear` (`action=login`) → GearService.login → 실패하면 `alertMsg`와 함께 로그인 화면 / 성공하면 세션 속성 `user` 저장 → redirect `/`\n- 로그아웃: `/gear?action=logout` → 세션 무효화 → redirect `/`\n\n## 짝으로 기억할 것\n\n| 보내는 쪽 | 받는 쪽 |\n| --- | --- |\n| form의 `name` | `request.getParameter` 이름 |\n| `request.setAttribute` 이름 | JSP의 EL 이름 |\n| SQL의 열 이름 | DTO의 필드와 `rs.getXxx` 이름 |\n| `session.setAttribute(\"user\")` | JSP의 `sessionScope.user` |\n",
+  "requirements": "# 요구사항\n\n이 프로젝트는 용품 정보를 등록하고 목록과 상세로 조회하며 로그인과 로그아웃을 처리하는 Servlet, JSP, MySQL 웹 프로젝트입니다. 모든 요청은 컨트롤러 하나(`GearController`)가 받습니다. 제공 파일은 수정하지 않고 작성 대상 파일의 표시된 영역만 채웁니다. 실행 환경은 OpenJDK25U-jdk hotspot 25.0.3_9, Apache tomcat-11.0.27, Dynamic web module version 6.0, mysql 8.4.11입니다.\n\n## 공통 약속\n\n| 항목 | 값 |\n| --- | --- |\n| URL | `/gear` (컨트롤러 `GearController`) |\n| 요청 구분 | 파라미터 `action`. 값이 없으면 `list` |\n| 세션 속성 | `user`(로그인한 `Member`) |\n| 쿠키 | `email`(아이디 기억하기로 저장한 이메일). 유효 기간 30일, path는 컨텍스트 경로(루트 컨텍스트는 `/`) |\n| 요청 속성 | `list`(용품 목록), `gear`(용품 한 건), `alertMsg`(화면에 보일 안내) |\n| 시작 데이터 | 용품 4건, 회원 2명(`manager@study.test`, `learner@study.test`, 비밀번호 `1234`) |\n\n## R-LAYER 계층 연결\n\n- `GearController`의 `doGet`과 `doPost`는 같은 `process`로 모입니다. `process`는 `action`에 따라 `list`, `regist`, `detail`, `login`, `logout`을 호출합니다. 정의되지 않은 값은 404입니다.\n- `GearServiceImpl`은 DAO를 호출합니다. `SQLException`은 원인을 보존해 `IllegalStateException`으로 바꿉니다. 코드 중복(`SQLIntegrityConstraintViolationException`)은 저장하지 못한 것이므로 `insert`가 0을 반환합니다.\n\n## R-LIST 목록\n\n- `/gear` 또는 `/gear?action=list`는 용품을 코드 순서로 모두 보여줍니다. 시작 데이터에서는 4행이고 열은 코드, 용품명, 가격, 색상입니다.\n- 데이터가 없으면 표 대신 \"등록된 용품이 없습니다.\" 행을 보여줍니다.\n- 코드는 상세 화면으로 가는 링크입니다. 출력하는 모든 값은 `c:out`으로 감쌉니다.\n\n## R-REGIST 등록\n\n- `GET /gear?action=regist`는 등록 화면을 보여줍니다.\n- `POST /gear`(`action=regist`)는 `code`, `name`, `price`, `brand`, `color`를 읽어 저장합니다.\n- 가격이 숫자가 아니거나 코드가 중복되어 저장하지 못하면 `alertMsg`를 담아 등록 화면으로 forward합니다.\n- 저장에 성공하면 목록으로 redirect합니다. 새로고침해도 같은 항목이 다시 등록되지 않습니다.\n\n## R-DETAIL 상세\n\n- `GET /gear?action=detail&code=코드`는 용품 한 건(코드, 용품명, 가격, 브랜드, 색상)을 보여줍니다.\n- 코드가 없거나 해당 용품이 없으면 404 오류 화면입니다. 빈 상세 화면을 보여주지 않습니다.\n\n## R-LOGIN 로그인\n\n- `GET /gear?action=login`은 로그인 화면입니다. `POST /gear`(`action=login`, `email`, `pass`)로 로그인합니다.\n- 실패하면 `alertMsg`를 담아 로그인 화면으로 forward합니다. 성공하면 세션 속성 `user`에 회원을 저장하고 메인(`/`)으로 redirect합니다.\n- 로그인 화면에는 `아이디 기억하기` 체크박스(`remember-me`)가 있습니다. 체크하고 로그인하면 `email` 쿠키에 입력한 이메일을 저장하고, 체크하지 않고 로그인하면 같은 이름과 path로 `email` 쿠키를 지웁니다. 쿠키는 저장할 때와 지울 때 path가 같아야 합니다.\n- 로그인 화면은 `email` 쿠키가 있으면 이메일 칸을 그 값으로 채우고 `아이디 기억하기`를 체크해 둡니다. 쿠키가 없으면 비워 둡니다. 쿠키 값은 `c:out`으로 출력합니다.\n- 머리글은 로그인 전에는 로그인 링크를, 로그인 후에는 사용자 이름과 로그아웃 링크를 보여줍니다.\n\n## R-LOGOUT 로그아웃\n\n- `GET /gear?action=logout`은 세션이 있으면 무효화하고 메인으로 redirect합니다. 세션을 새로 만들지 않습니다.\n\n## 이 연습의 범위 밖\n\n- 삭제와 수정은 다루지 않습니다.\n- 로그인하지 않아도 모든 화면을 볼 수 있습니다. 로그인 여부는 머리글의 메뉴만 바꿉니다.\n",
+  "flow": "# 월말평가 구현 흐름\n\n## 전체 흐름\n\n1. JSP의 form이나 링크가 URL, `action`, 입력 값을 보냅니다.\n2. 컨트롤러가 `action`으로 처리할 메서드를 고르고 입력을 읽어 서비스를 호출합니다.\n3. 서비스가 DAO를 호출합니다. DAO는 Connection, PreparedStatement, ResultSet으로 DB를 처리합니다.\n4. 조회 결과는 request 속성에 담아 JSP로 forward합니다.\n5. 등록이 성공하면 redirect로 새 GET 요청을 보내 목록을 다시 읽습니다.\n6. JSP는 EL과 JSTL로 결과와 로그인 상태를 표시합니다.\n\n## 기능별 흐름\n\n### 목록\n\n`/gear` → GearController.process → list → GearService.selectAll → GearDao.selectAll → request 속성 `list` → forward `/gear/list.jsp`\n\n### 등록\n\n- 화면: `/gear?action=regist` (GET) → forward `/gear/regist.jsp`\n- 저장: form POST `/gear` (`action=regist`) → GearService.insert → GearDao.insert → redirect `/gear?action=list`\n\nform의 `name` 속성과 `getParameter`의 이름이 같아야 값이 전달됩니다. 가격이 숫자가 아니거나 코드가 중복되면 `alertMsg`를 담아 등록 화면으로 forward합니다.\n\n### 상세\n\n링크 `/gear?action=detail&code=...` → GearService.detail → 없으면 404 / 있으면 request 속성 `gear` → forward `/gear/detail.jsp`\n\n### 로그인과 로그아웃\n\n- 화면: `/gear?action=login` (GET) → forward `/login-form.jsp` (브라우저가 보낸 `email` 쿠키가 있으면 이메일 칸을 채우고 `아이디 기억하기`를 체크)\n- 로그인: form POST `/gear` (`action=login`, `remember-me`) → GearService.login → 실패하면 `alertMsg`와 함께 로그인 화면 / 성공하면 세션 속성 `user` 저장 → 체크했으면 `email` 쿠키 저장, 체크하지 않았으면 같은 path로 삭제 → redirect `/`\n- 로그아웃: `/gear?action=logout` → 세션 무효화 → redirect `/`\n\n## 짝으로 기억할 것\n\n| 보내는 쪽 | 받는 쪽 |\n| --- | --- |\n| form의 `name` | `request.getParameter` 이름 |\n| `request.setAttribute` 이름 | JSP의 EL 이름 |\n| SQL의 열 이름 | DTO의 필드와 `rs.getXxx` 이름 |\n| `session.setAttribute(\"user\")` | JSP의 `sessionScope.user` |\n| `setupCookie(\"email\", ...)`의 이름 | JSP의 `cookie.email` |\n",
   "checklist": [
     {
       "id": "run-build",
@@ -1147,6 +1151,19 @@
         "dao-login",
         "jsp-login",
         "jsp-header"
+      ]
+    },
+    {
+      "id": "auth-cookie",
+      "title": "아이디 기억하기",
+      "steps": [
+        "아이디 기억하기를 체크하고 로그인한 뒤 로그아웃하고 로그인 화면을 다시 엽니다.",
+        "아이디 기억하기를 체크하지 않고 다시 로그인한 뒤 로그아웃하고 로그인 화면을 다시 엽니다."
+      ],
+      "expected": "체크했을 때는 이메일 칸이 채워지고 체크박스도 체크되어 있습니다. 체크하지 않았을 때는 이메일 칸이 비어 있고 체크되어 있지 않습니다. 브라우저 개발자 도구의 쿠키 목록에서 email 쿠키가 저장될 때와 지워질 때 같은 path로 처리됩니다.",
+      "targetIds": [
+        "ctrl-login",
+        "jsp-login"
       ]
     },
     {

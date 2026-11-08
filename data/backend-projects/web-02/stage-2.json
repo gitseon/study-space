@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "projectId": "web-02",
-  "revision": 2,
-  "hash": "39c90763c629ebfd",
+  "revision": 3,
+  "hash": "6adece56499741da",
   "stage": {
     "id": 2,
     "label": "메서드와 JSP 블록 작성"
@@ -18,7 +18,7 @@
       "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
       "language": "java",
       "editable": true,
-      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Book;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.BookService;\nimport com.ssafy.sample.model.service.BookServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/book\")\npublic class BookController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final BookService service = BookServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    private void process(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: action 값에 따라 list, regist, detail, login, logout 메서드를 호출하세요.\n        // 정의되지 않은 action은 404로 응답합니다.\n    }\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    private void list(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: 서비스에서 목록을 가져와 request 속성 \"list\"에 담고 /book/list.jsp로 forward하세요.\n    }\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    private void regist(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: GET 요청이면 등록 화면(/book/regist.jsp)으로 forward하세요.\n        // POST 요청이면 code, name, price, author, category를 읽어 Book를 만듭니다.\n        //  - 가격이 숫자가 아니면: request 속성 alertMsg에 안내를 담고 등록 화면으로 forward\n        //  - 서비스 insert가 0을 반환하면(코드 중복): 안내를 담고 등록 화면으로 forward\n        //  - 성공: 저장 후 /book?action=list로 redirect\n    }\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    private void detail(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: code 파라미터로 도서를 조회해 request 속성 \"book\"에 담고 /book/detail.jsp로 forward하세요.\n        // code가 없거나 해당 도서가 없으면 404로 응답합니다.\n    }\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-login:start\n    private void login(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: GET 요청이면 로그인 화면(/login-form.jsp)으로 forward하세요.\n        // POST 요청이면 email, pass 파라미터로 서비스 login을 호출합니다.\n        //  - 실패(null): request 속성 alertMsg에 안내를 담고 로그인 화면으로 forward\n        //  - 성공: 세션 속성 \"user\"에 회원을 저장하고 메인(/)으로 redirect\n    }\n    // study-target:ctrl-login:end\n\n    // study-target:ctrl-logout:start\n    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {\n        // TODO: 세션이 있으면 무효화하고 메인(/)으로 redirect하세요. 세션을 새로 만들지 않습니다.\n    }\n    // study-target:ctrl-logout:end\n}\n"
+      "text": "package com.ssafy.sample.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport com.ssafy.sample.model.dto.Book;\nimport com.ssafy.sample.model.dto.Member;\nimport com.ssafy.sample.model.service.BookService;\nimport com.ssafy.sample.model.service.BookServiceImpl;\n\nimport jakarta.servlet.ServletException;\nimport jakarta.servlet.annotation.WebServlet;\nimport jakarta.servlet.http.HttpServlet;\nimport jakarta.servlet.http.HttpServletRequest;\nimport jakarta.servlet.http.HttpServletResponse;\nimport jakarta.servlet.http.HttpSession;\n\n@WebServlet(\"/book\")\npublic class BookController extends HttpServlet implements ControllerHelper {\n    private static final long serialVersionUID = 1L;\n\n    private final BookService service = BookServiceImpl.getInstance();\n\n    @Override\n    protected void doGet(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    @Override\n    protected void doPost(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        process(request, response);\n    }\n\n    // study-target:ctrl-dispatch:start\n    private void process(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: action 값에 따라 list, regist, detail, login, logout 메서드를 호출하세요.\n        // 정의되지 않은 action은 404로 응답합니다.\n    }\n    // study-target:ctrl-dispatch:end\n\n    // study-target:ctrl-list:start\n    private void list(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: 서비스에서 목록을 가져와 request 속성 \"list\"에 담고 /book/list.jsp로 forward하세요.\n    }\n    // study-target:ctrl-list:end\n\n    // study-target:ctrl-regist:start\n    private void regist(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: GET 요청이면 등록 화면(/book/regist.jsp)으로 forward하세요.\n        // POST 요청이면 code, name, price, author, category를 읽어 Book를 만듭니다.\n        //  - 가격이 숫자가 아니면: request 속성 alertMsg에 안내를 담고 등록 화면으로 forward\n        //  - 서비스 insert가 0을 반환하면(코드 중복): 안내를 담고 등록 화면으로 forward\n        //  - 성공: 저장 후 /book?action=list로 redirect\n    }\n    // study-target:ctrl-regist:end\n\n    // study-target:ctrl-detail:start\n    private void detail(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: code 파라미터로 도서를 조회해 request 속성 \"book\"에 담고 /book/detail.jsp로 forward하세요.\n        // code가 없거나 해당 도서가 없으면 404로 응답합니다.\n    }\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-login:start\n    private void login(HttpServletRequest request, HttpServletResponse response)\n            throws ServletException, IOException {\n        // TODO: GET 요청이면 로그인 화면(/login-form.jsp)으로 forward하세요.\n        // POST 요청이면 email, pass 파라미터로 서비스 login을 호출합니다.\n        //  - 실패(null): request 속성 alertMsg에 안내를 담고 로그인 화면으로 forward\n        //  - 성공: 세션 속성 \"user\"에 회원을 저장합니다.\n        //    아이디 기억하기(remember-me)를 체크했으면 email 쿠키를 30일 동안 저장하고, 체크하지 않았으면 같은 path로 지웁니다.\n        //    쿠키 저장과 삭제에는 ControllerHelper의 setupCookie를 씁니다. 끝나면 메인(/)으로 redirect\n    }\n    // study-target:ctrl-login:end\n\n    // study-target:ctrl-logout:start\n    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {\n        // TODO: 세션이 있으면 무효화하고 메인(/)으로 redirect하세요. 세션을 새로 만들지 않습니다.\n    }\n    // study-target:ctrl-logout:end\n}\n"
     },
     {
       "path": "src/main/java/com/ssafy/sample/controller/ControllerHelper.java",
@@ -132,7 +132,7 @@
       "path": "src/main/webapp/login-form.jsp",
       "language": "jsp",
       "editable": true,
-      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>로그인 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>로그인 페이지</h1>\n    <%-- study-target:jsp-login:start --%>\n    <%-- TODO: /book로 POST 전송하는 로그인 form을 작성하세요.\n         hidden action=login과 email, pass 입력을 둡니다.\n         입력 name은 컨트롤러가 읽는 파라미터 이름과 같아야 합니다. --%>\n    <%-- study-target:jsp-login:end --%>\n</body>\n</html>\n"
+      "text": "<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\"%>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>로그인 페이지</title>\n</head>\n<body>\n    <%@ include file=\"/header.jsp\"%>\n    <h1>로그인 페이지</h1>\n    <%-- study-target:jsp-login:start --%>\n    <%-- TODO: /book로 POST 전송하는 로그인 form을 작성하세요.\n         hidden action=login과 email, pass 입력을 둡니다.\n         입력 name은 컨트롤러가 읽는 파라미터 이름과 같아야 합니다.\n         email 쿠키가 있으면 이메일 칸을 그 값으로 채우고, 이름이 remember-me인 아이디 기억하기 체크박스를 checked로 그립니다.\n         쿠키 값은 c:out으로 출력합니다. --%>\n    <%-- study-target:jsp-login:end --%>\n</body>\n</html>\n"
     }
   ],
   "targets": [
@@ -192,7 +192,7 @@
     },
     {
       "id": "ctrl-login",
-      "title": "로그인 처리",
+      "title": "로그인과 아이디 기억하기 쿠키",
       "path": "src/main/java/com/ssafy/sample/controller/BookController.java",
       "topicIds": [
         "web-servlet",
@@ -200,7 +200,8 @@
       ],
       "requirementId": "R-LOGIN",
       "checklistIds": [
-        "auth-login"
+        "auth-login",
+        "auth-cookie"
       ]
     },
     {
@@ -299,7 +300,7 @@
     },
     {
       "id": "jsp-login",
-      "title": "로그인 form",
+      "title": "로그인 form과 이메일 쿠키",
       "path": "src/main/webapp/login-form.jsp",
       "topicIds": [
         "jsp-el",
@@ -308,6 +309,7 @@
       "requirementId": "R-LOGIN",
       "checklistIds": [
         "auth-login",
+        "auth-cookie",
         "jsp-render"
       ]
     },
@@ -372,7 +374,9 @@
     "ctrl-login": [
       "GET은 로그인 화면 표시, POST는 로그인 처리로 나눕니다. 입력 이름은 email과 pass입니다.",
       "세션에는 객체를 저장할 수 있습니다. 로그인한 회원은 session.setAttribute(\"user\", member)로 저장하고 메인(/)으로 redirect합니다.",
-      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다."
+      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다.",
+      "쿠키에는 문자열만 저장할 수 있고 브라우저에 남습니다. 체크박스 remember-me를 체크하면 값이 \"on\"으로 오고 체크하지 않으면 null입니다. 체크했을 때 ControllerHelper의 setupCookie로 email 쿠키를 저장합니다.",
+      "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. 루트 컨텍스트에서는 getContextPath()가 빈 문자열이므로 path를 \"/\"로 바꿔 씁니다."
     ],
     "ctrl-logout": [
       "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
@@ -402,7 +406,9 @@
     ],
     "jsp-login": [
       "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
-      "로그인 요청도 /book로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다."
+      "로그인 요청도 /book로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다.",
+      "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다.",
+      "아이디 기억하기 체크박스는 email 쿠키가 있을 때만 checked를 붙입니다. 쿠키 값은 사용자가 바꿀 수 있으므로 c:out으로 출력합니다."
     ],
     "jsp-list": [
       "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",

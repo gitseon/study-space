@@ -108,13 +108,21 @@ public class GearController extends HttpServlet implements ControllerHelper {
             forward(request, response, "/login-form.jsp");
             return;
         }
-        Member member = service.login(request.getParameter("email"), request.getParameter("pass"));
+        String email = request.getParameter("email");
+        Member member = service.login(email, request.getParameter("pass"));
         if (member == null) {
             request.setAttribute("alertMsg", "이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.");
             forward(request, response, "/login-form.jsp");
             return;
         }
         request.getSession().setAttribute("user", member);
+        // 쿠키는 저장할 때와 지울 때 이름과 path가 같아야 합니다. 루트 컨텍스트는 getContextPath()가 빈 문자열이라 "/"로 바꿉니다.
+        String path = request.getContextPath().isEmpty() ? "/" : request.getContextPath();
+        if ("on".equals(request.getParameter("remember-me"))) {
+            setupCookie("email", email, 60 * 60 * 24 * 30, path, response);
+        } else {
+            setupCookie("email", "", 0, path, response);
+        }
         redirect(request, response, "/");
     }
 

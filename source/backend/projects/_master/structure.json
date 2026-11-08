@@ -188,12 +188,13 @@
       "label": "login-form.jsp",
       "kind": "JSP",
       "path": "src/main/webapp/login-form.jsp",
-      "role": "로그인 form입니다. 입력한 이메일과 비밀번호를 POST로 보냅니다.",
+      "role": "로그인 form입니다. email 쿠키가 있으면 이메일 칸을 채우고 아이디 기억하기를 체크해 두며, 입력한 이메일과 비밀번호와 기억하기 선택을 POST로 보냅니다.",
       "receives": [
-        "request 속성 alertMsg (로그인 실패)"
+        "request 속성 alertMsg (로그인 실패)",
+        "쿠키 email (아이디 기억하기)"
       ],
       "sends": [
-        "POST /gear (action=login, email, pass)"
+        "POST /gear (action=login, email, pass, remember-me)"
       ],
       "methods": [],
       "targets": [
@@ -203,7 +204,7 @@
         "<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\"%>",
         "<%@ include file=\"/header.jsp\"%>",
         "<h1>로그인 페이지</h1>",
-        "<%-- 작성 대상: 로그인 form --%>"
+        "<%-- 작성 대상: 로그인 form과 아이디 기억하기 --%>"
       ]
     },
     {
@@ -254,14 +255,15 @@
       "label": "GearController",
       "kind": "Servlet",
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
-      "role": "/gear 요청의 목록, 등록, 상세, 로그인, 로그아웃을 처리합니다. action 파라미터로 메서드를 고르고 서비스를 호출한 뒤 forward 또는 redirect로 응답합니다.",
+      "role": "/gear 요청의 목록, 등록, 상세, 로그인, 로그아웃을 처리합니다. action 파라미터로 메서드를 고르고 서비스를 호출한 뒤 forward 또는 redirect로 응답합니다. 로그인에서는 아이디 기억하기에 따라 email 쿠키를 저장하거나 지웁니다.",
       "receives": [
-        "action, code, name, price, brand, color, email, pass 파라미터"
+        "action, code, name, price, brand, color, email, pass, remember-me 파라미터"
       ],
       "sends": [
         "forward: request 속성 list, gear, alertMsg",
         "redirect: /gear?action=list, /",
         "세션 속성 user",
+        "쿠키 email (아이디 기억하기: 저장 또는 삭제)",
         "sendError: 404"
       ],
       "methods": [
@@ -580,7 +582,7 @@
       "to": "index",
       "kind": "redirect",
       "label": "로그인 성공",
-      "data": "세션 속성 user에 회원을 저장하고 메인(/)으로 redirect합니다."
+      "data": "세션 속성 user에 회원을 저장하고 아이디 기억하기에 따라 email 쿠키를 저장하거나 지운 뒤 메인(/)으로 redirect합니다."
     },
     {
       "id": "e-logout",

@@ -117,13 +117,20 @@ public class BookController extends HttpServlet implements ControllerHelper {
             forward(request, response, "/login-form.jsp");
             return;
         }
-        Member member = service.____(request.getParameter("email"), request.getParameter("pass"));
+        String email = request.getParameter("email");
+        Member member = service.____(email, request.getParameter("pass"));
         if (member == null) {
             request.setAttribute("alertMsg", "이메일 또는 비밀번호를 확인한 뒤 다시 시도하세요.");
             forward(request, response, "/login-form.jsp");
             return;
         }
         request.getSession().____("user", member);
+        String path = request.getContextPath().isEmpty() ? "____" : request.getContextPath();
+        if ("on".equals(request.getParameter("____"))) {
+            ____("email", email, 60 * 60 * 24 * 30, path, response);
+        } else {
+            setupCookie("email", "", ____, path, response);
+        }
         redirect(request, response, "____");
     }
     // study-target:ctrl-login:end

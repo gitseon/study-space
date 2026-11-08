@@ -28,8 +28,8 @@ form의 `name` 속성과 `getParameter`의 이름이 같아야 값이 전달됩�
 
 ### 로그인과 로그아웃
 
-- 화면: `/book?action=login` (GET) → forward `/login-form.jsp`
-- 로그인: form POST `/book` (`action=login`) → BookService.login → 실패하면 `alertMsg`와 함께 로그인 화면 / 성공하면 세션 속성 `user` 저장 → redirect `/`
+- 화면: `/book?action=login` (GET) → forward `/login-form.jsp` (브라우저가 보낸 `email` 쿠키가 있으면 이메일 칸을 채우고 `아이디 기억하기`를 체크)
+- 로그인: form POST `/book` (`action=login`, `remember-me`) → BookService.login → 실패하면 `alertMsg`와 함께 로그인 화면 / 성공하면 세션 속성 `user` 저장 → 체크했으면 `email` 쿠키 저장, 체크하지 않았으면 같은 path로 삭제 → redirect `/`
 - 로그아웃: `/book?action=logout` → 세션 무효화 → redirect `/`
 
 ## 짝으로 기억할 것
@@ -40,3 +40,4 @@ form의 `name` 속성과 `getParameter`의 이름이 같아야 값이 전달됩�
 | `request.setAttribute` 이름 | JSP의 EL 이름 |
 | SQL의 열 이름 | DTO의 필드와 `rs.getXxx` 이름 |
 | `session.setAttribute("user")` | JSP의 `sessionScope.user` |
+| `setupCookie("email", ...)`의 이름 | JSP의 `cookie.email` |

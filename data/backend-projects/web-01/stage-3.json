@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "projectId": "web-01",
-  "revision": 2,
-  "hash": "e947000630413bbe",
+  "revision": 3,
+  "hash": "dca6c667e37b5071",
   "stage": {
     "id": 3,
     "label": "구현 대상 전체 작성"
@@ -192,7 +192,7 @@
     },
     {
       "id": "ctrl-login",
-      "title": "로그인 처리",
+      "title": "로그인과 아이디 기억하기 쿠키",
       "path": "src/main/java/com/ssafy/sample/controller/GearController.java",
       "topicIds": [
         "web-servlet",
@@ -200,7 +200,8 @@
       ],
       "requirementId": "R-LOGIN",
       "checklistIds": [
-        "auth-login"
+        "auth-login",
+        "auth-cookie"
       ]
     },
     {
@@ -299,7 +300,7 @@
     },
     {
       "id": "jsp-login",
-      "title": "로그인 form",
+      "title": "로그인 form과 이메일 쿠키",
       "path": "src/main/webapp/login-form.jsp",
       "topicIds": [
         "jsp-el",
@@ -308,6 +309,7 @@
       "requirementId": "R-LOGIN",
       "checklistIds": [
         "auth-login",
+        "auth-cookie",
         "jsp-render"
       ]
     },
@@ -372,7 +374,9 @@
     "ctrl-login": [
       "GET은 로그인 화면 표시, POST는 로그인 처리로 나눕니다. 입력 이름은 email과 pass입니다.",
       "세션에는 객체를 저장할 수 있습니다. 로그인한 회원은 session.setAttribute(\"user\", member)로 저장하고 메인(/)으로 redirect합니다.",
-      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다."
+      "member가 null이면 로그인 실패입니다. alertMsg 속성에 안내를 담고 로그인 화면으로 forward합니다.",
+      "쿠키에는 문자열만 저장할 수 있고 브라우저에 남습니다. 체크박스 remember-me를 체크하면 값이 \"on\"으로 오고 체크하지 않으면 null입니다. 체크했을 때 ControllerHelper의 setupCookie로 email 쿠키를 저장합니다.",
+      "쿠키를 지울 때는 저장할 때와 같은 이름과 path로 만들고 maxAge를 0으로 둡니다. 루트 컨텍스트에서는 getContextPath()가 빈 문자열이므로 path를 \"/\"로 바꿔 씁니다."
     ],
     "ctrl-logout": [
       "getSession(false)는 세션이 없을 때 새로 만들지 않고 null을 반환합니다. null 확인 후 invalidate합니다."
@@ -402,7 +406,9 @@
     ],
     "jsp-login": [
       "form의 input name은 컨트롤러의 getParameter 이름과 같아야 합니다. 비밀번호 칸은 pass입니다.",
-      "로그인 요청도 /gear로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다."
+      "로그인 요청도 /gear로 보냅니다. 무슨 동작인지는 hidden action 값으로 알려줍니다.",
+      "EL의 cookie 객체로 ${cookie.email.value}를 읽을 수 있습니다. 쿠키가 없으면 빈 값입니다.",
+      "아이디 기억하기 체크박스는 email 쿠키가 있을 때만 checked를 붙입니다. 쿠키 값은 사용자가 바꿀 수 있으므로 c:out으로 출력합니다."
     ],
     "jsp-list": [
       "c:forEach의 items에는 EL로 request 속성 이름을 넣습니다. 목록이 비었는지는 empty로 확인합니다.",
