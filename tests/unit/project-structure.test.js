@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {detailHtml, edgeGroups, featureForTab, flowMembers, languageOf, structureHtml} from '../../assets/project-structure.js';
+import {archHtml, detailHtml, tipHtml, edgeGroups, featureForTab, flowMembers, isWriteNode, languageOf, structureHtml} from '../../assets/project-structure.js';
 
 const structure = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-01/project.json', import.meta.url), 'utf8')).structure;
 const book = JSON.parse(readFileSync(new URL('../../source/backend/projects/web-02/project.json', import.meta.url), 'utf8')).structure;
@@ -98,7 +98,7 @@ test('the detail box sits directly under the group of the chosen button', () => 
   const node = structure.nodes.find((n) => n.id === 'gearctl');
   const nodeHtml = structureHtml(structure, {selected: {type: 'node', id: node.id}});
   assert.equal(nodeHtml.split('class="st-detail"').length - 1, 1);
-  const layer = nodeHtml.split('<section class="st-layer"').find((s) => s.includes(`data-layer="${node.layer}"`));
+  const layer = nodeHtml.split('<section class="st-layer"').find((s) => s.startsWith(` data-layer="${node.layer}"`));
   assert.match(layer, /<\/div><div class="st-detail"/);
   const edge = Object.values(edgeGroups(structure).down).flat()[0];
   const edgeHtml = structureHtml(structure, {selected: {type: 'edge', id: edge.id}});
@@ -106,4 +106,59 @@ test('the detail box sits directly under the group of the chosen button', () => 
   assert.match(edgeHtml, /class="st-edges"[^]*?<\/div><div class="st-detail"/);
   const none = structureHtml(structure, {});
   assert.match(none, /<\/section><\/div><div class="st-detail"/);
+});
+
+test('boxes with targets are marked as write boxes and the others as provided files', () => {
+  const html = structureHtml(structure, {});
+  assert.match(html, /data-node="gearctl"[^>]*data-write="true"/);
+  assert.match(html, /data-node="dbutil"[^>]*data-write="false"/);
+  for (const node of structure.nodes) assert.equal(isWriteNode(node), node.targets.length > 0, node.id);
+  assert.equal(html.split('✎ 구현 필요</span><').length - 1 >= structure.nodes.filter(isWriteNode).length, true);
+});
+
+test('write-only view keeps only boxes with targets and edges between them', () => {
+  const html = structureHtml(structure, {writeOnly: true});
+  assert.match(html, /data-write-only="true"/);
+  assert.match(html, /data-writeonly[^>]*aria-pressed="true"/);
+  for (const node of structure.nodes) {
+    assert.equal(html.includes(`data-node="${node.id}" data-kind`), isWriteNode(node), node.id);
+  }
+  assert.doesNotMatch(html, /data-edge="e-request"/);
+  assert.match(html, /data-edge="e-gear-svc"/);
+  assert.match(html, /data-edge="e-forward-list"/);
+  assert.doesNotMatch(html, /data-edge="e-dao-db"/);
+  assert.equal(structureHtml(structure, {}).includes('data-edge="e-request"'), true);
+});
+
+test('the architecture picture lists the request path in order with a link per step', () => {
+  const html = archHtml(structure, {});
+  const order = ['browser', 'logging', 'gearctl', 'service', 'dao', 'db'].map((id) => html.indexOf(`data-arch-node="${id}"`));
+  assert.ok(order.every((i) => i >= 0));
+  assert.deepEqual([...order].sort((a, b) => a - b), order);
+  for (const id of ['e-request', 'e-log', 'e-gear-svc', 'e-svc-dao', 'e-dao-db']) assert.ok(html.includes(`data-arch-edge="${id}"`), id);
+  for (const node of structure.nodes) assert.ok(html.includes(`data-arch-node="${node.id}"`), node.id);
+  assert.match(html, /data-arch-node="gearctl"[^>]*data-write="true"/);
+  assert.match(html, /data-arch-node="dbutil"[^>]*data-write="false"/);
+  assert.match(html, /role="tooltip"/);
+});
+
+test('the architecture picture follows the write-only view and the selection', () => {
+  const html = archHtml(structure, {writeOnly: true, selected: {type: 'node', id: 'service'}});
+  for (const node of structure.nodes) assert.equal(html.includes(`data-arch-node="${node.id}"`), isWriteNode(node), node.id);
+  assert.match(html, /data-arch-node="service"[^>]*aria-pressed="true"/);
+  assert.doesNotMatch(html, /data-arch-edge="e-request"/);
+  assert.match(html, /data-arch-edge="e-svc-dao"/);
+  assert.match(structureHtml(structure, {}), /class="ar"[^]*class="st-sub"[^]*class="st-diagram"/);
+});
+
+test('the hover summary is short, marks the write boxes and escapes the data', () => {
+  const html = tipHtml(structure, 'node', 'gearctl');
+  assert.match(html, /GearController/);
+  assert.match(html, /구현 필요/);
+  assert.match(tipHtml(structure, 'node', 'dbutil'), /제공 파일/);
+  assert.match(tipHtml(structure, 'edge', 'e-gear-svc'), /GearController → GearService/);
+  assert.equal(tipHtml(structure, 'node', 'nope'), '');
+  const evil = structuredClone(structure);
+  evil.nodes[0].role = '<img src=x onerror=alert(1)>';
+  assert.doesNotMatch(tipHtml(evil, 'node', evil.nodes[0].id), /<img/);
 });
