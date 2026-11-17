@@ -1,0 +1,1485 @@
+{
+  "id": "spring-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "spring",
+  "title": "Spring 1회",
+  "subtitle": "구성 요소의 책임과 기본 요청 흐름",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1,
+  "questions": [
+    {
+      "title": "프레임워크와 라이브러리의 구분",
+      "topics": [
+        "foundation-boot"
+      ],
+      "tags": [
+        "framework-role"
+      ],
+      "group": "foundation-boot",
+      "type": "mc",
+      "id": "spring-01-q01",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L01 Framework 개요 p.5",
+        "SPR-S01 Framework 개요 p.15",
+        "spring-concepts Part 1"
+      ],
+      "difficulty": 1,
+      "correctChoiceId": "d",
+      "stem": "프레임워크를 라이브러리와 구분해 주는 특징으로 알맞은 것은?",
+      "solution": "정답 근거: 프레임워크는 실행 흐름의 주도권을 쥐고 정해진 지점에서 개발자의 코드를 호출한다. 이것이 제어의 역전(IoC)이다. 풀이: 재사용할 수 있다는 점과 의존성으로 추가한다는 점은 둘의 공통점이라 구분 기준이 되지 못한다. 흔한 실수: 규모가 크면 프레임워크라고 생각하는 것이다. 기준은 크기가 아니라 누가 누구를 호출하느냐이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "여러 프로젝트에서 다시 쓸 수 있는 코드를 묶어서 제공한다"
+        },
+        {
+          "id": "b",
+          "text": "개발자가 필요한 기능을 골라서 원하는 시점에 직접 호출한다"
+        },
+        {
+          "id": "c",
+          "text": "컴파일된 형태로 배포되어 프로젝트에 의존성으로 추가한다"
+        },
+        {
+          "id": "d",
+          "text": "정해진 실행 흐름 안에서 개발자가 쓴 코드를 대신 호출한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "재사용할 수 있는 코드 묶음이라는 점은 라이브러리와 프레임워크 모두에 해당한다.",
+        "b": "개발자의 코드가 기능을 골라 호출하는 것은 라이브러리의 사용 방식이다.",
+        "c": "배포 형태와 추가 방법은 둘이 같다. Spring도 라이브러리도 의존성으로 추가한다.",
+        "d": "프레임워크가 흐름을 쥐고 개발자의 코드를 호출한다. Spring MVC가 컨트롤러 메서드를 호출하는 것이 예이다."
+      }
+    },
+    {
+      "title": "컴포넌트 스캔의 기준 패키지",
+      "topics": [
+        "foundation-boot"
+      ],
+      "tags": [
+        "boot-autoconfig"
+      ],
+      "group": "foundation-boot",
+      "type": "mc",
+      "id": "spring-01-q02",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L03 자동 구성 p.15",
+        "SPR-S05 자동 구성 p.10",
+        "spring-concepts Part 2"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "c",
+      "stem": "메인 클래스가 `com.study.app` 패키지에 있고 스캔 범위를 따로 지정하지 않았다. 다음 두 클래스 중 빈으로 등록되는 것은?\n```java\npackage com.study.app;\n\n@SpringBootApplication\npublic class StudyApplication {\n}\n```\n```java\npackage com.study.app.room;\n\n@Service\npublic class RoomService {\n}\n```\n```java\npackage com.study.batch;\n\n@Service\npublic class CleanupService {\n}\n```",
+      "solution": "정답 근거: `@SpringBootApplication`에 포함된 `@ComponentScan`은 메인 클래스의 패키지와 그 하위 패키지만 찾는다. 풀이: `com.study.app.room`은 `com.study.app`의 하위라서 스캔되고 `com.study.batch`는 범위 밖이라 스캔되지 않는다. 흔한 실수: `@Service`만 붙이면 프로젝트 어디에 두어도 등록된다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`RoomService`와 `CleanupService`가 모두 등록된다"
+        },
+        {
+          "id": "b",
+          "text": "두 클래스 모두 스캔 범위에 들어가지 않아 등록되지 않는다"
+        },
+        {
+          "id": "c",
+          "text": "`RoomService`만 스캔되어 빈으로 등록된다"
+        },
+        {
+          "id": "d",
+          "text": "`CleanupService`만 스캔되어 빈으로 등록된다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "`com.study.batch`는 메인 클래스의 패키지 밖이라 스캔 대상이 아니다.",
+        "b": "메인 클래스의 하위 패키지는 스캔 범위에 들어간다.",
+        "c": "기준 패키지 `com.study.app`의 하위에 있는 `RoomService`만 등록된다.",
+        "d": "스캔되는 쪽과 스캔되지 않는 쪽을 반대로 본 것이다."
+      }
+    },
+    {
+      "title": "IoC와 DI의 관계",
+      "topics": [
+        "di-bean"
+      ],
+      "tags": [
+        "ioc-container"
+      ],
+      "group": "di-bean",
+      "type": "mc",
+      "id": "spring-01-q03",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L02 의존성과 IoC p.10",
+        "SPR-S03 IoC p.15",
+        "spring-concepts Part 3"
+      ],
+      "difficulty": 1,
+      "correctChoiceId": "a",
+      "stem": "IoC와 DI의 관계를 바르게 설명한 것은?",
+      "solution": "정답 근거: IoC는 객체의 생성과 호출의 주도권이 개발자의 코드에서 컨테이너로 넘어간다는 원칙이다. DI는 필요한 객체를 밖에서 넣어 주어 그 원칙을 구현하는 방법이다. 흔한 실수: 두 용어를 같은 뜻으로 쓰는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "IoC는 제어의 주체가 바뀐다는 원칙이고 DI는 그 원칙을 구현하는 방법이다"
+        },
+        {
+          "id": "b",
+          "text": "IoC는 객체를 주입하는 구체적인 방법이고 DI는 그것을 포함하는 원칙이다"
+        },
+        {
+          "id": "c",
+          "text": "IoC는 설정 클래스에 쓰는 방식이고 DI는 어노테이션에 쓰는 방식이다"
+        },
+        {
+          "id": "d",
+          "text": "IoC는 singleton 빈에 적용하는 원칙이고 DI는 prototype 빈에 적용한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "원칙(IoC)과 구현 방법(DI)의 관계를 바르게 설명했다.",
+        "b": "원칙과 방법을 뒤바꾼 설명이다.",
+        "c": "두 개념은 설정을 쓰는 위치로 나뉘지 않는다. 설정 클래스와 어노테이션 모두 DI에 쓰인다.",
+        "d": "두 개념은 빈의 scope와 관계가 없다."
+      }
+    },
+    {
+      "title": "등록 방식에 따른 빈의 기본 이름",
+      "topics": [
+        "di-bean"
+      ],
+      "tags": [
+        "bean-registration"
+      ],
+      "group": "di-bean",
+      "type": "mc",
+      "id": "spring-01-q04",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L02 명시적 DI p.15",
+        "SPR-S03 빈 관리 p.25",
+        "spring-concepts Part 3"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "a",
+      "stem": "이름을 따로 지정하지 않았을 때 다음 두 빈의 이름을 순서대로 나열한 것은?\n```java\n@Configuration\npublic class AppConfig {\n    @Bean\n    public Clock studyClock() {\n        return Clock.systemUTC();\n    }\n}\n```\n```java\n@Component\npublic class RoomPolicy {\n}\n```",
+      "solution": "정답 근거: `@Bean` 메서드로 등록한 빈의 기본 이름은 메서드 이름이고 `@Component` 계열은 클래스 이름의 첫 글자를 소문자로 바꾼 이름이다. 풀이: 메서드 이름이 `studyClock`이므로 첫 빈은 `studyClock`이고 클래스 `RoomPolicy`는 `roomPolicy`가 된다. 흔한 실수: `@Bean`의 이름을 반환 타입에서 만든다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`studyClock`, `roomPolicy`"
+        },
+        {
+          "id": "b",
+          "text": "`clock`, `roomPolicy`"
+        },
+        {
+          "id": "c",
+          "text": "`studyClock`, `RoomPolicy`"
+        },
+        {
+          "id": "d",
+          "text": "`clock`, `RoomPolicy`"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "메서드 이름과 첫 글자를 소문자로 바꾼 클래스 이름이다.",
+        "b": "`@Bean`의 이름은 반환 타입 `Clock`이 아니라 메서드 이름에서 온다.",
+        "c": "`@Component`의 이름은 클래스 이름 그대로가 아니라 첫 글자를 소문자로 바꾼다.",
+        "d": "두 이름 모두 규칙과 다르다."
+      }
+    },
+    {
+      "title": "@Primary와 @Qualifier가 함께 있을 때의 선택",
+      "topics": [
+        "di-bean"
+      ],
+      "tags": [
+        "bean-selection"
+      ],
+      "group": "di-bean",
+      "type": "mc",
+      "id": "spring-01-q05",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S03 DI p.45",
+        "spring-concepts Part 3"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "b",
+      "stem": "`DiscountPolicy` 타입의 빈이 둘이다. `OrderService`에 주입되는 빈은?\n```java\n@Component\n@Primary\npublic class RateDiscount implements DiscountPolicy {\n}\n```\n```java\n@Component\npublic class FixedDiscount implements DiscountPolicy {\n}\n```\n```java\n@Service\npublic class OrderService {\n    private final DiscountPolicy policy;\n\n    public OrderService(@Qualifier(\"fixedDiscount\") DiscountPolicy policy) {\n        this.policy = policy;\n    }\n}\n```",
+      "solution": "정답 근거: 주입 지점의 `@Qualifier`는 `@Primary`보다 우선한다. 풀이: `@Primary`는 기준이 없을 때 쓰는 기본 후보이고 `@Qualifier(\"fixedDiscount\")`는 이 주입 지점에서 쓸 빈을 이름으로 지정한다. 더 구체적인 지정이 이긴다. 흔한 실수: `@Primary`가 있으면 항상 그 빈이 주입된다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`@Primary`가 붙은 `RateDiscount`가 주입된다"
+        },
+        {
+          "id": "b",
+          "text": "이름을 지정한 `FixedDiscount`가 주입된다"
+        },
+        {
+          "id": "c",
+          "text": "후보를 정하지 못해 시작할 때 실패한다"
+        },
+        {
+          "id": "d",
+          "text": "두 빈이 번갈아 가며 주입된다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "`@Primary`는 `@Qualifier`가 없을 때의 기본 후보이다.",
+        "b": "`@Qualifier`로 이름을 지정한 빈이 주입된다.",
+        "c": "후보가 둘이어도 `@Qualifier`로 하나가 정해지므로 실패하지 않는다.",
+        "d": "주입은 빈을 만들 때 한 번 일어나며 번갈아 바뀌지 않는다."
+      }
+    },
+    {
+      "title": "pointcut 식이 가리키는 AOP 용어",
+      "topics": [
+        "aop-proxy"
+      ],
+      "tags": [
+        "aop-terms"
+      ],
+      "group": "aop-proxy",
+      "type": "mc",
+      "id": "spring-01-q06",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L05 AOP 한계 p.5",
+        "SPR-S06 AOP 동작 p.10",
+        "spring-concepts Part 4"
+      ],
+      "difficulty": 1,
+      "correctChoiceId": "c",
+      "stem": "다음 코드에서 `execution(..)`으로 쓴 식처럼 부가 기능을 적용할 메서드를 고르는 조건을 가리키는 용어는?\n```java\n@Before(\"execution(* com.study.room..*Service.*(..))\")\npublic void logStart() {\n}\n```",
+      "solution": "정답 근거: 어떤 join point에 부가 기능을 적용할지 고르는 식이 pointcut이다. 풀이: `@Before` 메서드 자체는 실행할 부가 기능인 advice이고 pointcut과 advice를 묶은 모듈이 aspect이다. weaving은 target에 aspect를 엮는 과정이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "advice"
+        },
+        {
+          "id": "b",
+          "text": "join point"
+        },
+        {
+          "id": "c",
+          "text": "pointcut"
+        },
+        {
+          "id": "d",
+          "text": "weaving"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "advice는 끼어들어 실행할 부가 기능과 그 시점이다. `logStart()` 메서드가 advice이다.",
+        "b": "join point는 advice가 끼어들 수 있는 지점이다. 적용할 지점을 고르는 조건이 아니라 그 후보이다.",
+        "c": "적용할 대상을 고르는 식이 pointcut이다.",
+        "d": "weaving은 target에 aspect를 엮는 과정이다."
+      }
+    },
+    {
+      "title": "한 aspect 안의 advice 실행 순서",
+      "topics": [
+        "aop-proxy"
+      ],
+      "tags": [
+        "advice-types"
+      ],
+      "group": "aop-proxy",
+      "type": "mc",
+      "id": "spring-01-q07",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L04 advice p.25",
+        "SPR-S06 advice p.35",
+        "spring-concepts Part 4"
+      ],
+      "difficulty": 3,
+      "correctChoiceId": "b",
+      "stem": "Spring Framework 7에서 한 aspect의 advice 네 개가 `RoomService.findRoom()`에 모두 적용된다. `findRoom()`이 `T`를 출력하고 정상 반환할 때 출력 순서는?\n```java\n@Around(\"target()\")\npublic Object around(ProceedingJoinPoint pjp) throws Throwable {\n    System.out.print(\"A1 \");\n    try {\n        return pjp.proceed();\n    } finally {\n        System.out.print(\"A2 \");\n    }\n}\n\n@Before(\"target()\")\npublic void before() {\n    System.out.print(\"B \");\n}\n\n@AfterReturning(\"target()\")\npublic void afterReturning() {\n    System.out.print(\"R \");\n}\n\n@After(\"target()\")\npublic void after() {\n    System.out.print(\"F \");\n}\n```",
+      "solution": "정답 근거: 같은 aspect 안에서는 Around의 앞부분, Before, target 순으로 들어가고 AfterReturning, After, Around의 뒷부분 순으로 나온다. 풀이: `proceed()`를 부르기 전의 `A1`이 가장 먼저 나오고 `proceed()` 안에서 `B`와 `T`가 실행된다. 반환 뒤에 `R`과 `F`가 차례로 나오고 `finally`의 `A2`가 마지막이다. 주의점: 이 순서는 검증 환경에서 실행해 확인한 결과이며 예외가 나오면 `R` 자리에 AfterThrowing이 실행된다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "B A1 T A2 R F"
+        },
+        {
+          "id": "b",
+          "text": "A1 B T R F A2"
+        },
+        {
+          "id": "c",
+          "text": "A1 B T F R A2"
+        },
+        {
+          "id": "d",
+          "text": "B A1 T R F A2"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "Around는 Before보다 바깥에서 감싸므로 `A1`이 `B`보다 먼저이고 `A2`가 가장 나중이다.",
+        "b": "Around가 가장 바깥에서 감싸고 그 안에서 Before, target, AfterReturning, After 순서로 실행된다.",
+        "c": "AfterReturning이 After보다 먼저 실행된다.",
+        "d": "Around의 앞부분은 Before보다 먼저 실행된다."
+      }
+    },
+    {
+      "title": "경로는 맞고 HTTP 메서드가 다른 요청의 응답",
+      "topics": [
+        "mvc-binding"
+      ],
+      "tags": [
+        "request-mapping"
+      ],
+      "group": "mvc-binding",
+      "type": "mc",
+      "id": "spring-01-q08",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L05 Controller와 응답 p.25",
+        "SPR-S07 MVC 요청 흐름 p.30",
+        "spring-concepts Part 5"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "b",
+      "stem": "다음 컨트롤러만 있는 애플리케이션에 `DELETE /rooms` 요청을 보냈다. 응답 상태 코드는?\n```java\n@Controller\n@RequestMapping(\"/rooms\")\npublic class RoomController {\n    @GetMapping\n    public String list(@RequestParam int page, Model model) {\n        model.addAttribute(\"page\", page);\n        return \"room/list\";\n    }\n}\n```",
+      "solution": "정답 근거: 경로가 맞는 핸들러는 있지만 요청한 HTTP 메서드를 처리하는 핸들러가 없으면 405 Method Not Allowed이다. 풀이: `/rooms`에는 GET 핸들러만 있다. DELETE는 경로는 맞고 메서드가 맞지 않는다. 흔한 실수: 맞는 핸들러가 없으면 모두 404라고 생각하는 것이다. 404는 경로 자체가 없을 때이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "400"
+        },
+        {
+          "id": "b",
+          "text": "405"
+        },
+        {
+          "id": "c",
+          "text": "404"
+        },
+        {
+          "id": "d",
+          "text": "200"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "400은 필수 파라미터가 없거나 값을 변환할 수 없을 때이다. 메서드가 맞지 않으면 바인딩 단계까지 가지 않는다.",
+        "b": "경로는 있고 HTTP 메서드만 맞지 않으므로 405이다.",
+        "c": "404는 `/rooms` 경로를 처리하는 핸들러가 하나도 없을 때이다.",
+        "d": "DELETE를 처리하는 핸들러가 없어 실행되지 않는다."
+      }
+    },
+    {
+      "title": "필수 @RequestParam이 없는 요청",
+      "topics": [
+        "mvc-binding"
+      ],
+      "tags": [
+        "argument-binding"
+      ],
+      "group": "mvc-binding",
+      "type": "mc",
+      "id": "spring-01-q09",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L06 인자 바인딩 p.10",
+        "SPR-S07 인자 바인딩 p.35",
+        "spring-concepts Part 5"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "d",
+      "stem": "다음 핸들러에 쿼리 스트링 없이 `GET /rooms` 요청을 보냈다. 결과는?\n```java\n@GetMapping(\"/rooms\")\npublic String list(@RequestParam int page, Model model) {\n    model.addAttribute(\"page\", page);\n    return \"room/list\";\n}\n```",
+      "solution": "정답 근거: `@RequestParam`은 기본이 필수이다. 값이 없으면 핸들러를 실행하지 않고 400 Bad Request로 응답한다. 풀이: 경로와 메서드는 맞으므로 핸들러는 찾는다. 그러나 `page`가 없어 바인딩에 실패한다. 선택 값으로 받으려면 `required = false`나 `defaultValue`를 쓴다. 흔한 실수: 기본형이라 0이 들어간다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`page`에 0이 들어간 채로 핸들러가 실행된다"
+        },
+        {
+          "id": "b",
+          "text": "`page`에 null이 들어간 채로 핸들러가 실행된다"
+        },
+        {
+          "id": "c",
+          "text": "맞는 핸들러를 찾지 못해 404로 응답한다"
+        },
+        {
+          "id": "d",
+          "text": "핸들러가 실행되지 않고 400으로 응답한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "기본값을 지정하지 않았으므로 0이 대신 들어가지 않는다.",
+        "b": "`int`는 null을 담을 수 없고 필수 파라미터가 없으면 실행 자체가 되지 않는다.",
+        "c": "경로와 HTTP 메서드가 맞으므로 핸들러는 찾는다. 404가 아니다.",
+        "d": "필수 파라미터가 없어 400으로 응답한다."
+      }
+    },
+    {
+      "title": "뷰 이름이 JSP 경로로 바뀌는 과정",
+      "topics": [
+        "mvc-binding"
+      ],
+      "tags": [
+        "model-view"
+      ],
+      "group": "mvc-binding",
+      "type": "mc",
+      "id": "spring-01-q10",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L05 Controller와 응답 p.30",
+        "SPR-S07 Model과 View p.50",
+        "spring-concepts Part 5"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "a",
+      "stem": "설정이 다음과 같을 때 `@Controller`의 핸들러가 문자열 `room/detail`을 반환했다. 이어지는 동작은?\n```properties\nspring.mvc.view.prefix=/WEB-INF/views/\nspring.mvc.view.suffix=.jsp\n```",
+      "solution": "정답 근거: `@Controller`가 반환한 문자열은 뷰 이름이다. ViewResolver가 prefix와 suffix를 붙여 JSP 경로를 만들고 그 JSP로 forward한다. 풀이: `/WEB-INF/views/` + `room/detail` + `.jsp`가 된다. 흔한 실수: 반환한 문자열이 그대로 응답 본문이 된다고 생각하는 것이다. 그것은 `@ResponseBody`나 `@RestController`일 때이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`/WEB-INF/views/room/detail.jsp`로 forward한다"
+        },
+        {
+          "id": "b",
+          "text": "브라우저에 `/room/detail` 주소로 redirect 응답을 보내 다시 요청하게 한다"
+        },
+        {
+          "id": "c",
+          "text": "뷰 이름 문자열 `room/detail`을 HTTP 응답 본문에 그대로 쓴다"
+        },
+        {
+          "id": "d",
+          "text": "`/room/detail.jsp`를 정적 리소스 경로에서 찾아 그대로 응답한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "prefix와 suffix를 붙인 JSP로 forward한다.",
+        "b": "redirect는 반환값이 `redirect:`로 시작할 때이다.",
+        "c": "본문에 그대로 쓰는 것은 `@ResponseBody`가 있을 때이다.",
+        "d": "뷰 이름에는 prefix가 붙으며 정적 파일을 찾는 것이 아니다."
+      }
+    },
+    {
+      "title": "인터셉터 두 개의 콜백 호출 순서",
+      "topics": [
+        "web-crosscut"
+      ],
+      "tags": [
+        "interceptor"
+      ],
+      "group": "web-crosscut",
+      "type": "mc",
+      "id": "spring-01-q11",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S08 Interceptor p.10",
+        "SPR-S08 Interceptor p.20",
+        "spring-concepts Part 6"
+      ],
+      "difficulty": 3,
+      "correctChoiceId": "d",
+      "stem": "인터셉터 `1`과 `2`를 이 순서로 등록했다. 두 인터셉터의 `preHandle`이 모두 `true`를 반환하고 핸들러가 정상 종료할 때 호출 순서는? `pre1`은 인터셉터 1의 `preHandle`, `post1`은 `postHandle`, `after1`은 `afterCompletion`을 뜻한다.",
+      "solution": "정답 근거: `preHandle`은 등록한 순서로, `postHandle`과 `afterCompletion`은 등록의 반대 순서로 호출된다. 풀이: 요청이 들어갈 때 1과 2를 차례로 지나고 나올 때는 2와 1의 순서로 되돌아 나온다. `postHandle`이 모두 끝난 뒤 뷰 렌더링을 거쳐 `afterCompletion`이 불린다. 주의점: 핸들러가 예외를 던지면 `postHandle`은 건너뛰고 `afterCompletion`만 불린다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "pre1 pre2 handler post1 post2 after1 after2"
+        },
+        {
+          "id": "b",
+          "text": "pre1 pre2 handler post2 post1 after1 after2"
+        },
+        {
+          "id": "c",
+          "text": "pre2 pre1 handler post1 post2 after2 after1"
+        },
+        {
+          "id": "d",
+          "text": "pre1 pre2 handler post2 post1 after2 after1"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "`postHandle`과 `afterCompletion`은 등록의 반대 순서이다.",
+        "b": "`afterCompletion`도 `postHandle`처럼 반대 순서로 불린다.",
+        "c": "`preHandle`은 등록한 순서대로 1이 먼저이다.",
+        "d": "들어갈 때는 등록 순서이고 나올 때는 반대 순서이다."
+      }
+    },
+    {
+      "title": "구현 클래스 없는 Mapper 인터페이스가 주입되는 이유",
+      "topics": [
+        "mybatis"
+      ],
+      "tags": [
+        "mapper-interface"
+      ],
+      "group": "mybatis",
+      "type": "mc",
+      "id": "spring-01-q12",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L07 MyBatis 연동 p.20",
+        "SPR-S09 MyBatis 설정 p.15",
+        "spring-concepts Part 8"
+      ],
+      "difficulty": 1,
+      "correctChoiceId": "b",
+      "stem": "`@Mapper`를 붙인 인터페이스만 작성하고 구현 클래스는 만들지 않았는데 Service에 주입되어 동작한다. 그 이유는?",
+      "solution": "정답 근거: MyBatis는 Mapper 인터페이스의 프록시 구현체를 실행 중에 만들어 스프링 빈으로 등록한다. 풀이: 프록시는 호출된 메서드 이름과 같은 `id`의 SQL을 매퍼 XML에서 찾아 실행한다. 그래서 XML의 `namespace`는 인터페이스의 전체 이름과 같아야 한다. 흔한 실수: XML이 클래스로 바뀐다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "컴파일할 때 Lombok이 구현 클래스의 소스 코드를 만들어 주기 때문이다"
+        },
+        {
+          "id": "b",
+          "text": "실행 중에 MyBatis가 프록시 구현체를 만들어 빈으로 등록하기 때문이다"
+        },
+        {
+          "id": "c",
+          "text": "스프링이 인터페이스 자체를 객체로 만들어서 주입해 주기 때문이다"
+        },
+        {
+          "id": "d",
+          "text": "매퍼 XML 파일이 빌드 과정에서 자바 클래스로 변환되기 때문이다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "Lombok은 접근자와 생성자 같은 코드를 만들 뿐 Mapper의 구현체를 만들지 않는다.",
+        "b": "MyBatis가 만든 프록시 객체가 주입된다.",
+        "c": "인터페이스는 그 자체로 객체를 만들 수 없다. 구현체가 필요하다.",
+        "d": "XML은 클래스로 변환되지 않는다. 실행 중에 읽혀 SQL로 쓰인다."
+      }
+    },
+    {
+      "title": "바인딩 표기에 조작된 문자열을 넣었을 때의 조회 결과",
+      "topics": [
+        "mybatis"
+      ],
+      "tags": [
+        "param-binding"
+      ],
+      "group": "mybatis",
+      "type": "mc",
+      "id": "spring-01-q13",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L08 동적 SQL p.5",
+        "SPR-S09 매퍼 XML p.25",
+        "spring-concepts Part 8"
+      ],
+      "difficulty": 3,
+      "correctChoiceId": "a",
+      "stem": "`reservation` 테이블에 3행이 있고 `member_name`이 아래 문자열과 같은 행은 없다. 두 구문에 같은 값 `x' OR '1'='1`을 `name`으로 넘겼을 때 조회되는 행 수는?\n```xml\n<select id=\"findA\" resultType=\"Reservation\">\n    SELECT * FROM reservation\n    WHERE member_name = '${name}'\n</select>\n<select id=\"findB\" resultType=\"Reservation\">\n    SELECT * FROM reservation\n    WHERE member_name = #{name}\n</select>\n```",
+      "solution": "정답 근거: `${}`는 문자열을 SQL에 그대로 끼워 넣고 `#{}`는 `?` 자리에 값으로 바인딩한다. 풀이: `findA`의 조건은 `member_name = 'x' OR '1'='1'`이 되어 항상 참이므로 3행이 모두 나온다. `findB`는 문자열 전체를 이름 값 하나로 비교하므로 같은 이름이 없어 0행이다. 주의점: 이것이 SQL Injection이며 값에는 `#{}`를 쓴다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`findA`는 3행이고 `findB`는 0행이다"
+        },
+        {
+          "id": "b",
+          "text": "`findA`는 0행이고 `findB`는 3행이다"
+        },
+        {
+          "id": "c",
+          "text": "`findA`와 `findB` 모두 0행이다"
+        },
+        {
+          "id": "d",
+          "text": "`findA`와 `findB` 모두 3행이다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "`${}`는 조건을 바꿔 전체가 조회되고 `#{}`는 값으로만 비교한다.",
+        "b": "두 표기의 동작을 반대로 본 것이다.",
+        "c": "`${}`에 넣은 문자열은 SQL의 일부가 되어 조건을 항상 참으로 만든다.",
+        "d": "`#{}`는 값을 바인딩하므로 조건이 바뀌지 않는다."
+      }
+    },
+    {
+      "title": "컬럼 이름과 프로퍼티 이름이 다를 때의 resultType 매핑",
+      "topics": [
+        "mybatis"
+      ],
+      "tags": [
+        "result-map"
+      ],
+      "group": "mybatis",
+      "type": "mc",
+      "id": "spring-01-q14",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L07 매퍼 p.30",
+        "SPR-S09 resultMap p.45",
+        "spring-concepts Part 8"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "b",
+      "stem": "`map-underscore-to-camel-case`는 기본값(`false`)이다. 조회된 행이 하나일 때 반환된 `Reservation` 객체의 상태는?\n```xml\n<select id=\"findById\" resultType=\"Reservation\">\n    SELECT reservation_id, member_name, people\n    FROM reservation\n    WHERE reservation_id = #{id}\n</select>\n```\n```java\npublic class Reservation {\n    private Integer reservationId;\n    private String memberName;\n    private Integer people;\n    // getter와 setter\n}\n```",
+      "solution": "정답 근거: `resultType`은 컬럼 이름과 같은 이름의 프로퍼티에만 값을 넣는다. 풀이: `people`은 이름이 같아 값이 들어간다. `reservation_id`와 `member_name`은 `reservationId`, `memberName`과 이름이 달라 버려지고 두 프로퍼티는 null로 남는다. 해결 방법은 별칭을 쓰거나 `map-underscore-to-camel-case`를 켜거나 `resultMap`을 쓰는 것이다. 흔한 실수: 이름이 맞지 않으면 예외가 난다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "세 프로퍼티에 모두 값이 들어 있다"
+        },
+        {
+          "id": "b",
+          "text": "`people`만 값이 있고 나머지는 null이다"
+        },
+        {
+          "id": "c",
+          "text": "세 프로퍼티가 모두 null인 빈 객체가 반환된다"
+        },
+        {
+          "id": "d",
+          "text": "매핑에 실패해 예외가 발생한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "밑줄 표기 컬럼은 설정 없이 camelCase 프로퍼티에 들어가지 않는다.",
+        "b": "이름이 같은 `people`만 매핑된다.",
+        "c": "이름이 같은 컬럼은 매핑되므로 `people`에는 값이 있다.",
+        "d": "맞는 프로퍼티가 없는 컬럼은 오류 없이 버려진다."
+      }
+    },
+    {
+      "title": "@Transactional을 Service에 두는 이유",
+      "topics": [
+        "service-tx"
+      ],
+      "tags": [
+        "tx-boundary"
+      ],
+      "group": "service-tx",
+      "type": "mc",
+      "id": "spring-01-q15",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L08 Service 트랜잭션 p.15",
+        "SPR-L08 Service 트랜잭션 p.20",
+        "spring-concepts Part 9"
+      ],
+      "difficulty": 1,
+      "correctChoiceId": "c",
+      "stem": "예약을 저장하면서 스터디실의 남은 자리를 줄이는 기능에서 `@Transactional`을 Mapper가 아닌 Service 메서드에 붙이는 이유로 알맞은 것은?",
+      "solution": "정답 근거: 함께 성공하거나 함께 취소되어야 하는 업무 단위를 아는 곳이 Service이다. 풀이: 예약 저장과 자리 감소는 SQL이 둘이다. Mapper 메서드마다 트랜잭션을 걸면 SQL 하나씩만 보호되어 하나만 반영되는 상태가 생길 수 있다. Service 메서드에 걸면 두 SQL이 한 트랜잭션에 들어간다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Mapper는 인터페이스여서 어노테이션을 붙일 수 없기 때문이다"
+        },
+        {
+          "id": "b",
+          "text": "Service가 가장 먼저 실행되어 DB 연결을 일찍 얻기 때문이다"
+        },
+        {
+          "id": "c",
+          "text": "여러 SQL을 하나의 업무 단위로 묶는 곳이 Service이기 때문이다"
+        },
+        {
+          "id": "d",
+          "text": "Service의 메서드만 프록시로 감싸서 실행할 수 있기 때문이다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "인터페이스에도 어노테이션을 붙일 수 있다. 이유는 업무 단위에 있다.",
+        "b": "요청은 Controller가 먼저 받는다. 실행 순서나 연결 시점이 이유가 아니다.",
+        "c": "업무 단위의 경계가 Service 메서드에 있다.",
+        "d": "프록시는 Service가 아닌 빈에도 만들 수 있다."
+      }
+    },
+    {
+      "title": "예외 종류에 따른 기본 rollback 동작",
+      "topics": [
+        "service-tx"
+      ],
+      "tags": [
+        "rollback-rules"
+      ],
+      "group": "service-tx",
+      "type": "mc",
+      "id": "spring-01-q16",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L08 Service 트랜잭션 p.25",
+        "spring-concepts Part 9"
+      ],
+      "difficulty": 3,
+      "correctChoiceId": "b",
+      "stem": "`reservation` 테이블에 3행이 있다. `runtime()`을 호출한 뒤 `checked()`를 호출했고 두 호출은 모두 예외로 끝났다. `insert`는 한 행을 추가한다. 최종 행 수는?\n```java\n@Transactional\npublic void runtime() {\n    mapper.insert(newReservation());\n    throw new IllegalStateException();\n}\n\n@Transactional\npublic void checked() throws IOException {\n    mapper.insert(newReservation());\n    throw new IOException();\n}\n```",
+      "solution": "정답 근거: `@Transactional`은 기본으로 `RuntimeException`과 `Error`에만 rollback하고 checked 예외에는 commit한다. 풀이: `IllegalStateException`은 런타임 예외라서 `runtime()`의 insert는 취소된다. `IOException`은 checked 예외라서 `checked()`의 insert는 commit되어 4행이 된다. checked 예외에도 rollback하려면 `rollbackFor = Exception.class`를 쓴다. 흔한 실수: 예외가 나오면 종류와 관계없이 rollback된다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "두 insert가 모두 취소되어 3행이다"
+        },
+        {
+          "id": "b",
+          "text": "`checked()`의 insert만 남아 4행이다"
+        },
+        {
+          "id": "c",
+          "text": "`runtime()`의 insert만 남아 4행이다"
+        },
+        {
+          "id": "d",
+          "text": "두 insert가 모두 반영되어 5행이다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "checked 예외는 기본 설정에서 rollback을 일으키지 않는다.",
+        "b": "런타임 예외만 rollback되고 checked 예외의 변경은 남는다.",
+        "c": "rollback되는 쪽과 commit되는 쪽을 반대로 본 것이다.",
+        "d": "런타임 예외가 나온 트랜잭션은 rollback된다."
+      }
+    },
+    {
+      "title": "멱등하지 않은 HTTP 메서드",
+      "topics": [
+        "rest-api"
+      ],
+      "tags": [
+        "rest-http-method"
+      ],
+      "group": "rest-api",
+      "type": "mc",
+      "id": "spring-01-q17",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L09 REST p.50",
+        "SPR-S11 HTTP와 REST p.30",
+        "spring-concepts Part 10"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "a",
+      "stem": "같은 요청을 두 번 보냈을 때 서버의 상태가 한 번 보낸 경우와 달라질 수 있는 것은?",
+      "solution": "정답 근거: POST는 멱등하지 않다. 보낼 때마다 새 자원이 만들어질 수 있다. 풀이: PUT은 보낸 내용으로 전체를 교체하므로 여러 번 보내도 결과가 같다. DELETE는 이미 지워진 자원을 다시 지워도 서버 상태가 같다. GET은 상태를 바꾸지 않는다. 주의점: 멱등은 응답 코드가 같다는 뜻이 아니라 서버 상태가 같다는 뜻이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`POST /api/rentals`로 대여를 등록한다"
+        },
+        {
+          "id": "b",
+          "text": "`PUT /api/rentals/3`으로 대여 정보를 교체한다"
+        },
+        {
+          "id": "c",
+          "text": "`DELETE /api/rentals/3`으로 대여를 삭제한다"
+        },
+        {
+          "id": "d",
+          "text": "`GET /api/rentals/3`으로 대여를 조회한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "POST를 두 번 보내면 대여가 두 건 등록될 수 있다.",
+        "b": "PUT은 같은 내용으로 다시 교체해도 상태가 같다.",
+        "c": "DELETE는 두 번째 요청 뒤에도 자원이 없는 상태로 같다.",
+        "d": "GET은 서버 상태를 바꾸지 않는 안전한 메서드이다."
+      }
+    },
+    {
+      "title": "ResponseEntity.created의 상태 코드와 헤더",
+      "topics": [
+        "rest-api"
+      ],
+      "tags": [
+        "response-entity"
+      ],
+      "group": "rest-api",
+      "type": "mc",
+      "id": "spring-01-q18",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S11 ResponseEntity p.60",
+        "spring-concepts Part 10"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "d",
+      "stem": "다음 핸들러가 정상 실행되었을 때 응답의 상태 코드와 `Location` 헤더에 대한 설명으로 옳은 것은?\n```java\n@PostMapping(\"/api/rentals\")\npublic ResponseEntity<RentalResponse> rent(@RequestBody RentalRequest request) {\n    RentalResponse created = service.rent(request);\n    URI location = URI.create(\"/api/rentals/\" + created.rentalId());\n    return ResponseEntity.created(location).body(created);\n}\n```",
+      "solution": "정답 근거: `ResponseEntity.created(uri)`는 상태 코드를 201 Created로 정하고 넘긴 URI를 `Location` 헤더에 넣는다. 풀이: 자원을 만든 POST 응답은 201과 새 자원의 주소를 함께 알린다. `body(created)`는 본문을 더할 뿐 상태 코드를 바꾸지 않는다. 흔한 실수: 객체를 본문에 담으면 200이라고 생각하는 것이다. 200은 `ResponseEntity`를 쓰지 않고 객체만 반환할 때의 기본값이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "200 OK이고 `Location` 헤더는 없다"
+        },
+        {
+          "id": "b",
+          "text": "200 OK이고 `Location` 헤더가 있다"
+        },
+        {
+          "id": "c",
+          "text": "201 Created이고 `Location` 헤더는 없다"
+        },
+        {
+          "id": "d",
+          "text": "201 Created이고 `Location` 헤더가 있다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "`created()`는 200이 아니라 201을 정하고 `Location`도 넣는다.",
+        "b": "`Location` 헤더는 있지만 상태 코드는 201이다.",
+        "c": "넘긴 URI가 `Location` 헤더에 들어간다.",
+        "d": "201 Created와 새 자원의 주소를 담은 `Location` 헤더가 함께 간다."
+      }
+    },
+    {
+      "title": "보안 필터와 컨트롤러의 실행 순서",
+      "topics": [
+        "security"
+      ],
+      "tags": [
+        "filter-chain"
+      ],
+      "group": "security",
+      "type": "mc",
+      "id": "spring-01-q19",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L10 SecurityFilterChain p.10",
+        "spring-concepts Part 11"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "c",
+      "stem": "`anyRequest().authenticated()`로 보호된 `/me`를 로그인하지 않은 사용자가 요청했다. `/me`를 처리하는 컨트롤러 메서드에 대한 설명으로 옳은 것은?",
+      "solution": "정답 근거: Spring Security는 서블릿 필터로 동작하고 필터는 DispatcherServlet보다 앞에 있다. 풀이: 요청은 `SecurityFilterChain`의 필터를 먼저 지난다. 인증되지 않은 요청은 여기서 로그인 화면으로 보내지거나 401로 끝나므로 컨트롤러와 인터셉터에 닿지 않는다. 흔한 실수: 인증 검사가 컨트롤러 안이나 인터셉터에서 이루어진다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "실행된다. 인증 검사는 컨트롤러가 반환한 뒤에 이루어진다"
+        },
+        {
+          "id": "b",
+          "text": "실행된다. 인증 검사는 인터셉터의 `postHandle`에서 이루어진다"
+        },
+        {
+          "id": "c",
+          "text": "실행되지 않는다. 보안 필터가 먼저 요청을 막는다"
+        },
+        {
+          "id": "d",
+          "text": "실행되지 않는다. 컨트롤러의 AOP 프록시가 호출을 막는다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "인증 검사는 컨트롤러 실행 전에 필터에서 끝난다.",
+        "b": "URL 규칙의 인증 검사는 인터셉터가 아니라 보안 필터가 한다.",
+        "c": "필터 단계에서 막혀 컨트롤러 메서드는 호출되지 않는다.",
+        "d": "실행되지 않는 것은 맞지만 막는 주체는 AOP 프록시가 아니라 서블릿 필터이다."
+      }
+    },
+    {
+      "title": "인증 실패와 권한 부족의 응답 코드",
+      "topics": [
+        "security"
+      ],
+      "tags": [
+        "authn-authz"
+      ],
+      "group": "security",
+      "type": "mc",
+      "id": "spring-01-q20",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L10 인증과 인가 p.5",
+        "SPR-L10 인증과 인가 p.20",
+        "spring-concepts Part 11"
+      ],
+      "difficulty": 2,
+      "correctChoiceId": "c",
+      "stem": "REST API의 보안 설정이 다음과 같다. `/admin` 요청을 로그인하지 않고 보낸 경우와 `USER` 권한만 가진 사용자가 로그인해서 보낸 경우의 응답 코드를 순서대로 나열한 것은?\n```java\nhttp.authorizeHttpRequests(auth -> auth\n        .requestMatchers(\"/admin/**\").hasRole(\"ADMIN\")\n        .anyRequest().authenticated())\n    .exceptionHandling(e -> e.authenticationEntryPoint(\n        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));\n```",
+      "solution": "정답 근거: 누구인지 확인되지 않은 요청은 인증 실패로 401이고 누구인지는 알지만 권한이 모자란 요청은 인가 실패로 403이다. 풀이: 로그인하지 않은 요청은 설정한 `authenticationEntryPoint`가 401로 답한다. `USER` 권한 사용자는 인증은 되었지만 `ADMIN` 역할이 없어 403이다. 흔한 실수: 접근이 거부되면 모두 403이라고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "403, 403"
+        },
+        {
+          "id": "b",
+          "text": "401, 401"
+        },
+        {
+          "id": "c",
+          "text": "401, 403"
+        },
+        {
+          "id": "d",
+          "text": "403, 401"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "로그인하지 않은 요청은 인증 실패이므로 401이다.",
+        "b": "로그인한 사용자의 권한 부족은 인가 실패이므로 403이다.",
+        "c": "인증 실패는 401이고 인가 실패는 403이다.",
+        "d": "두 코드의 뜻을 반대로 본 것이다."
+      }
+    },
+    {
+      "title": "넓은 규칙을 먼저 둔 인가 설정",
+      "topics": [
+        "security"
+      ],
+      "tags": [
+        "authorize-rules"
+      ],
+      "group": "security",
+      "type": "mc",
+      "id": "spring-01-q21",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L10 SecurityFilterChain p.40",
+        "SPR-L11 사용자 정의 인증 p.15",
+        "spring-concepts Part 11"
+      ],
+      "difficulty": 3,
+      "correctChoiceId": "d",
+      "stem": "다음 설정에서 로그인하지 않은 사용자가 `GET /admin/reports/daily`를 요청했다. 이 경로를 처리하는 컨트롤러가 있을 때 응답은?\n```java\nhttp.authorizeHttpRequests(auth -> auth\n        .requestMatchers(\"/**\").permitAll()\n        .requestMatchers(\"/admin/**\").hasRole(\"ADMIN\"));\n```",
+      "solution": "정답 근거: 인가 규칙은 위에서부터 처음 맞는 것 하나만 적용된다. 풀이: `/admin/reports/daily`는 첫 규칙 `/**`에 먼저 맞아 `permitAll()`이 적용된다. 아래의 `hasRole(\"ADMIN\")` 규칙은 검사되지 않으므로 컨트롤러가 실행되어 200으로 응답한다. 올바른 순서는 좁은 규칙을 위에 두고 넓은 규칙을 마지막에 두는 것이다. 흔한 실수: 더 구체적인 규칙이 순서와 관계없이 우선한다고 생각하는 것이다.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "로그인 화면으로 이동한다"
+        },
+        {
+          "id": "b",
+          "text": "401로 응답한다"
+        },
+        {
+          "id": "c",
+          "text": "403으로 응답한다"
+        },
+        {
+          "id": "d",
+          "text": "200으로 응답한다"
+        }
+      ],
+      "choiceExplanations": {
+        "a": "첫 규칙이 모두 허용하므로 인증을 요구하지 않는다.",
+        "b": "인증을 요구하는 규칙에 닿지 않으므로 401이 아니다.",
+        "c": "`hasRole(\"ADMIN\")` 규칙은 앞의 규칙에 가려 적용되지 않는다.",
+        "d": "먼저 맞은 `permitAll()`이 적용되어 요청이 그대로 처리된다."
+      }
+    },
+    {
+      "title": "Boot의 기본 로깅 구현체",
+      "topics": [
+        "foundation-boot"
+      ],
+      "tags": [
+        "logging-slf4j"
+      ],
+      "group": "foundation-boot",
+      "type": "short",
+      "id": "spring-01-q22",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L01 SLF4J 로깅 p.20",
+        "SPR-S02 로깅 p.15",
+        "spring-concepts Part 12"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "Logback",
+        "로그백"
+      ],
+      "normalization": "caseFold",
+      "stem": "SLF4J는 로깅 인터페이스이고 실제 출력은 구현체가 한다. Spring Boot가 기본으로 쓰는 구현체의 이름을 쓰시오.",
+      "solution": "정답: Logback. 허용 표기: 대소문자는 구분하지 않으며 한글 `로그백`도 정답이다. 근거: Boot의 기본 로깅 starter가 SLF4J의 구현체로 Logback을 가져온다. 코드에서는 SLF4J의 `Logger`만 쓰므로 구현체를 바꿔도 코드를 고치지 않는다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "빈의 기본 scope",
+      "topics": [
+        "di-bean"
+      ],
+      "tags": [
+        "bean-scope"
+      ],
+      "group": "di-bean",
+      "type": "short",
+      "id": "spring-01-q23",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S05 빈 scope p.45",
+        "spring-concepts Part 3"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "singleton",
+        "싱글톤",
+        "싱글턴"
+      ],
+      "normalization": "caseFold",
+      "stem": "scope를 지정하지 않은 빈은 컨테이너에 인스턴스가 하나만 만들어진다. 이 기본 scope의 이름을 쓰시오.",
+      "solution": "정답: singleton. 허용 표기: 대소문자는 구분하지 않으며 한글 `싱글톤`과 `싱글턴`도 정답이다. 근거: scope의 기본값은 singleton이며 같은 빈을 여러 번 주입받아도 같은 인스턴스이다. 주의점: 그래서 요청마다 달라지는 값을 빈의 필드에 두면 모든 요청이 그 값을 공유한다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "execution 식에서 파라미터를 가리지 않는 표기",
+      "topics": [
+        "aop-proxy"
+      ],
+      "tags": [
+        "pointcut-expression"
+      ],
+      "group": "aop-proxy",
+      "type": "short",
+      "id": "spring-01-q24",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L04 pointcut p.20",
+        "SPR-S06 pointcut p.20",
+        "spring-concepts Part 4"
+      ],
+      "difficulty": 2,
+      "acceptedAnswers": [
+        "(..)",
+        ".."
+      ],
+      "normalization": "trim",
+      "stem": "`execution(* com.study..*Service.find*(▢))`에서 파라미터의 개수와 타입을 가리지 않도록 ▢ 자리에 들어갈 표기를 쓰시오.",
+      "solution": "정답: `..` 허용 표기: 괄호를 붙인 `(..)`도 정답이다. 근거: 파라미터 자리의 `..`는 0개 이상의 모든 파라미터를 뜻한다. `*`는 파라미터가 정확히 하나일 때만 맞는다. 검증 환경에서 `find*(*)`는 파라미터가 하나인 메서드에만, `find*(..)`는 개수와 관계없이 적용되는 것을 확인했다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "등록 뒤 redirect로 조회하게 하는 패턴",
+      "topics": [
+        "mvc-binding"
+      ],
+      "tags": [
+        "redirect-prg"
+      ],
+      "group": "mvc-binding",
+      "type": "short",
+      "id": "spring-01-q25",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L06 인자 바인딩 p.15",
+        "SPR-S07 Model과 View p.55",
+        "spring-concepts Part 5"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "PRG",
+        "Post-Redirect-Get",
+        "Post Redirect Get",
+        "PRG 패턴"
+      ],
+      "normalization": "caseFold",
+      "stem": "등록 요청(POST)을 처리한 뒤 화면을 바로 그리지 않고 redirect로 조회 요청(GET)을 다시 보내게 하면 새로 고침으로 같은 등록이 반복되지 않는다. 이 패턴의 이름을 쓰시오.",
+      "solution": "정답: PRG. 허용 표기: `Post-Redirect-Get`과 `Post Redirect Get`, `PRG 패턴`도 정답이며 대소문자는 구분하지 않는다. 근거: POST 처리 뒤 redirect 응답을 보내면 브라우저의 마지막 요청이 GET이 된다. 새로 고침은 마지막 요청을 다시 보내므로 등록이 반복되지 않는다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "검증 오류를 핸들러가 직접 처리하게 하는 파라미터",
+      "topics": [
+        "web-crosscut"
+      ],
+      "tags": [
+        "validation"
+      ],
+      "group": "web-crosscut",
+      "type": "short",
+      "id": "spring-01-q26",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S07 Validation p.70",
+        "spring-concepts Part 6"
+      ],
+      "difficulty": 2,
+      "acceptedAnswers": [
+        "BindingResult"
+      ],
+      "normalization": "caseFold",
+      "stem": "`@Valid`를 붙인 파라미터 바로 다음에 두면 검증 오류가 있어도 핸들러가 실행되어 오류를 직접 처리할 수 있다. 이 파라미터의 타입 이름을 쓰시오.",
+      "solution": "정답: BindingResult. 허용 표기: 대소문자는 구분하지 않는다. 근거: 검증 대상 바로 뒤에 `BindingResult`가 있으면 오류가 그 객체에 담기고 핸들러가 실행된다. 없으면 검증 실패가 예외가 되어 핸들러가 실행되지 않고 400으로 응답한다. 검증 환경에서 두 경우를 실행해 확인했다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "조건이 있을 때만 WHERE를 붙이는 동적 SQL 태그",
+      "topics": [
+        "mybatis"
+      ],
+      "tags": [
+        "dynamic-sql"
+      ],
+      "group": "mybatis",
+      "type": "short",
+      "id": "spring-01-q27",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L08 동적 SQL p.10",
+        "SPR-S09 동적 SQL p.35",
+        "spring-concepts Part 8"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "where",
+        "<where>"
+      ],
+      "normalization": "caseFold",
+      "stem": "안의 내용이 있을 때만 `WHERE`를 붙이고 맨 앞에 남은 `AND`나 `OR`를 지워 주는 MyBatis 동적 SQL 태그의 이름을 쓰시오.",
+      "solution": "정답: where. 허용 표기: 꺾쇠를 붙인 `<where>`도 정답이며 대소문자는 구분하지 않는다. 근거: `<where>` 안의 `<if>`가 모두 거짓이면 `WHERE` 자체를 만들지 않는다. 일부만 참이면 맨 앞의 `AND`를 지워 문법에 맞는 SQL이 된다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "@Transactional의 propagation 기본값",
+      "topics": [
+        "service-tx"
+      ],
+      "tags": [
+        "propagation"
+      ],
+      "group": "service-tx",
+      "type": "short",
+      "id": "spring-01-q28",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L08 트랜잭션 전파 p.30",
+        "spring-concepts Part 9"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "REQUIRED",
+        "Propagation.REQUIRED"
+      ],
+      "normalization": "caseFold",
+      "stem": "`@Transactional`에 `propagation`을 지정하지 않으면 진행 중인 트랜잭션이 있을 때 참여하고 없을 때 새로 시작한다. 이 기본 전파 속성의 이름을 쓰시오.",
+      "solution": "정답: REQUIRED. 허용 표기: `Propagation.REQUIRED`도 정답이며 대소문자는 구분하지 않는다. 근거: `propagation`의 기본값은 `REQUIRED`이다. 그래서 `@Transactional` 메서드가 다른 `@Transactional` 메서드를 다른 빈을 통해 부르면 두 메서드는 한 트랜잭션에서 실행된다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "JSON 본문을 객체로 받는 어노테이션",
+      "topics": [
+        "rest-api"
+      ],
+      "tags": [
+        "json-body"
+      ],
+      "group": "rest-api",
+      "type": "short",
+      "id": "spring-01-q29",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L09 REST p.55",
+        "SPR-S11 HTTP와 REST p.55",
+        "spring-concepts Part 10"
+      ],
+      "difficulty": 1,
+      "acceptedAnswers": [
+        "@RequestBody",
+        "RequestBody"
+      ],
+      "normalization": "caseFold",
+      "stem": "요청 본문의 JSON을 객체로 바꿔 핸들러의 파라미터로 받으려고 한다. 그 파라미터에 붙이는 어노테이션을 쓰시오.",
+      "solution": "정답: @RequestBody. 허용 표기: `@`를 뺀 `RequestBody`도 정답이며 대소문자는 구분하지 않는다. 근거: `@RequestBody`가 붙은 파라미터는 요청 본문을 메시지 컨버터로 변환해 받는다. 검증 환경에서 `Content-Type`이 `application/json`이 아니면 415, JSON 문법이 틀리거나 본문이 없으면 400으로 응답하는 것을 확인했다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "UserDetailsService의 사용자 조회 메서드",
+      "topics": [
+        "security"
+      ],
+      "tags": [
+        "user-details"
+      ],
+      "group": "security",
+      "type": "short",
+      "id": "spring-01-q30",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L10 사용자와 권한 설정 p.35",
+        "SPR-L11 사용자 정의 인증 p.10",
+        "spring-concepts Part 11"
+      ],
+      "difficulty": 2,
+      "acceptedAnswers": [
+        "loadUserByUsername",
+        "loadUserByUsername()"
+      ],
+      "normalization": "caseFold",
+      "stem": "로그인할 때 사용자 이름으로 사용자 정보를 조회하기 위해 `UserDetailsService`에 구현하는 메서드의 이름을 쓰시오.",
+      "solution": "정답: loadUserByUsername. 허용 표기: 괄호를 붙인 `loadUserByUsername()`도 정답이며 대소문자는 구분하지 않는다. 근거: 이 메서드는 사용자 이름으로 `UserDetails`를 조회해 돌려주고 사용자가 없으면 `UsernameNotFoundException`을 던진다. 비밀번호 비교는 이 메서드가 아니라 Provider가 `PasswordEncoder`로 한다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "생성자 주입을 선택하는 근거",
+      "topics": [
+        "di-bean"
+      ],
+      "tags": [
+        "constructor-injection"
+      ],
+      "group": "di-bean",
+      "type": "essay",
+      "id": "spring-01-q31",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-L02 묵시적 DI p.25",
+        "SPR-S03 DI p.40",
+        "spring-concepts Part 3"
+      ],
+      "difficulty": 3,
+      "rubric": [
+        {
+          "id": "r0",
+          "criterion": "`final` 필드로 의존성을 고정해 불변을 지킬 수 있다고 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r1",
+          "criterion": "의존성 없이는 객체를 만들 수 없어 누락이 드러나거나 컨테이너 없이 테스트하기 쉽다고 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r2",
+          "criterion": "생성자가 하나이면 `@Autowired` 없이 주입된다고 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r3",
+          "criterion": "순환 의존으로 빈을 만들 수 없고 애플리케이션 시작 시점에 실패한다고 서술한다",
+          "points": 1
+        }
+      ],
+      "modelAnswer": "**(1)** 의존성을 `final` 필드에 담을 수 있어 객체가 만들어진 뒤 바뀌지 않는다. 또 의존성 없이는 생성자를 호출할 수 없으므로 누락이 바로 드러나고 컨테이너 없이 테스트할 때도 생성자로 가짜 객체를 넣을 수 있다.\n\n**(2)** 쓰지 않아도 된다. 생성자가 하나뿐이면 스프링이 그 생성자로 의존성을 주입한다.\n\n**(3)** 서로를 만들려면 상대가 먼저 있어야 하므로 어느 쪽도 만들 수 없다. 이 순환 의존은 애플리케이션이 시작할 때 빈 생성 오류로 드러나며 요청을 처리하는 중에 뒤늦게 나타나지 않는다. 한쪽의 의존을 없애도록 책임을 나누어 해결한다.",
+      "stem": "`ReservationService`는 `ReservationMapper`와 `RoomPolicy`에 의존한다. 필드에 `@Autowired`를 붙인 코드를 생성자 주입으로 바꾸려고 한다. 다음을 서술하시오.\n\n(1) 필드 주입과 비교한 생성자 주입의 장점 두 가지\n\n(2) 생성자가 하나뿐일 때 `@Autowired`를 써야 하는지 여부\n\n(3) 두 빈이 서로를 생성자로 주입받도록 작성되었을 때 일어나는 일과 그것이 드러나는 시점",
+      "solution": "**(1)** 의존성을 `final` 필드에 담을 수 있어 객체가 만들어진 뒤 바뀌지 않는다. 또 의존성 없이는 생성자를 호출할 수 없으므로 누락이 바로 드러나고 컨테이너 없이 테스트할 때도 생성자로 가짜 객체를 넣을 수 있다.\n\n**(2)** 쓰지 않아도 된다. 생성자가 하나뿐이면 스프링이 그 생성자로 의존성을 주입한다.\n\n**(3)** 서로를 만들려면 상대가 먼저 있어야 하므로 어느 쪽도 만들 수 없다. 이 순환 의존은 애플리케이션이 시작할 때 빈 생성 오류로 드러나며 요청을 처리하는 중에 뒤늦게 나타나지 않는다. 한쪽의 의존을 없애도록 책임을 나누어 해결한다.",
+      "choices": [],
+      "choiceExplanations": {}
+    },
+    {
+      "title": "Spring MVC의 요청 처리 흐름",
+      "topics": [
+        "mvc-binding"
+      ],
+      "tags": [
+        "dispatcher-flow"
+      ],
+      "group": "mvc-binding",
+      "type": "essay",
+      "id": "spring-01-q32",
+      "revision": 1,
+      "sourceRefs": [
+        "SPR-S07 MVC 요청 흐름 p.10",
+        "spring-concepts Part 5"
+      ],
+      "difficulty": 3,
+      "rubric": [
+        {
+          "id": "r0",
+          "criterion": "DispatcherServlet이 모든 요청을 먼저 받는다고 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r1",
+          "criterion": "HandlerMapping이 핸들러를 찾고 HandlerAdapter가 실행한다고 구분해 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r2",
+          "criterion": "핸들러가 Service를 호출하고 Model에 값을 담아 뷰 이름을 반환한다고 서술한다",
+          "points": 1
+        },
+        {
+          "id": "r3",
+          "criterion": "ViewResolver가 뷰 이름을 JSP로 바꾸고 View가 Model로 응답 화면을 만든다고 서술한다",
+          "points": 1
+        }
+      ],
+      "modelAnswer": "**(1)** 모든 요청은 Front Controller인 DispatcherServlet이 먼저 받는다. DispatcherServlet은 HandlerMapping에 물어 요청 URL과 HTTP 메서드에 맞는 핸들러를 찾고 HandlerAdapter를 통해 그 핸들러를 실행한다. HandlerAdapter는 `@PathVariable` 같은 파라미터를 바인딩해 넘긴다.\n\n**(2)** 핸들러는 Service를 호출해 스터디실 정보를 얻고 화면에 필요한 값을 Model에 담은 뒤 뷰 이름을 반환한다.\n\n**(3)** ViewResolver가 뷰 이름에 prefix와 suffix를 붙여 실제 JSP를 정한다. View가 Model의 값으로 화면을 만들어 응답한다.",
+      "stem": "브라우저가 보낸 `GET /rooms/3` 요청이 JSP 화면으로 응답되기까지의 과정을 Spring MVC의 구성 요소를 들어 서술하시오.\n\n(1) 요청을 가장 먼저 받는 구성 요소와 핸들러를 찾는 구성 요소, 핸들러를 실행하는 구성 요소\n\n(2) 컨트롤러의 핸들러가 하는 일과 반환하는 값\n\n(3) 반환값이 실제 화면으로 바뀌어 응답되는 과정",
+      "solution": "**(1)** 모든 요청은 Front Controller인 DispatcherServlet이 먼저 받는다. DispatcherServlet은 HandlerMapping에 물어 요청 URL과 HTTP 메서드에 맞는 핸들러를 찾고 HandlerAdapter를 통해 그 핸들러를 실행한다. HandlerAdapter는 `@PathVariable` 같은 파라미터를 바인딩해 넘긴다.\n\n**(2)** 핸들러는 Service를 호출해 스터디실 정보를 얻고 화면에 필요한 값을 Model에 담은 뒤 뷰 이름을 반환한다.\n\n**(3)** ViewResolver가 뷰 이름에 prefix와 suffix를 붙여 실제 JSP를 정한다. View가 Model의 값으로 화면을 만들어 응답한다.",
+      "choices": [],
+      "choiceExplanations": {}
+    }
+  ],
+  "questionIds": [
+    "spring-01-q01",
+    "spring-01-q02",
+    "spring-01-q03",
+    "spring-01-q04",
+    "spring-01-q05",
+    "spring-01-q06",
+    "spring-01-q07",
+    "spring-01-q08",
+    "spring-01-q09",
+    "spring-01-q10",
+    "spring-01-q11",
+    "spring-01-q12",
+    "spring-01-q13",
+    "spring-01-q14",
+    "spring-01-q15",
+    "spring-01-q16",
+    "spring-01-q17",
+    "spring-01-q18",
+    "spring-01-q19",
+    "spring-01-q20",
+    "spring-01-q21",
+    "spring-01-q22",
+    "spring-01-q23",
+    "spring-01-q24",
+    "spring-01-q25",
+    "spring-01-q26",
+    "spring-01-q27",
+    "spring-01-q28",
+    "spring-01-q29",
+    "spring-01-q30",
+    "spring-01-q31",
+    "spring-01-q32"
+  ],
+  "counts": {
+    "mc": 21,
+    "short": 9,
+    "essay": 2,
+    "code": 0
+  },
+  "defaultChoiceOrders": {
+    "spring-01-q01": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q02": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q03": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q04": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q05": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q06": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q07": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q08": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q09": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q10": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q11": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q12": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q13": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q14": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q15": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q16": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q17": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q18": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q19": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q20": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "spring-01-q21": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ]
+  },
+  "contentVersion": "bacc36c57f836f73"
+}

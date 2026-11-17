@@ -1,0 +1,846 @@
+[
+  {
+    "questionId": "spring-01-q02",
+    "revision": 1,
+    "cases": {
+      "config-scan-range": "true true false"
+    },
+    "correctChoiceContains": [
+      "RoomService"
+    ]
+  },
+  {
+    "questionId": "spring-01-q04",
+    "revision": 1,
+    "cases": {
+      "di-bean-names": "studyClock roomPolicy"
+    },
+    "correctChoiceContains": [
+      "studyClock",
+      "roomPolicy"
+    ]
+  },
+  {
+    "questionId": "spring-01-q05",
+    "revision": 1,
+    "cases": {
+      "di-qualifier-over-primary": "fixed",
+      "di-primary": "rate"
+    },
+    "correctChoiceContains": [
+      "FixedDiscount"
+    ]
+  },
+  {
+    "questionId": "spring-01-q07",
+    "revision": 1,
+    "cases": {
+      "aop-order-normal": "around-before before target afterReturning after around-after"
+    },
+    "correctChoiceContains": [
+      "A1 B T R F A2"
+    ]
+  },
+  {
+    "questionId": "spring-01-q08",
+    "revision": 1,
+    "cases": {
+      "mvc-statuses": "400 400 200 200 405 404 400"
+    },
+    "correctChoiceContains": [
+      "405"
+    ]
+  },
+  {
+    "questionId": "spring-01-q09",
+    "revision": 1,
+    "cases": {
+      "mvc-statuses": "400 400 200 200 405 404 400"
+    },
+    "correctChoiceContains": [
+      "400"
+    ]
+  },
+  {
+    "questionId": "spring-01-q11",
+    "revision": 1,
+    "cases": {
+      "mvc-interceptor-normal": "pre1 pre2 handler post2 post1 after2 after1"
+    },
+    "correctChoiceContains": [
+      "pre1 pre2 handler post2 post1 after2 after1"
+    ]
+  },
+  {
+    "questionId": "spring-01-q12",
+    "revision": 1,
+    "cases": {
+      "mb-mapper-proxy": "true 3"
+    },
+    "correctChoiceContains": [
+      "프록시"
+    ]
+  },
+  {
+    "questionId": "spring-01-q13",
+    "revision": 1,
+    "cases": {
+      "mb-hash-vs-dollar": "3 0 1"
+    },
+    "correctChoiceContains": [
+      "3행",
+      "0행"
+    ]
+  },
+  {
+    "questionId": "spring-01-q14",
+    "revision": 1,
+    "cases": {
+      "mb-column-mapping": "null null 2 / kim 1 / true 0"
+    },
+    "correctChoiceContains": [
+      "people"
+    ]
+  },
+  {
+    "questionId": "spring-01-q16",
+    "revision": 1,
+    "cases": {
+      "tx-rollback-rules": "3 4 4 5"
+    },
+    "correctChoiceContains": [
+      "checked()",
+      "4행"
+    ]
+  },
+  {
+    "questionId": "spring-01-q18",
+    "revision": 1,
+    "cases": {
+      "rest-created": "201 /api/rentals/12"
+    },
+    "correctChoiceContains": [
+      "201",
+      "Location"
+    ]
+  },
+  {
+    "questionId": "spring-01-q19",
+    "revision": 1,
+    "cases": {
+      "sec-blocked-before-controller": "controllerCalls=0"
+    },
+    "correctChoiceContains": [
+      "실행되지 않는다"
+    ]
+  },
+  {
+    "questionId": "spring-01-q20",
+    "revision": 1,
+    "cases": {
+      "sec-api-401-403": "401 403 200"
+    },
+    "correctChoiceContains": [
+      "401, 403"
+    ]
+  },
+  {
+    "questionId": "spring-01-q21",
+    "revision": 1,
+    "cases": {
+      "sec-wide-first": "200"
+    },
+    "correctChoiceContains": [
+      "200"
+    ]
+  },
+  {
+    "questionId": "spring-01-q23",
+    "revision": 1,
+    "cases": {
+      "di-scopes": "true false true false"
+    },
+    "acceptedContains": [
+      "singleton"
+    ]
+  },
+  {
+    "questionId": "spring-01-q24",
+    "revision": 1,
+    "cases": {
+      "aop-pointcut-match": "one=1 any=3"
+    },
+    "acceptedContains": [
+      "(..)"
+    ]
+  },
+  {
+    "questionId": "spring-01-q25",
+    "revision": 1,
+    "cases": {
+      "mvc-redirect": "302 /rooms/done?floor=3 flash=saved"
+    },
+    "acceptedContains": [
+      "PRG"
+    ]
+  },
+  {
+    "questionId": "spring-01-q26",
+    "revision": 1,
+    "cases": {
+      "mvc-validation-with-result": "200 reservation/form handler:2",
+      "mvc-validation-without-result": "400 handlerCalls=0"
+    },
+    "acceptedContains": [
+      "BindingResult"
+    ]
+  },
+  {
+    "questionId": "spring-01-q27",
+    "revision": 1,
+    "cases": {
+      "mb-dynamic-where": "[1, 2, 3] [1, 2] [1, 3] [1] [1, 2, 3] []"
+    },
+    "acceptedContains": [
+      "where"
+    ]
+  },
+  {
+    "questionId": "spring-01-q28",
+    "revision": 1,
+    "cases": {
+      "tx-required-inner-failure": "UnexpectedRollbackException 3 logs=0"
+    },
+    "acceptedContains": [
+      "REQUIRED"
+    ]
+  },
+  {
+    "questionId": "spring-01-q29",
+    "revision": 1,
+    "cases": {
+      "rest-body-statuses": "415 400 400 204:0 200 application/json"
+    },
+    "acceptedContains": [
+      "@RequestBody"
+    ]
+  },
+  {
+    "questionId": "spring-01-q30",
+    "revision": 1,
+    "cases": {
+      "sec-login-logout": "302->/ 302->/login?error 302->/login?error 403 200 403 302->/"
+    },
+    "acceptedContains": [
+      "loadUserByUsername"
+    ]
+  },
+  {
+    "questionId": "spring-02-q01",
+    "revision": 1,
+    "cases": {
+      "config-precedence": "9 10"
+    },
+    "correctChoiceContains": [
+      "실행 인자",
+      "10"
+    ]
+  },
+  {
+    "questionId": "spring-02-q02",
+    "revision": 1,
+    "cases": {
+      "junit-assert-message": "expected: <2> but was: <3>"
+    },
+    "correctChoiceContains": [
+      "expected: <2> but was: <3>"
+    ]
+  },
+  {
+    "questionId": "spring-02-q03",
+    "revision": 1,
+    "cases": {
+      "di-lifecycle": "constructor:null postConstruct:set proto-postConstruct use preDestroy"
+    },
+    "correctChoiceContains": [
+      "constructor:null",
+      "postConstruct:set",
+      "use → preDestroy"
+    ]
+  },
+  {
+    "questionId": "spring-02-q04",
+    "revision": 1,
+    "cases": {
+      "di-scopes": "true false true false"
+    },
+    "correctChoiceContains": [
+      "true, false, true, false"
+    ]
+  },
+  {
+    "questionId": "spring-02-q05",
+    "revision": 1,
+    "cases": {
+      "di-by-name": "sms"
+    },
+    "correctChoiceContains": [
+      "smsNotifier"
+    ]
+  },
+  {
+    "questionId": "spring-02-q06",
+    "revision": 1,
+    "cases": {
+      "aop-self-invocation": "daily summarize / advice summarize"
+    },
+    "correctChoiceContains": [
+      "daily, summarize"
+    ]
+  },
+  {
+    "questionId": "spring-02-q07",
+    "revision": 1,
+    "cases": {
+      "aop-no-proceed": "around -> null"
+    },
+    "correctChoiceContains": [
+      "A만 기록되고 null"
+    ]
+  },
+  {
+    "questionId": "spring-02-q08",
+    "revision": 1,
+    "cases": {
+      "mvc-statuses": "400 400 200 200 405 404 400"
+    },
+    "correctChoiceContains": [
+      "400"
+    ]
+  },
+  {
+    "questionId": "spring-02-q09",
+    "revision": 1,
+    "cases": {
+      "mvc-model-attribute": "200 true null null"
+    },
+    "correctChoiceContains": [
+      "roomForm"
+    ]
+  },
+  {
+    "questionId": "spring-02-q10",
+    "revision": 1,
+    "cases": {
+      "mvc-redirect": "302 /rooms/done?floor=3 flash=saved"
+    },
+    "correctChoiceContains": [
+      "floor=3",
+      "flash"
+    ]
+  },
+  {
+    "questionId": "spring-02-q11",
+    "revision": 1,
+    "cases": {
+      "mvc-exception-precedence": "409:local 404:advice-specific 500:advice-general"
+    },
+    "correctChoiceContains": [
+      "404와 `advice-specific`"
+    ]
+  },
+  {
+    "questionId": "spring-02-q12",
+    "revision": 1,
+    "cases": {
+      "mb-camel-case": "kim 1 2",
+      "mb-column-mapping": "null null 2 / kim 1 / true 0"
+    },
+    "correctChoiceContains": [
+      "모두 값이 들어간다"
+    ]
+  },
+  {
+    "questionId": "spring-02-q13",
+    "revision": 1,
+    "cases": {
+      "mb-collection": "A:2 C:0 flat=2"
+    },
+    "correctChoiceContains": [
+      "빈 목록"
+    ]
+  },
+  {
+    "questionId": "spring-02-q14",
+    "revision": 1,
+    "cases": {
+      "mb-foreach": "[1, 3] empty=BadSqlGrammarException"
+    },
+    "correctChoiceContains": [
+      "문법 오류"
+    ]
+  },
+  {
+    "questionId": "spring-02-q15",
+    "revision": 1,
+    "cases": {
+      "tx-self-invocation": "4 4"
+    },
+    "correctChoiceContains": [
+      "4행"
+    ]
+  },
+  {
+    "questionId": "spring-02-q16",
+    "revision": 1,
+    "cases": {
+      "tx-requires-new": "3 logs=1"
+    },
+    "correctChoiceContains": [
+      "예약 3행, 로그 1행"
+    ]
+  },
+  {
+    "questionId": "spring-02-q17",
+    "revision": 1,
+    "cases": {
+      "rest-error-json": "404 application/json code=RENTAL_NOT_FOUND"
+    },
+    "correctChoiceContains": [
+      "404",
+      "JSON"
+    ]
+  },
+  {
+    "questionId": "spring-02-q18",
+    "revision": 1,
+    "cases": {
+      "rest-cors": "200 http://localhost:5173 / 403 null / 200"
+    },
+    "correctChoiceContains": [
+      "403"
+    ]
+  },
+  {
+    "questionId": "spring-02-q19",
+    "revision": 1,
+    "cases": {
+      "sec-logout-without-token": "403 200",
+      "sec-login-logout": "302->/ 302->/login?error 302->/login?error 403 200 403 302->/"
+    },
+    "correctChoiceContains": [
+      "403",
+      "유지"
+    ]
+  },
+  {
+    "questionId": "spring-02-q20",
+    "revision": 1,
+    "cases": {
+      "sec-principal": "root [ROLE_ADMIN]"
+    },
+    "correctChoiceContains": [
+      "root [ROLE_ADMIN]"
+    ]
+  },
+  {
+    "questionId": "spring-02-q21",
+    "revision": 1,
+    "cases": {
+      "sec-form-rules": "302->/login 200 403 200 403 403"
+    },
+    "correctChoiceContains": [
+      "403"
+    ]
+  },
+  {
+    "questionId": "spring-02-q22",
+    "revision": 1,
+    "cases": {
+      "lombok-required-args": "2 2"
+    },
+    "acceptedContains": [
+      "RequiredArgsConstructor"
+    ]
+  },
+  {
+    "questionId": "spring-02-q23",
+    "revision": 1,
+    "cases": {
+      "di-single-constructor": "true false"
+    },
+    "acceptedContains": [
+      "@Autowired"
+    ]
+  },
+  {
+    "questionId": "spring-02-q24",
+    "revision": 1,
+    "cases": {
+      "aop-proxy-kind": "cglib"
+    },
+    "acceptedContains": [
+      "프록시"
+    ]
+  },
+  {
+    "questionId": "spring-02-q26",
+    "revision": 1,
+    "cases": {
+      "mvc-multipart": "true / false ../a.txt / 1MB 10MB"
+    },
+    "acceptedContains": [
+      "isEmpty"
+    ]
+  },
+  {
+    "questionId": "spring-02-q27",
+    "revision": 1,
+    "cases": {
+      "mb-generated-key": "1 4"
+    },
+    "acceptedContains": [
+      "useGeneratedKeys"
+    ]
+  },
+  {
+    "questionId": "spring-02-q28",
+    "revision": 1,
+    "cases": {
+      "tx-rollback-rules": "3 4 4 5"
+    },
+    "acceptedContains": [
+      "rollbackFor"
+    ]
+  },
+  {
+    "questionId": "spring-02-q30",
+    "revision": 1,
+    "cases": {
+      "sec-bcrypt-roles": "different-hashes matches=true [ROLE_ADMIN]"
+    },
+    "acceptedContains": [
+      "matches"
+    ]
+  },
+  {
+    "questionId": "spring-02-q31",
+    "revision": 1,
+    "cases": {
+      "tx-required-inner-failure": "UnexpectedRollbackException 3 logs=0",
+      "tx-requires-new": "3 logs=1"
+    }
+  },
+  {
+    "questionId": "spring-02-q32",
+    "revision": 1,
+    "cases": {
+      "mb-dynamic-where": "[1, 2, 3] [1, 2] [1, 3] [1] [1, 2, 3] []",
+      "mb-foreach": "[1, 3] empty=BadSqlGrammarException",
+      "mb-set": "1 people=6 none=BadSqlGrammarException"
+    }
+  },
+  {
+    "questionId": "spring-03-q01",
+    "revision": 1,
+    "cases": {
+      "boot-autoconfig-backoff": "auto user:1"
+    },
+    "correctChoiceContains": [
+      "개발자가 만든 빈만 남고"
+    ]
+  },
+  {
+    "questionId": "spring-03-q02",
+    "revision": 1,
+    "cases": {
+      "logging-level-filter": "INFO WARN ERROR"
+    },
+    "correctChoiceContains": [
+      "INFO, WARN, ERROR"
+    ]
+  },
+  {
+    "questionId": "spring-03-q03",
+    "revision": 1,
+    "cases": {
+      "di-configuration-proxy": "true false"
+    },
+    "correctChoiceContains": [
+      "true, false"
+    ]
+  },
+  {
+    "questionId": "spring-03-q04",
+    "revision": 1,
+    "cases": {
+      "di-cycle": "startup-failure"
+    },
+    "correctChoiceContains": [
+      "시작할 때"
+    ]
+  },
+  {
+    "questionId": "spring-03-q05",
+    "revision": 1,
+    "cases": {
+      "di-list-count": "2",
+      "di-primary": "rate"
+    },
+    "correctChoiceContains": [
+      "크기는 2"
+    ]
+  },
+  {
+    "questionId": "spring-03-q06",
+    "revision": 1,
+    "cases": {
+      "aop-pointcut-match": "one=1 any=3"
+    },
+    "correctChoiceContains": [
+      "1회, 3회"
+    ]
+  },
+  {
+    "questionId": "spring-03-q07",
+    "revision": 1,
+    "cases": {
+      "aop-order-exception": "around-before before target afterThrowing after around-after",
+      "aop-afterthrowing-propagates": "IllegalStateException"
+    },
+    "correctChoiceContains": [
+      "afterThrowing → after → around-after"
+    ]
+  },
+  {
+    "questionId": "spring-03-q08",
+    "revision": 1,
+    "cases": {
+      "mvc-class-method-path": "room/detail 7"
+    },
+    "correctChoiceContains": [
+      "room/detail",
+      "7"
+    ]
+  },
+  {
+    "questionId": "spring-03-q09",
+    "revision": 1,
+    "cases": {
+      "mvc-optional-defaults": "null 1"
+    },
+    "correctChoiceContains": [
+      "null이고 `page`는 1"
+    ]
+  },
+  {
+    "questionId": "spring-03-q10",
+    "revision": 1,
+    "cases": {
+      "mvc-forward-redirect": "200 /rooms/list / 302 /rooms/list"
+    },
+    "correctChoiceContains": [
+      "302"
+    ]
+  },
+  {
+    "questionId": "spring-03-q11",
+    "revision": 1,
+    "cases": {
+      "mvc-interceptor-blocked": "pre1 pre2 after1"
+    },
+    "correctChoiceContains": [
+      "pre1, pre2, after1"
+    ]
+  },
+  {
+    "questionId": "spring-03-q12",
+    "revision": 1,
+    "cases": {
+      "mb-dynamic-where": "[1, 2, 3] [1, 2] [1, 3] [1] [1, 2, 3] []"
+    },
+    "correctChoiceContains": [
+      "[1]과 [1, 2, 3]"
+    ]
+  },
+  {
+    "questionId": "spring-03-q13",
+    "revision": 1,
+    "cases": {
+      "mb-dynamic-where": "[1, 2, 3] [1, 2] [1, 3] [1] [1, 2, 3] []"
+    },
+    "correctChoiceContains": [
+      "1번과 3번"
+    ]
+  },
+  {
+    "questionId": "spring-03-q14",
+    "revision": 1,
+    "cases": {
+      "mb-generated-key": "1 4"
+    },
+    "correctChoiceContains": [
+      "1과 4"
+    ]
+  },
+  {
+    "questionId": "spring-03-q15",
+    "revision": 1,
+    "cases": {
+      "tx-rollback-rules": "3 4 4 5"
+    },
+    "correctChoiceContains": [
+      "4행"
+    ]
+  },
+  {
+    "questionId": "spring-03-q16",
+    "revision": 1,
+    "cases": {
+      "tx-mandatory": "IllegalTransactionStateException logs=0"
+    },
+    "correctChoiceContains": [
+      "예외가 발생하고"
+    ]
+  },
+  {
+    "questionId": "spring-03-q17",
+    "revision": 1,
+    "cases": {
+      "rest-body-statuses": "415 400 400 204:0 200 application/json"
+    },
+    "correctChoiceContains": [
+      "415, 400"
+    ]
+  },
+  {
+    "questionId": "spring-03-q18",
+    "revision": 1,
+    "cases": {
+      "rest-body-statuses": "415 400 400 204:0 200 application/json"
+    },
+    "correctChoiceContains": [
+      "204"
+    ]
+  },
+  {
+    "questionId": "spring-03-q19",
+    "revision": 1,
+    "cases": {
+      "sec-login-logout": "302->/ 302->/login?error 302->/login?error 403 200 403 302->/"
+    },
+    "correctChoiceContains": [
+      "/login?error"
+    ]
+  },
+  {
+    "questionId": "spring-03-q20",
+    "revision": 1,
+    "cases": {
+      "sec-form-rules": "302->/login 200 403 200 403 403"
+    },
+    "correctChoiceContains": [
+      "403"
+    ]
+  },
+  {
+    "questionId": "spring-03-q21",
+    "revision": 1,
+    "cases": {
+      "sec-bcrypt-roles": "different-hashes matches=true [ROLE_ADMIN]"
+    },
+    "correctChoiceContains": [
+      "matches"
+    ]
+  },
+  {
+    "questionId": "spring-03-q22",
+    "revision": 1,
+    "cases": {
+      "junit-lifecycle": "before a after before b after"
+    },
+    "acceptedContains": [
+      "@BeforeEach"
+    ]
+  },
+  {
+    "questionId": "spring-03-q23",
+    "revision": 1,
+    "cases": {
+      "di-configuration-proxy": "true false"
+    },
+    "acceptedContains": [
+      "@Configuration"
+    ]
+  },
+  {
+    "questionId": "spring-03-q25",
+    "revision": 1,
+    "cases": {
+      "mvc-class-method-path": "room/detail 7"
+    },
+    "acceptedContains": [
+      "@PathVariable"
+    ]
+  },
+  {
+    "questionId": "spring-03-q26",
+    "revision": 1,
+    "cases": {
+      "mvc-validation-with-result": "200 reservation/form handler:2"
+    },
+    "acceptedContains": [
+      "@NotBlank"
+    ]
+  },
+  {
+    "questionId": "spring-03-q27",
+    "revision": 1,
+    "cases": {
+      "mb-collection": "A:2 C:0 flat=2"
+    },
+    "acceptedContains": [
+      "collection"
+    ]
+  },
+  {
+    "questionId": "spring-03-q28",
+    "revision": 1,
+    "cases": {
+      "aop-self-invocation": "daily summarize / advice summarize",
+      "tx-self-invocation": "4 4"
+    },
+    "acceptedContains": [
+      "자기 호출"
+    ]
+  },
+  {
+    "questionId": "spring-03-q30",
+    "revision": 1,
+    "cases": {
+      "sec-principal": "root [ROLE_ADMIN]"
+    },
+    "acceptedContains": [
+      "SecurityContextHolder"
+    ]
+  },
+  {
+    "questionId": "spring-03-q31",
+    "revision": 1,
+    "cases": {
+      "rest-error-json": "404 application/json code=RENTAL_NOT_FOUND",
+      "rest-body-statuses": "415 400 400 204:0 200 application/json",
+      "mvc-validation-without-result": "400 handlerCalls=0"
+    }
+  },
+  {
+    "questionId": "spring-03-q32",
+    "revision": 1,
+    "cases": {
+      "sec-api-401-403": "401 403 200",
+      "sec-form-rules": "302->/login 200 403 200 403 403",
+      "sec-blocked-before-controller": "controllerCalls=0",
+      "sec-csrf": "403 200 200"
+    }
+  }
+]

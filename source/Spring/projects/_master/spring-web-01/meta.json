@@ -1,0 +1,22 @@
+{
+  "title": "스터디실 예약 관리",
+  "database": "study_room",
+  "revision": 1,
+  "sourceRefs": [
+    "SPR-L06 인자 바인딩 p.10",
+    "SPR-L07 매퍼 p.30",
+    "SPR-L08 동적 SQL p.10",
+    "SPR-L08 Service 트랜잭션 p.20",
+    "SPR-S07 MVC 요청 흐름 p.30",
+    "SPR-S09 resultMap p.45"
+  ],
+  "presentation": {
+    "lead": "제공된 Spring Boot MVC 프로젝트의 비어 있는 부분을 직접 채워 예약 목록, 검색, 상세, 등록과 취소를 Controller, Service, MyBatis, JSP로 연결합니다.",
+    "editorNotice": "자동완성 기능을 제공하지 않으니 Spring Tools for Eclipse(STS)에서 Maven 프로젝트로 가져와 확인하세요. STS에서의 실행은 아직 확인하지 못했습니다.",
+    "stageInfo": {
+      "1": "전체 코드가 주어지고 비어 있는 부분만 채웁니다.",
+      "2": "메서드 시그니처와 JSP의 정적 틀이 주어지고 본문과 동적 블록을 작성합니다.",
+      "3": "작성 대상 메서드와 구문과 JSP 블록을 처음부터 구현합니다. 설정, 모델, 화면 틀은 제공됩니다."
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.rental.mapper.RentalMapper">
+    <resultMap id="rentalMap" type="Rental">
+        <id property="rentalId" column="rental_id"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipmentName" column="name"/>
+        <result property="loginId" column="login_id"/>
+        <result property="days" column="days"/>
+    </resultMap>
+
+    <select id="findEquipments" resultType="Equipment">
+        SELECT equipment_id, name FROM rental_equipment ORDER BY equipment_id
+    </select>
+
+    <select id="findEquipment" resultType="Equipment">
+        SELECT equipment_id, name FROM rental_equipment WHERE equipment_id = #{equipmentId}
+    </select>
+
+    <select id="countActive" resultType="int">
+        SELECT COUNT(*) FROM equipment_rental WHERE equipment_id = #{equipmentId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="rentalId">
+        INSERT INTO equipment_rental (equipment_id, login_id, days)
+        VALUES (#{equipmentId}, #{loginId}, #{days})
+    </insert>
+
+    <select id="findById" resultMap="rentalMap">
+        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days
+        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id
+        WHERE r.rental_id = #{rentalId}
+    </select>
+
+    <select id="findByLoginId" resultMap="rentalMap">
+        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days
+        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id
+        WHERE r.login_id = #{loginId}
+        ORDER BY r.rental_id
+    </select>
+
+    <select id="findAll" resultMap="rentalMap">
+        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days
+        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id
+        ORDER BY r.rental_id
+    </select>
+
+    <delete id="delete">
+        DELETE FROM equipment_rental WHERE rental_id = #{rentalId}
+    </delete>
+</mapper>

@@ -42,7 +42,10 @@ test('every diagram in the published data renders', () => {
   let count = 0;
   for (const file of files) {
     const text = readFileSync(new URL('../../data/' + file, import.meta.url), 'utf8');
-    for (const q of JSON.parse(text).questions) {
+    const data = JSON.parse(text);
+    // Project catalogs (backend-projects.json, spring-projects.json) are not exams.
+    if (!Array.isArray(data.questions)) continue;
+    for (const q of data.questions) {
       for (const [, kind, body] of q.stem.matchAll(/```(tree|graph)\n([\s\S]*?)```/g)) {
         assert.doesNotThrow(() => diagram(kind, body), q.id);
         count++;

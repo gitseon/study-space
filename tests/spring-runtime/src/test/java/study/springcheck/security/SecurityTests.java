@@ -230,6 +230,16 @@ class SecurityTests {
     }
 
     @Test
+    void logoutWithoutTokenKeepsTheSession() throws Exception {
+        MockMvc mvc = mvc(FormConfig.class);
+        MockHttpSession session = (MockHttpSession) mvc.perform(formLogin().user("mina").password("pw-user")).andReturn().getRequest().getSession(false);
+        String rejected = outcome(mvc, post("/logout").session(session));
+        String stillIn = outcome(mvc, get("/me").session(session));
+        assertEquals("403 200", rejected + " " + stillIn);
+        Observations.record("sec-logout-without-token", rejected + " " + stillIn);
+    }
+
+    @Test
     void bcryptAndRoles() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String first = encoder.encode("study1234");

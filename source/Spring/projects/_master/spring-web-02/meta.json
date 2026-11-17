@@ -1,0 +1,22 @@
+{
+  "title": "장비 대여 API",
+  "database": "equipment_rental",
+  "revision": 1,
+  "sourceRefs": [
+    "SPR-L09 REST p.55",
+    "SPR-L10 SecurityFilterChain p.40",
+    "SPR-L11 사용자 정의 인증 p.10",
+    "SPR-S11 ResponseEntity p.60",
+    "SPR-S11 오류 응답 p.75",
+    "SPR-L08 Service 트랜잭션 p.20"
+  ],
+  "presentation": {
+    "lead": "제공된 Spring Boot REST 프로젝트의 비어 있는 부분을 직접 채워 장비 대여 API와 form 로그인 기반 보안 설정, JSON 오류 응답을 연결합니다.",
+    "editorNotice": "자동완성 기능을 제공하지 않으니 Spring Tools for Eclipse(STS)에서 Maven 프로젝트로 가져와 확인하세요. STS에서의 실행은 아직 확인하지 못했습니다.",
+    "stageInfo": {
+      "1": "전체 코드가 주어지고 비어 있는 부분만 채웁니다.",
+      "2": "메서드 시그니처가 주어지고 본문과 보안 규칙을 작성합니다.",
+      "3": "작성 대상 메서드와 구문과 보안 설정을 처음부터 구현합니다. 모델, 설정, DB 구조는 제공됩니다."
+    }
+  }
+}

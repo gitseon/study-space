@@ -122,3 +122,79 @@ class SpringTrackTests(unittest.TestCase):
         text = json.dumps(env, ensure_ascii=False)
         for forbidden in ("password", "C:\\", "/Users/", "localhost:"):
             self.assertNotIn(forbidden, text)
+
+
+class SpringPublishedContentTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name)
+        cls.exams = [e for e in build_data.build_data(ROOT / "source", cls.out) if build_data.track_of(e) == "spring"]
+        cls.manifest = json.loads((cls.out / "manifest.json").read_text(encoding="utf-8"))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_three_exams_follow_the_21_9_2_composition(self):
+        self.assertEqual([e["id"] for e in self.exams], ["spring-01", "spring-02", "spring-03"])
+        for exam in self.exams:
+            self.assertEqual(exam["counts"], {"mc": 21, "short": 9, "essay": 2, "code": 0}, exam["id"])
+            self.assertEqual(exam["practiceMinutes"], 60)
+            self.assertFalse(exam.get("draft"))
+
+    def test_every_question_names_only_registered_public_sources(self):
+        import check_public_sources as cps
+        provenance = cps.load_provenance(ROOT / "source" / "provenance.json")
+        notes = {n[0] for n in build_data.NOTES if n[2]}
+        for exam in self.exams:
+            for q in exam["questions"]:
+                for ref in q["sourceRefs"]:
+                    self.assertIsNone(cps.source_ref_issue(ref, provenance, notes), (q["id"], ref))
+
+    def test_question_ids_are_unique_and_revisions_start_at_one(self):
+        ids = [q["id"] for e in self.exams for q in e["questions"]]
+        self.assertEqual(len(ids), 96)
+        self.assertEqual(len(set(ids)), 96)
+        self.assertTrue(all(q["revision"] == 1 for e in self.exams for q in e["questions"]))
+
+    def test_every_question_has_a_check_or_a_resolve_record_for_its_revision(self):
+        spring = ROOT / "source" / "Spring"
+        checks = {c["questionId"]: c for c in json.loads((spring / "spring-checks.json").read_text(encoding="utf-8"))}
+        reviews = {r["questionId"]: r for r in json.loads((spring / "spring-reviews.json").read_text(encoding="utf-8"))}
+        self.assertFalse(set(checks) & set(reviews))
+        for exam in self.exams:
+            for q in exam["questions"]:
+                record = checks.get(q["id"]) or reviews.get(q["id"])
+                self.assertIsNotNone(record, q["id"])
+                self.assertEqual(record["revision"], q["revision"], q["id"])
+        self.assertTrue(all(r["independent"] is False for r in reviews.values()))
+
+    def test_coverage_is_full_and_links_the_notes_to_questions_and_project_targets(self):
+        coverage = json.loads((ROOT / "source" / "Spring" / "coverage-spring.json").read_text(encoding="utf-8"))
+        self.assertEqual(coverage["coverageProfile"], "full")
+        targets = set()
+        for pid in ("spring-web-01", "spring-web-02"):
+            project = json.loads((ROOT / "source" / "Spring" / "projects" / pid / "project.json").read_text(encoding="utf-8"))
+            targets |= {f"{pid}/{t['id']}" for t in project["targets"]}
+        linked = set()
+        for row in coverage["requirements"]:
+            if row.get("noteOnly"):
+                self.assertNotIn("projectTargets", row)
+                continue
+            self.assertTrue(row["questionIds"], row["requirementId"])
+            self.assertFalse(set(row["projectTargets"]) - targets, row["requirementId"])
+            linked |= set(row["projectTargets"])
+        self.assertEqual(linked, targets)
+
+    def test_the_manifest_lists_the_two_projects_with_their_verification_state(self):
+        entry = self.manifest["projectTracks"]["spring"]
+        self.assertEqual((entry["file"], entry["count"], entry["track"]), ("spring-projects.json", 2, "spring"))
+        index = json.loads((self.out / "spring-projects.json").read_text(encoding="utf-8"))
+        self.assertEqual([p["id"] for p in index["projects"]], ["spring-web-01", "spring-web-02"])
+        for project in index["projects"]:
+            self.assertEqual(project["verification"]["label"], "자동 검증 완료 · STS 미검증")
+            self.assertEqual(project["verification"]["steps"]["stsManual"], "unverified")
+            self.assertNotIn("tomcat", json.dumps(project["presentation"], ensure_ascii=False).lower())
+        zips = sorted(p.relative_to(self.out).as_posix() for p in (self.out / "spring-projects").rglob("*.zip"))
+        self.assertEqual(len(zips), 6)

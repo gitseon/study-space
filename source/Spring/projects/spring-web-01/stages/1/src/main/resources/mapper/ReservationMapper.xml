@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.room.mapper.ReservationMapper">
+    <resultMap id="reservationMap" type="Reservation">
+        <id property="reservationId" column="reservation_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+        <result property="memberName" column="member_name"/>
+        <result property="people" column="people"/>
+    </resultMap>
+
+    <select id="findRooms" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room ORDER BY room_id
+    </select>
+
+    <select id="findRoom" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room WHERE room_id = #{roomId}
+    </select>
+
+    <select id="sumPeople" resultType="int">
+        SELECT COALESCE(SUM(people), 0) FROM room_reservation WHERE room_id = #{roomId}
+    </select>
+
+    <!-- study-target:sql-search:start -->
+    <select id="search" resultMap="reservationMap">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        <____>
+            <if test="roomId != ____">
+                AND r.room_id = #{roomId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND r.member_name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </____>
+        ORDER BY r.reservation_id
+    </select>
+    <!-- study-target:sql-search:end -->
+
+    <!-- study-target:sql-detail:start -->
+    <select id="findById" resultMap="____">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        WHERE r.reservation_id = #{____}
+    </select>
+    <!-- study-target:sql-detail:end -->
+
+    <!-- study-target:sql-insert:start -->
+    <insert id="insert" ____="true" keyProperty="____">
+        INSERT INTO room_reservation (room_id, member_name, people)
+        VALUES (#{roomId}, #{memberName}, #{people})
+    </insert>
+    <!-- study-target:sql-insert:end -->
+
+    <delete id="delete">
+        DELETE FROM room_reservation WHERE reservation_id = #{reservationId}
+    </delete>
+</mapper>

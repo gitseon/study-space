@@ -1,0 +1,10 @@
+{
+  "id": "spring-03",
+  "revision": 1,
+  "kind": "subject",
+  "track": "spring",
+  "title": "Spring 3회",
+  "subtitle": "계층을 연결한 상황 판단",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1
+}

@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "track": "spring",
+  "projects": [
+    {
+      "id": "spring-web-01",
+      "title": "스터디실 예약 관리",
+      "revision": 1,
+      "hash": "5385a90c5d4f3e01",
+      "durationOptions": [
+        90,
+        120,
+        0
+      ],
+      "defaultMinutes": 120,
+      "environment": {
+        "javaRuntime": "25",
+        "javaRelease": "21",
+        "springBoot": "4.1.2",
+        "springFramework": "7.0.10",
+        "springSecurity": "7.1.2",
+        "mybatis": "3.5.19",
+        "mybatisStarter": "4.1.0",
+        "mysqlServer": "8.4",
+        "mysqlDriver": "9.7.0",
+        "packaging": {
+          "runtime-checks": "jar",
+          "jsp-projects": "war",
+          "rest-projects": "jar"
+        },
+        "classMatch": "unconfirmed"
+      },
+      "targetCount": 13,
+      "project": "spring-projects/spring-web-01/project.json",
+      "referenceFile": "spring-projects/spring-web-01/reference.json",
+      "stages": [
+        {
+          "id": 1,
+          "label": "빈칸 채우기",
+          "file": "spring-projects/spring-web-01/stage-1.json",
+          "zip": "spring-projects/spring-web-01/stage-1.zip"
+        },
+        {
+          "id": 2,
+          "label": "메서드와 JSP 블록 작성",
+          "file": "spring-projects/spring-web-01/stage-2.json",
+          "zip": "spring-projects/spring-web-01/stage-2.zip"
+        },
+        {
+          "id": 3,
+          "label": "구현 대상 전체 작성",
+          "file": "spring-projects/spring-web-01/stage-3.json",
+          "zip": "spring-projects/spring-web-01/stage-3.zip"
+        }
+      ],
+      "presentation": {
+        "lead": "제공된 Spring Boot MVC 프로젝트의 비어 있는 부분을 직접 채워 예약 목록, 검색, 상세, 등록과 취소를 Controller, Service, MyBatis, JSP로 연결합니다.",
+        "envNotice": "실행 환경(연습용): JDK 21 이상, Spring Boot 4.1.2, MyBatis 3.5.19(starter 4.1.0), MySQL 8.4. 수업 환경과 같은지는 확인하지 못했습니다.",
+        "editorNotice": "자동완성 기능을 제공하지 않으니 Spring Tools for Eclipse(STS)에서 Maven 프로젝트로 가져와 확인하세요. STS에서의 실행은 아직 확인하지 못했습니다.",
+        "stageInfo": {
+          "1": "전체 코드가 주어지고 비어 있는 부분만 채웁니다.",
+          "2": "메서드 시그니처와 JSP의 정적 틀이 주어지고 본문과 동적 블록을 작성합니다.",
+          "3": "작성 대상 메서드와 구문과 JSP 블록을 처음부터 구현합니다. 설정, 모델, 화면 틀은 제공됩니다."
+        }
+      },
+      "verification": {
+        "label": "자동 검증 완료 · STS 미검증",
+        "steps": {
+          "compile": "passed",
+          "unit": "passed",
+          "dbIntegration": "passed",
+          "httpIntegration": "passed",
+          "jspRender": "passed",
+          "stsManual": "unverified"
+        },
+        "environment": {
+          "javaRuntime": "25",
+          "javaRelease": "21",
+          "springBoot": "4.1.2",
+          "springFramework": "7.0.10",
+          "springSecurity": "7.1.2",
+          "mybatis": "3.5.19",
+          "mybatisStarter": "4.1.0",
+          "mysqlServer": "8.4",
+          "mysqlDriver": "9.7.0"
+        }
+      }
+    },
+    {
+      "id": "spring-web-02",
+      "title": "장비 대여 API",
+      "revision": 1,
+      "hash": "3cbdc8aa41f10c96",
+      "durationOptions": [
+        90,
+        120,
+        0
+      ],
+      "defaultMinutes": 120,
+      "environment": {
+        "javaRuntime": "25",
+        "javaRelease": "21",
+        "springBoot": "4.1.2",
+        "springFramework": "7.0.10",
+        "springSecurity": "7.1.2",
+        "mybatis": "3.5.19",
+        "mybatisStarter": "4.1.0",
+        "mysqlServer": "8.4",
+        "mysqlDriver": "9.7.0",
+        "packaging": {
+          "runtime-checks": "jar",
+          "jsp-projects": "war",
+          "rest-projects": "jar"
+        },
+        "classMatch": "unconfirmed"
+      },
+      "targetCount": 13,
+      "project": "spring-projects/spring-web-02/project.json",
+      "referenceFile": "spring-projects/spring-web-02/reference.json",
+      "stages": [
+        {
+          "id": 1,
+          "label": "빈칸 채우기",
+          "file": "spring-projects/spring-web-02/stage-1.json",
+          "zip": "spring-projects/spring-web-02/stage-1.zip"
+        },
+        {
+          "id": 2,
+          "label": "메서드와 JSP 블록 작성",
+          "file": "spring-projects/spring-web-02/stage-2.json",
+          "zip": "spring-projects/spring-web-02/stage-2.zip"
+        },
+        {
+          "id": 3,
+          "label": "구현 대상 전체 작성",
+          "file": "spring-projects/spring-web-02/stage-3.json",
+          "zip": "spring-projects/spring-web-02/stage-3.zip"
+        }
+      ],
+      "presentation": {
+        "lead": "제공된 Spring Boot REST 프로젝트의 비어 있는 부분을 직접 채워 장비 대여 API와 form 로그인 기반 보안 설정, JSON 오류 응답을 연결합니다.",
+        "envNotice": "실행 환경(연습용): JDK 21 이상, Spring Boot 4.1.2, MyBatis 3.5.19(starter 4.1.0), MySQL 8.4. 수업 환경과 같은지는 확인하지 못했습니다.",
+        "editorNotice": "자동완성 기능을 제공하지 않으니 Spring Tools for Eclipse(STS)에서 Maven 프로젝트로 가져와 확인하세요. STS에서의 실행은 아직 확인하지 못했습니다.",
+        "stageInfo": {
+          "1": "전체 코드가 주어지고 비어 있는 부분만 채웁니다.",
+          "2": "메서드 시그니처가 주어지고 본문과 보안 규칙을 작성합니다.",
+          "3": "작성 대상 메서드와 구문과 보안 설정을 처음부터 구현합니다. 모델, 설정, DB 구조는 제공됩니다."
+        }
+      },
+      "verification": {
+        "label": "자동 검증 완료 · STS 미검증",
+        "steps": {
+          "compile": "passed",
+          "unit": "passed",
+          "dbIntegration": "passed",
+          "httpIntegration": "passed",
+          "jspRender": "not-applicable",
+          "stsManual": "unverified"
+        },
+        "environment": {
+          "javaRuntime": "25",
+          "javaRelease": "21",
+          "springBoot": "4.1.2",
+          "springFramework": "7.0.10",
+          "springSecurity": "7.1.2",
+          "mybatis": "3.5.19",
+          "mybatisStarter": "4.1.0",
+          "mysqlServer": "8.4",
+          "mysqlDriver": "9.7.0"
+        }
+      }
+    }
+  ]
+}
