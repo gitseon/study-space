@@ -217,3 +217,27 @@ test('model answer code is escaped', () => {
   const html = detailHtml(structure, {type: 'node', id: 'gearctl'}, {reference: referenceFiles, collapsed: {reference: false}});
   assert.doesNotMatch(html, /<b>x<\/b>/);
 });
+
+test('the main path and the side note follow the structure metadata when it is given', () => {
+  const spring = {
+    mainLayers: ['client', 'security', 'controller', 'mapper'], sideLayers: [], sideNote: '',
+    layers: [{id: 'client', label: '클라이언트'}, {id: 'security', label: '보안 필터'}, {id: 'controller', label: '컨트롤러'}, {id: 'mapper', label: 'Mapper'}, {id: 'shared', label: '함께 쓰는 파일'}],
+    nodes: ['client', 'security', 'controller', 'mapper', 'shared'].map((id) => ({id, layer: id, label: id, kind: 'k', path: null, role: 'r', receives: [], sends: [], methods: [], targets: [], skeleton: ['x']})),
+    edges: [{id: 'e1', from: 'client', to: 'security', kind: 'request', label: '요청', data: 'd'}, {id: 'e2', from: 'controller', to: 'mapper', kind: 'call', label: '호출', data: 'd'}],
+    flows: {overview: {label: '전체', edges: ['e1', 'e2']}},
+  };
+  const html = archHtml(spring, {});
+  const chain = html.slice(html.indexOf('ar-chain'), html.indexOf('ar-foot'));
+  for (const id of ['client', 'security', 'controller', 'mapper']) assert.ok(chain.includes(`data-layer="${id}"`), id);
+  assert.ok(!chain.includes('data-layer="shared"'));
+  assert.ok(html.slice(html.indexOf('ar-foot')).includes('data-layer="shared"'));
+  assert.ok(!html.includes('ar-side'));
+  assert.ok(chain.includes('data-arch-edge="e2"'));
+});
+
+test('a structure without metadata keeps the backend main path', () => {
+  const html = archHtml(structure, {});
+  const chain = html.slice(html.indexOf('ar-chain'), html.indexOf('ar-side'));
+  for (const id of ['client', 'filter', 'controller', 'service', 'dao', 'db']) assert.ok(chain.includes(`data-layer="${id}"`), id);
+  assert.match(html, /컨트롤러가 .*으로 보내는 화면/);
+});

@@ -117,8 +117,10 @@ class PipelineTests(unittest.TestCase):
         for track,info in m.TRACKS.items():
             folder=ROOT/"source"/info["dir"]
             self.assertTrue((folder/info["scope"]).exists(),track)
-            self.assertTrue(list(folder.glob("*/exam.json")),track)
-        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp","backend","sqld"})
+            # A track may start with a note only, but it must then own a published note.
+            if track in ("algorithm","frontend","ai","adsp","backend","sqld"): self.assertTrue(list(folder.glob("*/exam.json")),track)
+            else: self.assertTrue(list(folder.glob("*/exam.json")) or any(n[3]==track and n[2] for n in m.NOTES),track)
+        self.assertEqual(set(m.TRACKS),{"algorithm","frontend","ai","adsp","backend","sqld","spring"})
         self.assertEqual(m.TRACKS["backend"]["label"],"백엔드 · DB")
 
     def test_ai_scope_defines_both_exam_kinds_and_every_tag_group(self):

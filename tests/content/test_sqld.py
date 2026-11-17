@@ -65,7 +65,7 @@ class SqldScopeTests(unittest.TestCase):
         import tempfile, json
         from collections import Counter
         with tempfile.TemporaryDirectory() as tmp:
-            exams = [e for e in build_data.build_data(ROOT / "source", Path(tmp)) if build_data.track_of(e) == "sqld"]
+            exams = [e for e in build_data.build_data(ROOT / "source", Path(tmp), include_disabled=True) if build_data.track_of(e) == "sqld"]
         self.assertEqual([e["id"] for e in exams], ["sqld-01"])
         exam = exams[0]
         self.assertEqual((exam["kind"], exam["practiceMinutes"], exam.get("draft"), exam.get("fixedPracticeMinutes")), ("subject", 90, True, None))
@@ -82,7 +82,7 @@ class SqldScopeTests(unittest.TestCase):
     def test_every_draft_question_has_a_review_record_that_claims_no_engine_run_or_independence(self):
         import json, tempfile
         with tempfile.TemporaryDirectory() as tmp:
-            exam = next(e for e in build_data.build_data(ROOT / "source", Path(tmp)) if e["id"] == "sqld-01")
+            exam = next(e for e in build_data.build_data(ROOT / "source", Path(tmp), include_disabled=True) if e["id"] == "sqld-01")
         records = json.loads((ROOT / "source/sqld/sqld-reviews.json").read_text(encoding="utf-8"))
         self.assertEqual({r["questionId"]: r["revision"] for r in records}, {q["id"]: q["revision"] for q in exam["questions"]})
         for r in records:
@@ -90,13 +90,13 @@ class SqldScopeTests(unittest.TestCase):
             self.assertFalse(r["engineRun"])
             self.assertFalse(r["independent"])
 
-    def test_the_manifest_lists_the_track_with_its_subjects_and_marks_the_exam_as_a_draft(self):
+    def test_the_track_is_switched_off_so_the_manifest_leaves_it_out_but_the_exam_stays_a_draft(self):
         import tempfile, json
         with tempfile.TemporaryDirectory() as tmp:
-            build_data.build_data(ROOT / "source", Path(tmp))
+            exams = build_data.build_data(ROOT / "source", Path(tmp), include_disabled=True)
             manifest = json.loads((Path(tmp) / "manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["tracks"]["sqld"]["subjects"], self.scope["subjects"])
-        self.assertTrue(next(e for e in manifest["exams"] if e["id"] == "sqld-01")["draft"])
+        self.assertNotIn("sqld", manifest["tracks"])
+        self.assertTrue(next(e for e in exams if e["id"] == "sqld-01")["draft"])
 
     def test_a_question_without_a_valid_dialect_fails_validation(self):
         import validate_questions as vq

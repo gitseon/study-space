@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "track": "spring",
+  "practiceMinutes": 60,
+  "note": "회차 수와 시간은 학습용 제안이며 공식 평가 규정이 아니다. 심화 주제(resilience, API versioning, RestClient와 HTTP Interface, Remember-Me)는 노트에만 두고 필수 태그에 넣지 않는다.",
+  "topics": {
+    "foundation-boot": "Framework와 Boot 기초",
+    "di-bean": "DI와 빈 관리",
+    "aop-proxy": "AOP와 프록시",
+    "mvc-binding": "MVC 요청과 바인딩",
+    "web-crosscut": "웹 공통 처리",
+    "mybatis": "MyBatis",
+    "service-tx": "Service와 트랜잭션",
+    "rest-api": "REST API",
+    "security": "Spring Security"
+  },
+  "tags": {
+    "foundation-boot": [
+      "framework-role",
+      "boot-autoconfig",
+      "config-properties",
+      "logging-slf4j",
+      "junit-test",
+      "lombok"
+    ],
+    "di-bean": [
+      "ioc-container",
+      "bean-registration",
+      "constructor-injection",
+      "bean-selection",
+      "bean-scope",
+      "bean-lifecycle"
+    ],
+    "aop-proxy": [
+      "aop-terms",
+      "pointcut-expression",
+      "advice-types",
+      "proxy-limits"
+    ],
+    "mvc-binding": [
+      "dispatcher-flow",
+      "request-mapping",
+      "argument-binding",
+      "model-view",
+      "redirect-prg"
+    ],
+    "web-crosscut": [
+      "interceptor",
+      "validation",
+      "exception-handling",
+      "multipart"
+    ],
+    "mybatis": [
+      "mapper-interface",
+      "param-binding",
+      "result-map",
+      "dynamic-sql",
+      "mybatis-config"
+    ],
+    "service-tx": [
+      "tx-boundary",
+      "rollback-rules",
+      "propagation",
+      "self-invocation"
+    ],
+    "rest-api": [
+      "rest-http-method",
+      "json-body",
+      "response-entity",
+      "rest-error",
+      "cors",
+      "api-docs"
+    ],
+    "security": [
+      "filter-chain",
+      "authn-authz",
+      "authorize-rules",
+      "user-details",
+      "login-logout",
+      "auth-info"
+    ]
+  },
+  "groups": {
+    "foundation-boot": {
+      "mc": 2,
+      "short": 1
+    },
+    "di-bean": {
+      "mc": 3,
+      "short": 1
+    },
+    "aop-proxy": {
+      "mc": 2,
+      "short": 1
+    },
+    "mvc-binding": {
+      "mc": 3,
+      "short": 1
+    },
+    "web-crosscut": {
+      "mc": 1,
+      "short": 1
+    },
+    "mybatis": {
+      "mc": 3,
+      "short": 1
+    },
+    "service-tx": {
+      "mc": 2,
+      "short": 1
+    },
+    "rest-api": {
+      "mc": 2,
+      "short": 1
+    },
+    "security": {
+      "mc": 3,
+      "short": 1
+    }
+  },
+  "composition": {
+    "subject": {
+      "mc": 21,
+      "short": 9,
+      "essay": 2,
+      "code": 0
+    }
+  },
+  "essayPlan": {
+    "spring-01": [
+      "di-bean",
+      "mvc-binding"
+    ],
+    "spring-02": [
+      "service-tx",
+      "mybatis"
+    ],
+    "spring-03": [
+      "rest-api",
+      "security"
+    ]
+  },
+  "sources": [
+    "SPR-L01~11",
+    "SPR-S01~11"
+  ],
+  "environment": "environment-spring.json",
+  "studyLinks": {
+    "foundation-boot": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 1. Framework와 Spring의 구성"
+      },
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 2. Spring Boot와 설정"
+      },
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 12. 테스트, 로깅, Lombok"
+      }
+    ],
+    "di-bean": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 3. DI와 빈 관리"
+      }
+    ],
+    "aop-proxy": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 4. AOP와 프록시"
+      }
+    ],
+    "mvc-binding": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 5. Spring MVC 요청 처리"
+      }
+    ],
+    "web-crosscut": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 6. Interceptor, Validation, 예외 처리"
+      },
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 7. 파일 업로드와 다운로드"
+      }
+    ],
+    "mybatis": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 8. MyBatis"
+      }
+    ],
+    "service-tx": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 9. Service와 트랜잭션"
+      }
+    ],
+    "rest-api": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 10. REST API"
+      }
+    ],
+    "security": [
+      {
+        "noteId": "spring-concepts",
+        "section": "Part 11. Spring Security"
+      }
+    ]
+  }
+}

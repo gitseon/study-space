@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import {siteHasSqld} from './site-features.js';
 
 test('the backend home lists note sections per topic and a link jumps to that section', async ({page}) => {
   await page.goto('index.html?track=backend');
@@ -52,6 +53,7 @@ test('other tracks keep their quiz screen without a note row', async ({page}) =>
 });
 
 test('the SQLD note opens from its track, has ten parts and a section link reaches the right heading', async ({page}) => {
+  test.skip(!siteHasSqld, 'the SQLD track is switched off');
   await page.goto('index.html?track=sqld');
   const card = page.getByRole('link', {name: /^SQLD 개념/});
   await expect(card).toHaveAttribute('href', /note=sqld-concepts/);
@@ -65,6 +67,7 @@ test('the SQLD note opens from its track, has ten parts and a section link reach
 });
 
 test('the SQLD note fits a phone screen and its answer toggles open', async ({page}) => {
+  test.skip(!siteHasSqld, 'the SQLD track is switched off');
   await page.setViewportSize({width: 360, height: 780});
   await page.goto('pages/concepts.html?note=sqld-concepts');
   await expect(page.locator('.note h2').first()).toBeVisible();

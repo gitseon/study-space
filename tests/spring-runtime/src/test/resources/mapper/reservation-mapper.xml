@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="study.springcheck.db.DbApp$ReservationMapper">
+    <resultMap id="roomMap" type="study.springcheck.db.DbApp$Room">
+        <id property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+        <collection property="reservations" ofType="study.springcheck.db.DbApp$Reservation">
+            <id property="reservationId" column="reservation_id"/>
+            <result property="memberName" column="member_name"/>
+            <result property="people" column="people"/>
+        </collection>
+    </resultMap>
+    <resultMap id="roomFlatMap" type="study.springcheck.db.DbApp$Room">
+        <result property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+    </resultMap>
+
+    <select id="search" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId, room_id AS roomId, member_name AS memberName, people
+        FROM reservation
+        <where>
+            <if test="roomId != null">
+                AND room_id = #{roomId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND member_name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        ORDER BY reservation_id
+    </select>
+    <select id="byNameUnsafe" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId FROM reservation WHERE member_name = '${name}'
+    </select>
+    <select id="byNameSafe" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId FROM reservation WHERE member_name = #{name}
+    </select>
+    <select id="findRaw" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id, room_id, member_name, people FROM reservation WHERE reservation_id = #{reservationId}
+    </select>
+    <select id="findAliased" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId, member_name AS memberName, people FROM reservation WHERE reservation_id = #{reservationId}
+    </select>
+    <select id="findByIds" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId FROM reservation WHERE reservation_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="twoParams" resultType="study.springcheck.db.DbApp$Reservation">
+        SELECT reservation_id AS reservationId FROM reservation WHERE room_id = #{roomId} AND people = #{people}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="reservationId">
+        INSERT INTO reservation (room_id, member_name, people) VALUES (#{roomId}, #{memberName}, #{people})
+    </insert>
+    <update id="updateDynamic">
+        UPDATE reservation
+        <set>
+            <if test="memberName != null">member_name = #{memberName},</if>
+            <if test="people != null">people = #{people},</if>
+        </set>
+        WHERE reservation_id = #{id}
+    </update>
+    <select id="roomWithReservations" resultMap="roomMap">
+        SELECT m.room_id, m.room_name, r.reservation_id, r.member_name, r.people
+        FROM room m LEFT JOIN reservation r ON r.room_id = m.room_id
+        WHERE m.room_id = #{roomId}
+        ORDER BY r.reservation_id
+    </select>
+    <select id="roomsFlat" resultMap="roomFlatMap">
+        SELECT m.room_id, m.room_name, r.reservation_id
+        FROM room m LEFT JOIN reservation r ON r.room_id = m.room_id
+        WHERE m.room_id = #{roomId}
+    </select>
+    <insert id="insertLog">
+        INSERT INTO audit_log (message) VALUES (#{message})
+    </insert>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM reservation
+    </select>
+    <select id="countLogs" resultType="int">
+        SELECT COUNT(*) FROM audit_log
+    </select>
+</mapper>

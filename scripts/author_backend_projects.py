@@ -18,6 +18,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from validate_projects import is_build_output
+
 ROOT = Path(__file__).resolve().parents[1]
 MASTER = ROOT / "source" / "backend" / "projects" / "_master"
 OUT = ROOT / "source" / "backend" / "projects"
@@ -350,7 +352,9 @@ def check_all(trees: dict[str, dict[str, str]]) -> list[str]:
             folder = base / name
             if folder.is_dir():
                 for file in folder.rglob("*"):
-                    if file.is_file() and file.relative_to(base).as_posix() not in tree:
+                    rel = file.relative_to(base).as_posix()
+                    # What an IDE or a Maven build left beside pom.xml is not a generated manuscript file.
+                    if file.is_file() and rel not in tree and not is_build_output(rel):
                         problems.append(f"{pid}/{file.relative_to(base).as_posix()}: 마스터에 없는 생성 파일")
     return problems
 

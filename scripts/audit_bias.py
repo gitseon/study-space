@@ -97,7 +97,7 @@ def audit_bias(exams,reviews):
 if __name__=="__main__":
     parser=argparse.ArgumentParser(); parser.add_argument("--strict",action="store_true"); parser.add_argument("--report",default="reports/bias.json"); args=parser.parse_args()
     reviews=[r for info in TRACKS.values() for f in [ROOT/"source"/info["dir"]/"authoring-reviews.json"] if f.exists() for r in json.loads(f.read_text(encoding="utf-8"))]
-    report=audit_bias(build_data(),reviews)
+    report=audit_bias(build_data(include_disabled=True),reviews)
     target=ROOT/args.report; target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(f"Bias audit: {report['unresolvedCount']} unresolved / {len(report['issues'])} findings")

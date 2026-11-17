@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import {siteHasSwTest} from './site-features.js';
 
 const openPanel = async (page) => {
   if (await page.locator('#theme-panel').isHidden()) {
@@ -28,7 +29,7 @@ test('a dark or light choice is remembered across pages and beats the system set
   await expect(html).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#14181a');
 
-  for (const url of ['pages/sw-test.html?p=hunter', 'pages/concepts.html', 'pages/quiz.html?exam=subject-01&mode=study&topic=queue']) {
+  for (const url of [...(siteHasSwTest ? ['pages/sw-test.html?p=hunter'] : []), 'pages/concepts.html', 'pages/quiz.html?exam=subject-01&mode=study&topic=queue']) {
     await page.goto(url);
     await expect(html).toHaveAttribute('data-theme', 'dark');
     await openPanel(page);
@@ -69,13 +70,14 @@ test('one 테마 button opens a panel with the theme and the colour palette choi
   await page.locator('h1').first().click();
   await expect(panel).toBeHidden();
 
-  await page.goto('pages/sw-test.html?p=hunter');
+  await page.goto(siteHasSwTest ? 'pages/sw-test.html?p=hunter' : 'pages/concepts.html');
   await expect(html).toHaveAttribute('data-palette', 'mono');
   await openPanel(page);
   await expect(page.locator('#palette-select')).toHaveValue('mono');
 });
 
 test('Java code uses the Eclipse editor colours in every palette', async ({page}) => {
+  test.skip(!siteHasSwTest, 'the SW test page is switched off');
   await page.goto('pages/sw-test.html?p=hunter');
   const color = (selector) => page.locator('figure.snippet[data-lang="java"] ' + selector).first().evaluate((el) => getComputedStyle(el).color);
   expect(await color('.tok-k')).toBe('rgb(127, 0, 85)');

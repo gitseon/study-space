@@ -6,7 +6,7 @@ import {studyLinksFor} from './study-links.js';
 import {renderNote} from './note-render.js';
 import {splitFlow} from './project-flow.js';
 import {featureForTab, mountStructure} from './project-structure.js';
-import {EDITOR_NOTICE, ENV_NOTICE} from './project-notices.js';
+import {createCatalogLoader, latestGuard, presentationOf, projectCatalogFor, projectHref} from './project-catalog.js';
 import {projectStore} from './project-store.js';
 
 const root = document.querySelector('#app');
@@ -178,15 +178,17 @@ function librarySection(attempts) {
     + '<div class="section-heading"><div><span class="eyebrow">내 속도로 준비하기</span><h2>오늘의 문제집</h2></div>'
     + '<div class="tabs" role="group" aria-label="평가 유형">' + tabs + '</div></div>'
     + (projectMode
-      ? '<div class="project-env" id="project-env"><p>' + e(ENV_NOTICE) + '</p><p>' + e(EDITOR_NOTICE) + '</p></div><div id="project-area"><p class="loading">월말평가 프로젝트를 불러오고 있습니다</p></div>'
+      ? '<div class="project-env" id="project-env">' + (track === 'backend' ? envHtml(presentationOf({})) : '') + '</div><div id="project-area"><p class="loading">월말평가 프로젝트를 불러오고 있습니다</p></div>'
       : '<div class="exam-grid">' + cards + '</div>')
     + '</section>';
 }
 
-// 백엔드 · DB의 월말평가는 문항이 아니라 직접 구현하는 Web 프로젝트라서 탭 하나로 따로 둡니다.
+// 월말평가는 문항이 아니라 직접 구현하는 프로젝트라서 탭 하나로 따로 둡니다. 프로젝트가 있는 과목에만 탭이 생깁니다.
 const PROJECT_KIND = 'project';
-const projectTabAvailable = () => track === 'backend' && !!manifest.webProjects;
-let projectIndexPromise = null;
+const projectTabAvailable = () => !!projectCatalogFor(manifest, track);
+const projectLoader = createCatalogLoader((file) => fetchData(file));
+const projectGuard = latestGuard();
+const envHtml = (text) => '<p>' + e(text.envNotice) + '</p><p>' + e(text.editorNotice) + '</p>';
 
 async function fetchData(path) {
   const res = await fetch(new URL('../data/' + path, import.meta.url));
@@ -201,9 +203,9 @@ function projectCard(project, number) {
   const times = project.durationOptions
     .map((m) => '<option value="' + m + '"' + (m === project.defaultMinutes ? ' selected' : '') + '>' + (m ? m + '분' : '시간 제한 없음') + '</option>').join('');
   return '<article class="exam-card project-card" data-project="' + e(project.id) + '">'
-    + '<div class="card-top"><span class="pill">월말평가 프로젝트</span><span class="card-number">' + String(number).padStart(2, '0') + '</span></div>'
+    + '<div class="card-top"><span class="pill">월말평가 프로젝트</span>' + (project.verification?.label ? '<span class="pill">' + e(project.verification.label) + '</span>' : '') + '<span class="card-number">' + String(number).padStart(2, '0') + '</span></div>'
     + '<h3>' + e(project.title) + '</h3>'
-    + '<p class="card-description">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 목록, 등록, 상세와 로그인, 로그아웃을 연결합니다. 사이트가 코드를 실행하거나 점수를 매기지는 않습니다.</p>'
+    + '<p class="card-description">' + e(presentationOf(project).lead) + ' 사이트가 코드를 실행하거나 점수를 매기지는 않습니다.</p>'
     + '<div class="card-types"><span>작성 대상 <b>' + project.targetCount + '</b></span><span>단계 <b>' + project.stages.length + '</b></span></div>'
     + '<label class="card-setting">단계 <select id="pstage-' + e(project.id) + '">' + stages + '</select></label>'
     + '<label class="card-setting">제한 시간 <select id="ptime-' + e(project.id) + '">' + times + '</select></label>'
@@ -225,9 +227,15 @@ async function fillProjectArea() {
   if (!area) {
     return;
   }
+  // 과목을 바꾼 뒤 늦게 도착한 이전 과목의 응답은 버립니다.
+  const requested = track;
+  const token = projectGuard.next();
+  const stale = () => !area.isConnected || !projectGuard.isCurrent(token) || track !== requested;
   try {
-    projectIndexPromise ||= fetchData(manifest.webProjects.file);
-    const index = await projectIndexPromise;
+    const index = await projectLoader.load(manifest, requested);
+    if (!index) {
+      throw Error(requested);
+    }
     // 구현 흐름의 도식은 구현해야 하는 파일의 모범답안도 보여 준다. 모범답안을 받지 못해도 도식은 그대로 쓴다.
     const first = index.projects[0];
     const [detail, answerFile] = await Promise.all([
@@ -235,8 +243,12 @@ async function fillProjectArea() {
       first.referenceFile ? fetchData(first.referenceFile).catch(() => null) : null,
     ]);
     const reference = answerFile?.files ? Object.fromEntries(answerFile.files.map((f) => [f.path, {language: f.language, text: f.text}])) : null;
-    if (!area.isConnected) {
+    if (stale()) {
       return;
+    }
+    const env = document.querySelector('#project-env');
+    if (env) {
+      env.innerHTML = envHtml(presentationOf(first));
     }
     const tabs = splitFlow(detail.flow);
     area.innerHTML = flowSummary(tabs) + '<div class="exam-grid">' + index.projects.map((p, i) => projectCard(p, i + 1)).join('') + '</div>';
@@ -260,13 +272,16 @@ async function fillProjectArea() {
     area.querySelectorAll('[data-project-start]').forEach((b) => {
       b.onclick = () => {
         const id = b.dataset.projectStart;
-        location.href = 'pages/project.html?project=' + encodeURIComponent(id)
-          + '&stage=' + document.getElementById('pstage-' + id).value + '&minutes=' + document.getElementById('ptime-' + id).value;
+        location.href = projectHref({track: requested, project: id, stage: document.getElementById('pstage-' + id).value, minutes: document.getElementById('ptime-' + id).value});
       };
     });
     try {
       const names = {'in-progress': '진행 중', 'time-ended': '시간 종료', review: '작성 마침'};
-      for (const a of await projectStore.list()) {
+      const saved = await projectStore.list();
+      if (stale()) {
+        return;
+      }
+      for (const a of saved) {
         const box = document.getElementById('presume-' + a.projectId);
         if (box) {
           box.insertAdjacentHTML('beforeend', '<a href="pages/project.html?attempt=' + encodeURIComponent(a.attemptId) + '">' + a.stageId + '단계 ' + names[a.status] + ' · 이어서 보기 →</a>');
@@ -276,7 +291,7 @@ async function fillProjectArea() {
       // 저장소를 열 수 없으면 이어서 하기 목록만 비웁니다.
     }
   } catch {
-    if (area.isConnected) {
+    if (!stale()) {
       area.innerHTML = '<div class="empty">월말평가 프로젝트를 불러오지 못했습니다. 연결을 확인하고 다시 시도해 주세요.</div>';
     }
   }

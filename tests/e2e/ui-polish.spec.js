@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import {siteHasSwTest} from './site-features.js';
 
 test('the time limit list runs from short to long with no limit last and keeps the exam length selected', async ({page}) => {
   await page.goto('index.html');
@@ -102,7 +103,9 @@ test('concept notes show code windows too while the SW test page keeps its Eclip
   await page.goto('pages/concepts.html?note=db-concepts');
   await expect(page.locator('.note figure.snippet.window').first()).toBeVisible();
   expect(await page.locator('.note figure.snippet.window').count()).toBeGreaterThan(3);
-  await page.goto('pages/sw-test.html?p=hunter');
-  await expect(page.locator('figure.snippet[data-lang="java"]').first()).toBeVisible();
-  await expect(page.locator('figure.snippet.window')).toHaveCount(0);
+  if (siteHasSwTest) {
+    await page.goto('pages/sw-test.html?p=hunter');
+    await expect(page.locator('figure.snippet[data-lang="java"]').first()).toBeVisible();
+    await expect(page.locator('figure.snippet.window')).toHaveCount(0);
+  }
 });
