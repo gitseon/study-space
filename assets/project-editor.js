@@ -348,6 +348,12 @@ export function mountProjectEditor(container, {files, activePath, readOnly = fal
   };
 }
 
+// 파일 패널이 늘어날 수 있는 범위. 요구사항 패널이 옆에 있으면(sideWidth > 0) 틈이 둘이고 코드 패널은 codeMin 이상을 지킨다.
+export function filesBounds({gridWidth, sideWidth, gap = 10, min = 160, codeMin = 320}) {
+  const gaps = sideWidth > 0 ? 2 * gap : gap;
+  return {min, max: Math.max(min, gridWidth - sideWidth - gaps - codeMin)};
+}
+
 // 패널 너비를 min과 max 사이로 맞춘다. max가 min보다 작으면 min을 쓴다.
 export function clampPanelWidth(width, min, max) {
   return Math.round(Math.min(Math.max(width, min), Math.max(min, max)));
