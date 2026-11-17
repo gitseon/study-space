@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "note": "공개 자료 ID 목록이다. 원본 파일명, 경로, 해시는 넣지 않는다. 쪽은 PDF 파일의 1부터 시작하는 페이지다. legacyTracks의 기존 출처 표기는 검사 대상이 아니며 새로 추가하는 트랙에는 허용하지 않는다.",
+  "idPrefixes": [
+    "SPR-"
+  ],
+  "checkedDirs": [
+    "Spring"
+  ],
+  "legacyTracks": [
+    "algorithm",
+    "frontend",
+    "ai",
+    "adsp",
+    "backend",
+    "sqld"
+  ],
+  "sources": [
+    {
+      "id": "SPR-L01",
+      "description": "Framework, SLF4J, JUnit, Lombok",
+      "pages": 42,
+      "allowedSections": [
+        "Framework 개요",
+        "SLF4J 로깅",
+        "JUnit 테스트",
+        "Lombok"
+      ]
+    },
+    {
+      "id": "SPR-L02",
+      "description": "의존성, 명시적·묵시적 DI, 빈 생명주기",
+      "pages": 35,
+      "allowedSections": [
+        "의존성과 IoC",
+        "명시적 DI",
+        "묵시적 DI",
+        "빈 생명주기"
+      ]
+    },
+    {
+      "id": "SPR-L03",
+      "description": "Boot, 자동 구성, 설정, 기존 Servlet 프로젝트 전환",
+      "pages": 40,
+      "allowedSections": [
+        "Boot 개요",
+        "자동 구성",
+        "설정 파일",
+        "Servlet 프로젝트 전환"
+      ]
+    },
+    {
+      "id": "SPR-L04",
+      "description": "AOP, 프록시, pointcut, advice",
+      "pages": 35,
+      "allowedSections": [
+        "AOP 개요",
+        "프록시",
+        "pointcut",
+        "advice"
+      ]
+    },
+    {
+      "id": "SPR-L05",
+      "description": "AOP 한계, MVC 흐름, Controller와 응답",
+      "pages": 32,
+      "allowedSections": [
+        "AOP 한계",
+        "MVC 요청 흐름",
+        "Controller와 응답"
+      ]
+    },
+    {
+      "id": "SPR-L06",
+      "description": "MVC 테스트, 인자 바인딩, 예외, 파일 업로드",
+      "pages": 30,
+      "allowedSections": [
+        "MVC 테스트",
+        "인자 바인딩",
+        "예외 처리",
+        "파일 업로드"
+      ]
+    },
+    {
+      "id": "SPR-L07",
+      "description": "Model 계층, Spring과 MyBatis, 매퍼",
+      "pages": 38,
+      "allowedSections": [
+        "Model 계층",
+        "MyBatis 연동",
+        "매퍼"
+      ]
+    },
+    {
+      "id": "SPR-L08",
+      "description": "동적 SQL, Service 트랜잭션, 전파, resilience",
+      "pages": 45,
+      "allowedSections": [
+        "동적 SQL",
+        "Service 트랜잭션",
+        "트랜잭션 전파",
+        "resilience"
+      ]
+    },
+    {
+      "id": "SPR-L09",
+      "description": "REST, API versioning, Swagger, RestClient, HTTP Interface",
+      "pages": 84,
+      "allowedSections": [
+        "REST",
+        "API versioning",
+        "Swagger",
+        "RestClient",
+        "HTTP Interface"
+      ]
+    },
+    {
+      "id": "SPR-L10",
+      "description": "SecurityFilterChain, 인증·인가, 사용자와 권한 설정",
+      "pages": 46,
+      "allowedSections": [
+        "SecurityFilterChain",
+        "인증과 인가",
+        "사용자와 권한 설정"
+      ]
+    },
+    {
+      "id": "SPR-L11",
+      "description": "사용자 정의 인증, 로그인·로그아웃, 인증 정보, Remember-Me",
+      "pages": 40,
+      "allowedSections": [
+        "사용자 정의 인증",
+        "로그인과 로그아웃",
+        "인증 정보",
+        "Remember-Me"
+      ]
+    },
+    {
+      "id": "SPR-S01",
+      "description": "Framework와 프로젝트 환경",
+      "pages": 50,
+      "allowedSections": [
+        "Framework 개요",
+        "프로젝트 환경"
+      ]
+    },
+    {
+      "id": "SPR-S02",
+      "description": "로깅과 JUnit 보충",
+      "pages": 36,
+      "allowedSections": [
+        "로깅",
+        "JUnit 테스트"
+      ]
+    },
+    {
+      "id": "SPR-S03",
+      "description": "IoC, DI, 빈 관리",
+      "pages": 73,
+      "allowedSections": [
+        "IoC",
+        "DI",
+        "빈 관리"
+      ]
+    },
+    {
+      "id": "SPR-S04",
+      "description": "Lombok 어노테이션",
+      "pages": 35,
+      "allowedSections": [
+        "Lombok"
+      ]
+    },
+    {
+      "id": "SPR-S05",
+      "description": "Boot 자동 구성, 설정, 빈 생명주기·scope",
+      "pages": 56,
+      "allowedSections": [
+        "자동 구성",
+        "설정 파일",
+        "빈 생명주기",
+        "빈 scope"
+      ]
+    },
+    {
+      "id": "SPR-S06",
+      "description": "AOP 동작, pointcut, advice, 활용",
+      "pages": 46,
+      "allowedSections": [
+        "AOP 동작",
+        "pointcut",
+        "advice",
+        "AOP 활용"
+      ]
+    },
+    {
+      "id": "SPR-S07",
+      "description": "MVC, 바인딩, Model/View, 예외, Validation",
+      "pages": 88,
+      "allowedSections": [
+        "MVC 요청 흐름",
+        "인자 바인딩",
+        "Model과 View",
+        "예외 처리",
+        "Validation"
+      ]
+    },
+    {
+      "id": "SPR-S08",
+      "description": "Interceptor, Filter·AOP 비교, 요청별 문맥",
+      "pages": 40,
+      "allowedSections": [
+        "Interceptor",
+        "Filter와 AOP 비교",
+        "요청별 문맥"
+      ]
+    },
+    {
+      "id": "SPR-S09",
+      "description": "MyBatis 설정, XML, 동적 SQL, resultMap",
+      "pages": 47,
+      "allowedSections": [
+        "MyBatis 설정",
+        "매퍼 XML",
+        "동적 SQL",
+        "resultMap"
+      ]
+    },
+    {
+      "id": "SPR-S10",
+      "description": "multipart와 파일 업로드·다운로드",
+      "pages": 26,
+      "allowedSections": [
+        "multipart",
+        "파일 업로드",
+        "파일 다운로드"
+      ]
+    },
+    {
+      "id": "SPR-S11",
+      "description": "HTTP·REST, ResponseEntity, CORS, 오류 응답, OpenAPI",
+      "pages": 114,
+      "allowedSections": [
+        "HTTP와 REST",
+        "ResponseEntity",
+        "CORS",
+        "오류 응답",
+        "OpenAPI"
+      ]
+    }
+  ]
+}

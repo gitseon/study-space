@@ -4,7 +4,8 @@ import json
 import re
 from pathlib import Path
 
-from build_backend_projects import ProjectError, build_projects
+from build_projects import ProjectError, build_projects
+from project_catalog import PROJECT_TRACKS, projects_root
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,8 +14,10 @@ TRACKS={"algorithm":{"label":"자료구조와 알고리즘","dir":"dsAlgo","scop
         "frontend":{"label":"프론트엔드","dir":"frontend","scope":"scope-frontend.json"},
         "ai":{"label":"AI 역량검사","dir":"AI역량검사","scope":"scope-ai.json"},
         "adsp":{"label":"ADsP","dir":"adsp","scope":"scope-adsp.json"},
-        "backend":{"label":"백엔드 · DB","dir":"backend","scope":"scope-backend.json"},
-        "sqld":{"label":"SQLD","dir":"sqld","scope":"scope-sqld.json"}}
+        "backend":{"label":"백엔드 · DB","dir":"backend","scope":"scope-backend.json","coverage":"coverage-backend.json"},
+        # enabled False keeps the manuscripts and their checks but publishes nothing: no data files, no manifest entry, no home button.
+        "sqld":{"label":"SQLD","dir":"sqld","scope":"scope-sqld.json","enabled":False},
+        "spring":{"label":"Spring","dir":"Spring","scope":"scope-spring.json","coverage":"coverage-spring.json"}}
 # Exam kinds that are answered mostly with multiple choice and feed the topic practice sets.
 CHOICE_KINDS=("subject","written")
 
@@ -25,14 +28,23 @@ NOTES=[("web-concepts","Web 개념","frontend/web개념 요약노트.md","fronte
        ("ai-concepts","AI 개념","AI역량검사/AI역량 개념 요약노트.md","ai"),
        ("backend-concepts","Backend 개념","backend/backend개념 요약노트.md","backend"),
        ("db-concepts","DB 개념","DB/DB개념 요약노트.md","backend"),
-       ("sqld-concepts","SQLD 개념","sqld/SQLD개념 요약노트.md","sqld")]
+       ("sqld-concepts","SQLD 개념","sqld/SQLD개념 요약노트.md","sqld"),
+       ("spring-concepts","Spring 개념","Spring/Spring개념 요약노트.md","spring")]
 
 class ContentError(ValueError):
     pass
 
+def enabled_tracks():
+    return [track for track,info in TRACKS.items() if info.get("enabled",True)]
+
+def is_published(track):
+    return TRACKS[track].get("enabled",True)
+
 # The SW역량테스트 page is not an exam track. It lists solved problems in prediction order,
 # each with an idea note and the Java solution, all read from source/SW역량테스트/.
 SW_TEST_DIR="SW역량테스트"
+# False keeps the manuscripts, their validation and the Java tests but publishes no data, page or home link.
+SW_TEST_PUBLISHED=False
 
 def build_sw_test(source_root):
     base=source_root/SW_TEST_DIR
@@ -147,15 +159,19 @@ def parse_exam(source_dir):
     exam["contentVersion"]=hashlib.sha256(json.dumps(exam,ensure_ascii=False,sort_keys=True).encode()).hexdigest()[:16]
     return exam
 
-def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
+def build_data(source_root=ROOT/"source", output_root=ROOT/"data", include_disabled=False):
+    """Writes the published data. include_disabled only widens the returned exams, so checks can still read the manuscripts of a switched-off track."""
     output_root.mkdir(parents=True,exist_ok=True)
-    exams=[parse_exam(p.parent) for info in TRACKS.values() for p in sorted((source_root/info["dir"]).glob("*/exam.json"))]
+    every=[parse_exam(p.parent) for info in TRACKS.values() for p in sorted((source_root/info["dir"]).glob("*/exam.json"))]
+    exams=[e for e in every if is_published(track_of(e))]
     if not exams:
         raise ContentError("No exam manuscripts found")
     for exam in exams:
         (output_root/f"{exam['id']}.json").write_text(json.dumps(exam,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     notes=[]
     for note_id,title,filename,note_track in NOTES:
+        if not is_published(note_track):
+            continue
         if filename is None:
             notes.append({"id":note_id,"title":title,"track":note_track,"file":None})
             continue
@@ -171,15 +187,20 @@ def build_data(source_root=ROOT/"source", output_root=ROOT/"data"):
     manifest={"exams":summary,"topics":scope["topics"],"tracks":tracks,"notes":notes}
     if (source_root/SW_TEST_DIR/"problems.json").exists():
         sw=build_sw_test(source_root)
+    if SW_TEST_PUBLISHED and (source_root/SW_TEST_DIR/"problems.json").exists():
         (output_root/"sw-test.json").write_text(json.dumps(sw,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
         manifest["swTest"]={"title":sw["title"],"file":"sw-test.json","count":len(sw["problems"])}
-    if (source_root/"backend"/"projects").is_dir():
+    # Month-end projects per track. webProjects stays as the backend entry for pages and links made before projectTracks.
+    for project_track in PROJECT_TRACKS:
+        base=projects_root(source_root,project_track)
+        if not base.is_dir() or not any(p.is_dir() and not p.name.startswith("_") for p in base.iterdir()): continue
         try:
-            manifest["webProjects"]=build_projects(source_root,output_root)
+            manifest.setdefault("projectTracks",{})[project_track]=build_projects(source_root,output_root,project_track)
         except ProjectError as error:
             raise ContentError(str(error)) from error
+    if "backend" in manifest.get("projectTracks",{}): manifest["webProjects"]=manifest["projectTracks"]["backend"]
     (output_root/"manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
-    return exams
+    return every if include_disabled else exams
 
 if __name__=="__main__":
     exams=build_data()

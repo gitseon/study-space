@@ -9,3 +9,8 @@ __pycache__/
 .venv/
 private/
 *.pdf
+# Spring 원본 폴더: 회차와 프로젝트 원고 폴더만 공개하고 그 밖의 하위 폴더(원본, 추출물)는 제외한다.
+source/Spring/*/
+!source/Spring/spring-*/
+!source/Spring/projects/
+target/

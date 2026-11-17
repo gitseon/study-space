@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "status": "practice",
+  "classMatch": "unconfirmed",
+  "note": "연습용 검증 환경이다. 수업 POM을 확보하지 못해 수업 환경과 같은지는 확인하지 못했다. 버전에 따라 달라지는 문항은 이 조합에서 실행한 결과를 정답으로 한다. 접속 계정과 비밀번호와 설치 경로는 기록하지 않는다.",
+  "versions": {
+    "javaRuntime": "25",
+    "javaRelease": "21",
+    "springBoot": "4.1.2",
+    "springFramework": "7.0.10",
+    "springSecurity": "7.1.2",
+    "mybatis": "3.5.19",
+    "mybatisStarter": "4.1.0",
+    "mysqlServer": "8.4",
+    "mysqlDriver": "9.7.0"
+  },
+  "build": {
+    "tool": "Maven 3.9",
+    "parent": "spring-boot-starter-parent"
+  },
+  "packaging": {
+    "runtime-checks": "jar",
+    "jsp-projects": "war",
+    "rest-projects": "jar"
+  },
+  "testTools": [
+    "JUnit Jupiter (Boot 관리 버전)",
+    "MockMvc",
+    "spring-security-test"
+  ],
+  "unverified": [
+    "STS에서의 수동 실행",
+    "수업 POM과의 일치 여부"
+  ]
+}

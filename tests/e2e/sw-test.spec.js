@@ -1,4 +1,7 @@
 import {test, expect} from '@playwright/test';
+import {siteHasSwTest} from './site-features.js';
+
+test.skip(!siteHasSwTest, 'the SW test page is switched off');
 
 const ORDER = ['나무 높이', '산악 구조 로봇(보급로)', '헌터', '선수과목', '프로세서 연결하기', '지역구 나누기', '키 순서', '등산로 조성', '사과 먹기 게임', '풍선 사격 게임', '다리 건설'];
 

@@ -143,26 +143,30 @@ def validate_notes(source_root=ROOT/"source"):
 
 COVERAGE_PROFILES=("pilot","full")
 
-def backend_note_texts(source_root=ROOT/"source"):
-    """Manuscripts of the notes owned by the backend track, keyed by note ID."""
-    return {note_id:(source_root/filename).read_text(encoding="utf-8-sig") for note_id,_,filename,note_track in NOTES if note_track=="backend" and filename}
+def note_texts_for_track(source_root=ROOT/"source", track="backend"):
+    """Manuscripts of the notes owned by one track, keyed by note ID."""
+    return {note_id:(source_root/filename).read_text(encoding="utf-8-sig") for note_id,_,filename,note_track in NOTES if note_track==track and filename}
 
-def validate_coverage(coverage, exams, note_texts):
-    """Every scope row must point at real note sections and, once backend exams exist, at real backend questions.
-    A pilot needs one question per row, a full bank needs one per keyword."""
+def backend_note_texts(source_root=ROOT/"source"):
+    return note_texts_for_track(source_root,"backend")
+
+def validate_coverage(coverage, exams, note_texts, track="backend"):
+    """Every scope row must point at real note sections and, once the track has exams, at real questions of that track.
+    A pilot needs one question per row, a full bank needs one per keyword. A noteOnly row is an advanced note section
+    that is not examined, so it lists no question. Project targets live in projectTargets and are checked with the projects."""
     issues=[]
     def add(code,item,message): issues.append({"code":code,"questionId":item,"message":message,"severity":"error"})
     profile=coverage.get("coverageProfile")
     if profile not in COVERAGE_PROFILES: add("coverage-profile","coverage",str(profile))
     track_of_question={q["id"]:track_of(e) for e in exams for q in e["questions"]}
-    has_exams=any(track=="backend" for track in track_of_question.values())
+    has_exams=any(found==track for found in track_of_question.values())
     def check_section(where,note_id,section):
-        if note_id not in note_texts: add("coverage-note",where,f"unknown backend note {note_id}"); return
+        if note_id not in note_texts: add("coverage-note",where,f"unknown {track} note {note_id}"); return
         if not re.search(r"(?m)^## "+re.escape(str(section))+r"\s*$",note_texts[note_id]): add("coverage-section",where,f"{note_id}: {section}")
     def check_questions(where,ids):
         for qid in ids:
             if qid not in track_of_question: add("coverage-unknown",where,qid)
-            elif track_of_question[qid]!="backend": add("coverage-track",where,qid)
+            elif track_of_question[qid]!=track: add("coverage-track",where,qid)
     seen=set()
     for req in coverage.get("requirements",[]):
         rid=req.get("requirementId","?")
@@ -174,11 +178,13 @@ def validate_coverage(coverage, exams, note_texts):
         check_questions(rid,listed)
         keywords=req.get("keywords",[])
         if not keywords or len({k["id"] for k in keywords})!=len(keywords): add("coverage-duplicate",rid,"keywords missing or duplicated")
+        note_only=req.get("noteOnly") is True
+        if note_only and (listed or any(k.get("questionIds") for k in keywords)): add("coverage-note-only",rid,"a note-only row lists no question")
         for keyword in keywords:
             check_questions(f"{rid}/{keyword['id']}",keyword.get("questionIds",[]))
             if set(keyword.get("questionIds",[]))-set(listed): add("coverage-listed",f"{rid}/{keyword['id']}","keyword question missing from the requirement")
-            if has_exams and profile=="full" and not keyword.get("questionIds"): add("coverage-keyword",f"{rid}/{keyword['id']}","keyword without a question")
-        if has_exams and not listed: add("coverage-question",rid,"requirement without a question")
+            if has_exams and profile=="full" and not note_only and not keyword.get("questionIds"): add("coverage-keyword",f"{rid}/{keyword['id']}","keyword without a question")
+        if has_exams and not note_only and not listed: add("coverage-question",rid,"requirement without a question")
     return issues
 
 def all_note_texts(source_root=ROOT/"source"):
@@ -241,13 +247,17 @@ def validate_sw_test(source_root=ROOT/"source"):
     return issues
 
 if __name__=="__main__":
-    exams=build_data(); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
+    exams=build_data(include_disabled=True); scopes={t:load_scope(ROOT/"source",t) for t in TRACKS if any(track_of(e)==t for e in exams)}
     issues=validate_bank(exams,scopes["algorithm"],scopes)+validate_notes()+validate_sw_test()
     notes_text=all_note_texts()
-    for track,scope in scopes.items(): issues+=validate_study_links(scope.get("studyLinks",{}),scope["topics"],notes_text)
-    coverage_path=ROOT/"source"/"backend"/"coverage-backend.json"
-    if coverage_path.exists():
-        issues+=validate_coverage(json.loads(coverage_path.read_text(encoding="utf-8-sig")),exams,backend_note_texts())
+    # A track that only has a note so far still gets its scope links checked.
+    for track in TRACKS:
+        scope=scopes.get(track) or load_scope(ROOT/"source",track)
+        issues+=validate_study_links(scope.get("studyLinks",{}),scope["topics"],notes_text)
+    for track,info in TRACKS.items():
+        if "coverage" not in info: continue
+        coverage_path=ROOT/"source"/info["dir"]/info["coverage"]
+        issues+=validate_coverage(json.loads(coverage_path.read_text(encoding="utf-8-sig")),exams,note_texts_for_track(ROOT/"source",track),track)
     for item in issues: print(json.dumps(item,ensure_ascii=True))
     print(f"Content validation: {len(issues)} errors")
     raise SystemExit(bool(issues))

@@ -110,9 +110,12 @@ export function archHtml(structure, {flow = 'overview', selected = null, writeOn
   const members = flowMembers(structure, flow);
   const shown = (node) => !writeOnly || isWriteNode(node);
   const rowsOf = (ids) => ids.map((id) => ({layer: structure.layers.find((l) => l.id === id), nodes: structure.nodes.filter((n) => n.layer === id && shown(n))})).filter((r) => r.layer && r.nodes.length);
-  const main = rowsOf(ARCH_MAIN);
-  const side = rowsOf(ARCH_SIDE);
-  const known = new Set([...ARCH_MAIN, ...ARCH_SIDE]);
+  // 프로젝트가 주 경로를 정해 주면 그것을 쓰고, 없으면 Servlet 프로젝트의 경로를 씁니다.
+  const mainIds = structure.mainLayers || ARCH_MAIN;
+  const sideIds = structure.sideLayers || ARCH_SIDE;
+  const main = rowsOf(mainIds);
+  const side = rowsOf(sideIds);
+  const known = new Set([...mainIds, ...sideIds]);
   const foot = rowsOf(structure.layers.map((l) => l.id).filter((id) => !known.has(id)));
   const row = (r) => `<div class="ar-row" data-layer="${escapeHtml(r.layer.id)}"><span class="ar-cap">${escapeHtml(r.layer.label)}</span><div class="ar-boxes">${r.nodes.map((n) => archBox(n, members, selected)).join('')}</div></div>`;
   const link = (a, b) => {
@@ -127,7 +130,7 @@ export function archHtml(structure, {flow = 'overview', selected = null, writeOn
   const chain = main.map((r, i) => (i ? link(main[i - 1], r) : '') + row(r)).join('');
   const kinds = [...new Set(structure.edges.filter((e) => ['forward', 'redirect', 'error'].includes(e.kind)).map((e) => KIND_LABELS[e.kind]))];
   const sideHtml = side.length
-    ? `<div class="ar-side">${side.map(row).join('')}<p class="ar-note">컨트롤러가 ${escapeHtml(kinds.join(' · '))}으로 보내는 화면</p></div>` : '';
+    ? `<div class="ar-side">${side.map(row).join('')}<p class="ar-note">${escapeHtml(structure.sideNote ?? `컨트롤러가 ${kinds.join(' · ')}으로 보내는 화면`)}</p></div>` : '';
   const footHtml = foot.length ? `<div class="ar-foot">${foot.map(row).join('')}</div>` : '';
   return `<div class="ar" role="group" aria-label="한눈에 보는 구조" data-collapsed="${collapsed}"><h4 class="ar-title">${foldButton('arch', '한눈에 보는 구조', !collapsed, 'ar-body')}</h4>`
     + `<div class="ar-body" id="ar-body"${collapsed ? ' hidden' : ''}>`

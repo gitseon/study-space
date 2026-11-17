@@ -158,6 +158,18 @@ SQLD 문항은 `exam.json`에 `"track": "sqld"`, `"kind": "subject"`, `"practice
 - 원본 요약집 문장을 옮기지 않고 노트와 문항의 예시 데이터는 새로 만든다. 도표는 직접 만든 표나 SVG만 쓴다.
 - 정답을 해당 엔진에서 확인하지 못한 회차는 `exam.json`에 `"draft": true`를 쓰고 `source/sqld/sqld-reviews.json`에 문항마다 `status: "draft-unverified"`와 `engineRun: false`, 확인한 범위(`crossCheck`)를 기록한다. 초안은 카드와 풀이 화면에 초안으로 표시되고 점수는 참고용이다. 이는 사용자가 정한 예외이며 Oracle 19c와 SQL Server 2022에서 정답을 실행해 확인하면 기록을 갱신하고 `draft`를 지운다. MySQL 교차 확인은 표준 SQL 의미를 점검한 것일 뿐 대상 엔진의 검증이 아니다.
 
+## 12. Spring 트랙
+
+Spring 문항은 `exam.json`에 `"track": "spring"`, `"kind": "subject"`, `"practiceMinutes": 60`을 쓰고 범위는 `source/Spring/scope-spring.json`을 따른다. 1~6절을 그대로 적용하며 아래 내용만 다르다.
+
+- 회차는 객관식 21, 단답형 9, 서술형 2이고 대주제별 배분은 scope의 `groups`가 정한다. `topics`와 `group`에는 대주제 ID 하나를 쓰고 세부 주제는 `tags`에 쓴다. 3회를 합쳐 모든 태그가 한 번 이상 나와야 하므로 한 회차만으로는 공개하지 않는다. 시범 회차는 `private/spring/`에서 쓰고 `verify_spring_answers.py --source-root`로 검증한다.
+- 실행 결과나 동작을 묻는 문항은 `tests/spring-runtime`의 케이스로 실행하고 `source/Spring/spring-checks.json`에 문항 ID와 revision, 관찰 값, 정답 선지에 들어 있어야 할 사실을 쓴다. 실행할 수 없는 문항은 `spring-reviews.json`에 재풀이 기록을 두며 작성자의 검토를 독립 검토로 적지 않는다(`independent: false`). 검증 환경(JDK, Boot, Framework, Security, MyBatis, MySQL 버전)은 `environment-spring.json`에 있고 실제로 실행한 버전과 다르면 검증이 실패한다.
+- 버전과 설정에 따라 달라지는 동작은 지문에 전제를 쓴다. `@Transactional(readOnly = true)`가 쓰기를 막는다고 단정하지 않고 PathPattern과 Ant 문법을 섞지 않는다. 401, 403, redirect와 예외 응답은 인증 방식과 설정을 지문에 제공한다. resilience, API versioning, RestClient와 HTTP Interface, Remember-Me는 노트에만 있는 심화이며 필수 태그에 넣지 않는다.
+- 새 예제의 도메인, 이름, 데이터, 코드는 직접 만든다. 강의 슬라이드의 문장, 예제, 확인 문제를 옮기지 않는다. 로컬 경로, 계정, 키는 어떤 예제에도 넣지 않는다.
+- `sourceRefs`에는 `source/provenance.json`에 등록된 자료 ID와 절과 PDF 쪽(`SPR-L08 Service 트랜잭션 p.25`), 공개 노트의 Part(`spring-concepts Part 9`), 공식 주소만 쓴다. 원본 파일명과 경로는 쓰지 않으며 `check_public_sources.py --public-only`가 검사한다.
+
 ## 문항이 아닌 연습 자료
+
+Spring 월말평가 프로젝트(`source/Spring/projects/`)도 문항이 아니다. 공개 전에 compile, unit, dbIntegration, httpIntegration과 JSP가 있으면 jspRender를 모두 통과해야 하며 이 기록은 현재 reference와 환경에 대해서만 유효하다. STS 확인은 사용자가 직접 할 때까지 미검증으로 두고 `자동 검증 완료 · STS 미검증`이라고 표시한다.
 
 백엔드 · DB 월말평가의 Web 프로젝트(`source/backend/projects/`)는 문항이 아니므로 정답 번호 분포와 선지 길이 지표는 해당하지 않는다. 대신 모범답안의 컴파일과 JSP 번역을 확인하고, 실행 검증 결과는 프로젝트별 `review.json`에 기록한다. 표시 기준(한국어 줄바꿈, 쉼표와 가운뎃점 나열)은 요구사항과 힌트 문구에도 같게 적용한다.

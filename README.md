@@ -13,15 +13,16 @@
 | 프론트엔드 | 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2) |
 | AI 역량검사 | 필기 검정 1회(객관식 100)와 실기 검정 1회(코드형 8문항, 100점) |
 | ADsP | 객관식 50문항(1과목 10, 2과목 10, 3과목 30) 모의평가 3회 |
-| SQLD | 개념 요약 노트(Oracle과 SQL Server 기준)와 객관식 50문항(1과목 10, 2과목 40) 모의고사 1회. 정답을 Oracle과 SQL Server에서 아직 확인하지 못한 초안이며 카드와 풀이 화면에 초안으로 표시됨 |
+| SQLD | **비활성화(사이트에 표시하지 않음)**. 원고(개념 노트와 객관식 50문항 1회)는 `source/sqld/`에 남아 있고 검증도 계속한다. 다시 켜는 방법은 아래 「비활성화한 항목」 |
+| Spring | 개념 요약 노트 14 Part(Spring 개념). 과목평가와 월말평가는 준비 중이며 아직 공개하지 않는다 |
 | 백엔드 · DB | 개념 노트 2개(Backend, DB)와 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2, 실전 60분) |
-| SW역량테스트 | A형 대비 11문제의 발상과 Java 코드를 예측 우선순위 순서로 정리한 노트(시험 회차 없음) |
+| SW역량테스트 | **비활성화(사이트에 표시하지 않음)**. A형 대비 11문제의 원고와 Java 풀이는 `source/SW역량테스트/`에 남아 있고 검증도 계속한다 |
 
 새 주제를 추가하면 이 표에 한 줄을 더합니다.
 
 ## 로컬 실행
 
-Python 3.12 이상, Node.js 24, Java 17 이상이 필요합니다. AI 역량검사 답안을 검증하려면 `pip install -r requirements-ai.txt`도 실행합니다.
+Python 3.12 이상, Node.js 24, Java 17 이상이 필요합니다(Spring 실행 검증은 JDK 21 이상, Maven 3.9, MySQL 8.4). AI 역량검사 답안을 검증하려면 `pip install -r requirements-ai.txt`도 실행합니다.
 
 ```text
 npm ci
@@ -39,8 +40,9 @@ npm run serve
 ```text
 python scripts/build_data.py
 python scripts/validate_questions.py
+python scripts/check_public_sources.py --public-only
 python scripts/author_backend_projects.py --check
-python scripts/validate_backend_projects.py
+python scripts/validate_projects.py --track backend
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
@@ -53,6 +55,10 @@ npm test
 python scripts/build_site.py
 SITE_DIR=dist npm run test:e2e
 ```
+
+로컬에서만 실행하는 검증은 `python scripts/verify_spring_answers.py`(Spring, MySQL과 Maven 필요)와 `python scripts/verify_backend_answers.py`(백엔드 · DB, MySQL 필요)입니다.
+
+`check_public_sources.py --public-only`는 문항과 프로젝트의 `sourceRefs`가 `source/provenance.json`에 등록된 공개 자료 ID와 절·쪽, 공개 노트, 공식 주소인지 검사하고 `docs/`, `data/`, `dist/`, `reports/`와 ZIP 안의 절대 경로, `private/` 링크, 설정 파일의 평문 비밀번호를 찾는다. 로컬 원본 대응표가 있으면 `--private-index private/spring/source-index.json`으로 해시와 원본 이름 누출까지 확인한다. 값은 출력하지 않고 파일 위치와 코드만 보고한다.
 
 `verify_code_answers.py`는 월평 구현형의 Java 모범답안을 컴파일한 뒤 예제와 검수 케이스로 실행합니다. 결과는 `reports/code-verification.json`에 남습니다.
 
@@ -96,9 +102,26 @@ SITE_DIR=dist npm run test:e2e
 
 `verify_ai_answers.py`는 필기 문항의 계산과 코드를 실행해 정답과 비교하고, 실기 문항은 모범답안이 숨은 검사를 통과하고 빈 템플릿이 실패하는지 확인합니다. 결과는 `reports/ai-verification.json`에 남습니다.
 
-## SW역량테스트
+## Spring
 
-홈 화면의 `SW역량테스트` 버튼은 `pages/sw-test.html`을 엽니다. 문제 목차에서 문제를 고르면 발상과 Java 코드를 볼 수 있습니다.
+`source/Spring/`이 원고 폴더입니다(대소문자가 다른 `spring` 폴더를 따로 만들지 않습니다). 지금 공개하는 것은 `Spring개념 요약노트.md`(`Spring 개념` 카드)뿐이고 범위는 `scope-spring.json`, 노트와 문항의 연결은 `coverage-spring.json`, 검증 환경은 `environment-spring.json`입니다. 과목평가는 3회(회차마다 객관식 21, 단답형 9, 서술형 2)로 계획했으며 필수 태그를 3회가 모두 채워야 공개할 수 있어 지금은 비공개 시범(`private/spring/`) 1회만 있습니다. 구현 계획은 `docs/plans/spring.md`와 `docs/plans/spring-refactoring.md`입니다.
+
+- 실행 검증: `tests/spring-runtime`은 Spring Boot 4.1, Spring Framework 7.0, Security 7.1, MyBatis 3.5, MySQL 8.4에서 문항의 코드를 실제로 실행하는 Maven 프로젝트입니다. `python scripts/verify_spring_answers.py`가 이를 실행해 관찰한 값을 `spring-checks.json`과 비교하고 실행할 수 없는 문항은 `spring-reviews.json`의 재풀이 기록(작성자는 `independent: false`)을 요구합니다. 접속 정보는 환경 변수 `SPRING_VERIFY_DB_URL`, `SPRING_VERIFY_DB_USER`, `SPRING_VERIFY_DB_PASSWORD`로 받고 없으면 건너뛰지 않고 실패합니다. 백엔드 · DB의 MySQL 검증처럼 DB가 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다. 환경은 수업 환경과 같은지 확인하지 못한 연습용 조합입니다.
+- 비공개 시범: `python scripts/verify_spring_answers.py --source-root <폴더> --report <파일>`은 `<폴더>/Spring/`의 회차를 검증하므로 공개 `data/`를 건드리지 않습니다.
+- 월말 프로젝트: `scripts/project_catalog.py`의 `PROJECT_TRACKS`에 트랙을 등록하면 `validate_projects.py --track <트랙>`, `build_projects.py`, 홈과 `pages/project.html?track=<트랙>&project=<ID>`가 같은 규칙으로 동작합니다. 필수 실행 검증(compile, unit, dbIntegration, httpIntegration, JSP가 있으면 jspRender)이 현재 reference와 환경에 대해 통과하지 못한 프로젝트는 `validate_projects.py --release`와 `build_site.py`가 거부합니다. STS 확인은 별도 항목이며 확인하지 않은 상태는 `자동 검증 완료 · STS 미검증`으로 표시합니다.
+
+## 비활성화한 항목
+
+SQLD 트랙과 SW역량테스트 페이지는 사이트에서 내렸습니다. 원고와 검증은 그대로 남기고 게시만 막았습니다.
+
+- SQLD: `scripts/build_data.py`의 `TRACKS["sqld"]`에 `"enabled": False`가 있습니다. 이 값이면 `data/`에 회차와 노트 파일을 쓰지 않고 매니페스트와 홈 버튼에서도 빠집니다. `validate_questions.py`와 `audit_bias.py`는 계속 SQLD 원고를 검사합니다. 다시 켜려면 이 값을 지우고 `python scripts/build_data.py`를 실행합니다.
+- SW역량테스트: `scripts/build_data.py`의 `SW_TEST_PUBLISHED = False`입니다. `data/sw-test.json`, `pages/sw-test.html`, `assets/sw-test.js`를 게시하지 않고 홈 링크도 없습니다. `validate_questions.py`와 `tests/sw_test`는 계속 원고를 검사합니다. 다시 켜려면 `True`로 바꿉니다.
+- 사이트를 내려도 사용자의 브라우저에 저장된 기록은 지우지 않습니다. 다시 켜면 이전 기록이 그대로 열립니다.
+- E2E는 매니페스트를 읽어 꺼진 기능의 검사를 건너뛰며(`tests/e2e/site-features.js`) `disabled-tracks.spec.js`가 숨김 상태를 검사합니다.
+
+## SW역량테스트(비활성화 중)
+
+`pages/sw-test.html`은 지금 게시하지 않습니다. 켜면 홈 화면의 `SW역량테스트` 버튼이 이 페이지를 엽니다. 문제 목차에서 문제를 고르면 발상과 Java 코드를 볼 수 있습니다.
 
 - 원고는 `source/SW역량테스트/`에 있습니다. `problems.json`이 문제 순서와 예측 근거를 정하고 문제 폴더마다 `idea.md`와 Java 풀이가 있습니다.
 - 순서를 바꾸려면 `problems.json`의 `problems` 배열 순서를 고칩니다. 같은 구분 안에서만 옮길 수 있고 `validate_questions.py`가 순서를 검사합니다.

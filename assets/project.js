@@ -1,4 +1,4 @@
-// 백엔드 · DB 월말평가 구현 연습 화면. 코드는 이 브라우저(IndexedDB)에만 저장하고 서버로 보내지 않습니다.
+// 월말평가 구현 연습 화면(백엔드 · DB, Spring). 코드는 이 브라우저(IndexedDB)에만 저장하고 서버로 보내지 않습니다.
 import {escapeHtml as e} from './render.js';
 import {renderNote} from './note-render.js';
 import {codeWindow} from './highlight.js';
@@ -12,18 +12,13 @@ import {store} from './storage.js';
 import {buildBackups, serializeBackup} from './project-backup.js';
 import {checkProjectDraft} from './project-checks.js';
 import {buildProjectZip, exportRoot} from './project-export.js';
-import {EDITOR_NOTICE, ENV_NOTICE} from './project-notices.js';
+import {attemptTrack, createCatalogLoader, presentationOf, resolveProject} from './project-catalog.js';
 import {mountStructure} from './project-structure.js';
 import {buildTree, clampPanelWidth, layoutFor, mountProjectEditor, targetStates, findRegion} from './project-editor.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
 const dataUrl = (path) => new URL('../data/' + path, import.meta.url);
-const STAGE_INFO = {
-  1: '전체 코드가 주어지고 비어 있는 부분만 채웁니다.',
-  2: '메서드 시그니처와 JSP의 정적 틀이 주어지고 본문과 동적 블록을 작성합니다.',
-  3: '작성 대상 파일을 처음부터 구현합니다. 설정, DTO, DB 연결은 제공됩니다.',
-};
 const CHECK_LABELS = {unchecked: '미확인', confirmed: '확인함', 'needs-work': '수정 필요'};
 const TARGET_LABELS = {changed: '바뀜', unchanged: '시작 그대로', 'marker-lost': '위치를 찾을 수 없음', missing: '파일 없음'};
 const SIDE_TABS = [['req', '요구사항'], ['flow', '흐름'], ['structure', '구조'], ['targets', '작성 대상'], ['check', '점검'], ['ref', '모범답안']];
@@ -42,6 +37,7 @@ async function getJson(path) {
 }
 
 const S = {
+  manifest: null, loader: null, track: 'backend',
   index: null, entry: null, attempt: null, view: null, browse: false, editor: null, side: 'req', panel: 'code', mode: 'write',
   dirty: false, chain: Promise.resolve(), saveTimer: null, tickTimer: null, ref: null, hintsOpen: new Set(), conflict: false,
 };
@@ -60,15 +56,22 @@ function showError(error) {
 
 async function boot() {
   try {
-    const manifest = await getJson('manifest.json');
-    if (!manifest.webProjects) throw new Error('월말평가 프로젝트 데이터가 없습니다');
-    S.index = await getJson(manifest.webProjects.file);
+    S.manifest = await getJson('manifest.json');
+    S.loader = createCatalogLoader(getJson);
     const attemptId = params.get('attempt');
     if (attemptId) await openAttempt(attemptId);
-    else renderStart();
+    else await openStart();
   } catch (error) {
     showError(error);
   }
+}
+
+// 주소의 과목과 프로젝트로 목록을 정합니다. track이 없는 옛 주소는 프로젝트 ID로 과목을 찾습니다.
+async function openStart(message = '') {
+  const route = await resolveProject({manifest: S.manifest, loader: S.loader, track: params.get('track'), projectId: params.get('project')});
+  S.track = route.track;
+  S.index = route.index;
+  renderStart(message);
 }
 
 // ---------------------------------------------------------------- 시작 화면
@@ -82,16 +85,17 @@ function renderStart(message = '') {
     stage: [1, 2, 3].includes(stageParam) ? stageParam : 1,
     ...parseMinutes(params.get('minutes')),
   };
+  const text = presentationOf(picked);
   const timeNote = choice.fallback ? '<p class="pj-notice" role="status">주소의 시간 값이 올바르지 않아 120분으로 안내합니다.</p>' : '';
   root.innerHTML = '<div class="pj-start"><h1>월말평가 구현 연습</h1>'
-    + '<p class="pj-lead">제공된 MVC 템플릿의 비어 있는 부분을 직접 채워 목록, 등록, 상세와 로그인, 로그아웃을 연결합니다. 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인하세요.</p>'
-    + `<div class="pj-env" id="pj-env"><p>${e(ENV_NOTICE)}</p><p>${e(EDITOR_NOTICE)}</p></div>`
+    + `<p class="pj-lead">${e(text.lead)} 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인하세요.</p>`
+    + `<div class="pj-env" id="pj-env"><p>${e(text.envNotice)}</p><p>${e(text.editorNotice)}</p>${text.verificationLabel ? `<p id="pj-verify">모범답안 검증 상태: ${e(text.verificationLabel)}</p>` : ''}</div>`
     + (message ? `<p class="pj-notice" role="status">${e(message)}</p>` : '') + timeNote
     + '<fieldset class="pj-fieldset"><legend>프로젝트</legend><div class="pj-options">'
     + S.index.projects.map((p) => `<label class="pj-option"><input type="radio" name="project" value="${e(p.id)}"${p.id === choice.project ? ' checked' : ''}><span><strong>${e(p.title)}</strong><span>작성 대상 ${p.targetCount}곳 · 3단계</span></span></label>`).join('')
     + '</div></fieldset>'
     + '<fieldset class="pj-fieldset"><legend>단계</legend><div class="pj-options">'
-    + picked.stages.map((s) => `<label class="pj-option"><input type="radio" name="stage" value="${s.id}"${s.id === choice.stage ? ' checked' : ''}><span><strong>${s.id}단계 ${e(s.label)}</strong><span>${e(STAGE_INFO[s.id])}</span></span></label>`).join('')
+    + picked.stages.map((s) => `<label class="pj-option"><input type="radio" name="stage" value="${s.id}"${s.id === choice.stage ? ' checked' : ''}><span><strong>${s.id}단계 ${e(s.label)}</strong><span>${e(text.stageInfo[s.id])}</span></span></label>`).join('')
     + '</div></fieldset>'
     + '<fieldset class="pj-fieldset"><legend>제한 시간</legend><div class="pj-options">'
     + DURATION_OPTIONS.map((m) => `<label class="pj-option"><input type="radio" name="minutes" value="${m}"${m === choice.minutes ? ' checked' : ''}><span><strong>${m === 0 ? '시간 제한 없음' : `${m}분`}</strong><span>${m === 120 ? '기본값입니다.' : m === 0 ? '경과 시간만 표시합니다.' : '시작 버튼을 누르면 시간이 흐릅니다.'}</span></span></label>`).join('')
@@ -122,7 +126,8 @@ async function listAttempts() {
   const box = root.querySelector('#pj-attempts');
   if (!box) return;
   try {
-    const attempts = await projectStore.list();
+    // 다른 과목의 응시는 그 과목의 시작 화면에서 보여 섞이지 않게 합니다.
+    const attempts = (await projectStore.list()).filter((a) => attemptTrack(a) === S.track);
     if (!attempts.length) {
       box.innerHTML = '<p class="pj-lead">저장된 응시가 없습니다.</p>';
       return;
@@ -188,14 +193,21 @@ async function openAttempt(id) {
   try {
     attempt = await projectStore.load(id);
   } catch {
-    renderStart('이 브라우저의 저장소를 열 수 없어 응시를 불러오지 못했습니다.');
+    await openStart('이 브라우저의 저장소를 열 수 없어 응시를 불러오지 못했습니다.');
     return;
   }
   if (!attempt) {
-    renderStart('해당 응시를 찾을 수 없습니다. 삭제되었거나 다른 브라우저에서 만든 기록일 수 있습니다.');
+    await openStart('해당 응시를 찾을 수 없습니다. 삭제되었거나 다른 브라우저에서 만든 기록일 수 있습니다.');
     return;
   }
-  S.entry = S.index.projects.find((p) => p.id === attempt.projectId) || null;
+  // 응시가 속한 과목은 저장된 기록이 정합니다. 목록을 받지 못하거나 프로젝트가 목록에서 빠져도 스냅샷으로 엽니다.
+  S.track = attemptTrack(attempt);
+  try {
+    S.index = await S.loader.load(S.manifest, S.track);
+  } catch {
+    S.index = null;
+  }
+  S.entry = S.index?.projects.find((p) => p.id === attempt.projectId) || null;
   S.browse = false;
   const synced = syncProjectAttempt(attempt, Date.now());
   S.attempt = synced;

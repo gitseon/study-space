@@ -1,4 +1,7 @@
 import {test, expect} from '@playwright/test';
+import {siteHasSqld} from './site-features.js';
+
+test.skip(!siteHasSqld, 'the SQLD track is switched off');
 
 const openSqld = async (page) => {
   await page.goto('index.html');

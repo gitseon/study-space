@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "track": "spring",
+  "coverageProfile": "pilot",
+  "note": "questionIds에는 문항 ID만, projectTargets에는 월말 프로젝트의 작성 대상 ID만 적는다. noteOnly 행은 노트에만 있는 심화 주제다.",
+  "requirements": [
+    {
+      "requirementId": "S01",
+      "group": "foundation-boot",
+      "noteId": "spring-concepts",
+      "section": "Part 1. Framework와 Spring의 구성",
+      "sources": [
+        "SPR-L01",
+        "SPR-S01"
+      ],
+      "keywords": [
+        {
+          "id": "framework-role",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S02",
+      "group": "foundation-boot",
+      "noteId": "spring-concepts",
+      "section": "Part 2. Spring Boot와 설정",
+      "sources": [
+        "SPR-L03",
+        "SPR-S05"
+      ],
+      "keywords": [
+        {
+          "id": "boot-autoconfig",
+          "questionIds": []
+        },
+        {
+          "id": "config-properties",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S03",
+      "group": "foundation-boot",
+      "noteId": "spring-concepts",
+      "section": "Part 12. 테스트, 로깅, Lombok",
+      "sources": [
+        "SPR-L01",
+        "SPR-L03",
+        "SPR-L06",
+        "SPR-S02",
+        "SPR-S04"
+      ],
+      "keywords": [
+        {
+          "id": "logging-slf4j",
+          "questionIds": []
+        },
+        {
+          "id": "junit-test",
+          "questionIds": []
+        },
+        {
+          "id": "lombok",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S04",
+      "group": "di-bean",
+      "noteId": "spring-concepts",
+      "section": "Part 3. DI와 빈 관리",
+      "sources": [
+        "SPR-L02",
+        "SPR-S03",
+        "SPR-S05"
+      ],
+      "keywords": [
+        {
+          "id": "ioc-container",
+          "questionIds": []
+        },
+        {
+          "id": "bean-registration",
+          "questionIds": []
+        },
+        {
+          "id": "constructor-injection",
+          "questionIds": []
+        },
+        {
+          "id": "bean-selection",
+          "questionIds": []
+        },
+        {
+          "id": "bean-scope",
+          "questionIds": []
+        },
+        {
+          "id": "bean-lifecycle",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S05",
+      "group": "aop-proxy",
+      "noteId": "spring-concepts",
+      "section": "Part 4. AOP와 프록시",
+      "sources": [
+        "SPR-L04",
+        "SPR-L05",
+        "SPR-S06"
+      ],
+      "keywords": [
+        {
+          "id": "aop-terms",
+          "questionIds": []
+        },
+        {
+          "id": "pointcut-expression",
+          "questionIds": []
+        },
+        {
+          "id": "advice-types",
+          "questionIds": []
+        },
+        {
+          "id": "proxy-limits",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S06",
+      "group": "mvc-binding",
+      "noteId": "spring-concepts",
+      "section": "Part 5. Spring MVC 요청 처리",
+      "sources": [
+        "SPR-L05",
+        "SPR-L06",
+        "SPR-S07"
+      ],
+      "keywords": [
+        {
+          "id": "dispatcher-flow",
+          "questionIds": []
+        },
+        {
+          "id": "request-mapping",
+          "questionIds": []
+        },
+        {
+          "id": "argument-binding",
+          "questionIds": []
+        },
+        {
+          "id": "model-view",
+          "questionIds": []
+        },
+        {
+          "id": "redirect-prg",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S07",
+      "group": "web-crosscut",
+      "noteId": "spring-concepts",
+      "section": "Part 6. Interceptor, Validation, 예외 처리",
+      "sources": [
+        "SPR-L06",
+        "SPR-S07",
+        "SPR-S08"
+      ],
+      "keywords": [
+        {
+          "id": "interceptor",
+          "questionIds": []
+        },
+        {
+          "id": "validation",
+          "questionIds": []
+        },
+        {
+          "id": "exception-handling",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S08",
+      "group": "web-crosscut",
+      "noteId": "spring-concepts",
+      "section": "Part 7. 파일 업로드와 다운로드",
+      "sources": [
+        "SPR-L06",
+        "SPR-S10"
+      ],
+      "keywords": [
+        {
+          "id": "multipart",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S09",
+      "group": "mybatis",
+      "noteId": "spring-concepts",
+      "section": "Part 8. MyBatis",
+      "sources": [
+        "SPR-L07",
+        "SPR-L08",
+        "SPR-S09"
+      ],
+      "keywords": [
+        {
+          "id": "mapper-interface",
+          "questionIds": []
+        },
+        {
+          "id": "param-binding",
+          "questionIds": []
+        },
+        {
+          "id": "result-map",
+          "questionIds": []
+        },
+        {
+          "id": "dynamic-sql",
+          "questionIds": []
+        },
+        {
+          "id": "mybatis-config",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S10",
+      "group": "service-tx",
+      "noteId": "spring-concepts",
+      "section": "Part 9. Service와 트랜잭션",
+      "sources": [
+        "SPR-L08"
+      ],
+      "keywords": [
+        {
+          "id": "tx-boundary",
+          "questionIds": []
+        },
+        {
+          "id": "rollback-rules",
+          "questionIds": []
+        },
+        {
+          "id": "propagation",
+          "questionIds": []
+        },
+        {
+          "id": "self-invocation",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S11",
+      "group": "rest-api",
+      "noteId": "spring-concepts",
+      "section": "Part 10. REST API",
+      "sources": [
+        "SPR-L09",
+        "SPR-S11"
+      ],
+      "keywords": [
+        {
+          "id": "rest-http-method",
+          "questionIds": []
+        },
+        {
+          "id": "json-body",
+          "questionIds": []
+        },
+        {
+          "id": "response-entity",
+          "questionIds": []
+        },
+        {
+          "id": "rest-error",
+          "questionIds": []
+        },
+        {
+          "id": "cors",
+          "questionIds": []
+        },
+        {
+          "id": "api-docs",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "S12",
+      "group": "security",
+      "noteId": "spring-concepts",
+      "section": "Part 11. Spring Security",
+      "sources": [
+        "SPR-L10",
+        "SPR-L11"
+      ],
+      "keywords": [
+        {
+          "id": "filter-chain",
+          "questionIds": []
+        },
+        {
+          "id": "authn-authz",
+          "questionIds": []
+        },
+        {
+          "id": "authorize-rules",
+          "questionIds": []
+        },
+        {
+          "id": "user-details",
+          "questionIds": []
+        },
+        {
+          "id": "login-logout",
+          "questionIds": []
+        },
+        {
+          "id": "auth-info",
+          "questionIds": []
+        }
+      ],
+      "questionIds": [],
+      "projectTargets": []
+    },
+    {
+      "requirementId": "X01",
+      "noteOnly": true,
+      "noteId": "spring-concepts",
+      "section": "Part 13. 심화 주제",
+      "sources": [
+        "SPR-L08",
+        "SPR-L09",
+        "SPR-L11"
+      ],
+      "keywords": [
+        {
+          "id": "resilience",
+          "questionIds": []
+        }
+      ],
+      "questionIds": []
+    },
+    {
+      "requirementId": "X02",
+      "noteOnly": true,
+      "noteId": "spring-concepts",
+      "section": "Part 13. 심화 주제",
+      "sources": [
+        "SPR-L08",
+        "SPR-L09",
+        "SPR-L11"
+      ],
+      "keywords": [
+        {
+          "id": "api-versioning",
+          "questionIds": []
+        }
+      ],
+      "questionIds": []
+    },
+    {
+      "requirementId": "X03",
+      "noteOnly": true,
+      "noteId": "spring-concepts",
+      "section": "Part 13. 심화 주제",
+      "sources": [
+        "SPR-L08",
+        "SPR-L09",
+        "SPR-L11"
+      ],
+      "keywords": [
+        {
+          "id": "rest-client",
+          "questionIds": []
+        },
+        {
+          "id": "http-interface",
+          "questionIds": []
+        }
+      ],
+      "questionIds": []
+    },
+    {
+      "requirementId": "X04",
+      "noteOnly": true,
+      "noteId": "spring-concepts",
+      "section": "Part 13. 심화 주제",
+      "sources": [
+        "SPR-L08",
+        "SPR-L09",
+        "SPR-L11"
+      ],
+      "keywords": [
+        {
+          "id": "remember-me",
+          "questionIds": []
+        }
+      ],
+      "questionIds": []
+    }
+  ]
+}

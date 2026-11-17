@@ -51,7 +51,12 @@ export function createProjectAttempt(project, stageId, minutes, now = Date.now()
       stageId, stageLabel: stage.stage.label, requirements: project.requirements, flow: project.flow,
       checklist: project.checklist, targets: stage.targets, hints: stage.hints, files: stage.files,
       ...(project.structure ? {structure: project.structure} : {}),
+      // 과목과 안내 문구도 시작 시점의 것을 보관해 목록에서 프로젝트가 빠져도 그대로 엽니다.
+      track: project.track || 'backend',
+      ...(project.presentation ? {presentation: project.presentation} : {}),
+      ...(project.verification ? {verification: project.verification} : {}),
     }),
+    track: project.track || 'backend',
     files,
     activePath: first,
     checks: emptyChecks(project.checklist),
@@ -154,6 +159,8 @@ export function validateProjectAttempt(a) {
   if (!Number.isInteger(a.revision) || a.revision < 1) fail('revision');
   if (!Number.isInteger(a.stageId)) fail('stageId');
   if (a.schemaVersion !== SCHEMA_VERSION) fail('schemaVersion');
+  // track은 나중에 생긴 필드라서 없는 옛 응시와 백업도 받습니다(backend로 읽음).
+  if (a.track !== undefined && (typeof a.track !== 'string' || !/^[a-z][a-z0-9-]*$/.test(a.track))) fail('track');
   if (!DURATION_OPTIONS.includes(a.minutes)) fail('minutes');
   if (!Number.isFinite(a.startedAt)) fail('startedAt');
   if (!(a.deadlineAt === null || Number.isFinite(a.deadlineAt)) || (a.minutes === 0) !== (a.deadlineAt === null)) fail('deadlineAt');
