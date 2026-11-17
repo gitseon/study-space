@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "projectId": "spring-web-02",
+  "revision": 1,
+  "hash": "3cbdc8aa41f10c96",
+  "stage": {
+    "id": 1,
+    "label": "빈칸 채우기"
+  },
+  "files": [
+    {
+      "path": "pom.xml",
+      "language": "xml",
+      "editable": false,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <parent>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-parent</artifactId>\n        <version>4.1.2</version>\n        <relativePath/>\n    </parent>\n    <groupId>com.study</groupId>\n    <artifactId>rental</artifactId>\n    <version>0.0.1-SNAPSHOT</version>\n    <packaging>jar</packaging>\n    <properties>\n        <java.version>21</java.version>\n        <mybatis-starter.version>4.1.0</mybatis-starter.version>\n    </properties>\n    <dependencies>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-webmvc</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-validation</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-security</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.mybatis.spring.boot</groupId>\n            <artifactId>mybatis-spring-boot-starter</artifactId>\n            <version>${mybatis-starter.version}</version>\n        </dependency>\n        <dependency>\n            <groupId>com.mysql</groupId>\n            <artifactId>mysql-connector-j</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-webmvc-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-security-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/RentalApplication.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental;\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class RentalApplication {\n    public static void main(String[] args) {\n        SpringApplication.run(RentalApplication.class, args);\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/EquipmentNotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.exception;\n\npublic class EquipmentNotFoundException extends NotFoundException {\n    public EquipmentNotFoundException(int equipmentId) {\n        super(\"장비 \" + equipmentId + \"번을 찾을 수 없습니다\");\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/NotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.exception;\n\npublic class NotFoundException extends RuntimeException {\n    public NotFoundException(String message) {\n        super(message);\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/RentalConflictException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.exception;\n\npublic class RentalConflictException extends RuntimeException {\n    public RentalConflictException(String equipmentName) {\n        super(equipmentName + \"은(는) 이미 대여 중입니다\");\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/RentalNotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.exception;\n\npublic class RentalNotFoundException extends NotFoundException {\n    public RentalNotFoundException(int rentalId) {\n        super(\"대여 \" + rentalId + \"번을 찾을 수 없습니다\");\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/mapper/MemberMapper.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.mapper;\n\nimport org.apache.ibatis.annotations.Mapper;\n\nimport com.study.rental.model.Member;\n\n@Mapper\npublic interface MemberMapper {\n    Member findByLoginId(String loginId);\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/mapper/RentalMapper.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.mapper;\n\nimport java.util.List;\n\nimport org.apache.ibatis.annotations.Mapper;\n\nimport com.study.rental.model.Equipment;\nimport com.study.rental.model.Rental;\n\n@Mapper\npublic interface RentalMapper {\n    List<Equipment> findEquipments();\n\n    Equipment findEquipment(int equipmentId);\n\n    int countActive(int equipmentId);\n\n    int insert(Rental rental);\n\n    Rental findById(int rentalId);\n\n    List<Rental> findByLoginId(String loginId);\n\n    List<Rental> findAll();\n\n    int delete(int rentalId);\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Equipment.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\npublic class Equipment {\n    private Integer equipmentId;\n    private String name;\n\n    public Integer getEquipmentId() {\n        return equipmentId;\n    }\n\n    public void setEquipmentId(Integer equipmentId) {\n        this.equipmentId = equipmentId;\n    }\n\n    public String getName() {\n        return name;\n    }\n\n    public void setName(String name) {\n        this.name = name;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/ErrorResponse.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\npublic record ErrorResponse(String code, String message) {\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Member.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\npublic class Member {\n    private String loginId;\n    private String passwordHash;\n    private String role;\n\n    public String getLoginId() {\n        return loginId;\n    }\n\n    public void setLoginId(String loginId) {\n        this.loginId = loginId;\n    }\n\n    public String getPasswordHash() {\n        return passwordHash;\n    }\n\n    public void setPasswordHash(String passwordHash) {\n        this.passwordHash = passwordHash;\n    }\n\n    public String getRole() {\n        return role;\n    }\n\n    public void setRole(String role) {\n        this.role = role;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Rental.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\npublic class Rental {\n    private Integer rentalId;\n    private Integer equipmentId;\n    private String equipmentName;\n    private String loginId;\n    private int days;\n\n    public Integer getRentalId() {\n        return rentalId;\n    }\n\n    public void setRentalId(Integer rentalId) {\n        this.rentalId = rentalId;\n    }\n\n    public Integer getEquipmentId() {\n        return equipmentId;\n    }\n\n    public void setEquipmentId(Integer equipmentId) {\n        this.equipmentId = equipmentId;\n    }\n\n    public String getEquipmentName() {\n        return equipmentName;\n    }\n\n    public void setEquipmentName(String equipmentName) {\n        this.equipmentName = equipmentName;\n    }\n\n    public String getLoginId() {\n        return loginId;\n    }\n\n    public void setLoginId(String loginId) {\n        this.loginId = loginId;\n    }\n\n    public int getDays() {\n        return days;\n    }\n\n    public void setDays(int days) {\n        this.days = days;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/RentalRequest.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\nimport jakarta.validation.constraints.Max;\nimport jakarta.validation.constraints.Min;\nimport jakarta.validation.constraints.NotNull;\n\npublic record RentalRequest(\n        @NotNull(message = \"장비를 선택하세요\") Integer equipmentId,\n        @NotNull(message = \"대여 일수를 입력하세요\") @Min(value = 1, message = \"대여 일수는 1일 이상입니다\") @Max(value = 14, message = \"대여 일수는 14일 이하입니다\") Integer days) {\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/RentalResponse.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.model;\n\npublic record RentalResponse(int rentalId, int equipmentId, String equipmentName, String loginId, int days) {\n    public static RentalResponse from(Rental rental) {\n        return new RentalResponse(rental.getRentalId(), rental.getEquipmentId(), rental.getEquipmentName(), rental.getLoginId(), rental.getDays());\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/DbUserDetailsService.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.rental.security;\n\nimport org.springframework.security.core.userdetails.User;\nimport org.springframework.security.core.userdetails.UserDetails;\nimport org.springframework.security.core.userdetails.UserDetailsService;\nimport org.springframework.security.core.userdetails.UsernameNotFoundException;\nimport org.springframework.stereotype.Service;\n\nimport com.study.rental.mapper.MemberMapper;\nimport com.study.rental.model.Member;\n\n@Service\npublic class DbUserDetailsService implements UserDetailsService {\n    private final MemberMapper mapper;\n\n    public DbUserDetailsService(MemberMapper mapper) {\n        this.mapper = mapper;\n    }\n\n    // study-target:sec-users:start\n    @Override\n    public UserDetails loadUserByUsername(String loginId) {\n        Member member = mapper.findByLoginId(loginId);\n        if (member == null) {\n            throw new ____(loginId);\n        }\n        return User.withUsername(member.getLoginId()).password(member.getPasswordHash()).____(member.getRole()).build();\n    }\n    // study-target:sec-users:end\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/Principals.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.rental.security;\n\nimport org.springframework.security.core.userdetails.UserDetails;\n\npublic final class Principals {\n    private Principals() {\n    }\n\n    public static boolean isAdmin(UserDetails user) {\n        return user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(\"ROLE_ADMIN\"));\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/SecurityConfig.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.rental.security;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.http.HttpMethod;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\nimport org.springframework.security.crypto.factory.PasswordEncoderFactories;\nimport org.springframework.security.crypto.password.PasswordEncoder;\nimport org.springframework.security.web.SecurityFilterChain;\nimport org.springframework.security.web.authentication.HttpStatusEntryPoint;\n\n@Configuration\n@EnableWebSecurity\npublic class SecurityConfig {\n    @Bean\n    public PasswordEncoder passwordEncoder() {\n        return PasswordEncoderFactories.createDelegatingPasswordEncoder();\n    }\n\n    // study-target:sec-chain:start\n    @Bean\n    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {\n        http.authorizeHttpRequests(auth -> auth\n                .requestMatchers(HttpMethod.GET, \"/api/equipments\").____()\n                .requestMatchers(\"/login\").permitAll()\n                .requestMatchers(\"/api/admin/**\").hasRole(\"____\")\n                .anyRequest().____())\n            .formLogin(form -> form\n                .successHandler((request, response, authentication) -> response.setStatus(HttpStatus.OK.value()))\n                .failureHandler((request, response, exception) -> response.setStatus(HttpStatus.____.value())))\n            .logout(logout -> logout\n                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpStatus.NO_CONTENT.value())))\n            .exceptionHandling(handling -> handling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));\n        return http.build();\n    }\n    // study-target:sec-chain:end\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.rental.service;\n\nimport java.util.List;\n\nimport org.springframework.security.access.AccessDeniedException;\nimport org.springframework.stereotype.Service;\nimport org.springframework.transaction.annotation.Transactional;\n\nimport com.study.rental.exception.EquipmentNotFoundException;\nimport com.study.rental.exception.RentalConflictException;\nimport com.study.rental.exception.RentalNotFoundException;\nimport com.study.rental.mapper.RentalMapper;\nimport com.study.rental.model.Equipment;\nimport com.study.rental.model.Rental;\nimport com.study.rental.model.RentalRequest;\n\n@Service\npublic class RentalService {\n    private final RentalMapper mapper;\n\n    public RentalService(RentalMapper mapper) {\n        this.mapper = mapper;\n    }\n\n    public List<Equipment> equipments() {\n        return mapper.findEquipments();\n    }\n\n    public List<Rental> mine(String loginId) {\n        return mapper.findByLoginId(loginId);\n    }\n\n    public List<Rental> all() {\n        return mapper.findAll();\n    }\n\n    // study-target:svc-rent:start\n    @____\n    public int rent(String loginId, RentalRequest request) {\n        Equipment equipment = mapper.findEquipment(request.equipmentId());\n        if (equipment == null) {\n            throw new EquipmentNotFoundException(request.equipmentId());\n        }\n        if (mapper.countActive(equipment.getEquipmentId()) > ____) {\n            throw new RentalConflictException(equipment.getName());\n        }\n        Rental rental = new Rental();\n        rental.setEquipmentId(equipment.getEquipmentId());\n        rental.setLoginId(loginId);\n        rental.setDays(request.days());\n        mapper.____(rental);\n        return rental.getRentalId();\n    }\n    // study-target:svc-rent:end\n\n    // study-target:svc-access:start\n    public Rental get(int rentalId, String loginId, boolean admin) {\n        Rental rental = mapper.____(rentalId);\n        if (rental == null) {\n            throw new RentalNotFoundException(rentalId);\n        }\n        if (!admin && !rental.getLoginId().____(loginId)) {\n            throw new AccessDeniedException(\"본인의 대여만 볼 수 있습니다\");\n        }\n        return rental;\n    }\n    // study-target:svc-access:end\n\n    @Transactional\n    public void cancel(int rentalId, String loginId, boolean admin) {\n        get(rentalId, loginId, admin);\n        mapper.delete(rentalId);\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/web/ApiExceptionHandler.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.rental.web;\n\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.MethodArgumentNotValidException;\nimport org.springframework.web.bind.annotation.ExceptionHandler;\nimport org.springframework.web.bind.annotation.RestControllerAdvice;\n\nimport com.study.rental.exception.NotFoundException;\nimport com.study.rental.exception.RentalConflictException;\nimport com.study.rental.model.ErrorResponse;\n\n@RestControllerAdvice\npublic class ApiExceptionHandler {\n    // study-target:exc-notfound:start\n    @ExceptionHandler(____.class)\n    public ResponseEntity<ErrorResponse> notFound(NotFoundException e) {\n        return ResponseEntity.status(HttpStatus.____).body(new ErrorResponse(\"NOT_FOUND\", e.getMessage()));\n    }\n    // study-target:exc-notfound:end\n\n    @ExceptionHandler(RentalConflictException.class)\n    public ResponseEntity<ErrorResponse> conflict(RentalConflictException e) {\n        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(\"CONFLICT\", e.getMessage()));\n    }\n\n    @ExceptionHandler(MethodArgumentNotValidException.class)\n    public ResponseEntity<ErrorResponse> invalid(MethodArgumentNotValidException e) {\n        String message = e.getBindingResult().getFieldErrors().stream().map(error -> error.getDefaultMessage()).findFirst().orElse(\"잘못된 요청입니다\");\n        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(\"VALIDATION_FAILED\", message));\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.rental.web;\n\nimport java.net.URI;\nimport java.util.List;\n\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.security.core.annotation.AuthenticationPrincipal;\nimport org.springframework.security.core.userdetails.UserDetails;\nimport org.springframework.web.bind.annotation.DeleteMapping;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.PathVariable;\nimport org.springframework.web.bind.annotation.PostMapping;\nimport org.springframework.web.bind.annotation.RequestBody;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RestController;\n\nimport com.study.rental.model.Equipment;\nimport com.study.rental.model.RentalRequest;\nimport com.study.rental.model.RentalResponse;\nimport com.study.rental.security.Principals;\nimport com.study.rental.service.RentalService;\n\nimport jakarta.validation.Valid;\n\n@RestController\n@RequestMapping(\"/api\")\npublic class RentalApiController {\n    private final RentalService service;\n\n    public RentalApiController(RentalService service) {\n        this.service = service;\n    }\n\n    @GetMapping(\"/equipments\")\n    public List<Equipment> equipments() {\n        return service.equipments();\n    }\n\n    // study-target:ctrl-rent:start\n    @PostMapping(\"/rentals\")\n    public ResponseEntity<RentalResponse> rent(@____ @RequestBody RentalRequest request, @AuthenticationPrincipal UserDetails user) {\n        int rentalId = service.rent(user.getUsername(), request);\n        RentalResponse body = RentalResponse.from(service.get(rentalId, user.getUsername(), Principals.isAdmin(user)));\n        return ResponseEntity.____(URI.create(\"/api/rentals/\" + rentalId)).body(body);\n    }\n    // study-target:ctrl-rent:end\n\n    // study-target:ctrl-get:start\n    @GetMapping(\"/rentals/{rentalId}\")\n    public RentalResponse get(@____ int rentalId, @____ UserDetails user) {\n        return RentalResponse.from(service.get(rentalId, user.____(), Principals.isAdmin(user)));\n    }\n    // study-target:ctrl-get:end\n\n    // study-target:ctrl-cancel:start\n    @DeleteMapping(\"/rentals/{rentalId}\")\n    public ResponseEntity<Void> cancel(@PathVariable int rentalId, @AuthenticationPrincipal UserDetails user) {\n        service.____(rentalId, user.getUsername(), Principals.isAdmin(user));\n        return ResponseEntity.____().build();\n    }\n    // study-target:ctrl-cancel:end\n\n    // study-target:ctrl-mine:start\n    @GetMapping(\"/rentals\")\n    public List<RentalResponse> mine(@AuthenticationPrincipal UserDetails user) {\n        return service.____(user.getUsername()).stream().map(RentalResponse::____).toList();\n    }\n    // study-target:ctrl-mine:end\n\n    // study-target:ctrl-admin:start\n    @GetMapping(\"/admin/rentals\")\n    public List<RentalResponse> all() {\n        return service.____().stream().map(RentalResponse::____).toList();\n    }\n    // study-target:ctrl-admin:end\n}\n"
+    },
+    {
+      "path": "src/main/resources/application.properties",
+      "language": "text",
+      "editable": false,
+      "text": "spring.application.name=equipment-rental\nspring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/equipment_rental?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}\nspring.datasource.username=${DB_USER:study}\nspring.datasource.password=${DB_PASSWORD}\nspring.sql.init.mode=always\nspring.sql.init.encoding=UTF-8\nmybatis.mapper-locations=classpath:mapper/*.xml\nmybatis.type-aliases-package=com.study.rental.model\nmybatis.configuration.map-underscore-to-camel-case=true\nlogging.level.com.study.rental=debug\n"
+    },
+    {
+      "path": "src/main/resources/data.sql",
+      "language": "sql",
+      "editable": false,
+      "text": "INSERT IGNORE INTO rental_equipment (equipment_id, name) VALUES (1, '노트북'), (2, '카메라'), (3, '빔 프로젝터');\n\nINSERT IGNORE INTO rental_member (login_id, password_hash, role) VALUES\n    ('mina', '{bcrypt}$2a$10$Y7RhUHNhc0YK3EQuqkUGLe3/pooU908naFLWVY5jPMMDDgNWf.yqO', 'USER'),\n    ('jun', '{bcrypt}$2a$10$Y7RhUHNhc0YK3EQuqkUGLe3/pooU908naFLWVY5jPMMDDgNWf.yqO', 'USER'),\n    ('root', '{bcrypt}$2a$10$Y7RhUHNhc0YK3EQuqkUGLe3/pooU908naFLWVY5jPMMDDgNWf.yqO', 'ADMIN');\n"
+    },
+    {
+      "path": "src/main/resources/mapper/MemberMapper.xml",
+      "language": "xml",
+      "editable": false,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"https://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"com.study.rental.mapper.MemberMapper\">\n    <select id=\"findByLoginId\" resultType=\"Member\">\n        SELECT login_id, password_hash, role FROM rental_member WHERE login_id = #{loginId}\n    </select>\n</mapper>\n"
+    },
+    {
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "language": "xml",
+      "editable": true,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"https://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"com.study.rental.mapper.RentalMapper\">\n    <resultMap id=\"rentalMap\" type=\"Rental\">\n        <id property=\"rentalId\" column=\"rental_id\"/>\n        <result property=\"equipmentId\" column=\"equipment_id\"/>\n        <result property=\"equipmentName\" column=\"name\"/>\n        <result property=\"loginId\" column=\"login_id\"/>\n        <result property=\"days\" column=\"days\"/>\n    </resultMap>\n\n    <select id=\"findEquipments\" resultType=\"Equipment\">\n        SELECT equipment_id, name FROM rental_equipment ORDER BY equipment_id\n    </select>\n\n    <select id=\"findEquipment\" resultType=\"Equipment\">\n        SELECT equipment_id, name FROM rental_equipment WHERE equipment_id = #{equipmentId}\n    </select>\n\n    <select id=\"countActive\" resultType=\"int\">\n        SELECT COUNT(*) FROM equipment_rental WHERE equipment_id = #{equipmentId}\n    </select>\n\n    <!-- study-target:sql-insert:start -->\n    <insert id=\"insert\" ____=\"true\" keyProperty=\"____\">\n        INSERT INTO equipment_rental (equipment_id, login_id, days)\n        VALUES (#{equipmentId}, #{loginId}, #{days})\n    </insert>\n    <!-- study-target:sql-insert:end -->\n\n    <!-- study-target:sql-detail:start -->\n    <select id=\"findById\" resultMap=\"____\">\n        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days\n        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id\n        WHERE r.rental_id = #{____}\n    </select>\n    <!-- study-target:sql-detail:end -->\n\n    <!-- study-target:sql-mine:start -->\n    <select id=\"findByLoginId\" resultMap=\"rentalMap\">\n        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days\n        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id\n        WHERE r.login_id = ____{loginId}\n        ORDER BY r.____\n    </select>\n    <!-- study-target:sql-mine:end -->\n\n    <select id=\"findAll\" resultMap=\"rentalMap\">\n        SELECT r.rental_id, r.equipment_id, e.name, r.login_id, r.days\n        FROM equipment_rental r JOIN rental_equipment e ON e.equipment_id = r.equipment_id\n        ORDER BY r.rental_id\n    </select>\n\n    <delete id=\"delete\">\n        DELETE FROM equipment_rental WHERE rental_id = #{rentalId}\n    </delete>\n</mapper>\n"
+    },
+    {
+      "path": "src/main/resources/schema.sql",
+      "language": "sql",
+      "editable": false,
+      "text": "CREATE TABLE IF NOT EXISTS rental_equipment (\n    equipment_id INT PRIMARY KEY,\n    name VARCHAR(40) NOT NULL\n);\n\nCREATE TABLE IF NOT EXISTS rental_member (\n    login_id VARCHAR(30) PRIMARY KEY,\n    password_hash VARCHAR(100) NOT NULL,\n    role VARCHAR(20) NOT NULL\n);\n\nCREATE TABLE IF NOT EXISTS equipment_rental (\n    rental_id INT AUTO_INCREMENT PRIMARY KEY,\n    equipment_id INT NOT NULL,\n    login_id VARCHAR(30) NOT NULL,\n    days INT NOT NULL,\n    FOREIGN KEY (equipment_id) REFERENCES rental_equipment (equipment_id),\n    FOREIGN KEY (login_id) REFERENCES rental_member (login_id)\n);\n"
+    }
+  ],
+  "targets": [
+    {
+      "id": "ctrl-rent",
+      "title": "대여 요청과 201 응답",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent",
+        "api-invalid"
+      ]
+    },
+    {
+      "id": "ctrl-get",
+      "title": "대여 한 건 조회",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api",
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-get",
+        "api-owner"
+      ]
+    },
+    {
+      "id": "ctrl-cancel",
+      "title": "대여 취소와 204 응답",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api"
+      ],
+      "requirementId": "R-CANCEL",
+      "checklistIds": [
+        "api-cancel"
+      ]
+    },
+    {
+      "id": "ctrl-mine",
+      "title": "내 대여 목록",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api",
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-mine"
+      ]
+    },
+    {
+      "id": "ctrl-admin",
+      "title": "관리자 전체 목록",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-admin"
+      ]
+    },
+    {
+      "id": "svc-rent",
+      "title": "대여 저장과 충돌 확인",
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent",
+        "api-conflict"
+      ]
+    },
+    {
+      "id": "svc-access",
+      "title": "소유자 확인",
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "topicIds": [
+        "security",
+        "service-tx"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-owner",
+        "api-get"
+      ]
+    },
+    {
+      "id": "exc-notfound",
+      "title": "404 JSON 오류 응답",
+      "path": "src/main/java/com/study/rental/web/ApiExceptionHandler.java",
+      "topicIds": [
+        "rest-api",
+        "web-crosscut"
+      ],
+      "requirementId": "R-ERROR",
+      "checklistIds": [
+        "api-notfound"
+      ]
+    },
+    {
+      "id": "sec-chain",
+      "title": "SecurityFilterChain 인가 규칙",
+      "path": "src/main/java/com/study/rental/security/SecurityConfig.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-SECURITY",
+      "checklistIds": [
+        "sec-anonymous",
+        "sec-roles",
+        "sec-login"
+      ]
+    },
+    {
+      "id": "sec-users",
+      "title": "사용자 조회와 UserDetails",
+      "path": "src/main/java/com/study/rental/security/DbUserDetailsService.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-SECURITY",
+      "checklistIds": [
+        "sec-login"
+      ]
+    },
+    {
+      "id": "sql-insert",
+      "title": "대여 저장과 생성된 번호",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent"
+      ]
+    },
+    {
+      "id": "sql-detail",
+      "title": "번호로 대여 한 건 조회",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-get"
+      ]
+    },
+    {
+      "id": "sql-mine",
+      "title": "로그인 아이디의 대여 목록",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-mine"
+      ]
+    }
+  ],
+  "hints": {
+    "ctrl-rent": [
+      "요청 본문 JSON은 검증하려면 파라미터에 붙이는 어노테이션 두 개가 필요합니다.",
+      "만들어진 자원은 201과 Location 헤더로 알립니다. 로그인한 사용자 이름은 인증 주체에서 꺼냅니다."
+    ],
+    "ctrl-get": [
+      "경로의 값은 파라미터 어노테이션으로 받고 로그인 사용자는 @AuthenticationPrincipal로 받습니다.",
+      "접근 검사는 서비스가 하므로 컨트롤러는 사용자 이름과 관리자 여부를 넘기기만 합니다."
+    ],
+    "ctrl-cancel": [
+      "삭제가 성공하면 돌려줄 내용이 없으므로 본문 없는 상태 코드로 응답합니다.",
+      "ResponseEntity의 편의 메서드를 씁니다."
+    ],
+    "ctrl-mine": [
+      "서비스가 돌려준 엔티티 목록을 응답 객체로 바꿔 돌려줍니다.",
+      "로그인 사용자의 이름으로만 조회하므로 다른 사람의 대여는 나오지 않습니다."
+    ],
+    "ctrl-admin": [
+      "접근 제한은 이 메서드가 아니라 보안 설정의 규칙이 맡습니다.",
+      "모든 대여를 응답 객체로 바꿔 돌려줍니다."
+    ],
+    "svc-rent": [
+      "장비가 없으면 404 예외, 이미 대여 중이면 409 예외를 던집니다. 저장은 마지막에 합니다.",
+      "변경 메서드이므로 트랜잭션 어노테이션을 붙입니다."
+    ],
+    "svc-access": [
+      "없는 번호는 RentalNotFoundException입니다. 관리자가 아니면 로그인 아이디와 대여의 주인을 비교합니다.",
+      "권한이 없을 때는 Spring Security의 AccessDeniedException을 던지면 403으로 응답됩니다."
+    ],
+    "exc-notfound": [
+      "예외 처리 클래스의 핸들러는 예외 타입을 지정하는 어노테이션으로 연결합니다.",
+      "상태와 본문을 함께 정하는 ResponseEntity로 ErrorResponse를 돌려줍니다."
+    ],
+    "sec-chain": [
+      "규칙은 위에서부터 처음 맞는 것 하나만 적용됩니다. anyRequest()는 마지막에 둡니다.",
+      "인증이 안 된 요청은 로그인 화면이 아니라 401로 응답하도록 entry point를 정합니다."
+    ],
+    "sec-users": [
+      "UserDetailsService는 비밀번호를 비교하지 않고 사용자 정보만 돌려줍니다. 없으면 UsernameNotFoundException입니다.",
+      "roles()에는 ROLE_ 접두사 없이 USER나 ADMIN을 넘깁니다."
+    ],
+    "sql-insert": [
+      "AUTO_INCREMENT로 만들어진 번호를 객체에 채우는 insert 태그 속성 두 개를 씁니다.",
+      "값은 모두 #{}로 바인딩합니다."
+    ],
+    "sql-detail": [
+      "대여와 장비를 조인해 장비 이름을 함께 조회하고 파일의 resultMap으로 매핑합니다.",
+      "파라미터 이름은 mapper 메서드의 rentalId입니다."
+    ],
+    "sql-mine": [
+      "WHERE의 login_id 조건에 #{loginId}를 바인딩하고 번호 순서로 정렬합니다.",
+      "장비 이름을 함께 조회하는 조인은 다른 구문과 같습니다."
+    ]
+  }
+}

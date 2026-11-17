@@ -1,0 +1,469 @@
+{
+  "mainLayers": [
+    "client",
+    "controller",
+    "service",
+    "mapper",
+    "db"
+  ],
+  "sideLayers": [
+    "view"
+  ],
+  "sideNote": "컨트롤러가 뷰 이름을 반환하면 ViewResolver가 JSP를 찾아 forward하는 화면과 redirect",
+  "layers": [
+    {
+      "id": "client",
+      "label": "브라우저"
+    },
+    {
+      "id": "controller",
+      "label": "컨트롤러"
+    },
+    {
+      "id": "service",
+      "label": "서비스"
+    },
+    {
+      "id": "mapper",
+      "label": "Mapper"
+    },
+    {
+      "id": "db",
+      "label": "데이터베이스"
+    },
+    {
+      "id": "view",
+      "label": "화면 (JSP)"
+    },
+    {
+      "id": "shared",
+      "label": "함께 쓰는 파일"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "browser",
+      "layer": "client",
+      "label": "브라우저",
+      "kind": "요청",
+      "path": null,
+      "role": "링크를 누르거나 form을 제출해 URL과 입력 값을 서버로 보냅니다. redirect 응답이면 새 주소를 다시 요청합니다.",
+      "receives": [
+        "JSP가 만든 HTML",
+        "redirect 응답의 새 주소"
+      ],
+      "sends": [
+        "GET /reservations",
+        "POST /reservations",
+        "POST /reservations/{id}/delete"
+      ],
+      "methods": [],
+      "targets": [],
+      "skeleton": [
+        "GET  /reservations?roomId=...&keyword=...",
+        "GET  /reservations/{id}",
+        "POST /reservations   (roomId, memberName, people)",
+        "POST /reservations/{id}/delete"
+      ]
+    },
+    {
+      "id": "controller",
+      "layer": "controller",
+      "label": "ReservationController",
+      "kind": "컨트롤러",
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "role": "요청을 매핑하고 파라미터를 바인딩해 서비스를 호출합니다. 결과를 모델에 담아 뷰 이름을 반환하고 변경이 끝나면 redirect합니다.",
+      "receives": [
+        "요청 파라미터와 경로 변수",
+        "검증 결과(BindingResult)"
+      ],
+      "sends": [
+        "모델 속성",
+        "뷰 이름 또는 redirect 주소"
+      ],
+      "methods": [
+        "list",
+        "detail",
+        "create",
+        "cancel"
+      ],
+      "targets": [
+        "ctrl-list",
+        "ctrl-detail",
+        "ctrl-create",
+        "ctrl-cancel"
+      ],
+      "skeleton": [
+        "// GET /reservations: 조건으로 목록을 찾아 모델에 담는다",
+        "// GET /reservations/{id}: 예약 한 건을 모델에 담는다",
+        "// POST /reservations: 검증하고 저장한 뒤 redirect한다",
+        "// POST /reservations/{id}/delete: 취소하고 redirect한다"
+      ]
+    },
+    {
+      "id": "advice",
+      "layer": "controller",
+      "label": "GlobalExceptionHandler",
+      "kind": "예외 처리",
+      "path": "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
+      "role": "컨트롤러와 서비스에서 던진 예외를 상태 코드와 오류 화면으로 바꿉니다.",
+      "receives": [
+        "ReservationNotFoundException",
+        "RoomFullException"
+      ],
+      "sends": [
+        "404 error/not-found",
+        "409 error/full"
+      ],
+      "methods": [
+        "notFound"
+      ],
+      "targets": [
+        "exc-notfound"
+      ],
+      "skeleton": [
+        "// ReservationNotFoundException: 404와 not-found 화면",
+        "// RoomFullException: 409와 full 화면(제공)"
+      ]
+    },
+    {
+      "id": "service",
+      "layer": "service",
+      "label": "ReservationService",
+      "kind": "서비스",
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "role": "업무 규칙을 확인하고 mapper를 호출합니다. 변경 메서드는 트랜잭션 하나로 묶어 함께 성공하거나 함께 취소됩니다.",
+      "receives": [
+        "컨트롤러가 넘긴 값"
+      ],
+      "sends": [
+        "Reservation",
+        "생성된 예약 번호",
+        "예외"
+      ],
+      "methods": [
+        "detail",
+        "reserve",
+        "cancel"
+      ],
+      "targets": [
+        "svc-detail",
+        "svc-reserve",
+        "svc-cancel"
+      ],
+      "skeleton": [
+        "// detail: 없으면 ReservationNotFoundException",
+        "// reserve: 방과 남은 자리를 확인하고 저장한다",
+        "// cancel: 지운 행이 없으면 ReservationNotFoundException"
+      ]
+    },
+    {
+      "id": "mapper",
+      "layer": "mapper",
+      "label": "ReservationMapper",
+      "kind": "인터페이스",
+      "path": "src/main/java/com/study/room/mapper/ReservationMapper.java",
+      "role": "구현 클래스 없이 메서드 이름으로 XML의 SQL 구문을 호출하는 인터페이스입니다. MyBatis가 프록시를 만들어 주입합니다.",
+      "receives": [
+        "서비스의 호출"
+      ],
+      "sends": [
+        "SQL 실행 결과"
+      ],
+      "methods": [
+        "search",
+        "findById",
+        "insert"
+      ],
+      "targets": [],
+      "skeleton": [
+        "// search(roomId, keyword): XML의 id가 같은 구문",
+        "// findById, insert, delete도 같은 규칙"
+      ]
+    },
+    {
+      "id": "xml",
+      "layer": "mapper",
+      "label": "ReservationMapper.xml",
+      "kind": "SQL",
+      "path": "src/main/resources/mapper/ReservationMapper.xml",
+      "role": "namespace가 mapper 인터페이스의 전체 이름이고 구문의 id가 메서드 이름입니다. #{}로 값을 바인딩합니다.",
+      "receives": [
+        "mapper 호출의 파라미터"
+      ],
+      "sends": [
+        "행 또는 영향받은 행 수"
+      ],
+      "methods": [],
+      "targets": [
+        "sql-search",
+        "sql-detail",
+        "sql-insert"
+      ],
+      "skeleton": [
+        "<!-- search: 조건이 있을 때만 WHERE에 붙이는 동적 SQL -->",
+        "<!-- findById: 방 이름을 조인해 한 건 -->",
+        "<!-- insert: 생성된 번호를 객체에 채운다 -->"
+      ]
+    },
+    {
+      "id": "db",
+      "layer": "db",
+      "label": "MySQL",
+      "kind": "DB",
+      "path": null,
+      "role": "study_room과 room_reservation 테이블에 데이터를 저장합니다. 접속 정보는 환경 변수로 받습니다.",
+      "receives": [
+        "SELECT, INSERT, DELETE"
+      ],
+      "sends": [
+        "결과 행"
+      ],
+      "methods": [],
+      "targets": [],
+      "skeleton": [
+        "study_room(room_id, room_name, capacity)",
+        "room_reservation(reservation_id, room_id, member_name, people)"
+      ]
+    },
+    {
+      "id": "list",
+      "layer": "view",
+      "label": "list.jsp",
+      "kind": "JSP",
+      "path": "src/main/webapp/WEB-INF/views/reservation/list.jsp",
+      "role": "모델의 reservations와 rooms로 검색 form과 표를 만듭니다. 값은 c:out으로 감싸 출력합니다.",
+      "receives": [
+        "reservations",
+        "rooms",
+        "roomId",
+        "keyword",
+        "message"
+      ],
+      "sends": [
+        "상세 링크",
+        "검색 form"
+      ],
+      "methods": [],
+      "targets": [
+        "jsp-list"
+      ],
+      "skeleton": [
+        "<%-- 검색 form(제공) --%>",
+        "<%-- 작성 대상: 비었을 때의 안내 행과 반복 행 --%>"
+      ]
+    },
+    {
+      "id": "detail",
+      "layer": "view",
+      "label": "detail.jsp",
+      "kind": "JSP",
+      "path": "src/main/webapp/WEB-INF/views/reservation/detail.jsp",
+      "role": "예약 한 건의 값을 보여 주고 취소 form을 제공합니다.",
+      "receives": [
+        "reservation",
+        "message"
+      ],
+      "sends": [
+        "POST /reservations/{id}/delete"
+      ],
+      "methods": [],
+      "targets": [
+        "jsp-detail"
+      ],
+      "skeleton": [
+        "<%-- 작성 대상: 값 출력과 취소 form --%>",
+        "<%-- 목록 링크(제공) --%>"
+      ]
+    },
+    {
+      "id": "form",
+      "layer": "view",
+      "label": "form.jsp",
+      "kind": "JSP",
+      "path": "src/main/webapp/WEB-INF/views/reservation/form.jsp",
+      "role": "입력 form과 검증 오류 목록을 보여 줍니다. 제공 파일입니다.",
+      "receives": [
+        "form",
+        "rooms",
+        "errors"
+      ],
+      "sends": [
+        "POST /reservations"
+      ],
+      "methods": [],
+      "targets": [],
+      "skeleton": [
+        "<%-- 오류 목록과 입력 form(제공) --%>"
+      ]
+    },
+    {
+      "id": "notfound",
+      "layer": "view",
+      "label": "not-found.jsp",
+      "kind": "JSP",
+      "path": "src/main/webapp/WEB-INF/views/error/not-found.jsp",
+      "role": "404 상태의 오류 화면입니다. 제공 파일입니다.",
+      "receives": [
+        "message"
+      ],
+      "sends": [
+        "목록 링크"
+      ],
+      "methods": [],
+      "targets": [],
+      "skeleton": [
+        "<%-- 오류 메시지(제공) --%>"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-request",
+      "from": "browser",
+      "to": "controller",
+      "kind": "request",
+      "label": "요청",
+      "data": "URL과 form의 name=value가 DispatcherServlet을 거쳐 알맞은 컨트롤러 메서드로 전달됩니다."
+    },
+    {
+      "id": "e-call-svc",
+      "from": "controller",
+      "to": "service",
+      "kind": "call",
+      "label": "서비스 호출",
+      "data": "검색 조건, 번호, 검증을 통과한 입력 객체를 넘깁니다."
+    },
+    {
+      "id": "e-svc-mapper",
+      "from": "service",
+      "to": "mapper",
+      "kind": "call",
+      "label": "mapper 호출",
+      "data": "search, findById, insert, delete와 방 조회를 호출합니다."
+    },
+    {
+      "id": "e-sql",
+      "from": "mapper",
+      "to": "db",
+      "kind": "sql",
+      "label": "SQL 실행",
+      "data": "XML 구문이 PreparedStatement로 실행되어 행을 읽고 씁니다."
+    },
+    {
+      "id": "e-forward-list",
+      "from": "controller",
+      "to": "list",
+      "kind": "forward",
+      "label": "forward",
+      "data": "모델에 담은 값과 함께 reservation/list를 JSP로 forward합니다."
+    },
+    {
+      "id": "e-forward-detail",
+      "from": "controller",
+      "to": "detail",
+      "kind": "forward",
+      "label": "forward",
+      "data": "모델의 reservation과 함께 reservation/detail을 JSP로 forward합니다."
+    },
+    {
+      "id": "e-forward-form",
+      "from": "controller",
+      "to": "form",
+      "kind": "forward",
+      "label": "forward",
+      "data": "검증 오류가 있으면 입력한 값을 유지한 채 reservation/form을 다시 보여 줍니다."
+    },
+    {
+      "id": "e-redirect-detail",
+      "from": "controller",
+      "to": "browser",
+      "kind": "redirect",
+      "label": "redirect",
+      "data": "등록이 성공하면 만들어진 번호의 상세 주소로 redirect합니다. flash 안내가 함께 넘어갑니다."
+    },
+    {
+      "id": "e-redirect-list",
+      "from": "controller",
+      "to": "browser",
+      "kind": "redirect",
+      "label": "redirect",
+      "data": "취소가 끝나면 목록 주소로 redirect합니다."
+    },
+    {
+      "id": "e-error",
+      "from": "advice",
+      "to": "notfound",
+      "kind": "error",
+      "label": "예외 처리",
+      "data": "ReservationNotFoundException을 404 상태와 not-found 화면으로 바꿉니다."
+    }
+  ],
+  "flows": {
+    "overview": {
+      "label": "전체 흐름",
+      "edges": [
+        "e-request",
+        "e-call-svc",
+        "e-svc-mapper",
+        "e-sql",
+        "e-forward-list",
+        "e-forward-detail",
+        "e-forward-form",
+        "e-redirect-detail",
+        "e-redirect-list",
+        "e-error"
+      ]
+    },
+    "list": {
+      "label": "목록",
+      "edges": [
+        "e-request",
+        "e-call-svc",
+        "e-svc-mapper",
+        "e-sql",
+        "e-forward-list"
+      ]
+    },
+    "detail": {
+      "label": "상세",
+      "edges": [
+        "e-request",
+        "e-call-svc",
+        "e-svc-mapper",
+        "e-sql",
+        "e-forward-detail",
+        "e-error"
+      ]
+    },
+    "regist": {
+      "label": "등록",
+      "edges": [
+        "e-request",
+        "e-call-svc",
+        "e-svc-mapper",
+        "e-sql",
+        "e-forward-form",
+        "e-redirect-detail"
+      ]
+    },
+    "cancel": {
+      "label": "취소",
+      "edges": [
+        "e-request",
+        "e-call-svc",
+        "e-svc-mapper",
+        "e-sql",
+        "e-redirect-list",
+        "e-error"
+      ]
+    }
+  },
+  "flowTabs": {
+    "전체 흐름": "overview",
+    "목록": "list",
+    "상세": "detail",
+    "등록": "regist",
+    "취소": "cancel"
+  }
+}

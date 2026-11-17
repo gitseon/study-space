@@ -45,6 +45,8 @@ def read_observations(folder):
 def compare_environment(recorded, observed):
     problems = []
     for key in COMPARED:
+        if key not in observed and key not in recorded:
+            continue
         if key not in observed:
             problems.append(f"environment: {key} was not reported by the run")
         elif key not in recorded:

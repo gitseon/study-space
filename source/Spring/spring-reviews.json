@@ -1,0 +1,119 @@
+[
+  {
+    "questionId": "spring-01-q01",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "프레임워크는 흐름을 쥐고 개발자 코드를 호출한다는 정의만으로 d가 유일하다. a와 c는 라이브러리에도 해당하고 b는 라이브러리의 사용 방식이다."
+  },
+  {
+    "questionId": "spring-01-q03",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "IoC는 제어 주체가 바뀐다는 원칙이고 DI는 그 구현 방법이다. 나머지는 개념을 설정 위치나 scope와 섞은 오답이다."
+  },
+  {
+    "questionId": "spring-01-q06",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "execution 식은 적용 대상을 고르는 조건이라 pointcut이다. advice는 실행할 부가 기능, join point는 후보 지점, weaving은 엮는 과정이다."
+  },
+  {
+    "questionId": "spring-01-q10",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "MockMvc 표준 설정은 JSP를 렌더링하지 않아 실행하지 못했다. @Controller의 문자열은 뷰 이름이고 ViewResolver가 prefix와 suffix를 붙인다는 정의로 a를 확정했다. 프로젝트 단계에서 JSP 렌더링을 실행해 확인한다."
+  },
+  {
+    "questionId": "spring-01-q15",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "트랜잭션 경계는 함께 성공하거나 취소될 업무 단위를 아는 Service에 둔다는 설계 원칙이다. 다른 선택지는 사실과 다르거나 이유가 아니다. 실행 검증으로 대체할 수 없는 개념 문항이다."
+  },
+  {
+    "questionId": "spring-01-q17",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "POST만 같은 요청의 반복이 새 자원을 만들 수 있다. PUT은 교체, DELETE는 삭제 후 같은 상태, GET은 상태를 바꾸지 않는다는 HTTP 메서드 정의로 확정했다."
+  },
+  {
+    "questionId": "spring-01-q22",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "Boot의 기본 로깅 구현체는 Logback이다. 공식 문서의 정의로 확인했고 실행 케이스는 두지 않았다."
+  },
+  {
+    "questionId": "spring-01-q31",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "서술형이다. 생성자 주입의 장점, 생성자 하나일 때 @Autowired 생략, 순환 의존이 시작 시점에 실패함은 실행으로 확인했다(di-cycle)."
+  },
+  {
+    "questionId": "spring-01-q32",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "서술형이다. DispatcherServlet, HandlerMapping, HandlerAdapter, ViewResolver의 역할 구분은 공식 문서의 MVC 흐름과 일치한다."
+  },
+  {
+    "questionId": "spring-02-q25",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "DispatcherServlet이 모든 요청을 먼저 받는 Front Controller라는 정의로 확정했다. 공식 MVC 문서의 흐름과 일치한다."
+  },
+  {
+    "questionId": "spring-02-q29",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "springdoc-openapi의 기본 명세 경로는 /v3/api-docs라는 공식 문서의 기본값으로 확정했다. 실행해 확인하지 않았다."
+  },
+  {
+    "questionId": "spring-03-q24",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "pointcut과 advice를 묶은 모듈이 aspect라는 AOP 용어 정의로 확정했다. 실행 케이스는 없다."
+  },
+  {
+    "questionId": "spring-03-q29",
+    "revision": 1,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-17",
+    "note": "PUT은 전체 교체이고 PATCH는 일부 수정이라는 HTTP 명세의 정의로 확정했다. 실행해 확인하지 않았다."
+  }
+]

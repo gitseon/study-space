@@ -14,7 +14,7 @@
 | AI 역량검사 | 필기 검정 1회(객관식 100)와 실기 검정 1회(코드형 8문항, 100점) |
 | ADsP | 객관식 50문항(1과목 10, 2과목 10, 3과목 30) 모의평가 3회 |
 | SQLD | **비활성화(사이트에 표시하지 않음)**. 원고(개념 노트와 객관식 50문항 1회)는 `source/sqld/`에 남아 있고 검증도 계속한다. 다시 켜는 방법은 아래 「비활성화한 항목」 |
-| Spring | 개념 요약 노트 14 Part(Spring 개념). 과목평가와 월말평가는 준비 중이며 아직 공개하지 않는다 |
+| Spring | 개념 요약 노트 14 Part(Spring 개념), 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2, 연습용 60분), 월말평가 프로젝트 2개(스터디실 예약 관리 MVC·JSP·MyBatis, 장비 대여 API REST·Security) |
 | 백엔드 · DB | 개념 노트 2개(Backend, DB)와 과목평가 3회(회차마다 객관식 21, 단답형 9, 서술형 2, 실전 60분) |
 | SW역량테스트 | **비활성화(사이트에 표시하지 않음)**. A형 대비 11문제의 원고와 Java 풀이는 `source/SW역량테스트/`에 남아 있고 검증도 계속한다 |
 
@@ -43,6 +43,8 @@ python scripts/validate_questions.py
 python scripts/check_public_sources.py --public-only
 python scripts/author_backend_projects.py --check
 python scripts/validate_projects.py --track backend
+python scripts/author_spring_projects.py --check
+python scripts/validate_projects.py --track spring --release
 python scripts/audit_bias.py --strict --report reports/bias.json
 python scripts/verify_code_answers.py
 node scripts/verify_frontend_answers.mjs
@@ -104,11 +106,14 @@ SITE_DIR=dist npm run test:e2e
 
 ## Spring
 
-`source/Spring/`이 원고 폴더입니다(대소문자가 다른 `spring` 폴더를 따로 만들지 않습니다). 지금 공개하는 것은 `Spring개념 요약노트.md`(`Spring 개념` 카드)뿐이고 범위는 `scope-spring.json`, 노트와 문항의 연결은 `coverage-spring.json`, 검증 환경은 `environment-spring.json`입니다. 과목평가는 3회(회차마다 객관식 21, 단답형 9, 서술형 2)로 계획했으며 필수 태그를 3회가 모두 채워야 공개할 수 있어 지금은 비공개 시범(`private/spring/`) 1회만 있습니다. 구현 계획은 `docs/plans/spring.md`와 `docs/plans/spring-refactoring.md`입니다.
+`source/Spring/`이 원고 폴더입니다(대소문자가 다른 `spring` 폴더를 따로 만들지 않습니다). 개념 노트는 `Spring개념 요약노트.md`(`Spring 개념` 카드)이고 범위는 `scope-spring.json`, 노트와 문항과 프로젝트 작성 대상의 연결은 `coverage-spring.json`, 검증 환경은 `environment-spring.json`입니다. 과목평가 `spring-01`~`spring-03`은 필수 태그 44개를 3회가 모두 채웁니다. 구현 계획은 `docs/plans/spring.md`와 `docs/plans/spring-refactoring.md`입니다.
 
 - 실행 검증: `tests/spring-runtime`은 Spring Boot 4.1, Spring Framework 7.0, Security 7.1, MyBatis 3.5, MySQL 8.4에서 문항의 코드를 실제로 실행하는 Maven 프로젝트입니다. `python scripts/verify_spring_answers.py`가 이를 실행해 관찰한 값을 `spring-checks.json`과 비교하고 실행할 수 없는 문항은 `spring-reviews.json`의 재풀이 기록(작성자는 `independent: false`)을 요구합니다. 접속 정보는 환경 변수 `SPRING_VERIFY_DB_URL`, `SPRING_VERIFY_DB_USER`, `SPRING_VERIFY_DB_PASSWORD`로 받고 없으면 건너뛰지 않고 실패합니다. 백엔드 · DB의 MySQL 검증처럼 DB가 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다. 환경은 수업 환경과 같은지 확인하지 못한 연습용 조합입니다.
 - 비공개 시범: `python scripts/verify_spring_answers.py --source-root <폴더> --report <파일>`은 `<폴더>/Spring/`의 회차를 검증하므로 공개 `data/`를 건드리지 않습니다.
-- 월말 프로젝트: `scripts/project_catalog.py`의 `PROJECT_TRACKS`에 트랙을 등록하면 `validate_projects.py --track <트랙>`, `build_projects.py`, 홈과 `pages/project.html?track=<트랙>&project=<ID>`가 같은 규칙으로 동작합니다. 필수 실행 검증(compile, unit, dbIntegration, httpIntegration, JSP가 있으면 jspRender)이 현재 reference와 환경에 대해 통과하지 못한 프로젝트는 `validate_projects.py --release`와 `build_site.py`가 거부합니다. STS 확인은 별도 항목이며 확인하지 않은 상태는 `자동 검증 완료 · STS 미검증`으로 표시합니다.
+- 월말 프로젝트 원고: `source/Spring/projects/_master/<프로젝트 ID>/`가 단일 원본입니다(`meta.json`, `targets.json`, `structure.json`, `docs/`, 표식이 든 `files/`). `python scripts/author_spring_projects.py`가 같은 폴더 옆에 `starter/`, `stages/1~3/`, `reference/`, `project.json`, `review.json` 등을 만들고 `--check`가 최신 여부를 검사합니다. 생성된 폴더는 직접 고치지 않습니다. 기본 CRUD 연습은 공식 평가 범위가 아니라 제안입니다.
+- 월말 프로젝트 검증: `python scripts/verify_spring_projects.py`는 `reference/`를 임시 Maven 프로젝트로 복사하고 `tests/spring-projects/`의 검사 소스를 더해 컴파일, 단위, MySQL 통합, MockMvc, 내장 Tomcat의 JSP 렌더링을 실행합니다. 결과는 각 프로젝트의 `review.json`에 현재 reference와 환경 해시와 함께 기록되어 코드나 환경이 바뀌면 만료됩니다. `--templates`는 미완성 템플릿(1~3단계)이 검사를 통과하지 못하는지 확인합니다. DB가 필요해 로컬에서 실행합니다.
+- 월말 프로젝트 공개 조건: `validate_projects.py --track spring --release`와 `build_site.py`는 compile, unit, dbIntegration, httpIntegration(JSP가 있으면 jspRender)이 현재 reference와 환경에 대해 통과하지 못한 프로젝트를 거부합니다. STS 실행 확인은 별도이며 사용자가 직접 확인하기 전까지 `stsManual`은 미검증이고 화면에는 `자동 검증 완료 · STS 미검증`으로 표시합니다.
+- 월말 프로젝트 화면: `scripts/project_catalog.py`의 `PROJECT_TRACKS`에 트랙을 등록하면 `validate_projects.py --track <트랙>`, `build_projects.py`, 홈과 `pages/project.html?track=<트랙>&project=<ID>`가 같은 규칙으로 동작합니다. 필수 실행 검증(compile, unit, dbIntegration, httpIntegration, JSP가 있으면 jspRender)이 현재 reference와 환경에 대해 통과하지 못한 프로젝트는 `validate_projects.py --release`와 `build_site.py`가 거부합니다. STS 확인은 별도 항목이며 확인하지 않은 상태는 `자동 검증 완료 · STS 미검증`으로 표시합니다.
 
 ## 비활성화한 항목
 

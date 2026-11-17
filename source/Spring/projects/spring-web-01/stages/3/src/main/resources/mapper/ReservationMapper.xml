@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.room.mapper.ReservationMapper">
+    <resultMap id="reservationMap" type="Reservation">
+        <id property="reservationId" column="reservation_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+        <result property="memberName" column="member_name"/>
+        <result property="people" column="people"/>
+    </resultMap>
+
+    <select id="findRooms" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room ORDER BY room_id
+    </select>
+
+    <select id="findRoom" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room WHERE room_id = #{roomId}
+    </select>
+
+    <select id="sumPeople" resultType="int">
+        SELECT COALESCE(SUM(people), 0) FROM room_reservation WHERE room_id = #{roomId}
+    </select>
+
+    <!-- study-target:sql-search:start -->
+    <!-- TODO: search 구문을 작성한다. 방과 이름 조건은 값이 있을 때만 붙이고 reservation_id 순으로 정렬한다 -->
+    <!-- study-target:sql-search:end -->
+
+    <!-- study-target:sql-detail:start -->
+    <!-- TODO: findById 구문을 작성한다. 방 이름을 함께 조회한다 -->
+    <!-- study-target:sql-detail:end -->
+
+    <!-- study-target:sql-insert:start -->
+    <!-- TODO: insert 구문을 작성한다. 생성된 번호를 reservationId에 채운다 -->
+    <!-- study-target:sql-insert:end -->
+
+    <delete id="delete">
+        DELETE FROM room_reservation WHERE reservation_id = #{reservationId}
+    </delete>
+</mapper>

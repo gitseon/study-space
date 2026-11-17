@@ -1,0 +1,790 @@
+{
+  "id": "spring-web-02",
+  "revision": 1,
+  "track": "spring",
+  "title": "장비 대여 API",
+  "durationOptions": [
+    90,
+    120,
+    0
+  ],
+  "defaultMinutes": 120,
+  "sourceRefs": [
+    "SPR-L09 REST p.55",
+    "SPR-L10 SecurityFilterChain p.40",
+    "SPR-L11 사용자 정의 인증 p.10",
+    "SPR-S11 ResponseEntity p.60",
+    "SPR-S11 오류 응답 p.75",
+    "SPR-L08 Service 트랜잭션 p.20"
+  ],
+  "environment": {
+    "javaRuntime": "25",
+    "javaRelease": "21",
+    "springBoot": "4.1.2",
+    "springFramework": "7.0.10",
+    "springSecurity": "7.1.2",
+    "mybatis": "3.5.19",
+    "mybatisStarter": "4.1.0",
+    "mysqlServer": "8.4",
+    "mysqlDriver": "9.7.0",
+    "packaging": {
+      "runtime-checks": "jar",
+      "jsp-projects": "war",
+      "rest-projects": "jar"
+    },
+    "classMatch": "unconfirmed"
+  },
+  "database": "equipment_rental",
+  "presentation": {
+    "lead": "제공된 Spring Boot REST 프로젝트의 비어 있는 부분을 직접 채워 장비 대여 API와 form 로그인 기반 보안 설정, JSON 오류 응답을 연결합니다.",
+    "envNotice": "실행 환경(연습용): JDK 21 이상, Spring Boot 4.1.2, MyBatis 3.5.19(starter 4.1.0), MySQL 8.4. 수업 환경과 같은지는 확인하지 못했습니다.",
+    "editorNotice": "자동완성 기능을 제공하지 않으니 Spring Tools for Eclipse(STS)에서 Maven 프로젝트로 가져와 확인하세요. STS에서의 실행은 아직 확인하지 못했습니다.",
+    "stageInfo": {
+      "1": "전체 코드가 주어지고 비어 있는 부분만 채웁니다.",
+      "2": "메서드 시그니처가 주어지고 본문과 보안 규칙을 작성합니다.",
+      "3": "작성 대상 메서드와 구문과 보안 설정을 처음부터 구현합니다. 모델, 설정, DB 구조는 제공됩니다."
+    }
+  },
+  "files": [
+    {
+      "path": "pom.xml",
+      "language": "xml",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/RentalApplication.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/EquipmentNotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/NotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/RentalConflictException.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/exception/RentalNotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/mapper/MemberMapper.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/mapper/RentalMapper.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Equipment.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/ErrorResponse.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Member.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/Rental.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/RentalRequest.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/model/RentalResponse.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/DbUserDetailsService.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/Principals.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/security/SecurityConfig.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/web/ApiExceptionHandler.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "language": "java",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/application.properties",
+      "language": "text",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/data.sql",
+      "language": "sql",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/mapper/MemberMapper.xml",
+      "language": "xml",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "language": "xml",
+      "editable": true,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/main/resources/schema.sql",
+      "language": "sql",
+      "editable": false,
+      "requiredInExport": true
+    }
+  ],
+  "targets": [
+    {
+      "id": "ctrl-rent",
+      "title": "대여 요청과 201 응답",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent",
+        "api-invalid"
+      ]
+    },
+    {
+      "id": "ctrl-get",
+      "title": "대여 한 건 조회",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api",
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-get",
+        "api-owner"
+      ]
+    },
+    {
+      "id": "ctrl-cancel",
+      "title": "대여 취소와 204 응답",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api"
+      ],
+      "requirementId": "R-CANCEL",
+      "checklistIds": [
+        "api-cancel"
+      ]
+    },
+    {
+      "id": "ctrl-mine",
+      "title": "내 대여 목록",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "rest-api",
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-mine"
+      ]
+    },
+    {
+      "id": "ctrl-admin",
+      "title": "관리자 전체 목록",
+      "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-admin"
+      ]
+    },
+    {
+      "id": "svc-rent",
+      "title": "대여 저장과 충돌 확인",
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent",
+        "api-conflict"
+      ]
+    },
+    {
+      "id": "svc-access",
+      "title": "소유자 확인",
+      "path": "src/main/java/com/study/rental/service/RentalService.java",
+      "topicIds": [
+        "security",
+        "service-tx"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-owner",
+        "api-get"
+      ]
+    },
+    {
+      "id": "exc-notfound",
+      "title": "404 JSON 오류 응답",
+      "path": "src/main/java/com/study/rental/web/ApiExceptionHandler.java",
+      "topicIds": [
+        "rest-api",
+        "web-crosscut"
+      ],
+      "requirementId": "R-ERROR",
+      "checklistIds": [
+        "api-notfound"
+      ]
+    },
+    {
+      "id": "sec-chain",
+      "title": "SecurityFilterChain 인가 규칙",
+      "path": "src/main/java/com/study/rental/security/SecurityConfig.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-SECURITY",
+      "checklistIds": [
+        "sec-anonymous",
+        "sec-roles",
+        "sec-login"
+      ]
+    },
+    {
+      "id": "sec-users",
+      "title": "사용자 조회와 UserDetails",
+      "path": "src/main/java/com/study/rental/security/DbUserDetailsService.java",
+      "topicIds": [
+        "security"
+      ],
+      "requirementId": "R-SECURITY",
+      "checklistIds": [
+        "sec-login"
+      ]
+    },
+    {
+      "id": "sql-insert",
+      "title": "대여 저장과 생성된 번호",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-RENT",
+      "checklistIds": [
+        "api-rent"
+      ]
+    },
+    {
+      "id": "sql-detail",
+      "title": "번호로 대여 한 건 조회",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-get"
+      ]
+    },
+    {
+      "id": "sql-mine",
+      "title": "로그인 아이디의 대여 목록",
+      "path": "src/main/resources/mapper/RentalMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-ACCESS",
+      "checklistIds": [
+        "api-mine"
+      ]
+    }
+  ],
+  "structure": {
+    "mainLayers": [
+      "client",
+      "security",
+      "controller",
+      "service",
+      "mapper",
+      "db"
+    ],
+    "sideLayers": [],
+    "sideNote": "",
+    "layers": [
+      {
+        "id": "client",
+        "label": "클라이언트"
+      },
+      {
+        "id": "security",
+        "label": "보안 필터"
+      },
+      {
+        "id": "controller",
+        "label": "컨트롤러"
+      },
+      {
+        "id": "service",
+        "label": "서비스"
+      },
+      {
+        "id": "mapper",
+        "label": "Mapper"
+      },
+      {
+        "id": "db",
+        "label": "데이터베이스"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "client",
+        "layer": "client",
+        "label": "클라이언트",
+        "kind": "요청",
+        "path": null,
+        "role": "세션 쿠키로 로그인한 뒤 JSON 요청을 보냅니다. 변경 요청에는 CSRF 토큰을 함께 보냅니다.",
+        "receives": [
+          "JSON 응답",
+          "상태 코드와 Location"
+        ],
+        "sends": [
+          "POST /login",
+          "GET /api/rentals",
+          "POST /api/rentals (JSON)",
+          "DELETE /api/rentals/{id}"
+        ],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "POST /login          (username, password)",
+          "POST /api/rentals    {equipmentId, days}",
+          "GET  /api/rentals/{id}",
+          "DELETE /api/rentals/{id}"
+        ]
+      },
+      {
+        "id": "filter",
+        "layer": "security",
+        "label": "SecurityFilterChain",
+        "kind": "보안 설정",
+        "path": "src/main/java/com/study/rental/security/SecurityConfig.java",
+        "role": "컨트롤러보다 앞에서 인증과 인가를 판단합니다. 인증되지 않으면 401, 권한이 없으면 403으로 응답하고 컨트롤러에는 닿지 않습니다.",
+        "receives": [
+          "모든 HTTP 요청"
+        ],
+        "sends": [
+          "통과한 요청",
+          "401 또는 403"
+        ],
+        "methods": [
+          "filterChain"
+        ],
+        "targets": [
+          "sec-chain"
+        ],
+        "skeleton": [
+          "// 장비 목록과 /login은 모두 허용",
+          "// /api/admin/**은 ADMIN 역할",
+          "// 나머지는 인증된 사용자만",
+          "// 인증되지 않으면 401(로그인 화면으로 보내지 않음)"
+        ]
+      },
+      {
+        "id": "users",
+        "layer": "security",
+        "label": "DbUserDetailsService",
+        "kind": "사용자 조회",
+        "path": "src/main/java/com/study/rental/security/DbUserDetailsService.java",
+        "role": "로그인할 때 DB에서 사용자를 조회해 UserDetails를 만듭니다. 비밀번호 비교는 PasswordEncoder가 합니다.",
+        "receives": [
+          "로그인 아이디"
+        ],
+        "sends": [
+          "UserDetails",
+          "UsernameNotFoundException"
+        ],
+        "methods": [
+          "loadUserByUsername"
+        ],
+        "targets": [
+          "sec-users"
+        ],
+        "skeleton": [
+          "// 사용자를 조회한다",
+          "// 없으면 UsernameNotFoundException",
+          "// 이름, 해시 비밀번호, 역할로 UserDetails를 만든다"
+        ]
+      },
+      {
+        "id": "controller",
+        "layer": "controller",
+        "label": "RentalApiController",
+        "kind": "컨트롤러",
+        "path": "src/main/java/com/study/rental/web/RentalApiController.java",
+        "role": "JSON 본문을 바인딩하고 검증한 뒤 서비스를 호출하고 상태 코드와 본문을 정합니다.",
+        "receives": [
+          "요청 본문",
+          "경로 변수",
+          "인증 주체"
+        ],
+        "sends": [
+          "ResponseEntity 또는 JSON 객체"
+        ],
+        "methods": [
+          "rent",
+          "get",
+          "cancel",
+          "mine",
+          "all"
+        ],
+        "targets": [
+          "ctrl-rent",
+          "ctrl-get",
+          "ctrl-cancel",
+          "ctrl-mine",
+          "ctrl-admin"
+        ],
+        "skeleton": [
+          "// POST /api/rentals: 검증하고 대여해 201과 Location",
+          "// GET /api/rentals/{id}: 한 건 조회",
+          "// DELETE /api/rentals/{id}: 204",
+          "// GET /api/rentals, /api/admin/rentals: 목록"
+        ]
+      },
+      {
+        "id": "advice",
+        "layer": "controller",
+        "label": "ApiExceptionHandler",
+        "kind": "예외 처리",
+        "path": "src/main/java/com/study/rental/web/ApiExceptionHandler.java",
+        "role": "예외를 상태 코드와 ErrorResponse JSON으로 바꿉니다.",
+        "receives": [
+          "NotFoundException",
+          "RentalConflictException",
+          "검증 실패"
+        ],
+        "sends": [
+          "404, 409, 400 JSON"
+        ],
+        "methods": [
+          "notFound"
+        ],
+        "targets": [
+          "exc-notfound"
+        ],
+        "skeleton": [
+          "// NotFoundException: 404와 NOT_FOUND 본문",
+          "// 충돌과 검증 실패는 제공"
+        ]
+      },
+      {
+        "id": "service",
+        "layer": "service",
+        "label": "RentalService",
+        "kind": "서비스",
+        "path": "src/main/java/com/study/rental/service/RentalService.java",
+        "role": "업무 규칙을 확인하고 mapper를 호출합니다. 변경은 트랜잭션 하나로 묶고 소유자를 확인합니다.",
+        "receives": [
+          "로그인 아이디",
+          "요청 DTO"
+        ],
+        "sends": [
+          "엔티티",
+          "예외"
+        ],
+        "methods": [
+          "rent",
+          "get"
+        ],
+        "targets": [
+          "svc-rent",
+          "svc-access"
+        ],
+        "skeleton": [
+          "// rent: 장비 확인, 충돌 확인, 저장",
+          "// get: 없으면 404, 남의 것이면 AccessDeniedException"
+        ]
+      },
+      {
+        "id": "mapper",
+        "layer": "mapper",
+        "label": "RentalMapper",
+        "kind": "인터페이스",
+        "path": "src/main/java/com/study/rental/mapper/RentalMapper.java",
+        "role": "메서드 이름이 XML 구문의 id인 MyBatis 인터페이스입니다.",
+        "receives": [
+          "서비스 호출"
+        ],
+        "sends": [
+          "엔티티",
+          "행 수"
+        ],
+        "methods": [
+          "insert",
+          "findById",
+          "findByLoginId"
+        ],
+        "targets": [],
+        "skeleton": [
+          "// 메서드 이름과 XML의 id가 같다"
+        ]
+      },
+      {
+        "id": "xml",
+        "layer": "mapper",
+        "label": "RentalMapper.xml",
+        "kind": "SQL",
+        "path": "src/main/resources/mapper/RentalMapper.xml",
+        "role": "대여와 장비를 조인해 읽고 대여를 저장합니다. 값은 #{}로 바인딩합니다.",
+        "receives": [
+          "mapper 호출"
+        ],
+        "sends": [
+          "행"
+        ],
+        "methods": [],
+        "targets": [
+          "sql-insert",
+          "sql-detail",
+          "sql-mine"
+        ],
+        "skeleton": [
+          "<!-- insert: 생성된 번호를 rentalId에 채운다 -->",
+          "<!-- findById, findByLoginId: 장비 이름을 조인한다 -->"
+        ]
+      },
+      {
+        "id": "db",
+        "layer": "db",
+        "label": "MySQL",
+        "kind": "DB",
+        "path": null,
+        "role": "rental_equipment, rental_member, equipment_rental 테이블입니다. 비밀번호는 해시로 저장합니다.",
+        "receives": [
+          "SELECT, INSERT, DELETE"
+        ],
+        "sends": [
+          "결과 행"
+        ],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "rental_equipment(equipment_id, name)",
+          "rental_member(login_id, password_hash, role)",
+          "equipment_rental(rental_id, equipment_id, login_id, days)"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "e-request",
+        "from": "client",
+        "to": "filter",
+        "kind": "request",
+        "label": "요청",
+        "data": "모든 요청은 컨트롤러보다 먼저 보안 필터 체인을 지납니다."
+      },
+      {
+        "id": "e-auth",
+        "from": "filter",
+        "to": "users",
+        "kind": "call",
+        "label": "사용자 조회",
+        "data": "로그인할 때 사용자 정보를 조회하고 PasswordEncoder로 비밀번호를 비교합니다."
+      },
+      {
+        "id": "e-controller",
+        "from": "filter",
+        "to": "controller",
+        "kind": "call",
+        "label": "통과",
+        "data": "인증과 인가를 통과한 요청만 DispatcherServlet을 거쳐 컨트롤러로 갑니다."
+      },
+      {
+        "id": "e-call-svc",
+        "from": "controller",
+        "to": "service",
+        "kind": "call",
+        "label": "서비스 호출",
+        "data": "대여, 조회, 취소를 서비스에 맡깁니다. 사용자 이름과 관리자 여부를 함께 넘깁니다."
+      },
+      {
+        "id": "e-svc-mapper",
+        "from": "service",
+        "to": "mapper",
+        "kind": "call",
+        "label": "mapper 호출",
+        "data": "findEquipment, countActive, insert, findById, delete를 호출합니다."
+      },
+      {
+        "id": "e-sql",
+        "from": "mapper",
+        "to": "db",
+        "kind": "sql",
+        "label": "SQL 실행",
+        "data": "XML 구문이 실행되어 행을 읽고 씁니다."
+      },
+      {
+        "id": "e-error",
+        "from": "service",
+        "to": "advice",
+        "kind": "error",
+        "label": "예외",
+        "data": "NotFoundException과 RentalConflictException이 ApiExceptionHandler로 갑니다."
+      },
+      {
+        "id": "e-denied",
+        "from": "filter",
+        "to": "client",
+        "kind": "error",
+        "label": "401 또는 403",
+        "data": "인증되지 않은 요청은 401, 권한이 없는 요청과 CSRF 토큰이 없는 변경 요청은 403으로 응답합니다."
+      }
+    ],
+    "flows": {
+      "overview": {
+        "label": "전체 흐름",
+        "edges": [
+          "e-request",
+          "e-auth",
+          "e-controller",
+          "e-call-svc",
+          "e-svc-mapper",
+          "e-sql",
+          "e-error",
+          "e-denied"
+        ]
+      },
+      "login": {
+        "label": "로그인",
+        "edges": [
+          "e-request",
+          "e-auth",
+          "e-denied"
+        ]
+      },
+      "rent": {
+        "label": "대여",
+        "edges": [
+          "e-request",
+          "e-controller",
+          "e-call-svc",
+          "e-svc-mapper",
+          "e-sql",
+          "e-error",
+          "e-denied"
+        ]
+      },
+      "read": {
+        "label": "조회",
+        "edges": [
+          "e-request",
+          "e-controller",
+          "e-call-svc",
+          "e-svc-mapper",
+          "e-sql",
+          "e-error",
+          "e-denied"
+        ]
+      },
+      "cancel": {
+        "label": "취소",
+        "edges": [
+          "e-request",
+          "e-controller",
+          "e-call-svc",
+          "e-svc-mapper",
+          "e-sql",
+          "e-error",
+          "e-denied"
+        ]
+      },
+      "admin": {
+        "label": "관리자",
+        "edges": [
+          "e-request",
+          "e-controller",
+          "e-call-svc",
+          "e-svc-mapper",
+          "e-sql",
+          "e-denied"
+        ]
+      }
+    },
+    "flowTabs": {
+      "전체 흐름": "overview",
+      "로그인": "login",
+      "대여": "rent",
+      "조회": "read",
+      "취소": "cancel",
+      "관리자": "admin"
+    }
+  }
+}

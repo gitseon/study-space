@@ -1,0 +1,207 @@
+[
+  {
+    "id": "ctrl-rent",
+    "title": "대여 요청과 201 응답",
+    "topicIds": [
+      "rest-api"
+    ],
+    "requirementId": "R-RENT",
+    "checklistIds": [
+      "api-rent",
+      "api-invalid"
+    ],
+    "hints": [
+      "요청 본문 JSON은 검증하려면 파라미터에 붙이는 어노테이션 두 개가 필요합니다.",
+      "만들어진 자원은 201과 Location 헤더로 알립니다. 로그인한 사용자 이름은 인증 주체에서 꺼냅니다."
+    ]
+  },
+  {
+    "id": "ctrl-get",
+    "title": "대여 한 건 조회",
+    "topicIds": [
+      "rest-api",
+      "security"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-get",
+      "api-owner"
+    ],
+    "hints": [
+      "경로의 값은 파라미터 어노테이션으로 받고 로그인 사용자는 @AuthenticationPrincipal로 받습니다.",
+      "접근 검사는 서비스가 하므로 컨트롤러는 사용자 이름과 관리자 여부를 넘기기만 합니다."
+    ]
+  },
+  {
+    "id": "ctrl-cancel",
+    "title": "대여 취소와 204 응답",
+    "topicIds": [
+      "rest-api"
+    ],
+    "requirementId": "R-CANCEL",
+    "checklistIds": [
+      "api-cancel"
+    ],
+    "hints": [
+      "삭제가 성공하면 돌려줄 내용이 없으므로 본문 없는 상태 코드로 응답합니다.",
+      "ResponseEntity의 편의 메서드를 씁니다."
+    ]
+  },
+  {
+    "id": "ctrl-mine",
+    "title": "내 대여 목록",
+    "topicIds": [
+      "rest-api",
+      "security"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-mine"
+    ],
+    "hints": [
+      "서비스가 돌려준 엔티티 목록을 응답 객체로 바꿔 돌려줍니다.",
+      "로그인 사용자의 이름으로만 조회하므로 다른 사람의 대여는 나오지 않습니다."
+    ]
+  },
+  {
+    "id": "ctrl-admin",
+    "title": "관리자 전체 목록",
+    "topicIds": [
+      "security"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-admin"
+    ],
+    "hints": [
+      "접근 제한은 이 메서드가 아니라 보안 설정의 규칙이 맡습니다.",
+      "모든 대여를 응답 객체로 바꿔 돌려줍니다."
+    ]
+  },
+  {
+    "id": "svc-rent",
+    "title": "대여 저장과 충돌 확인",
+    "topicIds": [
+      "service-tx"
+    ],
+    "requirementId": "R-RENT",
+    "checklistIds": [
+      "api-rent",
+      "api-conflict"
+    ],
+    "hints": [
+      "장비가 없으면 404 예외, 이미 대여 중이면 409 예외를 던집니다. 저장은 마지막에 합니다.",
+      "변경 메서드이므로 트랜잭션 어노테이션을 붙입니다."
+    ]
+  },
+  {
+    "id": "svc-access",
+    "title": "소유자 확인",
+    "topicIds": [
+      "security",
+      "service-tx"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-owner",
+      "api-get"
+    ],
+    "hints": [
+      "없는 번호는 RentalNotFoundException입니다. 관리자가 아니면 로그인 아이디와 대여의 주인을 비교합니다.",
+      "권한이 없을 때는 Spring Security의 AccessDeniedException을 던지면 403으로 응답됩니다."
+    ]
+  },
+  {
+    "id": "exc-notfound",
+    "title": "404 JSON 오류 응답",
+    "topicIds": [
+      "rest-api",
+      "web-crosscut"
+    ],
+    "requirementId": "R-ERROR",
+    "checklistIds": [
+      "api-notfound"
+    ],
+    "hints": [
+      "예외 처리 클래스의 핸들러는 예외 타입을 지정하는 어노테이션으로 연결합니다.",
+      "상태와 본문을 함께 정하는 ResponseEntity로 ErrorResponse를 돌려줍니다."
+    ]
+  },
+  {
+    "id": "sec-chain",
+    "title": "SecurityFilterChain 인가 규칙",
+    "topicIds": [
+      "security"
+    ],
+    "requirementId": "R-SECURITY",
+    "checklistIds": [
+      "sec-anonymous",
+      "sec-roles",
+      "sec-login"
+    ],
+    "hints": [
+      "규칙은 위에서부터 처음 맞는 것 하나만 적용됩니다. anyRequest()는 마지막에 둡니다.",
+      "인증이 안 된 요청은 로그인 화면이 아니라 401로 응답하도록 entry point를 정합니다."
+    ]
+  },
+  {
+    "id": "sec-users",
+    "title": "사용자 조회와 UserDetails",
+    "topicIds": [
+      "security"
+    ],
+    "requirementId": "R-SECURITY",
+    "checklistIds": [
+      "sec-login"
+    ],
+    "hints": [
+      "UserDetailsService는 비밀번호를 비교하지 않고 사용자 정보만 돌려줍니다. 없으면 UsernameNotFoundException입니다.",
+      "roles()에는 ROLE_ 접두사 없이 USER나 ADMIN을 넘깁니다."
+    ]
+  },
+  {
+    "id": "sql-insert",
+    "title": "대여 저장과 생성된 번호",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-RENT",
+    "checklistIds": [
+      "api-rent"
+    ],
+    "hints": [
+      "AUTO_INCREMENT로 만들어진 번호를 객체에 채우는 insert 태그 속성 두 개를 씁니다.",
+      "값은 모두 #{}로 바인딩합니다."
+    ]
+  },
+  {
+    "id": "sql-detail",
+    "title": "번호로 대여 한 건 조회",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-get"
+    ],
+    "hints": [
+      "대여와 장비를 조인해 장비 이름을 함께 조회하고 파일의 resultMap으로 매핑합니다.",
+      "파라미터 이름은 mapper 메서드의 rentalId입니다."
+    ]
+  },
+  {
+    "id": "sql-mine",
+    "title": "로그인 아이디의 대여 목록",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-ACCESS",
+    "checklistIds": [
+      "api-mine"
+    ],
+    "hints": [
+      "WHERE의 login_id 조건에 #{loginId}를 바인딩하고 번호 순서로 정렬합니다.",
+      "장비 이름을 함께 조회하는 조인은 다른 구문과 같습니다."
+    ]
+  }
+]

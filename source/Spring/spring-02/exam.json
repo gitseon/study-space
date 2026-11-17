@@ -1,0 +1,10 @@
+{
+  "id": "spring-02",
+  "revision": 1,
+  "kind": "subject",
+  "track": "spring",
+  "title": "Spring 2회",
+  "subtitle": "설정·바인딩·트랜잭션 오류 분석",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1
+}

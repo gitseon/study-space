@@ -1,0 +1,203 @@
+[
+  {
+    "id": "ctrl-list",
+    "title": "목록과 검색 요청 처리",
+    "topicIds": [
+      "mvc-binding"
+    ],
+    "requirementId": "R-LIST",
+    "checklistIds": [
+      "crd-list",
+      "crd-search"
+    ],
+    "hints": [
+      "검색 조건 roomId와 keyword는 없어도 되는 요청 파라미터입니다. 필수가 아니게 하려면 어노테이션 속성을 정합니다.",
+      "조회한 목록과 방 목록과 입력한 조건을 모델에 담고 뷰 이름 reservation/list를 반환합니다."
+    ]
+  },
+  {
+    "id": "ctrl-detail",
+    "title": "상세 요청 처리",
+    "topicIds": [
+      "mvc-binding"
+    ],
+    "requirementId": "R-DETAIL",
+    "checklistIds": [
+      "crd-detail",
+      "crd-notfound"
+    ],
+    "hints": [
+      "경로의 {reservationId}는 파라미터에 붙이는 어노테이션으로 받습니다.",
+      "서비스가 예약을 돌려주면 모델의 reservation 이름으로 담고 reservation/detail을 반환합니다."
+    ]
+  },
+  {
+    "id": "ctrl-create",
+    "title": "등록 요청과 검증, PRG",
+    "topicIds": [
+      "mvc-binding",
+      "web-crosscut"
+    ],
+    "requirementId": "R-REGIST",
+    "checklistIds": [
+      "crd-create",
+      "crd-invalid"
+    ],
+    "hints": [
+      "검증할 객체 바로 뒤에 BindingResult가 있어야 오류가 있어도 메서드가 실행됩니다.",
+      "오류가 있으면 방 목록을 다시 담아 입력 화면 이름을 반환하고 성공하면 redirect로 상세 화면을 요청하게 합니다. flash 속성은 redirect 뒤 첫 요청에서 모델로 옮겨집니다."
+    ]
+  },
+  {
+    "id": "ctrl-cancel",
+    "title": "취소 요청 처리",
+    "topicIds": [
+      "mvc-binding"
+    ],
+    "requirementId": "R-CANCEL",
+    "checklistIds": [
+      "crd-cancel"
+    ],
+    "hints": [
+      "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
+      "flash 속성으로 안내 메시지 message를 담습니다."
+    ]
+  },
+  {
+    "id": "svc-detail",
+    "title": "예약 한 건 조회와 없는 번호",
+    "topicIds": [
+      "service-tx"
+    ],
+    "requirementId": "R-DETAIL",
+    "checklistIds": [
+      "crd-notfound"
+    ],
+    "hints": [
+      "mapper의 findById는 조회 결과가 없으면 null을 돌려줍니다.",
+      "null이면 ReservationNotFoundException을 던져 화면 쪽 예외 처리로 넘깁니다."
+    ]
+  },
+  {
+    "id": "svc-reserve",
+    "title": "예약 저장과 남은 자리 확인",
+    "topicIds": [
+      "service-tx"
+    ],
+    "requirementId": "R-REGIST",
+    "checklistIds": [
+      "crd-create",
+      "crd-full"
+    ],
+    "hints": [
+      "여러 SQL을 한 업무 단위로 묶으려면 메서드에 트랜잭션 어노테이션을 붙입니다.",
+      "남은 자리는 방의 정원에서 이미 예약된 인원의 합을 뺀 값입니다. 넘으면 RoomFullException을 던지고 저장하지 않습니다."
+    ]
+  },
+  {
+    "id": "svc-cancel",
+    "title": "예약 취소와 없는 번호",
+    "topicIds": [
+      "service-tx"
+    ],
+    "requirementId": "R-CANCEL",
+    "checklistIds": [
+      "crd-cancel"
+    ],
+    "hints": [
+      "mapper의 delete는 지운 행 수를 돌려줍니다. 0이면 지울 예약이 없었다는 뜻입니다.",
+      "변경 메서드이므로 트랜잭션 어노테이션을 붙입니다."
+    ]
+  },
+  {
+    "id": "exc-notfound",
+    "title": "없는 예약의 404 처리",
+    "topicIds": [
+      "web-crosscut"
+    ],
+    "requirementId": "R-DETAIL",
+    "checklistIds": [
+      "crd-notfound"
+    ],
+    "hints": [
+      "컨트롤러 밖의 예외 처리는 예외 타입을 지정하는 핸들러 메서드가 맡습니다.",
+      "상태는 404로 정하고 메시지를 모델에 담아 error/not-found 화면 이름을 반환합니다."
+    ]
+  },
+  {
+    "id": "sql-search",
+    "title": "방과 이름으로 찾는 동적 SQL",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-LIST",
+    "checklistIds": [
+      "crd-search"
+    ],
+    "hints": [
+      "조건이 모두 비어도 SQL이 깨지지 않게 WHERE를 만들어 주는 태그를 씁니다.",
+      "이름은 LIKE CONCAT('%', #{keyword}, '%')로 부분 일치합니다. 값은 #{}로 바인딩합니다."
+    ]
+  },
+  {
+    "id": "sql-detail",
+    "title": "번호로 한 건 조회",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-DETAIL",
+    "checklistIds": [
+      "crd-detail"
+    ],
+    "hints": [
+      "예약과 방을 조인해 방 이름을 함께 조회합니다. 결과는 파일에 있는 resultMap으로 매핑합니다.",
+      "파라미터 이름은 mapper 메서드의 reservationId입니다."
+    ]
+  },
+  {
+    "id": "sql-insert",
+    "title": "저장과 생성된 번호 받기",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-REGIST",
+    "checklistIds": [
+      "crd-create"
+    ],
+    "hints": [
+      "AUTO_INCREMENT로 만들어진 번호를 객체에 채우려면 insert 태그의 속성 두 개를 씁니다.",
+      "값은 모두 #{}로 바인딩합니다. insert의 반환값은 키가 아니라 영향받은 행 수입니다."
+    ]
+  },
+  {
+    "id": "jsp-list",
+    "title": "예약 목록 표",
+    "topicIds": [
+      "mvc-binding"
+    ],
+    "requirementId": "R-LIST",
+    "checklistIds": [
+      "crd-list"
+    ],
+    "hints": [
+      "목록이 비었는지는 EL의 empty로 확인하고 분기는 c:choose를 씁니다.",
+      "출력하는 값은 c:out으로 감쌉니다. 번호는 상세 화면으로 가는 링크입니다."
+    ]
+  },
+  {
+    "id": "jsp-detail",
+    "title": "예약 상세와 취소 form",
+    "topicIds": [
+      "mvc-binding"
+    ],
+    "requirementId": "R-DETAIL",
+    "checklistIds": [
+      "crd-detail",
+      "crd-cancel"
+    ],
+    "hints": [
+      "모델 이름 reservation의 프로퍼티를 EL로 읽어 c:out으로 출력합니다.",
+      "취소는 데이터를 바꾸는 요청이므로 form의 method를 정합니다."
+    ]
+  }
+]

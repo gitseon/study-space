@@ -1,0 +1,10 @@
+{
+  "id": "spring-01",
+  "revision": 1,
+  "kind": "subject",
+  "track": "spring",
+  "title": "Spring 1회",
+  "subtitle": "구성 요소의 책임과 기본 요청 흐름",
+  "practiceMinutes": 60,
+  "sourceScopeVersion": 1
+}

@@ -1,0 +1,61 @@
+{
+  "projectId": "spring-web-01",
+  "revision": 1,
+  "referenceHash": "39fabc7580d16ff96979bd689e5b82780385029b3bafc91b9a337b739da99889",
+  "referenceFiles": {
+    "pom.xml": "a5a60e03ed6fbd5a3c0d580b09fb6c8809181e1a01643bca05280081372d565b",
+    "src/main/java/com/study/room/StudyRoomApplication.java": "b64e9e99c05b3b6ee30329f4415be8e79b93a3bc14289a33d835e261e8ace783",
+    "src/main/java/com/study/room/exception/ReservationNotFoundException.java": "d07b3daa0f2061c1dadc46ce6de11b33331e35176438cb6cac58992ba7eb32a0",
+    "src/main/java/com/study/room/exception/RoomFullException.java": "e25457c3e89c0f7670b86cd57cca56b8984d80cafcb17969dd25cfa291c68912",
+    "src/main/java/com/study/room/mapper/ReservationMapper.java": "6ce87bb724d63a6acf61f98afe95c33965b5313147a0dd18788d25272ae69722",
+    "src/main/java/com/study/room/model/Reservation.java": "62389a59b0a051524993138dcdfb64ca87bdc7ce8e7d04b887e2de91849a958c",
+    "src/main/java/com/study/room/model/ReservationForm.java": "1c33afbcd5e897c8a0f339f2e53fcb154244367ccfa920202a3a305f1cd04a1e",
+    "src/main/java/com/study/room/model/StudyRoom.java": "ca6925c330f33f40171452d5f48d99f0f3b61e7c40afb15783d7bf1ff718005d",
+    "src/main/java/com/study/room/service/ReservationService.java": "025f37d247e826ad5f68d7fcf18a141e47cc4dbe15b8ed2d4b40c0b987d0bbfd",
+    "src/main/java/com/study/room/web/GlobalExceptionHandler.java": "0e8723b5e0ce3a241d00c4e7efc94b5da2843d27e526fa38a5f45f6ae8c1f242",
+    "src/main/java/com/study/room/web/HomeController.java": "dbb5e76d3087ca758643e4db39df0d6fc7722d2e29c662c84ba4d732f57b96dd",
+    "src/main/java/com/study/room/web/ReservationController.java": "841f3898ba0ba2cbf1d0dbe0243cc323fb52e557b06098d5d3ed651fb373448b",
+    "src/main/resources/application.properties": "d8883d5de50a65564c7fc071a86d0e4c6e9b79411e01e2050394f2a9077fdd6d",
+    "src/main/resources/data.sql": "b754c66c336e48741902d810495b427371035b82f39cf0f9cd209cb5ea00d987",
+    "src/main/resources/mapper/ReservationMapper.xml": "05b833ee873530c22f156274b2aa56fc24a1d117d0783b3122fd869be9595d5a",
+    "src/main/resources/schema.sql": "b8c59e6adc2be6a81be5fb3058885f19e10314f009627e142dafe6e08ba73d3a",
+    "src/main/webapp/WEB-INF/views/common/header.jsp": "58e67123da466dfd830acb9fba492bfb2f453eb4632034fc9ab5d0161b931de6",
+    "src/main/webapp/WEB-INF/views/error/full.jsp": "b63a1724403a36ed2eaa83de6a2aba2a240ed55dfba560a0fbc4da172ec98fd1",
+    "src/main/webapp/WEB-INF/views/error/not-found.jsp": "1720962301d6b45d6ef60221793be3a9f1582e819941ba09544bdb808d04faa0",
+    "src/main/webapp/WEB-INF/views/reservation/detail.jsp": "9eab39ecfbd39c337645535bbe3856fbe792a8671960a78e672c895238a33a23",
+    "src/main/webapp/WEB-INF/views/reservation/form.jsp": "9cf9a825c35a691af6f8782661315daee2b046d2f797100246aabdac37a3bc90",
+    "src/main/webapp/WEB-INF/views/reservation/list.jsp": "410a910afa87c7385e4ddf076b3b409ccadf3add42415403d1774cd9c1b75ed0"
+  },
+  "verification": {
+    "steps": {
+      "compile": {
+        "status": "passed",
+        "note": "main과 test 소스를 컴파일했습니다"
+      },
+      "unit": {
+        "status": "passed",
+        "note": "테스트 7건 통과"
+      },
+      "dbIntegration": {
+        "status": "passed",
+        "note": "테스트 8건 통과"
+      },
+      "httpIntegration": {
+        "status": "passed",
+        "note": "테스트 9건 통과"
+      },
+      "jspRender": {
+        "status": "passed",
+        "note": "테스트 9건 통과"
+      },
+      "stsManual": {
+        "status": "unverified",
+        "note": ""
+      }
+    },
+    "verifiedReferenceHash": "39fabc7580d16ff96979bd689e5b82780385029b3bafc91b9a337b739da99889",
+    "environmentHash": "e0e3c28667d9273d",
+    "verifiedAt": "2026-11-17",
+    "reviewer": "verify_spring_projects.py"
+  }
+}

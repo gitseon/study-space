@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.room.mapper.ReservationMapper">
+    <resultMap id="reservationMap" type="Reservation">
+        <id property="reservationId" column="reservation_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+        <result property="memberName" column="member_name"/>
+        <result property="people" column="people"/>
+    </resultMap>
+
+    <select id="findRooms" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room ORDER BY room_id
+    </select>
+
+    <select id="findRoom" resultType="StudyRoom">
+        SELECT room_id, room_name, capacity FROM study_room WHERE room_id = #{roomId}
+    </select>
+
+    <select id="sumPeople" resultType="int">
+        SELECT COALESCE(SUM(people), 0) FROM room_reservation WHERE room_id = #{roomId}
+    </select>
+
+    <!-- @@target sql-search -->
+    <select id="search" resultMap="reservationMap">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        <where>
+            <if test="roomId != null">
+                AND r.room_id = #{roomId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND r.member_name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        ORDER BY r.reservation_id
+    </select>
+    <!-- @@stage 1 -->
+    <select id="search" resultMap="reservationMap">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        <____>
+            <if test="roomId != ____">
+                AND r.room_id = #{roomId}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND r.member_name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </____>
+        ORDER BY r.reservation_id
+    </select>
+    <!-- @@stage 2 -->
+    <select id="search" resultMap="reservationMap">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        <!-- TODO: roomId와 keyword가 있을 때만 조건을 붙이는 동적 SQL을 작성한다 -->
+        ORDER BY r.reservation_id
+    </select>
+    <!-- @@stage 3 -->
+    <!-- TODO: search 구문을 작성한다. 방과 이름 조건은 값이 있을 때만 붙이고 reservation_id 순으로 정렬한다 -->
+    <!-- @@end -->
+
+    <!-- @@target sql-detail -->
+    <select id="findById" resultMap="reservationMap">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        WHERE r.reservation_id = #{reservationId}
+    </select>
+    <!-- @@stage 1 -->
+    <select id="findById" resultMap="____">
+        SELECT r.reservation_id, r.room_id, s.room_name, r.member_name, r.people
+        FROM room_reservation r JOIN study_room s ON s.room_id = r.room_id
+        WHERE r.reservation_id = #{____}
+    </select>
+    <!-- @@stage 2 -->
+    <select id="findById" resultMap="reservationMap">
+        <!-- TODO: 예약과 방 이름을 조인해 번호로 한 건을 조회한다 -->
+    </select>
+    <!-- @@stage 3 -->
+    <!-- TODO: findById 구문을 작성한다. 방 이름을 함께 조회한다 -->
+    <!-- @@end -->
+
+    <!-- @@target sql-insert -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="reservationId">
+        INSERT INTO room_reservation (room_id, member_name, people)
+        VALUES (#{roomId}, #{memberName}, #{people})
+    </insert>
+    <!-- @@stage 1 -->
+    <insert id="insert" ____="true" keyProperty="____">
+        INSERT INTO room_reservation (room_id, member_name, people)
+        VALUES (#{roomId}, #{memberName}, #{people})
+    </insert>
+    <!-- @@stage 2 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="reservationId">
+        <!-- TODO: room_id, member_name, people 값을 바인딩해 한 행을 추가한다 -->
+    </insert>
+    <!-- @@stage 3 -->
+    <!-- TODO: insert 구문을 작성한다. 생성된 번호를 reservationId에 채운다 -->
+    <!-- @@end -->
+
+    <delete id="delete">
+        DELETE FROM room_reservation WHERE reservation_id = #{reservationId}
+    </delete>
+</mapper>

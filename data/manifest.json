@@ -288,6 +288,57 @@
         "code": 0
       },
       "contentVersion": "4139e7fc29bc32f6"
+    },
+    {
+      "id": "spring-01",
+      "revision": 1,
+      "kind": "subject",
+      "track": "spring",
+      "title": "Spring 1회",
+      "subtitle": "구성 요소의 책임과 기본 요청 흐름",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "bacc36c57f836f73"
+    },
+    {
+      "id": "spring-02",
+      "revision": 1,
+      "kind": "subject",
+      "track": "spring",
+      "title": "Spring 2회",
+      "subtitle": "설정·바인딩·트랜잭션 오류 분석",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "f099195579f6569b"
+    },
+    {
+      "id": "spring-03",
+      "revision": 1,
+      "kind": "subject",
+      "track": "spring",
+      "title": "Spring 3회",
+      "subtitle": "계층을 연결한 상황 판단",
+      "practiceMinutes": 60,
+      "sourceScopeVersion": 1,
+      "counts": {
+        "mc": 21,
+        "short": 9,
+        "essay": 2,
+        "code": 0
+      },
+      "contentVersion": "17601dc9faf529a1"
     }
   ],
   "topics": {
@@ -535,6 +586,99 @@
           }
         ]
       }
+    },
+    "spring": {
+      "label": "Spring",
+      "topics": {
+        "foundation-boot": "Framework와 Boot 기초",
+        "di-bean": "DI와 빈 관리",
+        "aop-proxy": "AOP와 프록시",
+        "mvc-binding": "MVC 요청과 바인딩",
+        "web-crosscut": "웹 공통 처리",
+        "mybatis": "MyBatis",
+        "service-tx": "Service와 트랜잭션",
+        "rest-api": "REST API",
+        "security": "Spring Security"
+      },
+      "topicCounts": {
+        "foundation-boot": 9,
+        "di-bean": 13,
+        "aop-proxy": 9,
+        "mvc-binding": 13,
+        "web-crosscut": 6,
+        "mybatis": 13,
+        "service-tx": 10,
+        "rest-api": 10,
+        "security": 13
+      },
+      "studyLinks": {
+        "foundation-boot": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 1. Framework와 Spring의 구성"
+          },
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 2. Spring Boot와 설정"
+          },
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 12. 테스트, 로깅, Lombok"
+          }
+        ],
+        "di-bean": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 3. DI와 빈 관리"
+          }
+        ],
+        "aop-proxy": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 4. AOP와 프록시"
+          }
+        ],
+        "mvc-binding": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 5. Spring MVC 요청 처리"
+          }
+        ],
+        "web-crosscut": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 6. Interceptor, Validation, 예외 처리"
+          },
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 7. 파일 업로드와 다운로드"
+          }
+        ],
+        "mybatis": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 8. MyBatis"
+          }
+        ],
+        "service-tx": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 9. Service와 트랜잭션"
+          }
+        ],
+        "rest-api": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 10. REST API"
+          }
+        ],
+        "security": [
+          {
+            "noteId": "spring-concepts",
+            "section": "Part 11. Spring Security"
+          }
+        ]
+      }
     }
   },
   "notes": [
@@ -580,6 +724,11 @@
       "file": "backend-projects.json",
       "count": 2,
       "track": "backend"
+    },
+    "spring": {
+      "file": "spring-projects.json",
+      "count": 2,
+      "track": "spring"
     }
   },
   "webProjects": {

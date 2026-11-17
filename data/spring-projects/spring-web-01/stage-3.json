@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "projectId": "spring-web-01",
+  "revision": 1,
+  "hash": "5385a90c5d4f3e01",
+  "stage": {
+    "id": 3,
+    "label": "구현 대상 전체 작성"
+  },
+  "files": [
+    {
+      "path": "pom.xml",
+      "language": "xml",
+      "editable": false,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <parent>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-parent</artifactId>\n        <version>4.1.2</version>\n        <relativePath/>\n    </parent>\n    <groupId>com.study</groupId>\n    <artifactId>room</artifactId>\n    <version>0.0.1-SNAPSHOT</version>\n    <packaging>war</packaging>\n    <properties>\n        <java.version>21</java.version>\n        <mybatis-starter.version>4.1.0</mybatis-starter.version>\n        <jstl.version>3.0.1</jstl.version>\n    </properties>\n    <dependencies>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-webmvc</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-validation</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.mybatis.spring.boot</groupId>\n            <artifactId>mybatis-spring-boot-starter</artifactId>\n            <version>${mybatis-starter.version}</version>\n        </dependency>\n        <dependency>\n            <groupId>com.mysql</groupId>\n            <artifactId>mysql-connector-j</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.apache.tomcat.embed</groupId>\n            <artifactId>tomcat-embed-jasper</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>jakarta.servlet.jsp.jstl</groupId>\n            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>\n            <version>${jstl.version}</version>\n        </dependency>\n        <dependency>\n            <groupId>org.glassfish.web</groupId>\n            <artifactId>jakarta.servlet.jsp.jstl</artifactId>\n            <version>${jstl.version}</version>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-webmvc-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/StudyRoomApplication.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room;\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.boot.builder.SpringApplicationBuilder;\nimport org.springframework.boot.web.servlet.support.SpringBootServletInitializer;\n\n@SpringBootApplication\npublic class StudyRoomApplication extends SpringBootServletInitializer {\n    public static void main(String[] args) {\n        SpringApplication.run(StudyRoomApplication.class, args);\n    }\n\n    @Override\n    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {\n        return builder.sources(StudyRoomApplication.class);\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/exception/ReservationNotFoundException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.exception;\n\npublic class ReservationNotFoundException extends RuntimeException {\n    public ReservationNotFoundException(int reservationId) {\n        super(\"예약 \" + reservationId + \"번을 찾을 수 없습니다\");\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/exception/RoomFullException.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.exception;\n\npublic class RoomFullException extends RuntimeException {\n    public RoomFullException(String roomName, int remaining) {\n        super(roomName + \"의 남은 자리는 \" + remaining + \"명입니다\");\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/mapper/ReservationMapper.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.mapper;\n\nimport java.util.List;\n\nimport org.apache.ibatis.annotations.Mapper;\nimport org.apache.ibatis.annotations.Param;\n\nimport com.study.room.model.Reservation;\nimport com.study.room.model.StudyRoom;\n\n@Mapper\npublic interface ReservationMapper {\n    List<StudyRoom> findRooms();\n\n    StudyRoom findRoom(int roomId);\n\n    int sumPeople(int roomId);\n\n    List<Reservation> search(@Param(\"roomId\") Integer roomId, @Param(\"keyword\") String keyword);\n\n    Reservation findById(int reservationId);\n\n    int insert(Reservation reservation);\n\n    int delete(int reservationId);\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/model/Reservation.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.model;\n\npublic class Reservation {\n    private Integer reservationId;\n    private Integer roomId;\n    private String roomName;\n    private String memberName;\n    private int people;\n\n    public Integer getReservationId() {\n        return reservationId;\n    }\n\n    public void setReservationId(Integer reservationId) {\n        this.reservationId = reservationId;\n    }\n\n    public Integer getRoomId() {\n        return roomId;\n    }\n\n    public void setRoomId(Integer roomId) {\n        this.roomId = roomId;\n    }\n\n    public String getRoomName() {\n        return roomName;\n    }\n\n    public void setRoomName(String roomName) {\n        this.roomName = roomName;\n    }\n\n    public String getMemberName() {\n        return memberName;\n    }\n\n    public void setMemberName(String memberName) {\n        this.memberName = memberName;\n    }\n\n    public int getPeople() {\n        return people;\n    }\n\n    public void setPeople(int people) {\n        this.people = people;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/model/ReservationForm.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.model;\n\nimport jakarta.validation.constraints.Min;\nimport jakarta.validation.constraints.NotBlank;\nimport jakarta.validation.constraints.NotNull;\nimport jakarta.validation.constraints.Size;\n\npublic class ReservationForm {\n    @NotNull(message = \"방을 선택하세요\")\n    private Integer roomId;\n\n    @NotBlank(message = \"예약자 이름을 입력하세요\")\n    @Size(max = 30, message = \"예약자 이름은 30자 이하입니다\")\n    private String memberName;\n\n    @NotNull(message = \"인원을 입력하세요\")\n    @Min(value = 1, message = \"인원은 1명 이상입니다\")\n    private Integer people;\n\n    public Integer getRoomId() {\n        return roomId;\n    }\n\n    public void setRoomId(Integer roomId) {\n        this.roomId = roomId;\n    }\n\n    public String getMemberName() {\n        return memberName;\n    }\n\n    public void setMemberName(String memberName) {\n        this.memberName = memberName;\n    }\n\n    public Integer getPeople() {\n        return people;\n    }\n\n    public void setPeople(Integer people) {\n        this.people = people;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/model/StudyRoom.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.model;\n\npublic class StudyRoom {\n    private Integer roomId;\n    private String roomName;\n    private int capacity;\n\n    public Integer getRoomId() {\n        return roomId;\n    }\n\n    public void setRoomId(Integer roomId) {\n        this.roomId = roomId;\n    }\n\n    public String getRoomName() {\n        return roomName;\n    }\n\n    public void setRoomName(String roomName) {\n        this.roomName = roomName;\n    }\n\n    public int getCapacity() {\n        return capacity;\n    }\n\n    public void setCapacity(int capacity) {\n        this.capacity = capacity;\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.room.service;\n\nimport java.util.List;\n\nimport org.springframework.stereotype.Service;\nimport org.springframework.transaction.annotation.Transactional;\n\nimport com.study.room.exception.ReservationNotFoundException;\nimport com.study.room.exception.RoomFullException;\nimport com.study.room.mapper.ReservationMapper;\nimport com.study.room.model.Reservation;\nimport com.study.room.model.ReservationForm;\nimport com.study.room.model.StudyRoom;\n\n@Service\npublic class ReservationService {\n    private final ReservationMapper mapper;\n\n    public ReservationService(ReservationMapper mapper) {\n        this.mapper = mapper;\n    }\n\n    public List<Reservation> search(Integer roomId, String keyword) {\n        return mapper.search(roomId, keyword);\n    }\n\n    public List<StudyRoom> rooms() {\n        return mapper.findRooms();\n    }\n\n    // study-target:svc-detail:start\n    // TODO: 예약 한 건을 조회하는 detail 메서드를 작성한다. 없으면 ReservationNotFoundException을 던진다\n    // study-target:svc-detail:end\n\n    // study-target:svc-reserve:start\n    // TODO: 예약을 저장하는 reserve 메서드를 작성한다. 트랜잭션 하나로 묶고 남은 자리를 넘으면 RoomFullException을 던진다\n    // study-target:svc-reserve:end\n\n    // study-target:svc-cancel:start\n    // TODO: 예약을 취소하는 cancel 메서드를 작성한다\n    // study-target:svc-cancel:end\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.room.web;\n\nimport org.springframework.http.HttpStatus;\nimport org.springframework.ui.Model;\nimport org.springframework.web.bind.annotation.ControllerAdvice;\nimport org.springframework.web.bind.annotation.ExceptionHandler;\nimport org.springframework.web.bind.annotation.ResponseStatus;\n\nimport com.study.room.exception.ReservationNotFoundException;\nimport com.study.room.exception.RoomFullException;\n\n@ControllerAdvice\npublic class GlobalExceptionHandler {\n    // study-target:exc-notfound:start\n    // TODO: ReservationNotFoundException을 404 상태와 error/not-found 화면으로 처리하는 핸들러를 작성한다\n    // study-target:exc-notfound:end\n\n    @ExceptionHandler(RoomFullException.class)\n    @ResponseStatus(HttpStatus.CONFLICT)\n    public String full(RoomFullException e, Model model) {\n        model.addAttribute(\"message\", e.getMessage());\n        return \"error/full\";\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/web/HomeController.java",
+      "language": "java",
+      "editable": false,
+      "text": "package com.study.room.web;\n\nimport org.springframework.stereotype.Controller;\nimport org.springframework.web.bind.annotation.GetMapping;\n\n@Controller\npublic class HomeController {\n    @GetMapping(\"/\")\n    public String home() {\n        return \"redirect:/reservations\";\n    }\n}\n"
+    },
+    {
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "language": "java",
+      "editable": true,
+      "text": "package com.study.room.web;\n\nimport org.springframework.stereotype.Controller;\nimport org.springframework.ui.Model;\nimport org.springframework.validation.BindingResult;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.ModelAttribute;\nimport org.springframework.web.bind.annotation.PathVariable;\nimport org.springframework.web.bind.annotation.PostMapping;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RequestParam;\nimport org.springframework.web.servlet.mvc.support.RedirectAttributes;\n\nimport com.study.room.model.ReservationForm;\nimport com.study.room.service.ReservationService;\n\nimport jakarta.validation.Valid;\n\n@Controller\n@RequestMapping(\"/reservations\")\npublic class ReservationController {\n    private final ReservationService service;\n\n    public ReservationController(ReservationService service) {\n        this.service = service;\n    }\n\n    // study-target:ctrl-list:start\n    // TODO: GET /reservations 요청을 처리하는 목록 메서드를 작성한다. 검색 조건 roomId와 keyword는 없어도 된다\n    // study-target:ctrl-list:end\n\n    @GetMapping(\"/new\")\n    public String form(Model model) {\n        model.addAttribute(\"form\", new ReservationForm());\n        model.addAttribute(\"rooms\", service.rooms());\n        return \"reservation/form\";\n    }\n\n    // study-target:ctrl-detail:start\n    // TODO: GET /reservations/{reservationId} 요청을 처리하는 상세 메서드를 작성한다\n    // study-target:ctrl-detail:end\n\n    // study-target:ctrl-create:start\n    // TODO: POST /reservations 요청을 처리하는 등록 메서드를 작성한다. 검증 오류는 입력 화면으로 돌아가고 성공하면 redirect한다\n    // study-target:ctrl-create:end\n\n    // study-target:ctrl-cancel:start\n    // TODO: POST /reservations/{reservationId}/delete 요청을 처리하는 취소 메서드를 작성한다\n    // study-target:ctrl-cancel:end\n}\n"
+    },
+    {
+      "path": "src/main/resources/application.properties",
+      "language": "text",
+      "editable": false,
+      "text": "spring.application.name=study-room\nspring.mvc.view.prefix=/WEB-INF/views/\nspring.mvc.view.suffix=.jsp\nspring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/study_room?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}\nspring.datasource.username=${DB_USER:study}\nspring.datasource.password=${DB_PASSWORD}\nspring.sql.init.mode=always\nspring.sql.init.encoding=UTF-8\nmybatis.mapper-locations=classpath:mapper/*.xml\nmybatis.type-aliases-package=com.study.room.model\nmybatis.configuration.map-underscore-to-camel-case=true\nlogging.level.com.study.room=debug\n"
+    },
+    {
+      "path": "src/main/resources/data.sql",
+      "language": "sql",
+      "editable": false,
+      "text": "INSERT IGNORE INTO study_room (room_id, room_name, capacity) VALUES (1, '소회의실 A', 6), (2, '소회의실 B', 4), (3, '세미나실', 10);\n\nINSERT INTO room_reservation (room_id, member_name, people)\nSELECT room_id, member_name, people FROM (\n    SELECT 1 AS room_id, '김하나' AS member_name, 2 AS people\n    UNION ALL SELECT 1, '이둘', 3\n    UNION ALL SELECT 2, '박셋', 2\n) seed WHERE NOT EXISTS (SELECT 1 FROM room_reservation);\n"
+    },
+    {
+      "path": "src/main/resources/mapper/ReservationMapper.xml",
+      "language": "xml",
+      "editable": true,
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"https://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"com.study.room.mapper.ReservationMapper\">\n    <resultMap id=\"reservationMap\" type=\"Reservation\">\n        <id property=\"reservationId\" column=\"reservation_id\"/>\n        <result property=\"roomId\" column=\"room_id\"/>\n        <result property=\"roomName\" column=\"room_name\"/>\n        <result property=\"memberName\" column=\"member_name\"/>\n        <result property=\"people\" column=\"people\"/>\n    </resultMap>\n\n    <select id=\"findRooms\" resultType=\"StudyRoom\">\n        SELECT room_id, room_name, capacity FROM study_room ORDER BY room_id\n    </select>\n\n    <select id=\"findRoom\" resultType=\"StudyRoom\">\n        SELECT room_id, room_name, capacity FROM study_room WHERE room_id = #{roomId}\n    </select>\n\n    <select id=\"sumPeople\" resultType=\"int\">\n        SELECT COALESCE(SUM(people), 0) FROM room_reservation WHERE room_id = #{roomId}\n    </select>\n\n    <!-- study-target:sql-search:start -->\n    <!-- TODO: search 구문을 작성한다. 방과 이름 조건은 값이 있을 때만 붙이고 reservation_id 순으로 정렬한다 -->\n    <!-- study-target:sql-search:end -->\n\n    <!-- study-target:sql-detail:start -->\n    <!-- TODO: findById 구문을 작성한다. 방 이름을 함께 조회한다 -->\n    <!-- study-target:sql-detail:end -->\n\n    <!-- study-target:sql-insert:start -->\n    <!-- TODO: insert 구문을 작성한다. 생성된 번호를 reservationId에 채운다 -->\n    <!-- study-target:sql-insert:end -->\n\n    <delete id=\"delete\">\n        DELETE FROM room_reservation WHERE reservation_id = #{reservationId}\n    </delete>\n</mapper>\n"
+    },
+    {
+      "path": "src/main/resources/schema.sql",
+      "language": "sql",
+      "editable": false,
+      "text": "CREATE TABLE IF NOT EXISTS study_room (\n    room_id INT PRIMARY KEY,\n    room_name VARCHAR(30) NOT NULL,\n    capacity INT NOT NULL\n);\n\nCREATE TABLE IF NOT EXISTS room_reservation (\n    reservation_id INT AUTO_INCREMENT PRIMARY KEY,\n    room_id INT NOT NULL,\n    member_name VARCHAR(30) NOT NULL,\n    people INT NOT NULL,\n    FOREIGN KEY (room_id) REFERENCES study_room (room_id)\n);\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/common/header.jsp",
+      "language": "jsp",
+      "editable": false,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<nav>\n    <strong>스터디실 예약</strong>\n    <a href=\"${root}/reservations\">예약 목록</a>\n    <a href=\"${root}/reservations/new\">예약하기</a>\n</nav>\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/error/full.jsp",
+      "language": "jsp",
+      "editable": false,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>예약할 수 없습니다</title>\n</head>\n<body>\n<h1>예약할 수 없습니다</h1>\n<p><c:out value=\"${message}\" /></p>\n<p><a href=\"${root}/reservations/new\">다시 예약하기</a></p>\n</body>\n</html>\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/error/not-found.jsp",
+      "language": "jsp",
+      "editable": false,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>찾을 수 없습니다</title>\n</head>\n<body>\n<h1>찾을 수 없습니다</h1>\n<p><c:out value=\"${message}\" /></p>\n<p><a href=\"${root}/reservations\">목록으로</a></p>\n</body>\n</html>\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/reservation/detail.jsp",
+      "language": "jsp",
+      "editable": true,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>예약 상세</title>\n</head>\n<body>\n<jsp:include page=\"/WEB-INF/views/common/header.jsp\" />\n<h1>예약 상세</h1>\n<c:if test=\"${not empty message}\">\n    <p class=\"notice\"><c:out value=\"${message}\" /></p>\n</c:if>\n<%-- study-target:jsp-detail:start --%>\n<%-- TODO: 예약 한 건의 값을 출력하고 취소 form을 만든다 --%>\n<%-- study-target:jsp-detail:end --%>\n<p><a href=\"${root}/reservations\">목록으로</a></p>\n</body>\n</html>\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/reservation/form.jsp",
+      "language": "jsp",
+      "editable": false,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<%@ taglib prefix=\"spring\" uri=\"http://www.springframework.org/tags\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>예약하기</title>\n</head>\n<body>\n<jsp:include page=\"/WEB-INF/views/common/header.jsp\" />\n<h1>예약하기</h1>\n<spring:hasBindErrors name=\"form\">\n    <ul class=\"errors\">\n        <c:forEach var=\"err\" items=\"${errors.allErrors}\">\n            <li><c:out value=\"${err.defaultMessage}\" /></li>\n        </c:forEach>\n    </ul>\n</spring:hasBindErrors>\n<form method=\"post\" action=\"${root}/reservations\">\n    <label>방\n        <select name=\"roomId\">\n            <c:forEach var=\"room\" items=\"${rooms}\">\n                <option value=\"${room.roomId}\" <c:if test=\"${form.roomId == room.roomId}\">selected</c:if>><c:out value=\"${room.roomName}\" /> (<c:out value=\"${room.capacity}\" />명)</option>\n            </c:forEach>\n        </select>\n    </label>\n    <label>예약자 <input type=\"text\" name=\"memberName\" value=\"<c:out value='${form.memberName}' />\"></label>\n    <label>인원 <input type=\"number\" name=\"people\" value=\"<c:out value='${form.people}' />\"></label>\n    <button type=\"submit\">예약</button>\n</form>\n</body>\n</html>\n"
+    },
+    {
+      "path": "src/main/webapp/WEB-INF/views/reservation/list.jsp",
+      "language": "jsp",
+      "editable": true,
+      "text": "<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n<%@ taglib prefix=\"c\" uri=\"jakarta.tags.core\" %>\n<c:set var=\"root\" value=\"${pageContext.request.contextPath}\" />\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>예약 목록</title>\n</head>\n<body>\n<jsp:include page=\"/WEB-INF/views/common/header.jsp\" />\n<h1>예약 목록</h1>\n<c:if test=\"${not empty message}\">\n    <p class=\"notice\"><c:out value=\"${message}\" /></p>\n</c:if>\n<form method=\"get\" action=\"${root}/reservations\">\n    <select name=\"roomId\">\n        <option value=\"\">전체 방</option>\n        <c:forEach var=\"room\" items=\"${rooms}\">\n            <option value=\"${room.roomId}\" <c:if test=\"${roomId == room.roomId}\">selected</c:if>><c:out value=\"${room.roomName}\" /></option>\n        </c:forEach>\n    </select>\n    <input type=\"text\" name=\"keyword\" value=\"<c:out value='${keyword}' />\" placeholder=\"예약자 이름\">\n    <button type=\"submit\">검색</button>\n</form>\n<table>\n    <thead>\n        <tr><th>번호</th><th>방</th><th>예약자</th><th>인원</th></tr>\n    </thead>\n    <tbody>\n        <%-- study-target:jsp-list:start --%>\n        <%-- TODO: reservations 목록을 표의 행으로 출력한다. 비어 있으면 \"예약이 없습니다.\" 행을 보여 준다 --%>\n        <%-- study-target:jsp-list:end --%>\n    </tbody>\n</table>\n</body>\n</html>\n"
+    }
+  ],
+  "targets": [
+    {
+      "id": "ctrl-list",
+      "title": "목록과 검색 요청 처리",
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "topicIds": [
+        "mvc-binding"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list",
+        "crd-search"
+      ]
+    },
+    {
+      "id": "ctrl-detail",
+      "title": "상세 요청 처리",
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "topicIds": [
+        "mvc-binding"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail",
+        "crd-notfound"
+      ]
+    },
+    {
+      "id": "ctrl-create",
+      "title": "등록 요청과 검증, PRG",
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "topicIds": [
+        "mvc-binding",
+        "web-crosscut"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create",
+        "crd-invalid"
+      ]
+    },
+    {
+      "id": "ctrl-cancel",
+      "title": "취소 요청 처리",
+      "path": "src/main/java/com/study/room/web/ReservationController.java",
+      "topicIds": [
+        "mvc-binding"
+      ],
+      "requirementId": "R-CANCEL",
+      "checklistIds": [
+        "crd-cancel"
+      ]
+    },
+    {
+      "id": "svc-detail",
+      "title": "예약 한 건 조회와 없는 번호",
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-notfound"
+      ]
+    },
+    {
+      "id": "svc-reserve",
+      "title": "예약 저장과 남은 자리 확인",
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create",
+        "crd-full"
+      ]
+    },
+    {
+      "id": "svc-cancel",
+      "title": "예약 취소와 없는 번호",
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-CANCEL",
+      "checklistIds": [
+        "crd-cancel"
+      ]
+    },
+    {
+      "id": "exc-notfound",
+      "title": "없는 예약의 404 처리",
+      "path": "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
+      "topicIds": [
+        "web-crosscut"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-notfound"
+      ]
+    },
+    {
+      "id": "sql-search",
+      "title": "방과 이름으로 찾는 동적 SQL",
+      "path": "src/main/resources/mapper/ReservationMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-search"
+      ]
+    },
+    {
+      "id": "sql-detail",
+      "title": "번호로 한 건 조회",
+      "path": "src/main/resources/mapper/ReservationMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail"
+      ]
+    },
+    {
+      "id": "sql-insert",
+      "title": "저장과 생성된 번호 받기",
+      "path": "src/main/resources/mapper/ReservationMapper.xml",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "crd-create"
+      ]
+    },
+    {
+      "id": "jsp-list",
+      "title": "예약 목록 표",
+      "path": "src/main/webapp/WEB-INF/views/reservation/list.jsp",
+      "topicIds": [
+        "mvc-binding"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list"
+      ]
+    },
+    {
+      "id": "jsp-detail",
+      "title": "예약 상세와 취소 form",
+      "path": "src/main/webapp/WEB-INF/views/reservation/detail.jsp",
+      "topicIds": [
+        "mvc-binding"
+      ],
+      "requirementId": "R-DETAIL",
+      "checklistIds": [
+        "crd-detail",
+        "crd-cancel"
+      ]
+    }
+  ],
+  "hints": {
+    "ctrl-list": [
+      "검색 조건 roomId와 keyword는 없어도 되는 요청 파라미터입니다. 필수가 아니게 하려면 어노테이션 속성을 정합니다.",
+      "조회한 목록과 방 목록과 입력한 조건을 모델에 담고 뷰 이름 reservation/list를 반환합니다."
+    ],
+    "ctrl-detail": [
+      "경로의 {reservationId}는 파라미터에 붙이는 어노테이션으로 받습니다.",
+      "서비스가 예약을 돌려주면 모델의 reservation 이름으로 담고 reservation/detail을 반환합니다."
+    ],
+    "ctrl-create": [
+      "검증할 객체 바로 뒤에 BindingResult가 있어야 오류가 있어도 메서드가 실행됩니다.",
+      "오류가 있으면 방 목록을 다시 담아 입력 화면 이름을 반환하고 성공하면 redirect로 상세 화면을 요청하게 합니다. flash 속성은 redirect 뒤 첫 요청에서 모델로 옮겨집니다."
+    ],
+    "ctrl-cancel": [
+      "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
+      "flash 속성으로 안내 메시지 message를 담습니다."
+    ],
+    "svc-detail": [
+      "mapper의 findById는 조회 결과가 없으면 null을 돌려줍니다.",
+      "null이면 ReservationNotFoundException을 던져 화면 쪽 예외 처리로 넘깁니다."
+    ],
+    "svc-reserve": [
+      "여러 SQL을 한 업무 단위로 묶으려면 메서드에 트랜잭션 어노테이션을 붙입니다.",
+      "남은 자리는 방의 정원에서 이미 예약된 인원의 합을 뺀 값입니다. 넘으면 RoomFullException을 던지고 저장하지 않습니다."
+    ],
+    "svc-cancel": [
+      "mapper의 delete는 지운 행 수를 돌려줍니다. 0이면 지울 예약이 없었다는 뜻입니다.",
+      "변경 메서드이므로 트랜잭션 어노테이션을 붙입니다."
+    ],
+    "exc-notfound": [
+      "컨트롤러 밖의 예외 처리는 예외 타입을 지정하는 핸들러 메서드가 맡습니다.",
+      "상태는 404로 정하고 메시지를 모델에 담아 error/not-found 화면 이름을 반환합니다."
+    ],
+    "sql-search": [
+      "조건이 모두 비어도 SQL이 깨지지 않게 WHERE를 만들어 주는 태그를 씁니다.",
+      "이름은 LIKE CONCAT('%', #{keyword}, '%')로 부분 일치합니다. 값은 #{}로 바인딩합니다."
+    ],
+    "sql-detail": [
+      "예약과 방을 조인해 방 이름을 함께 조회합니다. 결과는 파일에 있는 resultMap으로 매핑합니다.",
+      "파라미터 이름은 mapper 메서드의 reservationId입니다."
+    ],
+    "sql-insert": [
+      "AUTO_INCREMENT로 만들어진 번호를 객체에 채우려면 insert 태그의 속성 두 개를 씁니다.",
+      "값은 모두 #{}로 바인딩합니다. insert의 반환값은 키가 아니라 영향받은 행 수입니다."
+    ],
+    "jsp-list": [
+      "목록이 비었는지는 EL의 empty로 확인하고 분기는 c:choose를 씁니다.",
+      "출력하는 값은 c:out으로 감쌉니다. 번호는 상세 화면으로 가는 링크입니다."
+    ],
+    "jsp-detail": [
+      "모델 이름 reservation의 프로퍼티를 EL로 읽어 c:out으로 출력합니다.",
+      "취소는 데이터를 바꾸는 요청이므로 form의 method를 정합니다."
+    ]
+  }
+}

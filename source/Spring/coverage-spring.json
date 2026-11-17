@@ -1,8 +1,8 @@
 {
   "version": 1,
   "track": "spring",
-  "coverageProfile": "pilot",
-  "note": "questionIds에는 문항 ID만, projectTargets에는 월말 프로젝트의 작성 대상 ID만 적는다. noteOnly 행은 노트에만 있는 심화 주제다.",
+  "coverageProfile": "full",
+  "note": "questionIds에는 문항 ID만, projectTargets에는 월말 프로젝트의 작성 대상(<프로젝트 ID>/<target ID>)만 적는다. projectTargets는 대주제가 같은 작성 대상을 모은 것이며 노트의 절과 프로젝트의 연결을 보여 준다. noteOnly 행은 노트에만 있는 심화 주제다.",
   "requirements": [
     {
       "requirementId": "S01",
@@ -16,10 +16,14 @@
       "keywords": [
         {
           "id": "framework-role",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q01"
+          ]
         }
       ],
-      "questionIds": [],
+      "questionIds": [
+        "spring-01-q01"
+      ],
       "projectTargets": []
     },
     {
@@ -34,14 +38,23 @@
       "keywords": [
         {
           "id": "boot-autoconfig",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q02",
+            "spring-03-q01"
+          ]
         },
         {
           "id": "config-properties",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q01"
+          ]
         }
       ],
-      "questionIds": [],
+      "questionIds": [
+        "spring-01-q02",
+        "spring-02-q01",
+        "spring-03-q01"
+      ],
       "projectTargets": []
     },
     {
@@ -59,18 +72,32 @@
       "keywords": [
         {
           "id": "logging-slf4j",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q22",
+            "spring-03-q02"
+          ]
         },
         {
           "id": "junit-test",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q02",
+            "spring-03-q22"
+          ]
         },
         {
           "id": "lombok",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q22"
+          ]
         }
       ],
-      "questionIds": [],
+      "questionIds": [
+        "spring-01-q22",
+        "spring-02-q02",
+        "spring-02-q22",
+        "spring-03-q02",
+        "spring-03-q22"
+      ],
       "projectTargets": []
     },
     {
@@ -86,30 +113,63 @@
       "keywords": [
         {
           "id": "ioc-container",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q03"
+          ]
         },
         {
           "id": "bean-registration",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q04",
+            "spring-03-q03",
+            "spring-03-q23"
+          ]
         },
         {
           "id": "constructor-injection",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q31",
+            "spring-02-q23",
+            "spring-03-q04"
+          ]
         },
         {
           "id": "bean-selection",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q05",
+            "spring-02-q05",
+            "spring-03-q05"
+          ]
         },
         {
           "id": "bean-scope",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q23",
+            "spring-02-q04"
+          ]
         },
         {
           "id": "bean-lifecycle",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q03"
+          ]
         }
       ],
-      "questionIds": [],
+      "questionIds": [
+        "spring-01-q03",
+        "spring-01-q04",
+        "spring-01-q05",
+        "spring-01-q23",
+        "spring-01-q31",
+        "spring-02-q03",
+        "spring-02-q04",
+        "spring-02-q05",
+        "spring-02-q23",
+        "spring-03-q03",
+        "spring-03-q04",
+        "spring-03-q05",
+        "spring-03-q23"
+      ],
       "projectTargets": []
     },
     {
@@ -125,22 +185,45 @@
       "keywords": [
         {
           "id": "aop-terms",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q06",
+            "spring-02-q24",
+            "spring-03-q24"
+          ]
         },
         {
           "id": "pointcut-expression",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q24",
+            "spring-03-q06"
+          ]
         },
         {
           "id": "advice-types",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q07",
+            "spring-02-q07",
+            "spring-03-q07"
+          ]
         },
         {
           "id": "proxy-limits",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q06"
+          ]
         }
       ],
-      "questionIds": [],
+      "questionIds": [
+        "spring-01-q06",
+        "spring-01-q07",
+        "spring-01-q24",
+        "spring-02-q06",
+        "spring-02-q07",
+        "spring-02-q24",
+        "spring-03-q06",
+        "spring-03-q07",
+        "spring-03-q24"
+      ],
       "projectTargets": []
     },
     {
@@ -156,27 +239,66 @@
       "keywords": [
         {
           "id": "dispatcher-flow",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q32",
+            "spring-02-q25"
+          ]
         },
         {
           "id": "request-mapping",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q08",
+            "spring-03-q08"
+          ]
         },
         {
           "id": "argument-binding",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q09",
+            "spring-02-q08",
+            "spring-03-q09",
+            "spring-03-q25"
+          ]
         },
         {
           "id": "model-view",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q10",
+            "spring-02-q09",
+            "spring-03-q10"
+          ]
         },
         {
           "id": "redirect-prg",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q25",
+            "spring-02-q10"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q08",
+        "spring-01-q09",
+        "spring-01-q10",
+        "spring-01-q25",
+        "spring-01-q32",
+        "spring-02-q08",
+        "spring-02-q09",
+        "spring-02-q10",
+        "spring-02-q25",
+        "spring-03-q08",
+        "spring-03-q09",
+        "spring-03-q10",
+        "spring-03-q25"
+      ],
+      "projectTargets": [
+        "spring-web-01/ctrl-cancel",
+        "spring-web-01/ctrl-create",
+        "spring-web-01/ctrl-detail",
+        "spring-web-01/ctrl-list",
+        "spring-web-01/jsp-detail",
+        "spring-web-01/jsp-list"
+      ]
     },
     {
       "requirementId": "S07",
@@ -191,19 +313,37 @@
       "keywords": [
         {
           "id": "interceptor",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q11",
+            "spring-03-q11"
+          ]
         },
         {
           "id": "validation",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q26",
+            "spring-03-q26"
+          ]
         },
         {
           "id": "exception-handling",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q11"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q11",
+        "spring-01-q26",
+        "spring-02-q11",
+        "spring-03-q11",
+        "spring-03-q26"
+      ],
+      "projectTargets": [
+        "spring-web-01/ctrl-create",
+        "spring-web-01/exc-notfound",
+        "spring-web-02/exc-notfound"
+      ]
     },
     {
       "requirementId": "S08",
@@ -217,11 +357,19 @@
       "keywords": [
         {
           "id": "multipart",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q26"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-02-q26"
+      ],
+      "projectTargets": [
+        "spring-web-01/ctrl-create",
+        "spring-web-01/exc-notfound",
+        "spring-web-02/exc-notfound"
+      ]
     },
     {
       "requirementId": "S09",
@@ -236,27 +384,66 @@
       "keywords": [
         {
           "id": "mapper-interface",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q12",
+            "spring-02-q27",
+            "spring-03-q14"
+          ]
         },
         {
           "id": "param-binding",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q13",
+            "spring-03-q13"
+          ]
         },
         {
           "id": "result-map",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q14",
+            "spring-02-q13",
+            "spring-03-q27"
+          ]
         },
         {
           "id": "dynamic-sql",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q27",
+            "spring-02-q14",
+            "spring-02-q32",
+            "spring-03-q12"
+          ]
         },
         {
           "id": "mybatis-config",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q12"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q12",
+        "spring-01-q13",
+        "spring-01-q14",
+        "spring-01-q27",
+        "spring-02-q12",
+        "spring-02-q13",
+        "spring-02-q14",
+        "spring-02-q27",
+        "spring-02-q32",
+        "spring-03-q12",
+        "spring-03-q13",
+        "spring-03-q14",
+        "spring-03-q27"
+      ],
+      "projectTargets": [
+        "spring-web-01/sql-detail",
+        "spring-web-01/sql-insert",
+        "spring-web-01/sql-search",
+        "spring-web-02/sql-detail",
+        "spring-web-02/sql-insert",
+        "spring-web-02/sql-mine"
+      ]
     },
     {
       "requirementId": "S10",
@@ -269,23 +456,54 @@
       "keywords": [
         {
           "id": "tx-boundary",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q15",
+            "spring-02-q31"
+          ]
         },
         {
           "id": "rollback-rules",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q16",
+            "spring-02-q28",
+            "spring-03-q15"
+          ]
         },
         {
           "id": "propagation",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q28",
+            "spring-02-q16",
+            "spring-03-q16"
+          ]
         },
         {
           "id": "self-invocation",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q15",
+            "spring-03-q28"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q15",
+        "spring-01-q16",
+        "spring-01-q28",
+        "spring-02-q15",
+        "spring-02-q16",
+        "spring-02-q28",
+        "spring-02-q31",
+        "spring-03-q15",
+        "spring-03-q16",
+        "spring-03-q28"
+      ],
+      "projectTargets": [
+        "spring-web-01/svc-cancel",
+        "spring-web-01/svc-detail",
+        "spring-web-01/svc-reserve",
+        "spring-web-02/svc-access",
+        "spring-web-02/svc-rent"
+      ]
     },
     {
       "requirementId": "S11",
@@ -299,31 +517,64 @@
       "keywords": [
         {
           "id": "rest-http-method",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q17",
+            "spring-03-q29"
+          ]
         },
         {
           "id": "json-body",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q29",
+            "spring-03-q17"
+          ]
         },
         {
           "id": "response-entity",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q18",
+            "spring-03-q18"
+          ]
         },
         {
           "id": "rest-error",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q17",
+            "spring-03-q31"
+          ]
         },
         {
           "id": "cors",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q18"
+          ]
         },
         {
           "id": "api-docs",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q29"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q17",
+        "spring-01-q18",
+        "spring-01-q29",
+        "spring-02-q17",
+        "spring-02-q18",
+        "spring-02-q29",
+        "spring-03-q17",
+        "spring-03-q18",
+        "spring-03-q29",
+        "spring-03-q31"
+      ],
+      "projectTargets": [
+        "spring-web-02/ctrl-cancel",
+        "spring-web-02/ctrl-get",
+        "spring-web-02/ctrl-mine",
+        "spring-web-02/ctrl-rent",
+        "spring-web-02/exc-notfound"
+      ]
     },
     {
       "requirementId": "S12",
@@ -337,31 +588,71 @@
       "keywords": [
         {
           "id": "filter-chain",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q19"
+          ]
         },
         {
           "id": "authn-authz",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q20",
+            "spring-03-q32"
+          ]
         },
         {
           "id": "authorize-rules",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q21",
+            "spring-02-q21",
+            "spring-03-q20"
+          ]
         },
         {
           "id": "user-details",
-          "questionIds": []
+          "questionIds": [
+            "spring-01-q30",
+            "spring-02-q30",
+            "spring-03-q21"
+          ]
         },
         {
           "id": "login-logout",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q19",
+            "spring-03-q19"
+          ]
         },
         {
           "id": "auth-info",
-          "questionIds": []
+          "questionIds": [
+            "spring-02-q20",
+            "spring-03-q30"
+          ]
         }
       ],
-      "questionIds": [],
-      "projectTargets": []
+      "questionIds": [
+        "spring-01-q19",
+        "spring-01-q20",
+        "spring-01-q21",
+        "spring-01-q30",
+        "spring-02-q19",
+        "spring-02-q20",
+        "spring-02-q21",
+        "spring-02-q30",
+        "spring-03-q19",
+        "spring-03-q20",
+        "spring-03-q21",
+        "spring-03-q30",
+        "spring-03-q32"
+      ],
+      "projectTargets": [
+        "spring-web-02/ctrl-admin",
+        "spring-web-02/ctrl-get",
+        "spring-web-02/ctrl-mine",
+        "spring-web-02/sec-chain",
+        "spring-web-02/sec-users",
+        "spring-web-02/svc-access"
+      ]
     },
     {
       "requirementId": "X01",
