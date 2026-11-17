@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  buildTree, clampPanelWidth, findNext, findRegion, languageOptions, layoutFor, lineCount, regionBody, targetStates, withLineNumbers,
+  buildTree, clampPanelWidth, filesBounds, findNext, findRegion, languageOptions, layoutFor, lineCount, regionBody, targetStates, withLineNumbers,
 } from '../../assets/project-editor.js';
 import {editKey} from '../../assets/code-editor.js';
 
@@ -100,4 +100,15 @@ test('a panel width stays between its minimum and maximum and a maximum below th
   assert.equal(clampPanelWidth(900, 280, 520), 520);
   assert.equal(clampPanelWidth(900, 280, 200), 280);
   assert.equal(clampPanelWidth(280, 280, 520), 280);
+});
+
+test('the file panel may grow until the code panel keeps its minimum width next to the requirements panel', () => {
+  // desktop: two gaps (files|code and code|side)
+  assert.deepEqual(filesBounds({gridWidth: 1400, sideWidth: 500}), {min: 160, max: 560});
+  // requirements panel folded away or tablet layout: one gap
+  assert.deepEqual(filesBounds({gridWidth: 1000, sideWidth: 0}), {min: 160, max: 670});
+  // a grid too narrow for the code minimum never pushes the maximum below the minimum
+  assert.deepEqual(filesBounds({gridWidth: 600, sideWidth: 400}), {min: 160, max: 160});
+  assert.equal(clampPanelWidth(900, 160, filesBounds({gridWidth: 1400, sideWidth: 500}).max), 560);
+  assert.equal(clampPanelWidth(50, 160, 560), 160);
 });

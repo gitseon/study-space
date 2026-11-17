@@ -14,7 +14,7 @@ import {checkProjectDraft} from './project-checks.js';
 import {buildProjectZip, exportRoot} from './project-export.js';
 import {attemptTrack, createCatalogLoader, presentationOf, resolveProject} from './project-catalog.js';
 import {mountStructure} from './project-structure.js';
-import {buildTree, clampPanelWidth, layoutFor, mountProjectEditor, targetStates, findRegion} from './project-editor.js';
+import {buildTree, clampPanelWidth, filesBounds, layoutFor, mountProjectEditor, targetStates, findRegion} from './project-editor.js';
 
 const root = document.querySelector('#app');
 const params = new URLSearchParams(location.search);
@@ -268,7 +268,8 @@ function renderRun() {
     + (S.browse ? '' : '<div class="group"><button type="button" id="pj-finish" class="primary">작성 마치기</button></div>')
     + '</div><div class="pj-editor" id="pj-editor"></div></section>'
     + '<aside class="pj-panel pj-side" aria-label="요구사항과 점검"><header><span>요구사항 · 점검</span></header><div class="pj-side-body"><div class="pj-sidetabs" role="tablist" id="pj-sidetabs"></div><div id="pj-sidebody"></div></div></aside>'
-    + '<div class="pj-resizer" id="pj-resizer" role="separator" aria-orientation="vertical" aria-label="요구사항 영역 너비 조절 (방향키, Home, End, Enter로 처음 크기)" tabindex="0"></div>'
+    + '<div class="pj-resizer pj-resizer-files" id="pj-files-resizer" role="separator" aria-orientation="vertical" aria-label="파일 영역 너비 조절 (방향키, Home, End, Enter로 처음 크기)" tabindex="0"></div>'
+    + '<div class="pj-resizer pj-resizer-side" id="pj-resizer" role="separator" aria-orientation="vertical" aria-label="요구사항 영역 너비 조절 (방향키, Home, End, Enter로 처음 크기)" tabindex="0"></div>'
     + '</div></div>';
 
   const files = view.files.map((f) => ({path: f.path, language: f.language, editable: f.editable, text: currentFiles()[f.path]}));
@@ -307,6 +308,7 @@ function wireRun() {
     pj.dataset.files = collapsed ? 'open' : 'collapsed';
     $('#pj-toggle-files').textContent = collapsed ? '파일 접기' : '파일 펼치기';
     $('#pj-toggle-files').setAttribute('aria-pressed', String(!collapsed));
+    reclampFiles();
     reclampSide();
   };
   $('#pj-toggle-side').onclick = () => {
@@ -314,9 +316,11 @@ function wireRun() {
     const open = pj.dataset.side === 'open';
     pj.dataset.side = open ? (tablet ? 'closed' : 'collapsed') : 'open';
     $('#pj-toggle-side').textContent = open ? '요구사항 펼치기' : '요구사항 접기';
+    reclampFiles();
     reclampSide();
   };
   setupSideResize(pj);
+  setupFilesResize(pj);
   $('#pj-mode-read').onclick = () => setMode('read');
   $('#pj-mode-write').onclick = () => setMode('write');
   $('#pj-font-down').onclick = () => S.editor.setFontSize(S.editor.fontSize() - 1);
@@ -358,6 +362,7 @@ function wireRun() {
   $('#pj-sidebody').addEventListener('click', onSideClick);
   $('#pj-sidebody').addEventListener('change', onSideChange);
   window.addEventListener('resize', applyLayout);
+  window.addEventListener('resize', reclampFiles);
   window.addEventListener('resize', reclampSide);
   window.visualViewport?.addEventListener('resize', () => document.documentElement.style.setProperty('--vvh', `${window.visualViewport.height}px`));
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveNow(); });
@@ -491,6 +496,124 @@ function setupSideResize(pj) {
   });
 }
 
+// 파일 패널의 너비. 요구사항 패널과 같은 방식으로 끌거나 키보드로 바꾸고 브라우저에 저장한다.
+const FILES_KEY = 'study-space:project-files-width';
+const FILES_MIN = 160;
+
+function readFilesWidth() {
+  try {
+    const value = Number(localStorage.getItem(FILES_KEY));
+    return Number.isFinite(value) && value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeFilesWidth(value) {
+  try {
+    if (value == null) localStorage.removeItem(FILES_KEY);
+    else localStorage.setItem(FILES_KEY, String(Math.round(value)));
+  } catch {
+    // 저장할 수 없어도 이번 화면에서는 바꾼 너비가 그대로 쓰인다.
+  }
+}
+
+function filesRange(pj) {
+  // 요구사항 패널이 코드 패널 옆에 보이는 것은 데스크톱에서 접지 않았을 때뿐이다.
+  const sideShown = pj.dataset.layout === 'desktop' && pj.dataset.side !== 'collapsed';
+  return filesBounds({
+    gridWidth: pj.querySelector('.pj-grid').getBoundingClientRect().width,
+    sideWidth: sideShown ? pj.querySelector('.pj-side').getBoundingClientRect().width : 0,
+    gap: GAP, min: FILES_MIN, codeMin: CODE_MIN,
+  });
+}
+
+function currentFilesWidth(pj) {
+  return Math.round(pj.querySelector('.pj-files').getBoundingClientRect().width);
+}
+
+function updateFilesResizer(pj) {
+  const handle = pj.querySelector('#pj-files-resizer');
+  if (!handle || getComputedStyle(handle).display === 'none') return;
+  const {min, max} = filesRange(pj);
+  handle.setAttribute('aria-valuemin', String(min));
+  handle.setAttribute('aria-valuemax', String(Math.round(max)));
+  handle.setAttribute('aria-valuenow', String(currentFilesWidth(pj)));
+}
+
+// width가 null이면 처음 크기로 돌아간다.
+function applyFilesWidth(pj, width) {
+  if (width == null) {
+    pj.style.removeProperty('--pj-files-user');
+  } else {
+    const {min, max} = filesRange(pj);
+    pj.style.setProperty('--pj-files-user', `${clampPanelWidth(width, min, max)}px`);
+  }
+  updateFilesResizer(pj);
+}
+
+// 창 크기나 패널 접기가 바뀌면 저장한 너비를 새 범위 안으로 다시 맞춘다(저장 값은 그대로 둔다).
+function reclampFiles() {
+  const pj = root.querySelector('#pj');
+  if (!pj) return;
+  const stored = readFilesWidth();
+  if (stored) applyFilesWidth(pj, stored);
+  updateFilesResizer(pj);
+}
+
+function setupFilesResize(pj) {
+  const handle = pj.querySelector('#pj-files-resizer');
+  const stored = readFilesWidth();
+  if (stored) applyFilesWidth(pj, stored);
+  updateFilesResizer(pj);
+  let dragging = false;
+  handle.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    handle.setPointerCapture(event.pointerId);
+    dragging = true;
+    pj.dataset.resizing = 'files';
+  });
+  handle.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    // 손잡이 가운데가 파일 패널의 오른쪽 경계이므로 너비는 격자 왼쪽 끝에서 손잡이 가운데까지다.
+    applyFilesWidth(pj, event.clientX - pj.querySelector('.pj-grid').getBoundingClientRect().left - GAP / 2);
+    // 파일 패널이 바뀌면 요구사항 패널이 쓸 수 있는 범위도 바뀐다.
+    reclampSide();
+  });
+  const finish = () => {
+    if (!dragging) return;
+    dragging = false;
+    delete pj.dataset.resizing;
+    writeFilesWidth(currentFilesWidth(pj));
+  };
+  handle.addEventListener('pointerup', finish);
+  handle.addEventListener('pointercancel', finish);
+  handle.addEventListener('keydown', (event) => {
+    const step = event.shiftKey ? 72 : 24;
+    const now = currentFilesWidth(pj);
+    const {min, max} = filesRange(pj);
+    let next;
+    if (event.key === 'ArrowRight') next = now + step;
+    else if (event.key === 'ArrowLeft') next = now - step;
+    else if (event.key === 'Home') next = min;
+    else if (event.key === 'End') next = max;
+    else if (event.key === 'Enter') next = null;
+    else return;
+    event.preventDefault();
+    applyFilesWidth(pj, next);
+    writeFilesWidth(next == null ? null : currentFilesWidth(pj));
+    reclampSide();
+    updateFilesResizer(pj);
+  });
+  handle.addEventListener('dblclick', () => {
+    applyFilesWidth(pj, null);
+    writeFilesWidth(null);
+    reclampSide();
+    updateFilesResizer(pj);
+  });
+}
+
 function applyLayout() {
   const pj = root.querySelector('#pj');
   if (!pj) return;
@@ -499,6 +622,7 @@ function applyLayout() {
   pj.dataset.layout = layout;
   if (layout === 'tablet' && pj.dataset.side === 'collapsed') pj.dataset.side = 'closed';
   if (layout === 'desktop' && pj.dataset.side === 'closed') pj.dataset.side = 'open';
+  reclampFiles();
 }
 
 function setMode(mode) {

@@ -836,3 +836,88 @@ test('each file remembers its own scroll position across file and mode changes',
   await expect(page.locator('.pe-input')).toBeVisible();
   expect(await scrollOf('.pe-input')).toBe(400);
 });
+
+test('the file panel is resized by dragging and with the keyboard and the width is remembered', async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await start(page, {stage: 2, minutes: 0});
+  const handle = page.locator('#pj-files-resizer');
+  const filesWidth = async () => (await boxOf(page, '.pj-files')).width;
+  const codeWidth = async () => (await boxOf(page, '.pj-code')).width;
+  await expect(handle).toHaveAttribute('role', 'separator');
+  await expect(handle).toHaveAttribute('aria-label', /파일 영역 너비 조절/);
+  const initial = await filesWidth();
+  expect(initial).toBe(240);
+  const box = await handle.boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 + 100, box.y + 100, {steps: 5});
+  await page.mouse.up();
+  expect(Math.abs((await filesWidth()) - (initial + 100))).toBeLessThanOrEqual(3);
+  await expect(handle).toHaveAttribute('aria-valuenow', String(await filesWidth()));
+  const saved = await filesWidth();
+  await page.reload();
+  await expect(page.getByTestId('project-editor')).toBeVisible();
+  expect(Math.abs((await filesWidth()) - saved)).toBeLessThanOrEqual(1);
+
+  await handle.focus();
+  await page.keyboard.press('ArrowRight');
+  expect(Math.abs((await filesWidth()) - (saved + 24))).toBeLessThanOrEqual(2);
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('ArrowLeft');
+  expect(Math.abs((await filesWidth()) - (saved - 24))).toBeLessThanOrEqual(2);
+  await page.keyboard.press('Home');
+  expect(await filesWidth()).toBe(160);
+  await expect(handle).toHaveAttribute('aria-valuemin', '160');
+  await page.keyboard.press('End');
+  expect(await codeWidth()).toBeGreaterThanOrEqual(318);
+  expect(await filesWidth()).toBeGreaterThan(300);
+  await page.keyboard.press('Enter');
+  expect(await filesWidth()).toBe(initial);
+  expect(await page.evaluate(() => localStorage.getItem('study-space:project-files-width'))).toBeNull();
+
+  const again = await handle.boundingBox();
+  await page.mouse.move(again.x + again.width / 2, again.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(again.x + again.width / 2 - 600, again.y + 100, {steps: 4});
+  await page.mouse.up();
+  expect(await filesWidth()).toBe(160);
+  await handle.dblclick();
+  expect(await filesWidth()).toBe(initial);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('widening the file panel never squeezes the code panel and keeps the requirements panel in range', async ({page}) => {
+  await page.setViewportSize({width: 1300, height: 900});
+  await start(page, {stage: 2, minutes: 0});
+  const handle = page.locator('#pj-files-resizer');
+  await handle.focus();
+  await page.keyboard.press('End');
+  expect((await boxOf(page, '.pj-code')).width).toBeGreaterThanOrEqual(318);
+  const sideHandle = page.locator('#pj-resizer');
+  expect(Number(await sideHandle.getAttribute('aria-valuenow'))).toBeLessThanOrEqual(Number(await sideHandle.getAttribute('aria-valuemax')));
+  await page.setViewportSize({width: 1200, height: 900});
+  // The resize handler runs after the viewport change, so wait for the new range to be applied.
+  await expect.poll(async () => (await boxOf(page, '.pj-code')).width).toBeGreaterThanOrEqual(318);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('the file handle disappears with the file panel and on a phone, and still works on a tablet', async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await start(page, {stage: 2, minutes: 0});
+  await expect(page.locator('#pj-files-resizer')).toBeVisible();
+  await page.locator('#pj-toggle-files').click();
+  await expect(page.locator('#pj-files-resizer')).toBeHidden();
+  await page.locator('#pj-toggle-files').click();
+  await expect(page.locator('#pj-files-resizer')).toBeVisible();
+  await page.setViewportSize({width: 1024, height: 800});
+  const handle = page.locator('#pj-files-resizer');
+  await expect(handle).toBeVisible();
+  const before = (await boxOf(page, '.pj-files')).width;
+  await handle.focus();
+  await page.keyboard.press('ArrowRight');
+  expect(Math.abs((await boxOf(page, '.pj-files')).width - (before + 24))).toBeLessThanOrEqual(2);
+  expect((await boxOf(page, '.pj-code')).width).toBeGreaterThanOrEqual(318);
+  await page.setViewportSize({width: 390, height: 844});
+  await expect(handle).toBeHidden();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
