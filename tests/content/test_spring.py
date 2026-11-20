@@ -152,11 +152,14 @@ class SpringPublishedContentTests(unittest.TestCase):
                 for ref in q["sourceRefs"]:
                     self.assertIsNone(cps.source_ref_issue(ref, provenance, notes), (q["id"], ref))
 
-    def test_question_ids_are_unique_and_revisions_start_at_one(self):
+    def test_question_ids_are_unique_and_revisions_are_positive(self):
         ids = [q["id"] for e in self.exams for q in e["questions"]]
         self.assertEqual(len(ids), 96)
         self.assertEqual(len(set(ids)), 96)
-        self.assertTrue(all(q["revision"] == 1 for e in self.exams for q in e["questions"]))
+        for exam in self.exams:
+            for q in exam["questions"]:
+                self.assertIs(type(q["revision"]), int, q["id"])
+                self.assertGreaterEqual(q["revision"], 1, q["id"])
 
     def test_every_question_has_a_check_or_a_resolve_record_for_its_revision(self):
         spring = ROOT / "source" / "Spring"

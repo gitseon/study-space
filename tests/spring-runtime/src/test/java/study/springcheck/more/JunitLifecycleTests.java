@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class JunitLifecycleTests {
     static final List<String> EVENTS = new ArrayList<>();
+
+    @BeforeAll
+    static void setUpClass() {
+        EVENTS.add("beforeAll");
+    }
 
     @BeforeEach
     void before() {
@@ -40,8 +46,9 @@ class JunitLifecycleTests {
 
     @AfterAll
     static void record() {
+        EVENTS.add("afterAll");
         String observed = String.join(" ", EVENTS);
-        assertEquals("before a after before b after", observed);
+        assertEquals("beforeAll before a after before b after afterAll", observed);
         Observations.record("junit-lifecycle", observed);
     }
 }

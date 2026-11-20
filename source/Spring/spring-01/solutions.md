@@ -12,27 +12,27 @@
 
 ## question: spring-01-q02
 ### solution
-정답 근거: `@SpringBootApplication`에 포함된 `@ComponentScan`은 메인 클래스의 패키지와 그 하위 패키지만 찾는다. 풀이: `com.study.app.room`은 `com.study.app`의 하위라서 스캔되고 `com.study.batch`는 범위 밖이라 스캔되지 않는다. 흔한 실수: `@Service`만 붙이면 프로젝트 어디에 두어도 등록된다고 생각하는 것이다.
+`@SpringBootConfiguration`은 Boot의 설정 클래스를 표시하며 해당 클래스에서 `@Bean` 메서드나 추가 설정을 선언할 수 있다. `@EnableAutoConfiguration`은 클래스패스와 등록된 빈 등의 조건을 바탕으로 자동 구성을 적용한다. `@ComponentScan`은 설정 클래스가 있는 패키지와 하위 패키지에서 컴포넌트를 찾는다. 이 스캔 범위는 별도로 지정할 수 있다. 자동 구성과 컴포넌트 스캔은 빈을 등록하는 경로가 서로 다르다.
 ### choice-explanation: a
-`com.study.batch`는 메인 클래스의 패키지 밖이라 스캔 대상이 아니다.
+`@ComponentScan`은 컴포넌트 탐색을 담당한다. 설정 클래스 표시는 `@SpringBootConfiguration`이 맡는다.
 ### choice-explanation: b
-메인 클래스의 하위 패키지는 스캔 범위에 들어간다.
+`@EnableAutoConfiguration`이 맡는 역할은 두 번째에 제시된 조건부 자동 구성이다.
 ### choice-explanation: c
-기준 패키지 `com.study.app`의 하위에 있는 `RoomService`만 등록된다.
+설정 클래스 표시와 조건부 자동 구성 활성화에 이어 컴포넌트 탐색이 올바르게 연결됐다.
 ### choice-explanation: d
-스캔되는 쪽과 스캔되지 않는 쪽을 반대로 본 것이다.
+설정 클래스 표시는 맞지만 자동 구성과 컴포넌트 탐색을 담당하는 어노테이션이 뒤바뀌었다.
 
 ## question: spring-01-q03
 ### solution
-정답 근거: IoC는 객체의 생성과 호출의 주도권이 개발자의 코드에서 컨테이너로 넘어간다는 원칙이다. DI는 필요한 객체를 밖에서 넣어 주어 그 원칙을 구현하는 방법이다. 흔한 실수: 두 용어를 같은 뜻으로 쓰는 것이다.
+(가)에서는 컨테이너가 객체의 생성과 의존 관계를 관리한다(IoC). 필요한 저장소를 생성자로 넘기는 DI는 이를 구현하는 방법이다. (나)에서는 실행 시간 측정처럼 여러 클래스에 걸치는 부가 기능을 별도로 모은다(AOP). (다)에서는 공통 인터페이스가 트랜잭션 기술마다 달라지는 세부 동작을 감춘다(PSA). 예를 들어 업무 코드는 `PlatformTransactionManager`를 사용하고 환경에 맞는 구현체를 설정에서 선택할 수 있다.
 ### choice-explanation: a
-원칙(IoC)과 구현 방법(DI)의 관계를 바르게 설명했다.
+생성자에 의존 객체 전달, 공통 기능 분리, 기술별 차이의 추상화를 각각 올바르게 연결했다.
 ### choice-explanation: b
-원칙과 방법을 뒤바꾼 설명이다.
+(가)의 핵심은 컨테이너가 생성자 인자를 공급하는 것이므로 IoC/DI에 해당한다.
 ### choice-explanation: c
-두 개념은 설정을 쓰는 위치로 나뉘지 않는다. 설정 클래스와 어노테이션 모두 DI에 쓰인다.
+(나)는 AOP에 해당한다. (다)에서 같은 인터페이스로 기술별 차이를 감추는 것은 PSA에 해당한다.
 ### choice-explanation: d
-두 개념은 빈의 scope와 관계가 없다.
+(가)는 IoC/DI에 해당한다. (나)의 실행 시간 측정처럼 여러 서비스에 걸치는 기능을 분리하는 것은 AOP에 해당한다.
 
 ## question: spring-01-q04
 ### solution
@@ -132,7 +132,7 @@ redirect는 반환값이 `redirect:`로 시작할 때이다.
 
 ## question: spring-01-q12
 ### solution
-정답 근거: MyBatis는 Mapper 인터페이스의 프록시 구현체를 실행 중에 만들어 스프링 빈으로 등록한다. 풀이: 프록시는 호출된 메서드 이름과 같은 `id`의 SQL을 매퍼 XML에서 찾아 실행한다. 그래서 XML의 `namespace`는 인터페이스의 전체 이름과 같아야 한다. 흔한 실수: XML이 클래스로 바뀐다고 생각하는 것이다.
+Starter의 기본 스캔은 범위 안의 `@Mapper` 인터페이스를 찾는다. 패키지를 직접 지정하려면 설정 클래스에 `@MapperScan`을 선언할 수 있다. 두 방식 모두 MyBatis가 만든 매퍼 프록시를 스프링 빈으로 주입할 수 있게 한다. XML로 SQL을 작성한 경우 프록시는 인터페이스의 전체 이름과 일치하는 `namespace`에서 호출된 메서드와 이름이 같은 `id`를 찾아 실행한다.
 ### choice-explanation: a
 Lombok은 접근자와 생성자 같은 코드를 만들 뿐 Mapper의 구현체를 만들지 않는다.
 ### choice-explanation: b
@@ -216,7 +216,7 @@ GET은 서버 상태를 바꾸지 않는 안전한 메서드이다.
 
 ## question: spring-01-q19
 ### solution
-정답 근거: Spring Security는 서블릿 필터로 동작하고 필터는 DispatcherServlet보다 앞에 있다. 풀이: 요청은 `SecurityFilterChain`의 필터를 먼저 지난다. 인증되지 않은 요청은 여기서 로그인 화면으로 보내지거나 401로 끝나므로 컨트롤러와 인터셉터에 닿지 않는다. 흔한 실수: 인증 검사가 컨트롤러 안이나 인터셉터에서 이루어진다고 생각하는 것이다.
+서블릿 계층의 `DelegatingFilterProxy`가 Spring 빈인 `FilterChainProxy`에 요청 처리를 위임한다. `FilterChainProxy`는 요청과 일치하는 첫 번째 `SecurityFilterChain`을 골라 그 안의 필터를 실행한다. 인증은 요청 주체의 신원을 확인하는 과정이고 인가는 확인된 주체가 해당 자원에 접근할 수 있는지 판단하는 과정이다. 지문의 요청은 보안 필터에서 거부되므로 `DispatcherServlet`과 뒤에 있는 인터셉터 및 컨트롤러에 전달되지 않는다.
 ### choice-explanation: a
 인증 검사는 컨트롤러 실행 전에 필터에서 끝난다.
 ### choice-explanation: b
@@ -296,8 +296,8 @@ URL 규칙의 인증 검사는 인터셉터가 아니라 보안 필터가 한다
 
 ## question: spring-01-q32
 ### solution
-**(1)** 모든 요청은 Front Controller인 DispatcherServlet이 먼저 받는다. DispatcherServlet은 HandlerMapping에 물어 요청 URL과 HTTP 메서드에 맞는 핸들러를 찾고 HandlerAdapter를 통해 그 핸들러를 실행한다. HandlerAdapter는 `@PathVariable` 같은 파라미터를 바인딩해 넘긴다.
+**(1)** 서블릿 컨테이너의 필터 체인이 요청을 `DispatcherServlet`에 넘긴다. `HandlerMapping`이 요청 경로와 HTTP 메서드에 맞는 핸들러를 찾는다. `HandlerAdapter`가 `@PathVariable` 등의 인자를 바인딩해 핸들러를 실행한다. 핸들러는 서비스에서 조회한 예약 정보를 `Model`에 담고 뷰 이름을 반환한다. `ViewResolver`가 이름을 JSP 뷰로 해석하고 뷰가 모델을 사용해 응답 화면을 만든다.
 
-**(2)** 핸들러는 Service를 호출해 스터디실 정보를 얻고 화면에 필요한 값을 Model에 담은 뒤 뷰 이름을 반환한다.
+**(2)** `Filter`는 서블릿 계층에서 `chain.doFilter` 호출 전후에 동작한다. 예를 들어 파라미터를 읽기 전에 요청의 문자 인코딩을 설정할 수 있다. `HandlerInterceptor`는 Spring MVC 계층에서 매핑된 핸들러를 기준으로 동작한다. 예를 들어 `preHandle`에서 시작 시각을 남기고 `afterCompletion`에서 핸들러별 처리 시간을 기록할 수 있다.
 
-**(3)** ViewResolver가 뷰 이름에 prefix와 suffix를 붙여 실제 JSP를 정한다. View가 Model의 값으로 화면을 만들어 응답한다.
+**(3)** Spring AOP는 프록시를 거치는 빈의 메서드 실행에 부가 기능을 적용한다. 예를 들어 예약 서비스 메서드의 트랜잭션 경계를 관리할 수 있다.

@@ -1,7 +1,7 @@
 ## question: spring-02-q01
 ```json
 {
-  "title": "같은 키가 설정 파일과 실행 인자에 모두 있을 때",
+  "title": "외부 설정의 프로퍼티 바인딩과 우선순위",
   "topics": [
     "foundation-boot"
   ],
@@ -11,26 +11,27 @@
   "group": "foundation-boot",
   "type": "mc",
   "id": "spring-02-q01",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L03 설정 파일 p.10",
     "SPR-S05 설정 파일 p.40",
-    "spring-concepts Part 2"
+    "spring-concepts Part 2",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html"
   ],
   "difficulty": 2,
   "correctChoiceId": "b"
 }
 ```
 ### stem
-`application.properties`에 `room.open-hour=9`가 있고 애플리케이션을 `--room.open-hour=10` 인자와 함께 실행했다. `open-hour` 값을 `RoomProps`에 바인딩했을 때 `openHour`의 값은?
+Spring Boot 4.1에서 `@ConfigurationProperties(prefix = "room")`이 붙은 `RoomProps`를 설정 빈으로 등록했다. 이 클래스에는 게터와 세터가 있는 `int openHour` 프로퍼티가 있다. `application.properties`에 `room.open-hour=9`를 두고 `--room.open-hour=10`을 실행 인자로 전달했다. 이 키를 정의한 다른 설정은 없다. 바인딩 결과는?
 ### choice: a
-설정 파일의 9가 쓰인다
+`openHour`에는 설정 파일의 9가 바인딩된다
 ### choice: b
-실행 인자의 10이 쓰인다
+`openHour`에는 실행 인자의 10이 바인딩된다
 ### choice: c
-두 값이 충돌해 시작에 실패한다
+같은 키에 값이 두 개 있으므로 시작에 실패한다
 ### choice: d
-두 값을 더한 19가 쓰인다
+이름이 달라 바인딩되지 않으므로 `openHour`는 0이다
 
 ## question: spring-02-q02
 ```json
@@ -906,11 +907,12 @@ public String whoami(@AuthenticationPrincipal UserDetails user) {
   "group": "aop-proxy",
   "type": "short",
   "id": "spring-02-q24",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L05 AOP 한계 p.5",
     "SPR-S06 AOP 동작 p.10",
-    "spring-concepts Part 4"
+    "spring-concepts Part 4",
+    "https://docs.spring.io/spring-framework/reference/core/aop/introduction-defn.html"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -926,7 +928,7 @@ AOP가 적용되는 빈을 주입받으면 호출자가 받는 것은 원래 객
 ## question: spring-02-q25
 ```json
 {
-  "title": "모든 요청을 가장 먼저 받는 서블릿",
+  "title": "Spring MVC의 프런트 컨트롤러",
   "topics": [
     "mvc-binding"
   ],
@@ -936,7 +938,7 @@ AOP가 적용되는 빈을 주입받으면 호출자가 받는 것은 원래 객
   "group": "mvc-binding",
   "type": "short",
   "id": "spring-02-q25",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-S07 MVC 요청 흐름 p.10",
     "spring-concepts Part 5"
@@ -949,7 +951,7 @@ AOP가 적용되는 빈을 주입받으면 호출자가 받는 것은 원래 객
 }
 ```
 ### stem
-Spring MVC에서 모든 요청을 가장 먼저 받아 핸들러 매핑과 어댑터에 일을 나누는 Front Controller 서블릿의 이름을 쓰시오.
+Spring MVC로 매핑되어 서블릿 필터 체인을 통과한 요청을 받는다. 핸들러 매핑에 핸들러 선택을 맡긴 뒤 어댑터를 통해 실행하는 이 프런트 컨트롤러 서블릿의 이름을 쓰시오.
 
 ## question: spring-02-q26
 ```json
@@ -1072,32 +1074,33 @@ springdoc-openapi를 의존성에 더하면 기본으로 OpenAPI 명세를 JSON�
 ## question: spring-02-q30
 ```json
 {
-  "title": "비밀번호와 해시를 비교하는 PasswordEncoder 메서드",
+  "title": "Spring Security의 비밀번호 인코딩 인터페이스",
   "topics": [
     "security"
   ],
   "tags": [
-    "user-details"
+    "password-encoder"
   ],
   "group": "security",
   "type": "short",
   "id": "spring-02-q30",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L10 사용자와 권한 설정 p.35",
     "SPR-L11 사용자 정의 인증 p.10",
-    "spring-concepts Part 11"
+    "spring-concepts Part 11",
+    "https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/crypto/password/PasswordEncoder.html"
   ],
   "difficulty": 2,
   "acceptedAnswers": [
-    "matches",
-    "matches()"
+    "PasswordEncoder",
+    "org.springframework.security.crypto.password.PasswordEncoder"
   ],
   "normalization": "caseFold"
 }
 ```
 ### stem
-`PasswordEncoder`에서 입력한 원문 비밀번호가 저장된 해시와 맞는지 확인하는 메서드의 이름을 쓰시오.
+Spring Security에서 비밀번호를 단방향으로 인코딩하는 `encode`와 입력 비밀번호가 저장된 인코딩 값에 맞는지 확인하는 `matches`를 선언한 표준 인터페이스의 이름을 쓰시오.
 
 ## question: spring-02-q31
 ```json

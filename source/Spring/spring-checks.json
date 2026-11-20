@@ -1,12 +1,13 @@
 [
   {
     "questionId": "spring-01-q02",
-    "revision": 1,
+    "revision": 2,
     "cases": {
+      "boot-application-composition": "true true true",
       "config-scan-range": "true true false"
     },
     "correctChoiceContains": [
-      "RoomService"
+      "`@SpringBootConfiguration` → `@EnableAutoConfiguration` → `@ComponentScan`"
     ]
   },
   {
@@ -73,7 +74,7 @@
   },
   {
     "questionId": "spring-01-q12",
-    "revision": 1,
+    "revision": 2,
     "cases": {
       "mb-mapper-proxy": "true 3"
     },
@@ -126,7 +127,7 @@
   },
   {
     "questionId": "spring-01-q19",
-    "revision": 1,
+    "revision": 2,
     "cases": {
       "sec-blocked-before-controller": "controllerCalls=0"
     },
@@ -236,10 +237,18 @@
     ]
   },
   {
-    "questionId": "spring-02-q01",
-    "revision": 1,
+    "questionId": "spring-01-q32",
+    "revision": 2,
     "cases": {
-      "config-precedence": "9 10"
+      "mvc-filter-interceptor-order": "filter-in pre1 handler post1 after1 filter-out"
+    }
+  },
+  {
+    "questionId": "spring-02-q01",
+    "revision": 2,
+    "cases": {
+      "config-precedence": "9 10",
+      "config-relaxed-binding": "open-hour->openHour=9"
     },
     "correctChoiceContains": [
       "실행 인자",
@@ -475,7 +484,7 @@
   },
   {
     "questionId": "spring-02-q24",
-    "revision": 1,
+    "revision": 2,
     "cases": {
       "aop-proxy-kind": "cglib"
     },
@@ -515,12 +524,13 @@
   },
   {
     "questionId": "spring-02-q30",
-    "revision": 1,
+    "revision": 2,
     "cases": {
+      "sec-password-encoder-contract": "PasswordEncoder",
       "sec-bcrypt-roles": "different-hashes matches=true [ROLE_ADMIN]"
     },
     "acceptedContains": [
-      "matches"
+      "PasswordEncoder"
     ]
   },
   {
@@ -755,22 +765,12 @@
   },
   {
     "questionId": "spring-03-q22",
-    "revision": 1,
+    "revision": 2,
     "cases": {
-      "junit-lifecycle": "before a after before b after"
+      "junit-lifecycle": "beforeAll before a after before b after afterAll"
     },
     "acceptedContains": [
       "@BeforeEach"
-    ]
-  },
-  {
-    "questionId": "spring-03-q23",
-    "revision": 1,
-    "cases": {
-      "di-configuration-proxy": "true false"
-    },
-    "acceptedContains": [
-      "@Configuration"
     ]
   },
   {
@@ -826,8 +826,9 @@
   },
   {
     "questionId": "spring-03-q31",
-    "revision": 1,
+    "revision": 2,
     "cases": {
+      "mvc-view-and-response-body": "room/detail pong pong",
       "rest-error-json": "404 application/json code=RENTAL_NOT_FOUND",
       "rest-body-statuses": "415 400 400 204:0 200 application/json",
       "mvc-validation-without-result": "400 handlerCalls=0"

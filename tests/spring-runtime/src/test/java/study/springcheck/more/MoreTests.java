@@ -14,8 +14,11 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,6 +26,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -204,6 +208,16 @@ class MoreTests {
     }
 
     // ---- Boot auto configuration backs off
+
+    @Test
+    void springBootApplicationDeclaresConfigurationAutoConfigurationAndScanning() {
+        var annotation = SpringBootApplication.class;
+        String observed = annotation.isAnnotationPresent(SpringBootConfiguration.class) + " "
+                + annotation.isAnnotationPresent(EnableAutoConfiguration.class) + " "
+                + annotation.isAnnotationPresent(ComponentScan.class);
+        assertEquals("true true true", observed);
+        Observations.record("boot-application-composition", observed);
+    }
 
     public record ClockInfo(String source) {
     }

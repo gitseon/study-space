@@ -43,6 +43,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import study.springcheck.Observations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -214,6 +215,45 @@ class MvcTests {
         Observations.record("mvc-interceptor-normal", normal);
         Observations.record("mvc-interceptor-exception", failed);
         Observations.record("mvc-interceptor-blocked", stopped);
+    }
+
+    @Test
+    void servletFilterWrapsMvcInterceptorsAndTheHandler() throws Exception {
+        MockMvc mvc = MockMvcBuilders.standaloneSetup(new PingController())
+                .addFilters((request, response, chain) -> {
+                    LOG.add("filter-in");
+                    chain.doFilter(request, response);
+                    LOG.add("filter-out");
+                })
+                .addInterceptors(new NamedInterceptor("1", true))
+                .build();
+        LOG.clear();
+        mvc.perform(get("/ping"));
+        String observed = String.join(" ", LOG);
+        assertEquals("filter-in pre1 handler post1 after1 filter-out", observed);
+        Observations.record("mvc-filter-interceptor-order", observed);
+    }
+
+    @RestController
+    public static class PingApi {
+        @GetMapping("/api/ping")
+        public String ping() {
+            return "pong";
+        }
+    }
+
+    @Test
+    void controllerStringsUseViewResolutionOrResponseBody() throws Exception {
+        MockMvc mvc = MockMvcBuilders.standaloneSetup(new RoomController(), new PingController(), new PingApi()).build();
+        MvcResult page = mvc.perform(get("/rooms/8")).andReturn();
+        MvcResult methodBody = mvc.perform(get("/ping")).andReturn();
+        MvcResult classBody = mvc.perform(get("/api/ping")).andReturn();
+        assertNull(methodBody.getModelAndView());
+        assertNull(classBody.getModelAndView());
+        String observed = page.getModelAndView().getViewName() + " "
+                + methodBody.getResponse().getContentAsString() + " " + classBody.getResponse().getContentAsString();
+        assertEquals("room/detail pong pong", observed);
+        Observations.record("mvc-view-and-response-body", observed);
     }
 
     public static class ReserveForm {

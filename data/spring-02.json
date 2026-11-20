@@ -9,7 +9,7 @@
   "sourceScopeVersion": 1,
   "questions": [
     {
-      "title": "같은 키가 설정 파일과 실행 인자에 모두 있을 때",
+      "title": "외부 설정의 프로퍼티 바인딩과 우선순위",
       "topics": [
         "foundation-boot"
       ],
@@ -19,39 +19,40 @@
       "group": "foundation-boot",
       "type": "mc",
       "id": "spring-02-q01",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "SPR-L03 설정 파일 p.10",
         "SPR-S05 설정 파일 p.40",
-        "spring-concepts Part 2"
+        "spring-concepts Part 2",
+        "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html"
       ],
       "difficulty": 2,
       "correctChoiceId": "b",
-      "stem": "`application.properties`에 `room.open-hour=9`가 있고 애플리케이션을 `--room.open-hour=10` 인자와 함께 실행했다. `open-hour` 값을 `RoomProps`에 바인딩했을 때 `openHour`의 값은?",
-      "solution": "정답 근거: 같은 키가 여러 곳에 있으면 우선순위가 높은 쪽이 이긴다. 명령행 인자가 설정 파일보다 높다. 풀이: 인자 없이 실행하면 9이고 인자를 주면 10이다. 검증 환경에서 두 경우를 실행해 확인했다. 흔한 실수: 파일을 먼저 읽은 값이 남는다고 생각하는 것이다.",
+      "stem": "Spring Boot 4.1에서 `@ConfigurationProperties(prefix = \"room\")`이 붙은 `RoomProps`를 설정 빈으로 등록했다. 이 클래스에는 게터와 세터가 있는 `int openHour` 프로퍼티가 있다. `application.properties`에 `room.open-hour=9`를 두고 `--room.open-hour=10`을 실행 인자로 전달했다. 이 키를 정의한 다른 설정은 없다. 바인딩 결과는?",
+      "solution": "`@ConfigurationProperties(prefix = \"room\")`의 접두사 아래에서 `open-hour`는 완화된 바인딩 규칙에 따라 자바의 `openHour` 프로퍼티에 연결된다. `10`은 `int`로 변환되어 세터로 전달된다. 같은 키의 명령행 인자가 설정 파일의 값보다 우선한다. 검증 코드에서는 인자 없이 실행했을 때 9를, 인자와 함께 실행했을 때 10을 확인한다. 프로퍼티 이름을 연결하는 규칙과 설정 소스의 값을 고르는 우선순위를 구분해야 한다.",
       "choices": [
         {
           "id": "a",
-          "text": "설정 파일의 9가 쓰인다"
+          "text": "`openHour`에는 설정 파일의 9가 바인딩된다"
         },
         {
           "id": "b",
-          "text": "실행 인자의 10이 쓰인다"
+          "text": "`openHour`에는 실행 인자의 10이 바인딩된다"
         },
         {
           "id": "c",
-          "text": "두 값이 충돌해 시작에 실패한다"
+          "text": "같은 키에 값이 두 개 있으므로 시작에 실패한다"
         },
         {
           "id": "d",
-          "text": "두 값을 더한 19가 쓰인다"
+          "text": "이름이 달라 바인딩되지 않으므로 `openHour`는 0이다"
         }
       ],
       "choiceExplanations": {
-        "a": "설정 파일은 명령행 인자보다 우선순위가 낮다.",
-        "b": "우선순위가 높은 명령행 인자의 값이 쓰인다.",
-        "c": "같은 키는 충돌이 아니라 우선순위로 정리되어 실패하지 않는다.",
-        "d": "값을 합치지 않고 하나만 고른다."
+        "a": "바인딩 대상은 맞다. 덮어쓰는 실행 인자가 없을 때 설정 파일의 9가 사용된다.",
+        "b": "설정 키는 `openHour`와 연결되고 우선순위가 높은 실행 인자의 10이 사용된다.",
+        "c": "서로 다른 설정 소스에 같은 키가 있을 수 있다. Boot가 우선순위에 따라 사용할 값을 정한다.",
+        "d": "완화된 바인딩은 설정의 케밥 표기 `open-hour`와 자바의 카멜 표기 `openHour`를 연결한다."
       }
     },
     {
@@ -1034,11 +1035,12 @@
       "group": "aop-proxy",
       "type": "short",
       "id": "spring-02-q24",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "SPR-L05 AOP 한계 p.5",
         "SPR-S06 AOP 동작 p.10",
-        "spring-concepts Part 4"
+        "spring-concepts Part 4",
+        "https://docs.spring.io/spring-framework/reference/core/aop/introduction-defn.html"
       ],
       "difficulty": 1,
       "acceptedAnswers": [
@@ -1047,12 +1049,12 @@
       ],
       "normalization": "caseFold",
       "stem": "AOP가 적용되는 빈을 주입받으면 호출자가 받는 것은 원래 객체가 아니라 호출을 가로채는 대리 객체이다. 이 객체를 가리키는 용어를 쓰시오.",
-      "solution": "정답: 프록시. 허용 표기: `proxy`도 정답이며 대소문자는 구분하지 않는다. 근거: 컨테이너는 pointcut에 걸리는 빈 대신 프록시를 빈으로 등록한다. 호출자는 프록시를 거쳐 advice를 실행한 뒤 target으로 간다. 검증 환경에서 주입된 객체가 CGLIB 프록시임을 확인했다.",
+      "solution": "정답은 `프록시` 또는 `proxy`다. 대소문자는 구분하지 않는다. Target은 원래 업무 로직을 가진 객체다. Proxy는 호출자에게 노출되는 대리 객체로, 포인트컷에 해당하는 메서드 호출에서 advice를 적용하고 필요에 따라 target에 호출을 위임한다. 예를 들어 `@Around`가 `proceed()`를 호출하지 않으면 target 메서드는 실행되지 않는다. 검증 케이스에서는 주입받은 객체가 CGLIB 프록시임을 확인한다.",
       "choices": [],
       "choiceExplanations": {}
     },
     {
-      "title": "모든 요청을 가장 먼저 받는 서블릿",
+      "title": "Spring MVC의 프런트 컨트롤러",
       "topics": [
         "mvc-binding"
       ],
@@ -1062,7 +1064,7 @@
       "group": "mvc-binding",
       "type": "short",
       "id": "spring-02-q25",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "SPR-S07 MVC 요청 흐름 p.10",
         "spring-concepts Part 5"
@@ -1072,8 +1074,8 @@
         "DispatcherServlet"
       ],
       "normalization": "caseFold",
-      "stem": "Spring MVC에서 모든 요청을 가장 먼저 받아 핸들러 매핑과 어댑터에 일을 나누는 Front Controller 서블릿의 이름을 쓰시오.",
-      "solution": "정답: DispatcherServlet. 허용 표기: 대소문자는 구분하지 않는다. 근거: 모든 요청은 DispatcherServlet이 먼저 받는다. 이어서 HandlerMapping이 핸들러를 찾고 HandlerAdapter가 실행하며 ViewResolver가 뷰를 정한다. 흔한 실수: 컨트롤러가 요청을 직접 받는다고 생각하는 것이다.",
+      "stem": "Spring MVC로 매핑되어 서블릿 필터 체인을 통과한 요청을 받는다. 핸들러 매핑에 핸들러 선택을 맡긴 뒤 어댑터를 통해 실행하는 이 프런트 컨트롤러 서블릿의 이름을 쓰시오.",
+      "solution": "정답은 `DispatcherServlet`이다. 대소문자는 구분하지 않는다. Spring MVC에 매핑된 요청은 서블릿 필터 체인을 거쳐 `DispatcherServlet`에 도달한다. 이 서블릿은 `HandlerMapping`에 핸들러 선택을 맡기고 `HandlerAdapter`를 통해 선택된 핸들러를 실행한다. 요청을 받는 서블릿과 실제 작업을 수행하는 컨트롤러의 역할을 구분해야 한다.",
       "choices": [],
       "choiceExplanations": {}
     },
@@ -1188,30 +1190,31 @@
       "choiceExplanations": {}
     },
     {
-      "title": "비밀번호와 해시를 비교하는 PasswordEncoder 메서드",
+      "title": "Spring Security의 비밀번호 인코딩 인터페이스",
       "topics": [
         "security"
       ],
       "tags": [
-        "user-details"
+        "password-encoder"
       ],
       "group": "security",
       "type": "short",
       "id": "spring-02-q30",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "SPR-L10 사용자와 권한 설정 p.35",
         "SPR-L11 사용자 정의 인증 p.10",
-        "spring-concepts Part 11"
+        "spring-concepts Part 11",
+        "https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/crypto/password/PasswordEncoder.html"
       ],
       "difficulty": 2,
       "acceptedAnswers": [
-        "matches",
-        "matches()"
+        "PasswordEncoder",
+        "org.springframework.security.crypto.password.PasswordEncoder"
       ],
       "normalization": "caseFold",
-      "stem": "`PasswordEncoder`에서 입력한 원문 비밀번호가 저장된 해시와 맞는지 확인하는 메서드의 이름을 쓰시오.",
-      "solution": "정답: matches. 허용 표기: 괄호를 붙인 `matches()`도 정답이며 대소문자는 구분하지 않는다. 근거: BCrypt는 같은 비밀번호도 인코딩할 때마다 다른 해시를 만든다. 그래서 해시 문자열끼리 비교하지 않고 `matches(원문, 해시)`로 확인한다. 검증 환경에서 같은 비밀번호의 두 해시가 서로 다르고 둘 다 `matches`를 통과함을 확인했다.",
+      "stem": "Spring Security에서 비밀번호를 단방향으로 인코딩하는 `encode`와 입력 비밀번호가 저장된 인코딩 값에 맞는지 확인하는 `matches`를 선언한 표준 인터페이스의 이름을 쓰시오.",
+      "solution": "정답은 `PasswordEncoder`다. 패키지명을 포함한 `org.springframework.security.crypto.password.PasswordEncoder`도 허용하며 대소문자는 구분하지 않는다. 비밀번호를 저장할 때 `encode`를 호출하고 로그인할 때 `matches`에 입력 비밀번호와 저장된 인코딩 값을 전달한다. `BCryptPasswordEncoder`는 이 인터페이스의 구현체다. BCrypt는 솔트를 사용하기 때문에 같은 비밀번호를 다시 인코딩한 문자열과 저장된 해시의 일치 여부로 검증하면 오류가 생길 수 있다.",
       "choices": [],
       "choiceExplanations": {}
     },
@@ -1476,5 +1479,5 @@
       "d"
     ]
   },
-  "contentVersion": "f099195579f6569b"
+  "contentVersion": "58e30456789ffec9"
 }

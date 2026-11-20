@@ -249,6 +249,8 @@ class SecurityTests {
         List<String> authorities = User.withUsername("a").password("x").roles("ADMIN").build().getAuthorities().stream().map(Object::toString).toList();
         assertEquals(List.of("ROLE_ADMIN"), authorities);
         Observations.record("sec-bcrypt-roles", "different-hashes matches=true " + authorities);
+        assertTrue(PasswordEncoder.class.isInterface());
+        Observations.record("sec-password-encoder-contract", PasswordEncoder.class.getSimpleName());
     }
 
     @Test

@@ -252,11 +252,11 @@ form 형식은 400이 아니라 형식 미지원인 415이다.
 
 ## question: spring-03-q22
 ### solution
-정답: @BeforeEach. 허용 표기: `@`를 뺀 `BeforeEach`도 정답이며 대소문자는 구분하지 않는다. 근거: 이 어노테이션이 붙은 메서드는 각 `@Test` 앞에서 실행되고 `@AfterEach`는 각 테스트 뒤에 실행된다. 검증 환경에서 테스트 두 개의 실행 순서가 `before a after before b after`임을 확인했다.
+정답은 `@BeforeEach` 또는 `BeforeEach`다. 대소문자는 구분하지 않는다. `@BeforeEach`는 각 테스트 전에 실행하고 `@AfterEach`는 각 테스트 후에 실행한다. `@BeforeAll`과 `@AfterAll`은 각각 테스트 클래스의 전체 실행 전과 후에 한 번 호출한다. JUnit 5의 공식 문서에서 네 어노테이션의 의미를 확인했고 같은 동작을 저장소의 Spring Boot 관리 JUnit Jupiter 환경에서도 실행해 확인한다.
 
 ## question: spring-03-q23
 ### solution
-정답: @Configuration. 허용 표기: `@`를 뺀 `Configuration`도 정답이며 대소문자는 구분하지 않는다. 근거: 이 어노테이션이 붙은 클래스는 프록시로 감싸져 `@Bean` 메서드 호출이 컨테이너의 빈을 돌려준다. `proxyBeanMethods = false`이면 일반 호출이 된다. 검증 환경에서 두 설정을 비교해 확인했다.
+정답은 `POJO` 또는 `Plain Old Java Object`다. 대소문자는 구분하지 않는다. 할인 정책 객체는 특정 프레임워크의 상속이나 인터페이스 구현을 요구하지 않으므로 일반 자바 코드에서 생성하고 테스트할 수 있다. 이런 객체도 `@Bean` 메서드의 반환값으로 컨테이너에 등록할 수 있다. POJO는 객체의 구현 방식을 설명하고 빈은 컨테이너가 객체를 관리한다는 뜻이다.
 
 ## question: spring-03-q24
 ### solution
@@ -288,11 +288,11 @@ form 형식은 400이 아니라 형식 미지원인 415이다.
 
 ## question: spring-03-q31
 ### solution
-**(1)** 없는 대여 조회는 404 Not Found이고 JSON 문법이 틀리거나 읽을 수 없는 요청은 400 Bad Request이다. 이미 대여 중인 장비를 다시 대여하는 것은 현재 상태와 충돌하므로 409 Conflict이다. 형식이 지원되지 않는 본문은 415이다.
+**(1)** `@Controller`는 화면 처리에 사용할 수 있다. `@ResponseBody`가 없는 일반적인 `String` 반환 메서드는 뷰 이름을 반환한다. 특정 메서드만 응답 본문을 쓰게 하려면 그 메서드에 `@ResponseBody`를 붙인다. `@RestController`는 `@Controller`와 클래스 수준의 `@ResponseBody`를 함께 적용하므로 API 핸들러의 일반 반환값을 응답 본문으로 처리한다. 응답 형식은 메시지 컨버터와 콘텐츠 협상에 따라 결정된다.
 
-**(2)** `code`와 `message`처럼 클라이언트가 원인을 구분할 수 있는 약속된 항목을 JSON으로 둔다. 스택 트레이스, SQL, 서버 내부 경로 같은 내부 정보는 두지 않는다.
+**(2)** 없는 대여 내역을 조회하면 404를 보낸다. `Content-Type: application/json`인 요청의 JSON 문법이 틀리면 400을 보낸다. 이미 대여 중인 장비를 다시 대여하는 요청은 현재 상태와 충돌하므로 409를 보낸다.
 
-**(3)** 클라이언트가 상태 코드로 성공과 실패를 구분할 수 없고 캐시와 모니터링 도구도 실패를 놓친다. 오류는 의미에 맞는 상태 코드와 JSON 본문을 함께 보낸다. 검증 환경에서 404와 JSON 본문, 415와 400 응답을 확인했다.
+**(3)** 오류 본문에는 `code`와 `message`를 두고 스택 트레이스나 SQL 같은 내부 정보는 제외한다. 오류에 200을 쓰면 클라이언트와 모니터링 도구가 HTTP 상태 코드만 보고 성공으로 처리할 수 있다.
 
 ## question: spring-03-q32
 ### solution

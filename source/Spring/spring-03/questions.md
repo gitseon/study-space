@@ -841,11 +841,12 @@ http.authorizeHttpRequests(auth -> auth
   "group": "foundation-boot",
   "type": "short",
   "id": "spring-03-q22",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L01 JUnit 테스트 p.30",
     "SPR-S02 JUnit 테스트 p.25",
-    "spring-concepts Part 12"
+    "spring-concepts Part 12",
+    "https://docs.junit.org/5.14.4/writing-tests/annotations.html"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
@@ -861,32 +862,31 @@ JUnit 5에서 테스트 메서드가 실행되기 전에 매번 먼저 실행되
 ## question: spring-03-q23
 ```json
 {
-  "title": "@Bean 메서드를 두는 설정 클래스의 어노테이션",
+  "title": "특정 프레임워크에 의존하지 않는 자바 객체",
   "topics": [
     "di-bean"
   ],
   "tags": [
-    "bean-registration"
+    "pojo"
   ],
   "group": "di-bean",
   "type": "short",
   "id": "spring-03-q23",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
-    "SPR-L02 명시적 DI p.15",
-    "SPR-S03 빈 관리 p.25",
+    "spring-concepts Part 1",
     "spring-concepts Part 3"
   ],
   "difficulty": 1,
   "acceptedAnswers": [
-    "@Configuration",
-    "Configuration"
+    "POJO",
+    "Plain Old Java Object"
   ],
   "normalization": "caseFold"
 }
 ```
 ### stem
-`@Bean` 메서드를 모아 빈을 직접 등록하는 클래스에 붙이는 어노테이션의 이름을 쓰시오. 이 클래스 안에서 `@Bean` 메서드를 부르면 같은 singleton을 돌려준다.
+할인 정책 클래스는 일반 자바 클래스다. 특정 프레임워크의 상위 클래스나 인터페이스를 사용하지 않고 컨테이너 없이도 만들어 테스트할 수 있다. 이런 객체를 가리키는 용어를 약어나 영어 전체 이름으로 쓰시오.
 
 ## question: spring-03-q24
 ```json
@@ -1099,21 +1099,24 @@ null과 빈 문자열은 물론 공백만 있는 문자열도 허용하지 않�
 ## question: spring-03-q31
 ```json
 {
-  "title": "REST 오류 응답의 계약",
+  "title": "@Controller와 @RestController의 반환값 처리 비교",
   "topics": [
     "rest-api"
   ],
   "tags": [
-    "rest-error"
+    "rest-error",
+    "controller-response-body"
   ],
   "group": "rest-api",
   "type": "essay",
   "id": "spring-03-q31",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L09 REST p.20",
     "SPR-S11 오류 응답 p.75",
-    "spring-concepts Part 10"
+    "spring-concepts Part 5",
+    "spring-concepts Part 10",
+    "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/responsebody.html"
   ],
   "difficulty": 3,
   "rubric": [
@@ -1136,19 +1139,29 @@ null과 빈 문자열은 물론 공백만 있는 문자열도 허용하지 않�
       "id": "r3",
       "criterion": "오류를 200으로 알리면 클라이언트가 상태 코드로 실패를 구분할 수 없다고 서술한다",
       "points": 1
+    },
+    {
+      "id": "r4",
+      "criterion": "화면용 @Controller의 뷰 이름과 API용 @RestController의 HTTP 응답 본문을 구분한다",
+      "points": 1
+    },
+    {
+      "id": "r5",
+      "criterion": "@Controller의 개별 메서드에 @ResponseBody를 명시할 수 있고 @RestController는 이를 클래스 수준에서 포함한다고 설명한다",
+      "points": 1
     }
   ],
-  "modelAnswer": "**(1)** 없는 대여 조회는 404 Not Found이고 JSON 문법이 틀리거나 읽을 수 없는 요청은 400 Bad Request이다. 이미 대여 중인 장비를 다시 대여하는 것은 현재 상태와 충돌하므로 409 Conflict이다. 형식이 지원되지 않는 본문은 415이다.\n\n**(2)** `code`와 `message`처럼 클라이언트가 원인을 구분할 수 있는 약속된 항목을 JSON으로 둔다. 스택 트레이스, SQL, 서버 내부 경로 같은 내부 정보는 두지 않는다.\n\n**(3)** 클라이언트가 상태 코드로 성공과 실패를 구분할 수 없고 캐시와 모니터링 도구도 실패를 놓친다. 오류는 의미에 맞는 상태 코드와 JSON 본문을 함께 보낸다. 검증 환경에서 404와 JSON 본문, 415와 400 응답을 확인했다."
+  "modelAnswer": "**(1)** `@Controller`는 화면 처리에 사용할 수 있다. `@ResponseBody`가 없는 일반적인 `String` 반환 메서드는 뷰 이름을 반환한다. 특정 메서드만 응답 본문을 쓰게 하려면 그 메서드에 `@ResponseBody`를 붙인다. `@RestController`는 `@Controller`와 클래스 수준의 `@ResponseBody`를 함께 적용하므로 API 핸들러의 일반 반환값을 응답 본문으로 처리한다. 응답 형식은 메시지 컨버터와 콘텐츠 협상에 따라 결정된다.\n\n**(2)** 없는 대여 내역을 조회하면 404를 보낸다. `Content-Type: application/json`인 요청의 JSON 문법이 틀리면 400을 보낸다. 이미 대여 중인 장비를 다시 대여하는 요청은 현재 상태와 충돌하므로 409를 보낸다.\n\n**(3)** 오류 본문에는 `code`와 `message`를 두고 스택 트레이스나 SQL 같은 내부 정보는 제외한다. 오류에 200을 쓰면 클라이언트와 모니터링 도구가 HTTP 상태 코드만 보고 성공으로 처리할 수 있다."
 }
 ```
 ### stem
-장비 대여 API가 없는 대여 조회, 잘못된 JSON 요청, 이미 대여 중인 장비 대여를 각각 처리한다. 다음을 서술하시오.
+장비 대여 서비스는 브라우저에 HTML 화면을 보여 주고 API 클라이언트에는 JSON을 보낸다. 다음을 서술하시오.
 
-(1) 세 경우에 알맞은 상태 코드와 그 이유
+(1) 화면용 `@Controller`와 API용 `@RestController`의 주된 반환 대상과 목적을 비교하시오. 각 경우에 `@ResponseBody`가 어떻게 적용되는지도 설명하시오.
 
-(2) 오류 응답 본문에 둘 항목과 두지 말아야 할 항목
+(2) API에서 없는 대여 내역을 조회한 경우와 JSON 문법이 잘못된 경우에 알맞은 상태 코드와 근거를 쓰시오. 이미 대여 중인 장비를 다시 대여하는 경우도 설명하시오. JSON 요청의 `Content-Type`은 `application/json`이라고 가정한다.
 
-(3) 오류를 200과 본문의 실패 표시로 알릴 때의 문제
+(3) 오류 본문에 포함하거나 제외할 항목을 예로 들고, HTTP 상태 코드를 200으로 처리하면 어떤 문제가 생기는지 설명하시오.
 
 ## question: spring-03-q32
 ```json

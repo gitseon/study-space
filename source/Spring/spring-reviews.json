@@ -10,12 +10,12 @@
   },
   {
     "questionId": "spring-01-q03",
-    "revision": 1,
+    "revision": 2,
     "method": "resolved",
     "independent": false,
     "reviewer": "작성자(AI)",
-    "reviewedAt": "2026-11-17",
-    "note": "IoC는 제어 주체가 바뀐다는 원칙이고 DI는 그 구현 방법이다. 나머지는 개념을 설정 위치나 scope와 섞은 오답이다."
+    "reviewedAt": "2026-11-20",
+    "note": "생성자 의존성 제공은 IoC/DI이고 여러 서비스에 걸친 기능을 별도로 두는 것은 AOP다. 트랜잭션 기술의 차이를 공통 인터페이스로 감추는 것은 PSA다. 이 배치를 충족하는 선지는 하나다."
   },
   {
     "questionId": "spring-01-q06",
@@ -72,22 +72,13 @@
     "note": "서술형이다. 생성자 주입의 장점, 생성자 하나일 때 @Autowired 생략, 순환 의존이 시작 시점에 실패함은 실행으로 확인했다(di-cycle)."
   },
   {
-    "questionId": "spring-01-q32",
-    "revision": 1,
-    "method": "resolved",
-    "independent": false,
-    "reviewer": "작성자(AI)",
-    "reviewedAt": "2026-11-17",
-    "note": "서술형이다. DispatcherServlet, HandlerMapping, HandlerAdapter, ViewResolver의 역할 구분은 공식 문서의 MVC 흐름과 일치한다."
-  },
-  {
     "questionId": "spring-02-q25",
-    "revision": 1,
+    "revision": 2,
     "method": "resolved",
     "independent": false,
     "reviewer": "작성자(AI)",
-    "reviewedAt": "2026-11-17",
-    "note": "DispatcherServlet이 모든 요청을 먼저 받는 Front Controller라는 정의로 확정했다. 공식 MVC 문서의 흐름과 일치한다."
+    "reviewedAt": "2026-11-20",
+    "note": "Spring MVC로 매핑되어 서블릿 필터를 통과한 요청의 프런트 컨트롤러는 DispatcherServlet이다. HandlerMapping은 핸들러를 찾고 HandlerAdapter는 선택된 핸들러를 실행한다."
   },
   {
     "questionId": "spring-02-q29",
@@ -97,6 +88,15 @@
     "reviewer": "작성자(AI)",
     "reviewedAt": "2026-11-17",
     "note": "springdoc-openapi의 기본 명세 경로는 /v3/api-docs라는 공식 문서의 기본값으로 확정했다. 실행해 확인하지 않았다."
+  },
+  {
+    "questionId": "spring-03-q23",
+    "revision": 2,
+    "method": "resolved",
+    "independent": false,
+    "reviewer": "작성자(AI)",
+    "reviewedAt": "2026-11-20",
+    "note": "프레임워크의 전용 타입이나 컨테이너를 요구하지 않는 일반 자바 객체의 명칭은 POJO다. 컨테이너에 등록 가능한지를 기준으로 POJO를 판단하지 않는다."
   },
   {
     "questionId": "spring-03-q24",

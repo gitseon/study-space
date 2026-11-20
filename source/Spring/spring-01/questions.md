@@ -35,75 +35,58 @@
 ## question: spring-01-q02
 ```json
 {
-  "title": "컴포넌트 스캔의 기준 패키지",
+  "title": "@SpringBootApplication을 구성하는 어노테이션",
   "topics": [
     "foundation-boot"
   ],
   "tags": [
-    "boot-autoconfig"
+    "boot-autoconfig",
+    "boot-application"
   ],
   "group": "foundation-boot",
   "type": "mc",
   "id": "spring-01-q02",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L03 자동 구성 p.15",
     "SPR-S05 자동 구성 p.10",
-    "spring-concepts Part 2"
+    "spring-concepts Part 2",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/using-the-springbootapplication-annotation.html"
   ],
   "difficulty": 2,
   "correctChoiceId": "c"
 }
 ```
 ### stem
-메인 클래스가 `com.study.app` 패키지에 있고 스캔 범위를 따로 지정하지 않았다. 다음 두 클래스 중 빈으로 등록되는 것은?
-```java
-package com.study.app;
-
-@SpringBootApplication
-public class StudyApplication {
-}
-```
-```java
-package com.study.app.room;
-
-@Service
-public class RoomService {
-}
-```
-```java
-package com.study.batch;
-
-@Service
-public class CleanupService {
-}
-```
+`@SpringBootApplication`을 구성하는 어노테이션을 역할에 맞춰 나열한 것은? 애플리케이션 설정 클래스 표시, 조건부 자동 구성 활성화, 컴포넌트 탐색 순서로 고르시오.
 ### choice: a
-`RoomService`와 `CleanupService`가 모두 등록된다
+`@ComponentScan` → `@SpringBootConfiguration` → `@EnableAutoConfiguration`
 ### choice: b
-두 클래스 모두 스캔 범위에 들어가지 않아 등록되지 않는다
+`@EnableAutoConfiguration` → `@ComponentScan` → `@SpringBootConfiguration`
 ### choice: c
-`RoomService`만 스캔되어 빈으로 등록된다
+`@SpringBootConfiguration` → `@EnableAutoConfiguration` → `@ComponentScan`
 ### choice: d
-`CleanupService`만 스캔되어 빈으로 등록된다
+`@SpringBootConfiguration` → `@ComponentScan` → `@EnableAutoConfiguration`
 
 ## question: spring-01-q03
 ```json
 {
-  "title": "IoC와 DI의 관계",
+  "title": "IoC/DI, AOP, PSA의 역할",
   "topics": [
     "di-bean"
   ],
   "tags": [
-    "ioc-container"
+    "ioc-container",
+    "spring-core-features"
   ],
   "group": "di-bean",
   "type": "mc",
   "id": "spring-01-q03",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L02 의존성과 IoC p.10",
     "SPR-S03 IoC p.15",
+    "spring-concepts Part 1",
     "spring-concepts Part 3"
   ],
   "difficulty": 1,
@@ -111,15 +94,19 @@ public class CleanupService {
 }
 ```
 ### stem
-IoC와 DI의 관계를 바르게 설명한 것은?
+정산 서비스에 적용한 다음 세 설계를 각각 대표하는 Spring의 특징은?
+
+- (가) 컨테이너가 정산 서비스를 만들 때 생성자에 저장소 객체를 전달한다.
+- (나) 여러 서비스에 공통으로 적용할 실행 시간 측정을 별도 모듈에 둔다.
+- (다) 트랜잭션 기술을 바꿔도 같은 트랜잭션 관리 인터페이스를 사용한다.
 ### choice: a
-IoC는 제어의 주체가 바뀐다는 원칙이고 DI는 그 원칙을 구현하는 방법이다
+(가) IoC/DI, (나) AOP, (다) PSA
 ### choice: b
-IoC는 객체를 주입하는 구체적인 방법이고 DI는 그것을 포함하는 원칙이다
+(가) AOP, (나) PSA, (다) IoC/DI
 ### choice: c
-IoC는 설정 클래스에 쓰는 방식이고 DI는 어노테이션에 쓰는 방식이다
+(가) PSA, (나) AOP, (다) IoC/DI
 ### choice: d
-IoC는 singleton 빈에 적용하는 원칙이고 DI는 prototype 빈에 적용한다
+(가) IoC/DI, (나) PSA, (다) AOP
 
 ## question: spring-01-q04
 ```json
@@ -493,18 +480,19 @@ pre1 pre2 handler post2 post1 after2 after1
   "group": "mybatis",
   "type": "mc",
   "id": "spring-01-q12",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L07 MyBatis 연동 p.20",
     "SPR-S09 MyBatis 설정 p.15",
-    "spring-concepts Part 8"
+    "spring-concepts Part 8",
+    "https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/"
   ],
   "difficulty": 1,
   "correctChoiceId": "b"
 }
 ```
 ### stem
-`@Mapper`를 붙인 인터페이스만 작성하고 구현 클래스는 만들지 않았는데 Service에 주입되어 동작한다. 그 이유는?
+MyBatis Spring Boot Starter의 기본 매퍼 스캔 범위 안에 `@Mapper` 인터페이스를 뒀다. 별도의 구현 클래스를 작성하지 않고도 서비스에 이 타입을 주입할 수 있는 이유는?
 ### choice: a
 컴파일할 때 Lombok이 구현 클래스의 소스 코드를 만들어 주기 때문이다
 ### choice: b
@@ -775,10 +763,11 @@ public ResponseEntity<RentalResponse> rent(@RequestBody RentalRequest request) {
   "group": "security",
   "type": "mc",
   "id": "spring-01-q19",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L10 SecurityFilterChain p.10",
-    "spring-concepts Part 11"
+    "spring-concepts Part 11",
+    "https://docs.spring.io/spring-security/reference/servlet/architecture.html"
   ],
   "difficulty": 2,
   "correctChoiceId": "c"
@@ -1201,26 +1190,29 @@ scope를 지정하지 않은 빈은 컨테이너에 인스턴스가 하나만 �
 ## question: spring-01-q32
 ```json
 {
-  "title": "Spring MVC의 요청 처리 흐름",
+  "title": "Filter와 HandlerInterceptor 비교 및 MVC 요청 흐름",
   "topics": [
     "mvc-binding"
   ],
   "tags": [
-    "dispatcher-flow"
+    "dispatcher-flow",
+    "request-crosscut-layers"
   ],
   "group": "mvc-binding",
   "type": "essay",
   "id": "spring-01-q32",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-S07 MVC 요청 흐름 p.10",
-    "spring-concepts Part 5"
+    "spring-concepts Part 5",
+    "spring-concepts Part 6",
+    "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/interceptors.html"
   ],
   "difficulty": 3,
   "rubric": [
     {
       "id": "r0",
-      "criterion": "DispatcherServlet이 모든 요청을 먼저 받는다고 서술한다",
+      "criterion": "서블릿 필터 체인이 요청을 DispatcherServlet에 전달한다고 설명한다",
       "points": 1
     },
     {
@@ -1237,16 +1229,31 @@ scope를 지정하지 않은 빈은 컨테이너에 인스턴스가 하나만 �
       "id": "r3",
       "criterion": "ViewResolver가 뷰 이름을 JSP로 바꾸고 View가 Model로 응답 화면을 만든다고 서술한다",
       "points": 1
+    },
+    {
+      "id": "r4",
+      "criterion": "Filter는 서블릿 계층에서 동작하며 인코딩이나 요청 객체 래핑처럼 이 계층에 알맞은 역할을 한 가지 제시한다",
+      "points": 1
+    },
+    {
+      "id": "r5",
+      "criterion": "HandlerInterceptor는 MVC에서 핸들러가 선택된 뒤 호출되며 핸들러별 처리 시간 기록처럼 이 계층에 알맞은 역할을 한 가지 제시한다",
+      "points": 1
+    },
+    {
+      "id": "r6",
+      "criterion": "Spring AOP는 프록시를 거치는 빈의 메서드 실행에 적용되며 서비스 메서드의 트랜잭션처럼 해당 계층에 알맞은 역할을 한 가지 제시한다",
+      "points": 1
     }
   ],
-  "modelAnswer": "**(1)** 모든 요청은 Front Controller인 DispatcherServlet이 먼저 받는다. DispatcherServlet은 HandlerMapping에 물어 요청 URL과 HTTP 메서드에 맞는 핸들러를 찾고 HandlerAdapter를 통해 그 핸들러를 실행한다. HandlerAdapter는 `@PathVariable` 같은 파라미터를 바인딩해 넘긴다.\n\n**(2)** 핸들러는 Service를 호출해 스터디실 정보를 얻고 화면에 필요한 값을 Model에 담은 뒤 뷰 이름을 반환한다.\n\n**(3)** ViewResolver가 뷰 이름에 prefix와 suffix를 붙여 실제 JSP를 정한다. View가 Model의 값으로 화면을 만들어 응답한다."
+  "modelAnswer": "**(1)** 서블릿 컨테이너의 필터 체인이 요청을 `DispatcherServlet`에 넘긴다. `HandlerMapping`이 요청 경로와 HTTP 메서드에 맞는 핸들러를 찾는다. `HandlerAdapter`가 `@PathVariable` 등의 인자를 바인딩해 핸들러를 실행한다. 핸들러는 서비스에서 조회한 예약 정보를 `Model`에 담고 뷰 이름을 반환한다. `ViewResolver`가 이름을 JSP 뷰로 해석하고 뷰가 모델을 사용해 응답 화면을 만든다.\n\n**(2)** `Filter`는 서블릿 계층에서 `chain.doFilter` 호출 전후에 동작한다. 예를 들어 파라미터를 읽기 전에 요청의 문자 인코딩을 설정할 수 있다. `HandlerInterceptor`는 Spring MVC 계층에서 매핑된 핸들러를 기준으로 동작한다. 예를 들어 `preHandle`에서 시작 시각을 남기고 `afterCompletion`에서 핸들러별 처리 시간을 기록할 수 있다.\n\n**(3)** Spring AOP는 프록시를 거치는 빈의 메서드 실행에 부가 기능을 적용한다. 예를 들어 예약 서비스 메서드의 트랜잭션 경계를 관리할 수 있다."
 }
 ```
 ### stem
-브라우저가 보낸 `GET /rooms/3` 요청이 JSP 화면으로 응답되기까지의 과정을 Spring MVC의 구성 요소를 들어 서술하시오.
+브라우저가 보낸 `GET /reservations/8` 요청에 Spring MVC가 예약 상세 JSP 화면으로 응답한다. 다음을 서술하시오.
 
-(1) 요청을 가장 먼저 받는 구성 요소와 핸들러를 찾는 구성 요소, 핸들러를 실행하는 구성 요소
+(1) 필터 체인에서 JSP 응답까지의 흐름을 설명하시오. 핸들러 선택과 실행, 모델과 뷰 이름 처리에 관여하는 구성 요소를 포함하시오.
 
-(2) 컨트롤러의 핸들러가 하는 일과 반환하는 값
+(2) `Filter`와 `HandlerInterceptor`의 실행 위치를 비교하고 각각에 알맞은 대표 역할을 한 가지씩 예로 드시오.
 
-(3) 반환값이 실제 화면으로 바뀌어 응답되는 과정
+(3) Spring AOP가 동작하는 위치와 예약 서비스에 적용할 수 있는 대표 역할을 한 가지 쓰시오.

@@ -18,6 +18,7 @@
     "foundation-boot": [
       "framework-role",
       "boot-autoconfig",
+      "boot-application",
       "config-properties",
       "logging-slf4j",
       "junit-test",
@@ -25,6 +26,8 @@
     ],
     "di-bean": [
       "ioc-container",
+      "spring-core-features",
+      "pojo",
       "bean-registration",
       "constructor-injection",
       "bean-selection",
@@ -39,6 +42,7 @@
     ],
     "mvc-binding": [
       "dispatcher-flow",
+      "request-crosscut-layers",
       "request-mapping",
       "argument-binding",
       "model-view",
@@ -65,6 +69,7 @@
     ],
     "rest-api": [
       "rest-http-method",
+      "controller-response-body",
       "json-body",
       "response-entity",
       "rest-error",
@@ -76,6 +81,7 @@
       "authn-authz",
       "authorize-rules",
       "user-details",
+      "password-encoder",
       "login-logout",
       "auth-info"
     ]

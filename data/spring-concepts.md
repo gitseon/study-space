@@ -461,9 +461,9 @@ public class WebConfig implements WebMvcConfigurer {
 
 | 구분 | 위치 | 다루는 대상 |
 |---|---|---|
-| Filter | DispatcherServlet 앞(서블릿 컨테이너) | 모든 요청과 응답. 인코딩, 보안 필터 |
-| Interceptor | DispatcherServlet과 컨트롤러 사이 | 핸들러 정보를 아는 웹 공통 처리. 로그인 확인 |
-| AOP | 빈의 메서드 호출 | 웹과 무관한 메서드 단위 부가 기능. 트랜잭션, 실행 시간 |
+| Filter | 서블릿 필터 체인에서 `chain.doFilter` 호출 전후 | 매핑된 요청의 인코딩 설정이나 요청 래핑 |
+| HandlerInterceptor | Spring MVC에서 핸들러가 선택된 뒤 | 컨트롤러 메서드별 처리 시간 기록 |
+| Spring AOP | 프록시를 거치는 빈의 메서드 실행 | 서비스 메서드의 트랜잭션 관리 |
 
 ### 3. Validation
 
@@ -589,7 +589,7 @@ public interface ReservationMapper {
 }
 ```
 
-- `@Mapper` 인터페이스는 구현 클래스를 쓰지 않는다. MyBatis가 프록시 구현체를 만들어 빈으로 등록한다.
+- Starter의 기본 스캔은 범위 안에서 `@Mapper`가 붙은 인터페이스를 찾는다. 설정 클래스의 `@MapperScan`으로 매퍼 패키지를 지정할 수도 있다. MyBatis가 매퍼 프록시를 만들어 스프링 빈으로 주입할 수 있게 한다.
 - XML의 `namespace`는 인터페이스의 패키지를 포함한 전체 이름과 같아야 하고 각 구문의 `id`는 메서드 이름과 같아야 한다.
 
 | 설정 | 뜻 |
@@ -821,7 +821,8 @@ public class RentalApiController {
 }
 ```
 
-- `@RestController`는 `@Controller`와 `@ResponseBody`를 합친 것이다. 반환 객체를 뷰 이름으로 보지 않고 JSON 본문으로 쓴다.
+- 화면용 `@Controller`의 일반적인 `String` 반환값은 뷰 이름으로 처리한다. 특정 메서드에 `@ResponseBody`를 붙이면 반환값을 응답 본문에 쓴다.
+- `@RestController`는 `@Controller`와 클래스 수준의 `@ResponseBody`를 결합한다. API 핸들러의 반환값은 응답 본문으로 처리되며, 형식은 메시지 컨버터와 콘텐츠 협상에 따라 결정된다.
 - `@RequestBody`는 JSON 본문을 객체로 바꾼다. `Content-Type`이 `application/json`이 아니면 **415**, JSON 문법이 틀리면 **400**이다.
 - `ResponseEntity`는 상태 코드와 헤더와 본문을 함께 정한다. 객체만 반환하면 상태는 200이다.
 
@@ -879,7 +880,7 @@ public class CorsConfig implements WebMvcConfigurer {
 2. CORS 오류가 났을 때 요청을 막은 주체는?
    답: 브라우저이다. 서버가 허용 헤더를 보내지 않아 브라우저가 응답을 스크립트에 넘기지 않은 것이다.
 3. `@Controller`와 `@RestController`의 반환값 처리 차이는?
-   답: `@Controller`는 문자열을 뷰 이름으로 보고 `@RestController`는 반환값을 응답 본문(JSON)으로 쓴다.
+   답: 화면용 `@Controller`의 일반 `String` 반환값은 뷰 이름이다. 본문이 필요한 메서드에 `@ResponseBody`를 붙일 수 있다. `@RestController`는 `@ResponseBody`를 클래스 수준에서 적용해 API 응답 본문을 처리한다.
 
 ## Part 11. Spring Security
 
@@ -1149,7 +1150,7 @@ mockMvc.perform(get("/rooms/3"))
 | `REQUIRED`와 `REQUIRES_NEW` | 바깥에 참여 / 따로 commit |
 | PUT과 PATCH | 전체 교체, 멱등 / 일부 수정 |
 | 401과 403 | 인증 안 됨 / 권한 없음 |
-| `@Controller`와 `@RestController` | 뷰 이름 반환 / 본문(JSON) 반환 |
+| `@Controller`와 `@RestController` | 화면용 뷰 이름 / API 응답 본문(`@ResponseBody` 포함) |
 
 ### 2. 프로젝트 구현 순서
 

@@ -1,14 +1,14 @@
 ## question: spring-02-q01
 ### solution
-정답 근거: 같은 키가 여러 곳에 있으면 우선순위가 높은 쪽이 이긴다. 명령행 인자가 설정 파일보다 높다. 풀이: 인자 없이 실행하면 9이고 인자를 주면 10이다. 검증 환경에서 두 경우를 실행해 확인했다. 흔한 실수: 파일을 먼저 읽은 값이 남는다고 생각하는 것이다.
+`@ConfigurationProperties(prefix = "room")`의 접두사 아래에서 `open-hour`는 완화된 바인딩 규칙에 따라 자바의 `openHour` 프로퍼티에 연결된다. `10`은 `int`로 변환되어 세터로 전달된다. 같은 키의 명령행 인자가 설정 파일의 값보다 우선한다. 검증 코드에서는 인자 없이 실행했을 때 9를, 인자와 함께 실행했을 때 10을 확인한다. 프로퍼티 이름을 연결하는 규칙과 설정 소스의 값을 고르는 우선순위를 구분해야 한다.
 ### choice-explanation: a
-설정 파일은 명령행 인자보다 우선순위가 낮다.
+바인딩 대상은 맞다. 덮어쓰는 실행 인자가 없을 때 설정 파일의 9가 사용된다.
 ### choice-explanation: b
-우선순위가 높은 명령행 인자의 값이 쓰인다.
+설정 키는 `openHour`와 연결되고 우선순위가 높은 실행 인자의 10이 사용된다.
 ### choice-explanation: c
-같은 키는 충돌이 아니라 우선순위로 정리되어 실패하지 않는다.
+서로 다른 설정 소스에 같은 키가 있을 수 있다. Boot가 우선순위에 따라 사용할 값을 정한다.
 ### choice-explanation: d
-값을 합치지 않고 하나만 고른다.
+완화된 바인딩은 설정의 케밥 표기 `open-hour`와 자바의 카멜 표기 `openHour`를 연결한다.
 
 ## question: spring-02-q02
 ### solution
@@ -260,11 +260,11 @@ preflight의 `OPTIONS`는 CORS 설정이 처리하므로 405가 아니다.
 
 ## question: spring-02-q24
 ### solution
-정답: 프록시. 허용 표기: `proxy`도 정답이며 대소문자는 구분하지 않는다. 근거: 컨테이너는 pointcut에 걸리는 빈 대신 프록시를 빈으로 등록한다. 호출자는 프록시를 거쳐 advice를 실행한 뒤 target으로 간다. 검증 환경에서 주입된 객체가 CGLIB 프록시임을 확인했다.
+정답은 `프록시` 또는 `proxy`다. 대소문자는 구분하지 않는다. Target은 원래 업무 로직을 가진 객체다. Proxy는 호출자에게 노출되는 대리 객체로, 포인트컷에 해당하는 메서드 호출에서 advice를 적용하고 필요에 따라 target에 호출을 위임한다. 예를 들어 `@Around`가 `proceed()`를 호출하지 않으면 target 메서드는 실행되지 않는다. 검증 케이스에서는 주입받은 객체가 CGLIB 프록시임을 확인한다.
 
 ## question: spring-02-q25
 ### solution
-정답: DispatcherServlet. 허용 표기: 대소문자는 구분하지 않는다. 근거: 모든 요청은 DispatcherServlet이 먼저 받는다. 이어서 HandlerMapping이 핸들러를 찾고 HandlerAdapter가 실행하며 ViewResolver가 뷰를 정한다. 흔한 실수: 컨트롤러가 요청을 직접 받는다고 생각하는 것이다.
+정답은 `DispatcherServlet`이다. 대소문자는 구분하지 않는다. Spring MVC에 매핑된 요청은 서블릿 필터 체인을 거쳐 `DispatcherServlet`에 도달한다. 이 서블릿은 `HandlerMapping`에 핸들러 선택을 맡기고 `HandlerAdapter`를 통해 선택된 핸들러를 실행한다. 요청을 받는 서블릿과 실제 작업을 수행하는 컨트롤러의 역할을 구분해야 한다.
 
 ## question: spring-02-q26
 ### solution
@@ -284,7 +284,7 @@ preflight의 `OPTIONS`는 CORS 설정이 처리하므로 405가 아니다.
 
 ## question: spring-02-q30
 ### solution
-정답: matches. 허용 표기: 괄호를 붙인 `matches()`도 정답이며 대소문자는 구분하지 않는다. 근거: BCrypt는 같은 비밀번호도 인코딩할 때마다 다른 해시를 만든다. 그래서 해시 문자열끼리 비교하지 않고 `matches(원문, 해시)`로 확인한다. 검증 환경에서 같은 비밀번호의 두 해시가 서로 다르고 둘 다 `matches`를 통과함을 확인했다.
+정답은 `PasswordEncoder`다. 패키지명을 포함한 `org.springframework.security.crypto.password.PasswordEncoder`도 허용하며 대소문자는 구분하지 않는다. 비밀번호를 저장할 때 `encode`를 호출하고 로그인할 때 `matches`에 입력 비밀번호와 저장된 인코딩 값을 전달한다. `BCryptPasswordEncoder`는 이 인터페이스의 구현체다. BCrypt는 솔트를 사용하기 때문에 같은 비밀번호를 다시 인코딩한 문자열과 저장된 해시의 일치 여부로 검증하면 오류가 생길 수 있다.
 
 ## question: spring-02-q31
 ### solution

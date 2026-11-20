@@ -48,6 +48,12 @@
           "questionIds": [
             "spring-02-q01"
           ]
+        },
+        {
+          "id": "boot-application",
+          "questionIds": [
+            "spring-01-q02"
+          ]
         }
       ],
       "questionIds": [
@@ -108,7 +114,14 @@
       "group": "di-bean",
       "noteId": "spring-concepts",
       "section": "Part 3. DI와 빈 관리",
+      "alsoSee": [
+        {
+          "noteId": "spring-concepts",
+          "section": "Part 1. Framework와 Spring의 구성"
+        }
+      ],
       "sources": [
+        "SPR-L01",
         "SPR-L02",
         "SPR-S03",
         "SPR-S05"
@@ -121,11 +134,22 @@
           ]
         },
         {
+          "id": "spring-core-features",
+          "questionIds": [
+            "spring-01-q03"
+          ]
+        },
+        {
+          "id": "pojo",
+          "questionIds": [
+            "spring-03-q23"
+          ]
+        },
+        {
           "id": "bean-registration",
           "questionIds": [
             "spring-01-q04",
-            "spring-03-q03",
-            "spring-03-q23"
+            "spring-03-q03"
           ]
         },
         {
@@ -234,6 +258,12 @@
       "group": "mvc-binding",
       "noteId": "spring-concepts",
       "section": "Part 5. Spring MVC 요청 처리",
+      "alsoSee": [
+        {
+          "noteId": "spring-concepts",
+          "section": "Part 6. Interceptor, Validation, 예외 처리"
+        }
+      ],
       "sources": [
         "SPR-L05",
         "SPR-L06",
@@ -245,6 +275,12 @@
           "questionIds": [
             "spring-01-q32",
             "spring-02-q25"
+          ]
+        },
+        {
+          "id": "request-crosscut-layers",
+          "questionIds": [
+            "spring-01-q32"
           ]
         },
         {
@@ -542,6 +578,12 @@
           ]
         },
         {
+          "id": "controller-response-body",
+          "questionIds": [
+            "spring-03-q31"
+          ]
+        },
+        {
           "id": "rest-error",
           "questionIds": [
             "spring-02-q17",
@@ -616,8 +658,13 @@
           "id": "user-details",
           "questionIds": [
             "spring-01-q30",
-            "spring-02-q30",
             "spring-03-q21"
+          ]
+        },
+        {
+          "id": "password-encoder",
+          "questionIds": [
+            "spring-02-q30"
           ]
         },
         {
