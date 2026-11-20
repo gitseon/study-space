@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="study.practice.notice.persistence.NoticeDao">
+    <select id="selectAll" resultType="study.practice.notice.model.Notice">
+        SELECT notice_id, category_id, author_id, title, content,
+               view_count, is_pinned AS pinned, status, created_at
+        FROM notice
+        ORDER BY notice_id ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="noticeId" keyColumn="notice_id">
+        INSERT INTO notice (category_id, author_id, title, content)
+        VALUES (#{categoryId}, #{authorId}, #{title}, #{content})
+    </insert>
+</mapper>

@@ -106,6 +106,8 @@ SITE_DIR=dist npm run test:e2e
 
 ## Spring
 
+- [공지사항 API 구현 연습](examples/spring-notice-practice/README.md)은 STS에서 가져올 수 있는 Maven 프로젝트입니다. TODO 네 곳을 구현하고 연습 테스트 8건으로 확인합니다. 풀이 비교용 코드도 함께 제공합니다.
+
 `source/Spring/`이 원고 폴더입니다(대소문자가 다른 `spring` 폴더를 따로 만들지 않습니다). 개념 노트는 `Spring개념 요약노트.md`(`Spring 개념` 카드)이고 범위는 `scope-spring.json`, 노트와 문항과 프로젝트 작성 대상의 연결은 `coverage-spring.json`, 검증 환경은 `environment-spring.json`입니다. 과목평가 `spring-01`~`spring-03`은 필수 태그 44개를 3회가 모두 채웁니다. 구현 계획은 `docs/plans/spring.md`와 `docs/plans/spring-refactoring.md`입니다.
 
 - 실행 검증: `tests/spring-runtime`은 Spring Boot 4.1, Spring Framework 7.0, Security 7.1, MyBatis 3.5, MySQL 8.4에서 문항의 코드를 실제로 실행하는 Maven 프로젝트입니다. `python scripts/verify_spring_answers.py`가 이를 실행해 관찰한 값을 `spring-checks.json`과 비교하고 실행할 수 없는 문항은 `spring-reviews.json`의 재풀이 기록(작성자는 `independent: false`)을 요구합니다. 접속 정보는 환경 변수 `SPRING_VERIFY_DB_URL`, `SPRING_VERIFY_DB_USER`, `SPRING_VERIFY_DB_PASSWORD`로 받고 없으면 건너뛰지 않고 실패합니다. 백엔드 · DB의 MySQL 검증처럼 DB가 필요해 현재 CI에는 넣지 않았고 로컬에서 실행합니다. 환경은 수업 환경과 같은지 확인하지 못한 연습용 조합입니다.
