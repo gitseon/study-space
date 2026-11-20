@@ -142,16 +142,19 @@
         "예외"
       ],
       "methods": [
+        "search",
         "detail",
         "reserve",
         "cancel"
       ],
       "targets": [
+        "svc-search",
         "svc-detail",
         "svc-reserve",
         "svc-cancel"
       ],
       "skeleton": [
+        "// search: 읽기 전용 트랜잭션으로 mapper.search를 호출한다",
         "// detail: 없으면 ReservationNotFoundException",
         "// reserve: 방과 남은 자리를 확인하고 저장한다",
         "// cancel: 지운 행이 없으면 ReservationNotFoundException"
@@ -314,6 +317,48 @@
       "targets": [],
       "skeleton": [
         "<%-- 오류 메시지(제공) --%>"
+      ]
+    },
+    {
+      "id": "dto",
+      "layer": "shared",
+      "label": "Reservation",
+      "kind": "DTO",
+      "path": "src/main/java/com/study/room/model/Reservation.java",
+      "role": "조회한 행과 요청의 값을 담는 객체입니다. Lombok이 생성자, 접근자, 빌더를 만들어 mapper와 서비스, 컨트롤러가 같은 타입을 씁니다.",
+      "receives": [
+        "mapper가 매핑한 행",
+        "요청에서 채운 값"
+      ],
+      "sends": [
+        "필드 값"
+      ],
+      "methods": [],
+      "targets": [
+        "dto-reservation"
+      ],
+      "skeleton": [
+        "// 클래스에 Lombok 어노테이션으로 생성자, 접근자, 빌더를 만든다",
+        "// 필드: reservationId, roomId, roomName, memberName, people"
+      ]
+    },
+    {
+      "id": "tests",
+      "layer": "shared",
+      "label": "UnitTests",
+      "kind": "JUnit 테스트",
+      "path": "src/test/java/com/study/room/UnitTests.java",
+      "role": "제공된 JUnit 테스트입니다. 수정하지 않고 작성이 끝난 뒤 실행해 DTO와 트랜잭션, 서비스 규칙을 확인합니다.",
+      "receives": [
+        "작성한 DTO와 서비스"
+      ],
+      "sends": [
+        "통과와 실패 결과"
+      ],
+      "methods": [],
+      "targets": [],
+      "skeleton": [
+        "// 제공 파일이므로 수정하지 않는다"
       ]
     }
   ],

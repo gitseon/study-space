@@ -1,5 +1,21 @@
 [
   {
+    "id": "dto-reservation",
+    "title": "예약 DTO 작성",
+    "topicIds": [
+      "mybatis"
+    ],
+    "requirementId": "R-REGIST",
+    "checklistIds": [
+      "run-build",
+      "crd-create"
+    ],
+    "hints": [
+      "필드 다섯 개의 이름과 타입은 요구사항 표와 정확히 같아야 합니다. 예약 번호는 등록 전에 비어 있을 수 있는 타입입니다.",
+      "기본 생성자, 전체 인자 생성자, Getter와 Setter, 빌더를 모두 Lombok 어노테이션으로 만듭니다."
+    ]
+  },
+  {
     "id": "ctrl-list",
     "title": "목록과 검색 요청 처리",
     "topicIds": [
@@ -61,6 +77,22 @@
     "hints": [
       "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
       "flash 속성으로 안내 메시지 message를 담습니다."
+    ]
+  },
+  {
+    "id": "svc-search",
+    "title": "예약 목록 검색 조회",
+    "topicIds": [
+      "service-tx"
+    ],
+    "requirementId": "R-LIST",
+    "checklistIds": [
+      "crd-list",
+      "crd-search"
+    ],
+    "hints": [
+      "조회만 하는 메서드는 데이터를 바꾸지 않는다고 트랜잭션에 알립니다. 어노테이션 속성으로 정합니다.",
+      "roomId와 keyword는 가공하지 않고 mapper의 search에 그대로 넘깁니다."
     ]
   },
   {

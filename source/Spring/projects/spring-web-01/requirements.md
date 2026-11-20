@@ -1,6 +1,43 @@
 # 요구사항
 
-이 프로젝트는 스터디실 예약을 목록, 검색, 상세로 조회하고 등록과 취소를 처리하는 Spring Boot MVC, JSP, MyBatis, MySQL 프로젝트입니다. 제공 파일은 수정하지 않고 작성 대상 파일의 표시된 영역만 채웁니다. 기본 CRUD는 이 연습을 위한 제안이며 공식 평가의 과제 범위가 아닙니다.
+스터디실 예약을 조회하고 등록·취소하는 Maven 프로젝트입니다. 제공된 스키마와 매퍼 인터페이스, JUnit 테스트를 읽고 표시된 작성 영역을 채웁니다. 이 문제는 학습용입니다.
+
+## 단계별 구현
+
+### STEP 1. DTO
+
+`Reservation.java`에 다음 필드 다섯 개를 표 순서로 선언합니다. Lombok으로 기본 생성자와 전체 인자 생성자, Getter와 Setter, 빌더를 제공합니다. 폼 입력은 별도로 제공된 `ReservationForm`을 사용합니다.
+
+| 필드 | 타입 | 가져오는 값 |
+| --- | --- | --- |
+| `reservationId` | `Integer` | 예약 번호. 등록하기 전에는 비어 있습니다 |
+| `roomId` | `Integer` | 방 번호 |
+| `roomName` | `String` | 방을 조인해 얻는 이름 |
+| `memberName` | `String` | 예약자 이름 |
+| `people` | `int` | 예약 인원 |
+
+### STEP 2. MyBatis 매퍼
+
+제공된 `ReservationMapper` 인터페이스를 기준으로 XML의 `search`, `findById`, `insert`를 작성합니다. 조회한 행을 `Reservation`으로 매핑할 때 제공된 `resultMap`을 사용하고, 목록은 예약 번호 오름차순으로 정렬합니다. 등록은 방 번호, 예약자 이름, 인원만 넣고 DB에서 생성한 번호를 같은 객체의 `reservationId`에 채웁니다.
+
+### STEP 3. 서비스
+
+`ReservationService.search`에 읽기 전용 트랜잭션을 선언하고 두 검색 인자를 그대로 매퍼에 전달합니다. 상세 조회에서는 없는 번호를 예외로 처리합니다. 등록과 취소에는 각각 트랜잭션을 적용합니다. 등록 전에 방과 남은 자리를 검사하고 저장한 경우 받은 번호를 반환합니다.
+
+### STEP 4. 컨트롤러와 JSP
+
+`ReservationController`에서 요청을 바인딩하고 아래 기능별 계약을 만족하도록 모델과 뷰를 연결합니다. 목록과 상세 JSP를 완성하고, 예외 처리기에서 없는 예약을 404 화면으로 연결합니다.
+
+| 동작 | 요청 | 기대 결과 |
+| --- | --- | --- |
+| 목록과 검색 | `GET /reservations` | 200과 예약 목록 JSP |
+| 상세 | `GET /reservations/{reservationId}` | 200과 상세 JSP, 없는 번호는 404 |
+| 등록 | `POST /reservations` | 성공하면 생성된 번호의 상세로 이동, 입력 오류면 등록 폼 |
+| 취소 | `POST /reservations/{reservationId}/delete` | 취소 후 목록으로 이동 |
+
+## 로컬 확인
+
+제공된 `src/test`의 파일은 수정하지 않습니다. 빈칸을 채우기 전에는 필요한 DTO 접근자나 메서드가 없어 컴파일이 실패할 수 있습니다. 작성이 끝나면 연습 전용 MySQL 스키마를 연결해 `mvn test`를 실행합니다. DB와 HTTP, JSP 테스트는 예약 행을 지우고 시작 데이터를 다시 넣습니다. 테스트 후 스터디실 목록을 열어 번호 순서와 상세 이동을 직접 확인합니다.
 
 ## 공통 약속
 

@@ -20,9 +20,12 @@ public class ReservationService {
         this.mapper = mapper;
     }
 
+    // study-target:svc-search:start
+    @Transactional(readOnly = ____)
     public List<Reservation> search(Integer roomId, String keyword) {
         return mapper.search(roomId, keyword);
     }
+    // study-target:svc-search:end
 
     public List<StudyRoom> rooms() {
         return mapper.findRooms();

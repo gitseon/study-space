@@ -1,9 +1,9 @@
 {
   "projectId": "spring-web-02",
-  "revision": 1,
-  "referenceHash": "8c497582327cb76712ce53df7a61cbfb8ccfb5c5a9d3d4b933ed573c1ca82a18",
+  "revision": 2,
+  "referenceHash": "391c694173048fd4269874ba1a5b35287bb788f430bf2f790996d05667bfd8cf",
   "referenceFiles": {
-    "pom.xml": "d8da17cf743cca5d52b70942370cfb6bd57eb2dabc3a0c98e4459e2451f25770",
+    "pom.xml": "a80be3f26ec77cbb5d0dc65a3d264d75c01025f6658b39625974bc8929b4bdb8",
     "src/main/java/com/study/rental/RentalApplication.java": "f4b55c4b779003f446d6b1859436eaec4f7430f8207d12715263445755c49c26",
     "src/main/java/com/study/rental/exception/EquipmentNotFoundException.java": "0dfc988a3e76070051b398dbde809cb712f3cc18b600361a8ca8b1780e2a5ac5",
     "src/main/java/com/study/rental/exception/NotFoundException.java": "b2c8c396e152b5361e514deabb85195ceb177d3b9893055f25b28a78e6704922",
@@ -14,20 +14,23 @@
     "src/main/java/com/study/rental/model/Equipment.java": "4f6f51df6655c45b33c4181dd62fb4600111df759f99df77dadb81872720151d",
     "src/main/java/com/study/rental/model/ErrorResponse.java": "3b1c35f4dc173719fe2511121ca285e775912b422faf864bf01bfcba616188bb",
     "src/main/java/com/study/rental/model/Member.java": "93d0a403b83fb4ea33b6d917131caefff26a68787f64b202950815893a8bc5a9",
-    "src/main/java/com/study/rental/model/Rental.java": "c9bdc0a7cfd1f0b7ca106dee76ae37db05bbc8cd89915a649e44cb210ea6c846",
+    "src/main/java/com/study/rental/model/Rental.java": "76e0829d4a2186dfbfe08157e297869a77cd4d4408c95decd032943002c48e64",
     "src/main/java/com/study/rental/model/RentalRequest.java": "f433f9be591fc0d989f30c87a030f3d7b2d3e32bc6cb1e6e080370a1076b3eab",
     "src/main/java/com/study/rental/model/RentalResponse.java": "2ac330652465da8e4709addf01bd2df4eeb9055824421ab0eb0b7d8aeb8b29e3",
     "src/main/java/com/study/rental/security/DbUserDetailsService.java": "8f2027c440e24341761307e987767c0703feb0132494c777b171997231225118",
     "src/main/java/com/study/rental/security/Principals.java": "959e52b5f7e2d8d7863cf36553a272ab90ffefab1e52d73f8e73da809cc308c0",
     "src/main/java/com/study/rental/security/SecurityConfig.java": "d1696806b4e2be2ccea2696f7b39dcd4b30befa74715a414978b020ef74cd7ef",
-    "src/main/java/com/study/rental/service/RentalService.java": "ec87680f8a1869fffb6e215ac40b35ecad5dd4c53f020449da236c43787092cf",
+    "src/main/java/com/study/rental/service/RentalService.java": "7862b0af992934ae36b45eabc016fbc7a831d8eb69238228d0db59c3692a90e5",
     "src/main/java/com/study/rental/web/ApiExceptionHandler.java": "60c0d9e5f83356eb71a4f348055759b6429184b0b136182d1204daac98106f61",
     "src/main/java/com/study/rental/web/RentalApiController.java": "8018191245f826bbbb26832ad6db9090387ddbe2765d151f2e256c03be7e0cb4",
     "src/main/resources/application.properties": "ea20ad8bc1cac2cb63c424a754aab0e32d8bb3ec6471f43b5c88de81ad901819",
     "src/main/resources/data.sql": "b05384d63bcd0062687de058cd220c09a1d815c5dd370e84257b318870468068",
     "src/main/resources/mapper/MemberMapper.xml": "0a044c34ce2238cb212357fd0f2d14bc424a283d7cc8507274859b68a4645bfb",
     "src/main/resources/mapper/RentalMapper.xml": "8e67cbabe29e7c408785dd7781c1f8439f04cd2a6a70bbbb1e45e6efe478a8d9",
-    "src/main/resources/schema.sql": "5c3575c1b2085764bcd6f6d318abb586b5e36a68d8445337997b10ed5c22624c"
+    "src/main/resources/schema.sql": "5c3575c1b2085764bcd6f6d318abb586b5e36a68d8445337997b10ed5c22624c",
+    "src/test/java/com/study/rental/DbTests.java": "c23d9a049b3bef1bce28f2771472e093817266e57ebbbb67be53e16e90a25645",
+    "src/test/java/com/study/rental/HttpTests.java": "7d48159aa79f33ff2ebbb65d10012b0fde41787cc59ab2b91583260924e563af",
+    "src/test/java/com/study/rental/UnitTests.java": "5b0e09f71b74f2f98c1ab39c9f5577e4030f03a200282116c6b7c733463f6000"
   },
   "verification": {
     "steps": {
@@ -37,7 +40,7 @@
       },
       "unit": {
         "status": "passed",
-        "note": "테스트 6건 통과"
+        "note": "테스트 8건 통과"
       },
       "dbIntegration": {
         "status": "passed",
@@ -56,9 +59,9 @@
         "note": ""
       }
     },
-    "verifiedReferenceHash": "8c497582327cb76712ce53df7a61cbfb8ccfb5c5a9d3d4b933ed573c1ca82a18",
+    "verifiedReferenceHash": "391c694173048fd4269874ba1a5b35287bb788f430bf2f790996d05667bfd8cf",
     "environmentHash": "e0e3c28667d9273d",
-    "verifiedAt": "2026-11-17",
+    "verifiedAt": "2026-11-20",
     "reviewer": "verify_spring_projects.py"
   }
 }

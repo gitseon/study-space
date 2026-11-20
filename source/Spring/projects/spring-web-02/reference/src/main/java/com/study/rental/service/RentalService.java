@@ -26,6 +26,7 @@ public class RentalService {
         return mapper.findEquipments();
     }
 
+    @Transactional(readOnly = true)
     public List<Rental> mine(String loginId) {
         return mapper.findByLoginId(loginId);
     }

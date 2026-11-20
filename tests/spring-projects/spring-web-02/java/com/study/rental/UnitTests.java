@@ -9,6 +9,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.access.AccessDeniedException;
@@ -90,6 +92,26 @@ class UnitTests {
         verify(mapper, never()).delete(1);
         service.cancel(1, "mina", false);
         verify(mapper).delete(1);
+    }
+
+    @Test
+    void dtoSupportsBuilderConstructorsAndAccessors() {
+        Rental rental = Rental.builder().rentalId(3).equipmentId(1).equipmentName("카메라").loginId("mina").days(2).build();
+        assertEquals(3, rental.getRentalId());
+        assertEquals("카메라", rental.getEquipmentName());
+        Rental fromConstructor = new Rental(3, 1, "카메라", "mina", 2);
+        assertEquals("mina", fromConstructor.getLoginId());
+        rental.setDays(4);
+        assertEquals(4, rental.getDays());
+    }
+
+    @Test
+    void listingDelegatesToMapperInAReadOnlyTransaction() throws Exception {
+        Transactional transaction = RentalService.class.getMethod("mine", String.class).getAnnotation(Transactional.class);
+        assertTrue(transaction != null && transaction.readOnly());
+        List<Rental> rows = List.of(new Rental());
+        when(mapper.findByLoginId("mina")).thenReturn(rows);
+        assertEquals(rows, service.mine("mina"));
     }
 
     @Test

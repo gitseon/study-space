@@ -10,6 +10,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +98,26 @@ class UnitTests {
         when(mapper.delete(6)).thenReturn(1);
         service.cancel(6);
         verify(mapper).delete(6);
+    }
+
+    @Test
+    void dtoSupportsBuilderConstructorsAndAccessors() {
+        Reservation reservation = Reservation.builder().reservationId(3).roomId(1).roomName("A").memberName("민수").people(2).build();
+        assertEquals(3, reservation.getReservationId());
+        assertEquals("A", reservation.getRoomName());
+        Reservation fromConstructor = new Reservation(3, 1, "A", "민수", 2);
+        assertEquals("민수", fromConstructor.getMemberName());
+        reservation.setPeople(4);
+        assertEquals(4, reservation.getPeople());
+    }
+
+    @Test
+    void listingDelegatesToMapperInAReadOnlyTransaction() throws Exception {
+        Transactional transaction = ReservationService.class.getMethod("search", Integer.class, String.class).getAnnotation(Transactional.class);
+        assertTrue(transaction != null && transaction.readOnly());
+        List<Reservation> rows = List.of(new Reservation());
+        when(mapper.search(2, "민")).thenReturn(rows);
+        assertEquals(rows, service.search(2, "민"));
     }
 
     @Test

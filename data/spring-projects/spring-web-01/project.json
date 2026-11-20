@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "spring-web-01",
   "title": "스터디실 예약 관리",
-  "revision": 1,
+  "revision": 2,
   "track": "spring",
-  "hash": "5385a90c5d4f3e01",
+  "hash": "dc824c9d85cdf035",
   "database": "study_room",
   "environment": {
     "javaRuntime": "25",
@@ -71,7 +71,7 @@
     {
       "path": "src/main/java/com/study/room/model/Reservation.java",
       "language": "java",
-      "editable": false,
+      "editable": true,
       "requiredInExport": true
     },
     {
@@ -169,9 +169,46 @@
       "language": "jsp",
       "editable": true,
       "requiredInExport": true
+    },
+    {
+      "path": "src/test/java/com/study/room/DbTests.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/test/java/com/study/room/HttpTests.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/test/java/com/study/room/JspTests.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
+    },
+    {
+      "path": "src/test/java/com/study/room/UnitTests.java",
+      "language": "java",
+      "editable": false,
+      "requiredInExport": true
     }
   ],
   "targets": [
+    {
+      "id": "dto-reservation",
+      "title": "예약 DTO 작성",
+      "path": "src/main/java/com/study/room/model/Reservation.java",
+      "topicIds": [
+        "mybatis"
+      ],
+      "requirementId": "R-REGIST",
+      "checklistIds": [
+        "run-build",
+        "crd-create"
+      ]
+    },
     {
       "id": "ctrl-list",
       "title": "목록과 검색 요청 처리",
@@ -222,6 +259,19 @@
       "requirementId": "R-CANCEL",
       "checklistIds": [
         "crd-cancel"
+      ]
+    },
+    {
+      "id": "svc-search",
+      "title": "예약 목록 검색 조회",
+      "path": "src/main/java/com/study/room/service/ReservationService.java",
+      "topicIds": [
+        "service-tx"
+      ],
+      "requirementId": "R-LIST",
+      "checklistIds": [
+        "crd-list",
+        "crd-search"
       ]
     },
     {
@@ -479,16 +529,19 @@
           "예외"
         ],
         "methods": [
+          "search",
           "detail",
           "reserve",
           "cancel"
         ],
         "targets": [
+          "svc-search",
           "svc-detail",
           "svc-reserve",
           "svc-cancel"
         ],
         "skeleton": [
+          "// search: 읽기 전용 트랜잭션으로 mapper.search를 호출한다",
           "// detail: 없으면 ReservationNotFoundException",
           "// reserve: 방과 남은 자리를 확인하고 저장한다",
           "// cancel: 지운 행이 없으면 ReservationNotFoundException"
@@ -652,6 +705,48 @@
         "skeleton": [
           "<%-- 오류 메시지(제공) --%>"
         ]
+      },
+      {
+        "id": "dto",
+        "layer": "shared",
+        "label": "Reservation",
+        "kind": "DTO",
+        "path": "src/main/java/com/study/room/model/Reservation.java",
+        "role": "조회한 행과 요청의 값을 담는 객체입니다. Lombok이 생성자, 접근자, 빌더를 만들어 mapper와 서비스, 컨트롤러가 같은 타입을 씁니다.",
+        "receives": [
+          "mapper가 매핑한 행",
+          "요청에서 채운 값"
+        ],
+        "sends": [
+          "필드 값"
+        ],
+        "methods": [],
+        "targets": [
+          "dto-reservation"
+        ],
+        "skeleton": [
+          "// 클래스에 Lombok 어노테이션으로 생성자, 접근자, 빌더를 만든다",
+          "// 필드: reservationId, roomId, roomName, memberName, people"
+        ]
+      },
+      {
+        "id": "tests",
+        "layer": "shared",
+        "label": "UnitTests",
+        "kind": "JUnit 테스트",
+        "path": "src/test/java/com/study/room/UnitTests.java",
+        "role": "제공된 JUnit 테스트입니다. 수정하지 않고 작성이 끝난 뒤 실행해 DTO와 트랜잭션, 서비스 규칙을 확인합니다.",
+        "receives": [
+          "작성한 DTO와 서비스"
+        ],
+        "sends": [
+          "통과와 실패 결과"
+        ],
+        "methods": [],
+        "targets": [],
+        "skeleton": [
+          "// 제공 파일이므로 수정하지 않는다"
+        ]
       }
     ],
     "edges": [
@@ -804,8 +899,8 @@
       "취소": "cancel"
     }
   },
-  "requirements": "# 요구사항\n\n이 프로젝트는 스터디실 예약을 목록, 검색, 상세로 조회하고 등록과 취소를 처리하는 Spring Boot MVC, JSP, MyBatis, MySQL 프로젝트입니다. 제공 파일은 수정하지 않고 작성 대상 파일의 표시된 영역만 채웁니다. 기본 CRUD는 이 연습을 위한 제안이며 공식 평가의 과제 범위가 아닙니다.\n\n## 공통 약속\n\n| 항목 | 값 |\n| --- | --- |\n| 기본 주소 | `/reservations` (컨트롤러 `ReservationController`) |\n| 뷰 | `/WEB-INF/views/` 아래 JSP. 뷰 이름 `reservation/list`는 `reservation/list.jsp` |\n| 모델 이름 | `reservations`(목록), `rooms`(방 목록), `reservation`(한 건), `form`(입력 객체), `message`(flash 안내) |\n| DB | 환경 변수 `DB_URL`, `DB_USER`, `DB_PASSWORD`로 접속. 비밀번호는 파일에 쓰지 않습니다 |\n| 시작 데이터 | 방 3개(소회의실 A 정원 6, 소회의실 B 정원 4, 세미나실 정원 10), 예약 3건 |\n\n## R-LIST 목록과 검색\n\n- `GET /reservations`는 예약을 번호 순서로 모두 보여 줍니다. 시작 데이터에서는 3행이고 열은 번호, 방, 예약자, 인원입니다.\n- `roomId`와 `keyword`는 선택 파라미터입니다. 값이 있으면 그 조건으로만 찾습니다. 이름은 부분 일치입니다.\n- 결과가 없으면 표 대신 \"예약이 없습니다.\" 행을 보여 줍니다. 출력하는 모든 값은 `c:out`으로 감쌉니다.\n\n## R-DETAIL 상세\n\n- `GET /reservations/{reservationId}`는 예약 한 건(번호, 방, 예약자, 인원)을 보여 줍니다.\n- 번호가 숫자가 아니면 400입니다. 해당 예약이 없으면 404 오류 화면입니다. 빈 상세 화면을 보여 주지 않습니다.\n\n## R-REGIST 등록\n\n- `GET /reservations/new`는 입력 화면입니다. `POST /reservations`는 `roomId`, `memberName`, `people`을 읽어 저장합니다.\n- 입력 검증에 실패하면 저장하지 않고 오류 메시지와 함께 입력 화면을 다시 보여 줍니다. 입력한 값은 유지됩니다.\n- 남은 자리(정원에서 이미 예약된 인원을 뺀 값)보다 많이 예약하면 저장하지 않고 409 화면을 보여 줍니다.\n- 저장에 성공하면 만들어진 번호의 상세 화면으로 redirect합니다. 새로 고침해도 같은 예약이 다시 등록되지 않습니다.\n\n## R-CANCEL 취소\n\n- `POST /reservations/{reservationId}/delete`는 예약을 지우고 목록으로 redirect하며 \"예약을 취소했습니다\" 안내를 보여 줍니다.\n- 지울 예약이 없으면 404 오류 화면입니다.\n\n## 이 연습의 범위 밖\n\n- 수정, 로그인, 파일 업로드, REST API는 다루지 않습니다.\n- 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인합니다.\n",
-  "flow": "# 월말평가 구현 흐름\n\n## 전체 흐름\n\n1. 브라우저가 URL과 form 값을 보내면 `DispatcherServlet`이 받아 `ReservationController`의 메서드를 찾습니다.\n2. 컨트롤러가 요청 파라미터를 바인딩하고 서비스를 호출합니다.\n3. 서비스가 업무 규칙을 확인하고 `ReservationMapper`를 호출합니다. 변경 메서드는 트랜잭션 하나로 묶입니다.\n4. mapper의 SQL은 `ReservationMapper.xml`의 같은 `id` 구문으로 실행되어 MySQL을 읽고 씁니다.\n5. 조회 결과는 모델에 담아 뷰 이름을 반환하고 ViewResolver가 JSP를 찾아 화면을 만듭니다.\n6. 등록과 취소가 끝나면 redirect로 새 GET 요청을 보내 같은 요청이 반복되지 않게 합니다.\n7. 예외는 `GlobalExceptionHandler`가 상태 코드와 오류 화면으로 바꿉니다.\n\n## 기능별 흐름\n\n### 목록\n\n`GET /reservations` → ReservationController.list → ReservationService.search → ReservationMapper.search → 모델 `reservations`, `rooms` → `reservation/list.jsp`\n\n### 상세\n\n`GET /reservations/{id}` → ReservationController.detail → ReservationService.detail → ReservationMapper.findById → 없으면 ReservationNotFoundException → `GlobalExceptionHandler` → 404 `error/not-found.jsp` / 있으면 모델 `reservation` → `reservation/detail.jsp`\n\n### 등록\n\n- 화면: `GET /reservations/new` → `reservation/form.jsp`\n- 저장: `POST /reservations` → `@Valid` 검증 → 오류가 있으면 입력 화면 / 없으면 ReservationService.reserve(트랜잭션) → ReservationMapper.insert → redirect `/reservations/{id}`\n\n남은 자리를 넘으면 RoomFullException이 던져져 저장은 취소되고 409 화면이 나옵니다. 같은 요청이 PRG 덕분에 새로 고침으로 반복되지 않습니다.\n\n### 취소\n\n`POST /reservations/{id}/delete` → ReservationController.cancel → ReservationService.cancel(트랜잭션) → ReservationMapper.delete → 0행이면 404 / 아니면 flash 메시지와 redirect `/reservations`\n\n## 짝으로 기억할 것\n\n| 보내는 쪽 | 받는 쪽 |\n| --- | --- |\n| 컨트롤러가 반환하는 뷰 이름 | `prefix` + 뷰 이름 + `suffix`의 JSP |\n| 모델에 담은 이름 | JSP의 EL 이름 |\n| mapper 메서드 이름 | XML 구문의 `id` |\n| mapper 인터페이스의 전체 이름 | XML의 `namespace` |\n",
+  "requirements": "# 요구사항\n\n스터디실 예약을 조회하고 등록·취소하는 Maven 프로젝트입니다. 제공된 스키마와 매퍼 인터페이스, JUnit 테스트를 읽고 표시된 작성 영역을 채웁니다. 이 문제는 학습용입니다.\n\n## 단계별 구현\n\n### STEP 1. DTO\n\n`Reservation.java`에 다음 필드 다섯 개를 표 순서로 선언합니다. Lombok으로 기본 생성자와 전체 인자 생성자, Getter와 Setter, 빌더를 제공합니다. 폼 입력은 별도로 제공된 `ReservationForm`을 사용합니다.\n\n| 필드 | 타입 | 가져오는 값 |\n| --- | --- | --- |\n| `reservationId` | `Integer` | 예약 번호. 등록하기 전에는 비어 있습니다 |\n| `roomId` | `Integer` | 방 번호 |\n| `roomName` | `String` | 방을 조인해 얻는 이름 |\n| `memberName` | `String` | 예약자 이름 |\n| `people` | `int` | 예약 인원 |\n\n### STEP 2. MyBatis 매퍼\n\n제공된 `ReservationMapper` 인터페이스를 기준으로 XML의 `search`, `findById`, `insert`를 작성합니다. 조회한 행을 `Reservation`으로 매핑할 때 제공된 `resultMap`을 사용하고, 목록은 예약 번호 오름차순으로 정렬합니다. 등록은 방 번호, 예약자 이름, 인원만 넣고 DB에서 생성한 번호를 같은 객체의 `reservationId`에 채웁니다.\n\n### STEP 3. 서비스\n\n`ReservationService.search`에 읽기 전용 트랜잭션을 선언하고 두 검색 인자를 그대로 매퍼에 전달합니다. 상세 조회에서는 없는 번호를 예외로 처리합니다. 등록과 취소에는 각각 트랜잭션을 적용합니다. 등록 전에 방과 남은 자리를 검사하고 저장한 경우 받은 번호를 반환합니다.\n\n### STEP 4. 컨트롤러와 JSP\n\n`ReservationController`에서 요청을 바인딩하고 아래 기능별 계약을 만족하도록 모델과 뷰를 연결합니다. 목록과 상세 JSP를 완성하고, 예외 처리기에서 없는 예약을 404 화면으로 연결합니다.\n\n| 동작 | 요청 | 기대 결과 |\n| --- | --- | --- |\n| 목록과 검색 | `GET /reservations` | 200과 예약 목록 JSP |\n| 상세 | `GET /reservations/{reservationId}` | 200과 상세 JSP, 없는 번호는 404 |\n| 등록 | `POST /reservations` | 성공하면 생성된 번호의 상세로 이동, 입력 오류면 등록 폼 |\n| 취소 | `POST /reservations/{reservationId}/delete` | 취소 후 목록으로 이동 |\n\n## 로컬 확인\n\n제공된 `src/test`의 파일은 수정하지 않습니다. 빈칸을 채우기 전에는 필요한 DTO 접근자나 메서드가 없어 컴파일이 실패할 수 있습니다. 작성이 끝나면 연습 전용 MySQL 스키마를 연결해 `mvn test`를 실행합니다. DB와 HTTP, JSP 테스트는 예약 행을 지우고 시작 데이터를 다시 넣습니다. 테스트 후 스터디실 목록을 열어 번호 순서와 상세 이동을 직접 확인합니다.\n\n## 공통 약속\n\n| 항목 | 값 |\n| --- | --- |\n| 기본 주소 | `/reservations` (컨트롤러 `ReservationController`) |\n| 뷰 | `/WEB-INF/views/` 아래 JSP. 뷰 이름 `reservation/list`는 `reservation/list.jsp` |\n| 모델 이름 | `reservations`(목록), `rooms`(방 목록), `reservation`(한 건), `form`(입력 객체), `message`(flash 안내) |\n| DB | 환경 변수 `DB_URL`, `DB_USER`, `DB_PASSWORD`로 접속. 비밀번호는 파일에 쓰지 않습니다 |\n| 시작 데이터 | 방 3개(소회의실 A 정원 6, 소회의실 B 정원 4, 세미나실 정원 10), 예약 3건 |\n\n## R-LIST 목록과 검색\n\n- `GET /reservations`는 예약을 번호 순서로 모두 보여 줍니다. 시작 데이터에서는 3행이고 열은 번호, 방, 예약자, 인원입니다.\n- `roomId`와 `keyword`는 선택 파라미터입니다. 값이 있으면 그 조건으로만 찾습니다. 이름은 부분 일치입니다.\n- 결과가 없으면 표 대신 \"예약이 없습니다.\" 행을 보여 줍니다. 출력하는 모든 값은 `c:out`으로 감쌉니다.\n\n## R-DETAIL 상세\n\n- `GET /reservations/{reservationId}`는 예약 한 건(번호, 방, 예약자, 인원)을 보여 줍니다.\n- 번호가 숫자가 아니면 400입니다. 해당 예약이 없으면 404 오류 화면입니다. 빈 상세 화면을 보여 주지 않습니다.\n\n## R-REGIST 등록\n\n- `GET /reservations/new`는 입력 화면입니다. `POST /reservations`는 `roomId`, `memberName`, `people`을 읽어 저장합니다.\n- 입력 검증에 실패하면 저장하지 않고 오류 메시지와 함께 입력 화면을 다시 보여 줍니다. 입력한 값은 유지됩니다.\n- 남은 자리(정원에서 이미 예약된 인원을 뺀 값)보다 많이 예약하면 저장하지 않고 409 화면을 보여 줍니다.\n- 저장에 성공하면 만들어진 번호의 상세 화면으로 redirect합니다. 새로 고침해도 같은 예약이 다시 등록되지 않습니다.\n\n## R-CANCEL 취소\n\n- `POST /reservations/{reservationId}/delete`는 예약을 지우고 목록으로 redirect하며 \"예약을 취소했습니다\" 안내를 보여 줍니다.\n- 지울 예약이 없으면 404 오류 화면입니다.\n\n## 이 연습의 범위 밖\n\n- 수정, 로그인, 파일 업로드, REST API는 다루지 않습니다.\n- 사이트는 코드를 실행하거나 점수를 매기지 않습니다. 내려받은 프로젝트를 로컬에서 실행해 확인합니다.\n",
+  "flow": "# 월말평가 구현 흐름\n\n## 구현 순서\n\n| 단계 | 파일 | 확인할 결과 |\n| --- | --- | --- |\n| STEP 1 DTO | `Reservation.java` | 조회 행과 생성된 예약 번호를 같은 타입으로 받을 수 있습니다 |\n| STEP 2 매퍼 | `ReservationMapper.xml` | 검색 조건과 정렬이 맞고 등록한 객체에 번호가 생깁니다 |\n| STEP 3 서비스 | `ReservationService.java` | 조회는 읽기 전용으로 실행하고 남은 자리를 초과하면 저장하지 않습니다 |\n| STEP 4 컨트롤러와 JSP | `ReservationController.java`, 목록·상세 JSP | 목록과 상세가 열리고 등록 뒤 새 상세 주소로 이동합니다 |\n| 검증 | `src/test` | JUnit으로 DTO와 트랜잭션, DB, HTTP, JSP 렌더링을 확인합니다 |\n\n## 전체 흐름\n\n1. 브라우저가 URL과 form 값을 보내면 `DispatcherServlet`이 받아 `ReservationController`의 메서드를 찾습니다.\n2. 컨트롤러가 요청 파라미터를 바인딩하고 서비스를 호출합니다.\n3. 서비스가 업무 규칙을 확인하고 `ReservationMapper`를 호출합니다. 변경 메서드는 트랜잭션 하나로 묶입니다.\n4. mapper의 SQL은 `ReservationMapper.xml`의 같은 `id` 구문으로 실행되어 MySQL을 읽고 씁니다.\n5. 조회 결과는 모델에 담아 뷰 이름을 반환하고 ViewResolver가 JSP를 찾아 화면을 만듭니다.\n6. 등록과 취소가 끝나면 redirect로 새 GET 요청을 보내 같은 요청이 반복되지 않게 합니다.\n7. 예외는 `GlobalExceptionHandler`가 상태 코드와 오류 화면으로 바꿉니다.\n\n## 기능별 흐름\n\n### 목록\n\n`GET /reservations` → ReservationController.list → ReservationService.search → ReservationMapper.search → 모델 `reservations`, `rooms` → `reservation/list.jsp`\n\n### 상세\n\n`GET /reservations/{id}` → ReservationController.detail → ReservationService.detail → ReservationMapper.findById → 없으면 ReservationNotFoundException → `GlobalExceptionHandler` → 404 `error/not-found.jsp` / 있으면 모델 `reservation` → `reservation/detail.jsp`\n\n### 등록\n\n- 화면: `GET /reservations/new` → `reservation/form.jsp`\n- 저장: `POST /reservations` → `@Valid` 검증 → 오류가 있으면 입력 화면 / 없으면 ReservationService.reserve(트랜잭션) → ReservationMapper.insert → redirect `/reservations/{id}`\n\n남은 자리를 넘으면 RoomFullException이 던져져 저장은 취소되고 409 화면이 나옵니다. 같은 요청이 PRG 덕분에 새로 고침으로 반복되지 않습니다.\n\n### 취소\n\n`POST /reservations/{id}/delete` → ReservationController.cancel → ReservationService.cancel(트랜잭션) → ReservationMapper.delete → 0행이면 404 / 아니면 flash 메시지와 redirect `/reservations`\n\n## 짝으로 기억할 것\n\n| 보내는 쪽 | 받는 쪽 |\n| --- | --- |\n| 컨트롤러가 반환하는 뷰 이름 | `prefix` + 뷰 이름 + `suffix`의 JSP |\n| 모델에 담은 이름 | JSP의 EL 이름 |\n| mapper 메서드 이름 | XML 구문의 `id` |\n| mapper 인터페이스의 전체 이름 | XML의 `namespace` |\n",
   "checklist": [
     {
       "id": "run-build",
@@ -818,7 +913,8 @@
       "expected": "컴파일 오류 없이 시작되고 예약 목록 화면이 열립니다.",
       "targetIds": [
         "ctrl-list",
-        "sql-search"
+        "sql-search",
+        "dto-reservation"
       ]
     },
     {
@@ -832,7 +928,8 @@
       "expected": "시작 데이터 3행이 번호 순서로 보입니다. 예약이 없으면 안내 행이 보입니다.",
       "targetIds": [
         "ctrl-list",
-        "jsp-list"
+        "jsp-list",
+        "svc-search"
       ]
     },
     {
@@ -846,7 +943,8 @@
       "expected": "조건에 맞는 행만 보이고 조건이 없으면 전체가 보입니다.",
       "targetIds": [
         "ctrl-list",
-        "sql-search"
+        "sql-search",
+        "svc-search"
       ]
     },
     {
@@ -889,7 +987,8 @@
       "targetIds": [
         "ctrl-create",
         "svc-reserve",
-        "sql-insert"
+        "sql-insert",
+        "dto-reservation"
       ]
     },
     {

@@ -10,7 +10,8 @@
     "expected": "컴파일 오류 없이 시작되고 장비 3건이 JSON으로 응답됩니다.",
     "targetIds": [
       "sec-chain",
-      "sql-insert"
+      "sql-insert",
+      "dto-rental"
     ]
   },
   {
@@ -64,7 +65,8 @@
     "targetIds": [
       "ctrl-rent",
       "svc-rent",
-      "sql-insert"
+      "sql-insert",
+      "dto-rental"
     ]
   },
   {
@@ -138,7 +140,8 @@
     "expected": "mina의 대여만 번호 순서로 응답됩니다.",
     "targetIds": [
       "ctrl-mine",
-      "sql-mine"
+      "sql-mine",
+      "svc-mine"
     ]
   },
   {

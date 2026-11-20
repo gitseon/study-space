@@ -1,49 +1,47 @@
 package com.study.room.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+// @@target dto-reservation
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Reservation {
     private Integer reservationId;
     private Integer roomId;
     private String roomName;
     private String memberName;
     private int people;
-
-    public Integer getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(Integer reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public Integer getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
-
-    public int getPeople() {
-        return people;
-    }
-
-    public void setPeople(int people) {
-        this.people = people;
-    }
 }
+// @@stage 1
+@Getter
+@Setter
+@NoArgsConstructor
+// TODO: 전체 인자 생성자와 빌더를 추가한다.
+public class Reservation {
+    private Integer reservationId;
+    private Integer roomId;
+    private String roomName;
+    private String memberName;
+    private int people;
+}
+// @@stage 2
+// TODO: 기본 생성자, 전체 인자 생성자, 접근자와 빌더를 제공한다.
+public class Reservation {
+    private Integer reservationId;
+    private Integer roomId;
+    private String roomName;
+    private String memberName;
+    private int people;
+}
+// @@stage 3
+public class Reservation {
+    // TODO: 요구사항의 필드와 Lombok으로 만드는 생성자, 접근자, 빌더를 작성한다.
+}
+// @@end

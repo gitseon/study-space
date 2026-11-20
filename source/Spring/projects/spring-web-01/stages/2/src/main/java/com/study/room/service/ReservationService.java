@@ -20,9 +20,13 @@ public class ReservationService {
         this.mapper = mapper;
     }
 
+    // study-target:svc-search:start
+    // TODO: 읽기 전용 트랜잭션을 선언한다.
     public List<Reservation> search(Integer roomId, String keyword) {
-        return mapper.search(roomId, keyword);
+        // TODO: 제공된 매퍼로 조건에 맞는 예약 목록을 조회한다.
+        return List.of();
     }
+    // study-target:svc-search:end
 
     public List<StudyRoom> rooms() {
         return mapper.findRooms();
