@@ -1,20 +1,40 @@
+import io
 import json
 import shutil
 import tempfile
+import zipfile
 from pathlib import Path
 from build_data import ROOT, SW_TEST_PUBLISHED, build_data
-from check_public_sources import FORBIDDEN_SUFFIXES, finding, scan_file
+from check_public_sources import FORBIDDEN_SUFFIXES, finding, listed_files, scan_file
 from project_catalog import PROJECT_TRACKS
 from validate_projects import release_issues_for_track
 
 PAGES=["index.html","pages/quiz.html","pages/review.html","pages/concepts.html","pages/sw-test.html","pages/project.html"]
 SW_TEST_FILES=("pages/sw-test.html","assets/sw-test.js")
+NOTICE_PRACTICE="spring-notice-practice"
 
 def published_pages():
     return [page for page in PAGES if SW_TEST_PUBLISHED or page not in SW_TEST_FILES]
 
 def relative_files(base):
     return {f.relative_to(base).as_posix():f for f in base.rglob("*") if f.is_file()} if base.is_dir() else {}
+
+def notice_practice_zip(root):
+    folder = f"examples/{NOTICE_PRACTICE}"
+    project = root / folder
+    files = {"README.md", "starter/pom.xml"}
+    for path in listed_files(root, folder):
+        relative = (root / path).relative_to(project)
+        if relative.parts[:2] in (("starter", "src"), ("solution", "src")) and relative.suffix in (".java", ".xml", ".properties", ".sql"):
+            files.add(relative.as_posix())
+    output = io.BytesIO()
+    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for relative in sorted(files):
+            path = project / relative
+            if not path.resolve().is_relative_to(project.resolve()):
+                raise SystemExit(f"Refusing to include a file outside {folder}: {relative}")
+            archive.writestr(f"{NOTICE_PRACTICE}/{relative}", path.read_bytes())
+    return output.getvalue()
 
 def same_content(rel,fresh,current):
     """JSON is compared as data and Markdown as text so line endings alone never make a file stale. Everything else by bytes."""
@@ -53,6 +73,7 @@ def build_site(output_dir: Path, data_dir: Path=None, root: Path=ROOT) -> None:
         contents={f"data/{rel}":path.read_bytes() for rel,path in relative_files(fresh).items()}
         contents.update({page:(root/page).read_bytes() for page in published_pages()})
         contents.update({f"assets/{rel}":path.read_bytes() for rel,path in relative_files(root/"assets").items() if SW_TEST_PUBLISHED or f"assets/{rel}" not in SW_TEST_FILES})
+        contents[f"downloads/{NOTICE_PRACTICE}.zip"] = notice_practice_zip(root)
         findings=public_findings(contents)
         if findings:
             raise SystemExit("Refusing to publish: "+"; ".join(f"{f['code']} {f['file']}"+(f":{f['line']}" if "line" in f else "") for f in findings[:10]))

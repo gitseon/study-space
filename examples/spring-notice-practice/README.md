@@ -1,6 +1,6 @@
 # Spring 공지사항 API 구현 연습
 
-커뮤니티 공간의 운영 공지를 조회하고 등록하는 Maven 프로젝트다. 준비된 DAO 인터페이스와 스키마, JUnit 테스트를 읽고 `starter/`의 TODO 네 곳을 구현한다. [Spring 개념 노트](../../source/Spring/Spring개념%20요약노트.md)
+커뮤니티 공간의 운영 공지를 조회하고 등록하는 Maven 프로젝트다. 준비된 DAO 인터페이스와 스키마, JUnit 테스트를 읽고 `starter/`의 TODO 네 곳을 구현한다. [Spring 개념 노트](https://gitseon.github.io/study-space/pages/concepts.html?note=spring-concepts)
 
 ## 환경 준비
 

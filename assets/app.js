@@ -177,6 +177,11 @@ function librarySection(attempts) {
   return '<section class="library">'
     + '<div class="section-heading"><div><span class="eyebrow">내 속도로 준비하기</span><h2>오늘의 문제집</h2></div>'
     + '<div class="tabs" role="group" aria-label="평가 유형">' + tabs + '</div></div>'
+    + (projectMode && track === 'spring'
+      ? '<section class="project-flow"><h3>공지사항 API 구현 연습</h3>'
+        + '<p class="muted">STS에서 시작 프로젝트를 열고 TODO 네 곳을 구현한 뒤 JUnit으로 확인합니다.</p>'
+        + '<a class="quiet" href="downloads/spring-notice-practice.zip" download>연습 프로젝트 ZIP 내려받기</a></section>'
+      : '')
     + (projectMode
       ? '<div class="project-env" id="project-env">' + (track === 'backend' ? envHtml(presentationOf({})) : '') + '</div><div id="project-area"><p class="loading">월말평가 프로젝트를 불러오고 있습니다</p></div>'
       : '<div class="exam-grid">' + cards + '</div>')

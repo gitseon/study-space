@@ -1,4 +1,6 @@
+import {readFile} from 'node:fs/promises';
 import {test, expect} from '@playwright/test';
+import {strFromU8, unzipSync} from 'fflate';
 
 const LABEL = '자동 검증 완료 · STS 미검증';
 
@@ -28,6 +30,26 @@ test('the backend tab keeps its own environment lines and cards', async ({page})
   await expect(page.locator('.project-card')).toHaveCount(2);
   await expect(page.locator('#project-env')).toContainText('Apache tomcat-11.0.27');
   await expect(page.locator('.project-card .pill', {hasText: '자동 검증'})).toHaveCount(0);
+});
+
+test('Spring 월말평가 downloads the Maven practice with starter and solution separated', async ({page}) => {
+  await page.goto('index.html?track=spring');
+  await page.getByRole('button', {name: '월말평가', exact: true}).click();
+  const link = page.getByRole('link', {name: '연습 프로젝트 ZIP 내려받기'});
+  const [download] = await Promise.all([page.waitForEvent('download'), link.click({timeout: 5000})]);
+  expect(download.suggestedFilename()).toBe('spring-notice-practice.zip');
+  const files = unzipSync(await readFile(await download.path()));
+  const folder = 'spring-notice-practice';
+  const dto = 'src/main/java/study/practice/notice/model/Notice.java';
+  expect(files[`${folder}/README.md`]).toBeDefined();
+  expect(files[`${folder}/starter/pom.xml`]).toBeDefined();
+  expect(files[`${folder}/starter/src/test/java/study/practice/notice/NoticePracticeTests.java`]).toBeDefined();
+  expect(strFromU8(files[`${folder}/starter/${dto}`])).toContain('TODO 1');
+  expect(strFromU8(files[`${folder}/solution/${dto}`])).toContain('@Builder');
+  expect(Object.keys(files).every((name) => name.startsWith(`${folder}/`) && !/\/(target|private)\/|\.pdf$/i.test(name))).toBe(true);
+  await page.goto('index.html?track=backend');
+  await page.getByRole('button', {name: '월말평가', exact: true}).click();
+  await expect(link).toHaveCount(0);
 });
 
 test('switching between the two tracks never shows the other track cards', async ({page}) => {
