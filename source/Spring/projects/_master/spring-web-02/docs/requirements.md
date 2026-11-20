@@ -1,6 +1,43 @@
 # 요구사항
 
-이 프로젝트는 장비 대여를 JSON API로 처리하는 Spring Boot REST, MyBatis, Spring Security(form 로그인과 세션) 프로젝트입니다. 제공 파일은 수정하지 않고 작성 대상 파일의 표시된 영역만 채웁니다. 이 예제는 연습을 위한 제안이며 공식 평가의 과제 범위가 아닙니다.
+장비 대여를 조회하고 등록·취소하는 JSON API를 완성하는 Maven 프로젝트입니다. 제공된 스키마와 매퍼 인터페이스, JUnit 테스트를 읽고 표시된 작성 영역을 채웁니다. 이 문제는 학습용입니다.
+
+## 단계별 구현
+
+### STEP 1. DTO
+
+`Rental.java`에 다음 필드 다섯 개를 표 순서로 선언합니다. Lombok으로 기본 생성자와 전체 인자 생성자, Getter와 Setter, 빌더를 제공합니다. 요청의 `RentalRequest`와 응답의 `RentalResponse`는 제공됩니다.
+
+| 필드 | 타입 | 가져오는 값 |
+| --- | --- | --- |
+| `rentalId` | `Integer` | 대여 번호. 등록하기 전에는 비어 있습니다 |
+| `equipmentId` | `Integer` | 장비 번호 |
+| `equipmentName` | `String` | 장비를 조인해 얻는 이름 |
+| `loginId` | `String` | 로그인으로 식별한 대여자 |
+| `days` | `int` | 대여 일수 |
+
+### STEP 2. MyBatis 매퍼
+
+제공된 `RentalMapper` 인터페이스를 기준으로 XML의 `findByLoginId`, `findById`, `insert`를 작성합니다. 조회는 장비 이름을 포함하고 제공된 `resultMap`으로 매핑합니다. 내 대여 목록은 대여 번호 오름차순입니다. 등록은 장비 번호, 대여자 아이디, 일수만 넣고 생성된 번호를 같은 객체의 `rentalId`에 채웁니다.
+
+### STEP 3. 서비스
+
+`RentalService.mine`에 읽기 전용 트랜잭션을 선언하고 로그인 아이디로 조회합니다. `rent`는 변경 트랜잭션에서 장비 존재와 대여 가능 여부를 확인해 저장한 뒤 발급된 번호를 반환합니다. 상세 조회에서는 존재 여부와 소유자 또는 관리자 권한을 검사합니다.
+
+### STEP 4. 컨트롤러와 보안
+
+`RentalApiController`에서 JSON을 검증하고 로그인 사용자 정보로 서비스를 호출합니다. 예외 처리기에서 없는 자원을 404 JSON으로 바꾸고, `SecurityConfig`와 `DbUserDetailsService`를 완성하여 아래 인증·인가 계약을 만족합니다.
+
+| 동작 | 요청 | 기대 결과 |
+| --- | --- | --- |
+| 내 목록 | `GET /api/rentals` | 200과 내 대여 목록 JSON |
+| 등록 | `POST /api/rentals` | 201과 Location 헤더, 등록된 대여 JSON |
+| 잘못된 입력 | `POST /api/rentals` | 400과 `VALIDATION_FAILED` |
+| 취소 | `DELETE /api/rentals/{id}` | 204와 빈 본문 |
+
+## 로컬 확인
+
+제공된 `src/test`의 파일은 수정하지 않습니다. 빈칸을 채우기 전에는 필요한 DTO 접근자나 메서드가 없어 컴파일이 실패할 수 있습니다. 작성이 끝나면 연습 전용 MySQL 스키마를 연결해 `mvn test`를 실행합니다. DB와 HTTP 테스트는 대여 행을 지우고 시작 데이터를 다시 넣습니다. 브라우저나 HTTP 클라이언트로 확인할 때는 로그인 세션의 쿠키와 변경 요청의 CSRF 토큰을 함께 사용합니다.
 
 ## 공통 약속
 

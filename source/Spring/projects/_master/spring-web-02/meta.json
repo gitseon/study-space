@@ -1,7 +1,7 @@
 {
   "title": "장비 대여 API",
   "database": "equipment_rental",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L09 REST p.55",
     "SPR-L10 SecurityFilterChain p.40",

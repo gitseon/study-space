@@ -26,9 +26,13 @@ public class RentalService {
         return mapper.findEquipments();
     }
 
+    // study-target:svc-mine:start
+    // TODO: 읽기 전용 트랜잭션을 선언한다.
     public List<Rental> mine(String loginId) {
-        return mapper.findByLoginId(loginId);
+        // TODO: 제공된 매퍼로 내 대여 목록을 조회한다.
+        return List.of();
     }
+    // study-target:svc-mine:end
 
     public List<Rental> all() {
         return mapper.findAll();

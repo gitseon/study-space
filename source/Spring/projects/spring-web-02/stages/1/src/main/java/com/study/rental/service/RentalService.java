@@ -26,9 +26,12 @@ public class RentalService {
         return mapper.findEquipments();
     }
 
+    // study-target:svc-mine:start
+    @Transactional(readOnly = ____)
     public List<Rental> mine(String loginId) {
         return mapper.findByLoginId(loginId);
     }
+    // study-target:svc-mine:end
 
     public List<Rental> all() {
         return mapper.findAll();

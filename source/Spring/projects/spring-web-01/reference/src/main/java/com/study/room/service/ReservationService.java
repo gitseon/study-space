@@ -20,6 +20,7 @@ public class ReservationService {
         this.mapper = mapper;
     }
 
+    @Transactional(readOnly = true)
     public List<Reservation> search(Integer roomId, String keyword) {
         return mapper.search(roomId, keyword);
     }

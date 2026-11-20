@@ -98,7 +98,10 @@
         "spring-03-q02",
         "spring-03-q22"
       ],
-      "projectTargets": []
+      "projectTargets": [
+        "spring-web-01/dto-reservation",
+        "spring-web-02/dto-rental"
+      ]
     },
     {
       "requirementId": "S04",
@@ -501,7 +504,9 @@
         "spring-web-01/svc-cancel",
         "spring-web-01/svc-detail",
         "spring-web-01/svc-reserve",
+        "spring-web-01/svc-search",
         "spring-web-02/svc-access",
+        "spring-web-02/svc-mine",
         "spring-web-02/svc-rent"
       ]
     },

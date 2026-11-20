@@ -10,7 +10,8 @@
     "expected": "컴파일 오류 없이 시작되고 예약 목록 화면이 열립니다.",
     "targetIds": [
       "ctrl-list",
-      "sql-search"
+      "sql-search",
+      "dto-reservation"
     ]
   },
   {
@@ -24,7 +25,8 @@
     "expected": "시작 데이터 3행이 번호 순서로 보입니다. 예약이 없으면 안내 행이 보입니다.",
     "targetIds": [
       "ctrl-list",
-      "jsp-list"
+      "jsp-list",
+      "svc-search"
     ]
   },
   {
@@ -38,7 +40,8 @@
     "expected": "조건에 맞는 행만 보이고 조건이 없으면 전체가 보입니다.",
     "targetIds": [
       "ctrl-list",
-      "sql-search"
+      "sql-search",
+      "svc-search"
     ]
   },
   {
@@ -81,7 +84,8 @@
     "targetIds": [
       "ctrl-create",
       "svc-reserve",
-      "sql-insert"
+      "sql-insert",
+      "dto-reservation"
     ]
   },
   {

@@ -3,6 +3,7 @@
 `source/Spring/projects/_master/<프로젝트 ID>/`의 마스터 한 벌에서 `starter/`, `stages/1~3/`, `reference/`와
 `project.json`, `stages.json`, `checklist.json`, `requirements.md`, `flow.md`, `review.json`을 결정적으로 만든다.
 생성 결과는 저장소에 커밋하며 `--check`로 최신인지 확인한다. 생성된 폴더는 직접 고치지 않는다.
+프로젝트별 JUnit 원본은 `tests/spring-projects/<프로젝트 ID>/`에서 제공 파일로 넣는다.
 
 마스터 폴더의 구성:
     meta.json        제목, DB 이름, 출처, 안내 문구
@@ -30,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPRING = ROOT / "source" / "Spring"
 MASTER_ROOT = SPRING / "projects" / "_master"
 OUT = SPRING / "projects"
+PROJECT_TESTS = ROOT / "tests" / "spring-projects"
 STAGE_LABELS = {"1": "빈칸 채우기", "2": "메서드와 JSP 블록 작성", "3": "구현 대상 전체 작성"}
 LANGUAGES = {".java": "java", ".jsp": "jsp", ".xml": "xml", ".sql": "sql"}
 GENERATED_DIRS = ("starter", "stages", "reference")
@@ -65,6 +67,19 @@ def master_files(base: Path) -> list[Path]:
     return sorted((p for p in base.rglob("*") if p.is_file()), key=lambda p: p.relative_to(base).as_posix())
 
 
+def project_sources(base: Path, pid: str) -> dict[str, Path]:
+    files = base / "files"
+    sources = {path.relative_to(files).as_posix(): path for path in master_files(files)}
+    for section in ("java", "resources"):
+        tests = PROJECT_TESTS / pid / section
+        for path in master_files(tests):
+            relative = (Path("src/test") / section / path.relative_to(tests)).as_posix()
+            if relative in sources:
+                raise AuthoringError(f"{pid}: 제공 테스트 경로가 중복되었습니다: {relative}")
+            sources[relative] = path
+    return sources
+
+
 def generate_project(pid: str, existing_review: dict | None = None) -> dict[str, str]:
     base = MASTER_ROOT / pid
     meta = read_json(base / "meta.json")
@@ -74,10 +89,11 @@ def generate_project(pid: str, existing_review: dict | None = None) -> dict[str,
     target_paths: dict[str, str] = {}
     editable_paths: list[str] = []
 
-    for src in master_files(base / "files"):
-        rel = src.relative_to(base / "files").as_posix()
+    for rel, src in sorted(project_sources(base, pid).items()):
         text = src.read_text(encoding="utf-8")
         reference, found = expand_file(rel, text, "reference")
+        if rel.startswith("src/test/") and found:
+            raise AuthoringError(f"{pid}: 제공 테스트에 작성 대상 표식이 있습니다: {rel}")
         tree[f"reference/{rel}"] = reference
         editable = bool(found)
         if editable:

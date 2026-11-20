@@ -20,9 +20,9 @@ public class ReservationService {
         this.mapper = mapper;
     }
 
-    public List<Reservation> search(Integer roomId, String keyword) {
-        return mapper.search(roomId, keyword);
-    }
+    // study-target:svc-search:start
+    // TODO: 읽기 전용으로 조건에 맞는 예약 목록을 조회하는 search 메서드를 작성한다.
+    // study-target:svc-search:end
 
     public List<StudyRoom> rooms() {
         return mapper.findRooms();

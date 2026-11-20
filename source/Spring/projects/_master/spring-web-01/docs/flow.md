@@ -1,5 +1,15 @@
 # 월말평가 구현 흐름
 
+## 구현 순서
+
+| 단계 | 파일 | 확인할 결과 |
+| --- | --- | --- |
+| STEP 1 DTO | `Reservation.java` | 조회 행과 생성된 예약 번호를 같은 타입으로 받을 수 있습니다 |
+| STEP 2 매퍼 | `ReservationMapper.xml` | 검색 조건과 정렬이 맞고 등록한 객체에 번호가 생깁니다 |
+| STEP 3 서비스 | `ReservationService.java` | 조회는 읽기 전용으로 실행하고 남은 자리를 초과하면 저장하지 않습니다 |
+| STEP 4 컨트롤러와 JSP | `ReservationController.java`, 목록·상세 JSP | 목록과 상세가 열리고 등록 뒤 새 상세 주소로 이동합니다 |
+| 검증 | `src/test` | JUnit으로 DTO와 트랜잭션, DB, HTTP, JSP 렌더링을 확인합니다 |
+
 ## 전체 흐름
 
 1. 브라우저가 URL과 form 값을 보내면 `DispatcherServlet`이 받아 `ReservationController`의 메서드를 찾습니다.

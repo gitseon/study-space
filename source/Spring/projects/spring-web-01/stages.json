@@ -4,6 +4,7 @@
       "id": 1,
       "label": "빈칸 채우기",
       "files": [
+        "src/main/java/com/study/room/model/Reservation.java",
         "src/main/java/com/study/room/service/ReservationService.java",
         "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
         "src/main/java/com/study/room/web/ReservationController.java",
@@ -12,6 +13,10 @@
         "src/main/webapp/WEB-INF/views/reservation/list.jsp"
       ],
       "hints": {
+        "dto-reservation": [
+          "필드 다섯 개의 이름과 타입은 요구사항 표와 정확히 같아야 합니다. 예약 번호는 등록 전에 비어 있을 수 있는 타입입니다.",
+          "기본 생성자, 전체 인자 생성자, Getter와 Setter, 빌더를 모두 Lombok 어노테이션으로 만듭니다."
+        ],
         "ctrl-list": [
           "검색 조건 roomId와 keyword는 없어도 되는 요청 파라미터입니다. 필수가 아니게 하려면 어노테이션 속성을 정합니다.",
           "조회한 목록과 방 목록과 입력한 조건을 모델에 담고 뷰 이름 reservation/list를 반환합니다."
@@ -27,6 +32,10 @@
         "ctrl-cancel": [
           "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
           "flash 속성으로 안내 메시지 message를 담습니다."
+        ],
+        "svc-search": [
+          "조회만 하는 메서드는 데이터를 바꾸지 않는다고 트랜잭션에 알립니다. 어노테이션 속성으로 정합니다.",
+          "roomId와 keyword는 가공하지 않고 mapper의 search에 그대로 넘깁니다."
         ],
         "svc-detail": [
           "mapper의 findById는 조회 결과가 없으면 null을 돌려줍니다.",
@@ -70,6 +79,7 @@
       "id": 2,
       "label": "메서드와 JSP 블록 작성",
       "files": [
+        "src/main/java/com/study/room/model/Reservation.java",
         "src/main/java/com/study/room/service/ReservationService.java",
         "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
         "src/main/java/com/study/room/web/ReservationController.java",
@@ -78,6 +88,10 @@
         "src/main/webapp/WEB-INF/views/reservation/list.jsp"
       ],
       "hints": {
+        "dto-reservation": [
+          "필드 다섯 개의 이름과 타입은 요구사항 표와 정확히 같아야 합니다. 예약 번호는 등록 전에 비어 있을 수 있는 타입입니다.",
+          "기본 생성자, 전체 인자 생성자, Getter와 Setter, 빌더를 모두 Lombok 어노테이션으로 만듭니다."
+        ],
         "ctrl-list": [
           "검색 조건 roomId와 keyword는 없어도 되는 요청 파라미터입니다. 필수가 아니게 하려면 어노테이션 속성을 정합니다.",
           "조회한 목록과 방 목록과 입력한 조건을 모델에 담고 뷰 이름 reservation/list를 반환합니다."
@@ -93,6 +107,10 @@
         "ctrl-cancel": [
           "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
           "flash 속성으로 안내 메시지 message를 담습니다."
+        ],
+        "svc-search": [
+          "조회만 하는 메서드는 데이터를 바꾸지 않는다고 트랜잭션에 알립니다. 어노테이션 속성으로 정합니다.",
+          "roomId와 keyword는 가공하지 않고 mapper의 search에 그대로 넘깁니다."
         ],
         "svc-detail": [
           "mapper의 findById는 조회 결과가 없으면 null을 돌려줍니다.",
@@ -136,6 +154,7 @@
       "id": 3,
       "label": "구현 대상 전체 작성",
       "files": [
+        "src/main/java/com/study/room/model/Reservation.java",
         "src/main/java/com/study/room/service/ReservationService.java",
         "src/main/java/com/study/room/web/GlobalExceptionHandler.java",
         "src/main/java/com/study/room/web/ReservationController.java",
@@ -144,6 +163,10 @@
         "src/main/webapp/WEB-INF/views/reservation/list.jsp"
       ],
       "hints": {
+        "dto-reservation": [
+          "필드 다섯 개의 이름과 타입은 요구사항 표와 정확히 같아야 합니다. 예약 번호는 등록 전에 비어 있을 수 있는 타입입니다.",
+          "기본 생성자, 전체 인자 생성자, Getter와 Setter, 빌더를 모두 Lombok 어노테이션으로 만듭니다."
+        ],
         "ctrl-list": [
           "검색 조건 roomId와 keyword는 없어도 되는 요청 파라미터입니다. 필수가 아니게 하려면 어노테이션 속성을 정합니다.",
           "조회한 목록과 방 목록과 입력한 조건을 모델에 담고 뷰 이름 reservation/list를 반환합니다."
@@ -159,6 +182,10 @@
         "ctrl-cancel": [
           "취소는 POST로 받고 처리한 뒤에는 목록을 다시 요청하는 redirect를 반환합니다.",
           "flash 속성으로 안내 메시지 message를 담습니다."
+        ],
+        "svc-search": [
+          "조회만 하는 메서드는 데이터를 바꾸지 않는다고 트랜잭션에 알립니다. 어노테이션 속성으로 정합니다.",
+          "roomId와 keyword는 가공하지 않고 mapper의 search에 그대로 넘깁니다."
         ],
         "svc-detail": [
           "mapper의 findById는 조회 결과가 없으면 null을 돌려줍니다.",

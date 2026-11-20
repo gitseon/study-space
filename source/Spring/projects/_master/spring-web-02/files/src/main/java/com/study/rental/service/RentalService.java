@@ -26,9 +26,25 @@ public class RentalService {
         return mapper.findEquipments();
     }
 
+    // @@target svc-mine
+    @Transactional(readOnly = true)
     public List<Rental> mine(String loginId) {
         return mapper.findByLoginId(loginId);
     }
+    // @@stage 1
+    @Transactional(readOnly = ____)
+    public List<Rental> mine(String loginId) {
+        return mapper.findByLoginId(loginId);
+    }
+    // @@stage 2
+    // TODO: 읽기 전용 트랜잭션을 선언한다.
+    public List<Rental> mine(String loginId) {
+        // TODO: 제공된 매퍼로 내 대여 목록을 조회한다.
+        return List.of();
+    }
+    // @@stage 3
+    // TODO: 읽기 전용으로 내 대여 목록을 조회하는 mine 메서드를 작성한다.
+    // @@end
 
     public List<Rental> all() {
         return mapper.findAll();

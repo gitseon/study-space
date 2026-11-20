@@ -20,9 +20,25 @@ public class ReservationService {
         this.mapper = mapper;
     }
 
+    // @@target svc-search
+    @Transactional(readOnly = true)
     public List<Reservation> search(Integer roomId, String keyword) {
         return mapper.search(roomId, keyword);
     }
+    // @@stage 1
+    @Transactional(readOnly = ____)
+    public List<Reservation> search(Integer roomId, String keyword) {
+        return mapper.search(roomId, keyword);
+    }
+    // @@stage 2
+    // TODO: 읽기 전용 트랜잭션을 선언한다.
+    public List<Reservation> search(Integer roomId, String keyword) {
+        // TODO: 제공된 매퍼로 조건에 맞는 예약 목록을 조회한다.
+        return List.of();
+    }
+    // @@stage 3
+    // TODO: 읽기 전용으로 조건에 맞는 예약 목록을 조회하는 search 메서드를 작성한다.
+    // @@end
 
     public List<StudyRoom> rooms() {
         return mapper.findRooms();

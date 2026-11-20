@@ -1,5 +1,15 @@
 # 월말평가 구현 흐름
 
+## 구현 순서
+
+| 단계 | 파일 | 확인할 결과 |
+| --- | --- | --- |
+| STEP 1 DTO | `Rental.java` | 조회 행과 생성된 대여 번호를 같은 타입으로 받을 수 있습니다 |
+| STEP 2 매퍼 | `RentalMapper.xml` | 로그인 아이디로 조회하고 등록한 객체에 번호를 채웁니다 |
+| STEP 3 서비스 | `RentalService.java` | 조회는 읽기 전용으로 실행하고 대여할 수 없는 장비는 저장하지 않습니다 |
+| STEP 4 컨트롤러와 보안 | `RentalApiController.java`, 보안·예외 처리 파일 | JSON 응답의 상태와 헤더를 확인하고 권한에 따라 요청을 제한합니다 |
+| 검증 | `src/test` | JUnit으로 DTO와 트랜잭션, DB, MockMvc 요청을 확인합니다 |
+
 ## 전체 흐름
 
 1. 요청은 서블릿 컨테이너의 필터를 지나 `SecurityFilterChain`을 가장 먼저 만납니다. 인증과 인가가 여기서 정해집니다.

@@ -143,6 +143,33 @@ test('the provided and write files are listed and the stage 3 template shows no 
   expect(text).not.toContain('service.search(roomId, keyword)');
 });
 
+for (const {project, domain, dto} of [
+  {project: 'spring-web-01', domain: 'room', dto: 'Reservation'},
+  {project: 'spring-web-02', domain: 'rental', dto: 'Rental'},
+]) {
+  test(`${project} shows the sample-style steps, editable DTO and provided JUnit`, async ({page}) => {
+    await start(page, {project, stage: 3});
+    const side = page.locator('#pj-sidebody');
+    await page.getByRole('tab', {name: '요구사항'}).click();
+    await expect(side.getByRole('heading', {name: 'STEP 1. DTO'})).toBeVisible();
+    await expect(side.getByRole('heading', {name: /STEP 4\. 컨트롤러/})).toBeVisible();
+
+    await page.getByRole('tab', {name: '구조'}).click();
+    await expect(side.locator('.ar-box[data-arch-node="dto"]')).toHaveAttribute('data-write', 'true');
+    await expect(side.locator('.ar-box[data-arch-node="tests"]')).toHaveAttribute('data-write', 'false');
+
+    await expect(page.locator(`.pj-tree [data-file$="model/${dto}.java"] .tag`)).toHaveText('작성');
+    await expect(page.locator('.pj-tree [data-file$="UnitTests.java"] .tag')).toHaveText('제공');
+    const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#pj-zip').click()]);
+    const files = unzipSync(await readFile(await download.path()));
+    const root = `${project}-stage-3/src`;
+    const template = strFromU8(files[`${root}/main/java/com/study/${domain}/model/${dto}.java`]);
+    expect(template).toContain('study-target:dto-');
+    expect(template).not.toContain('@Builder');
+    expect(files[`${root}/test/java/com/study/${domain}/UnitTests.java`]).toBeDefined();
+  });
+}
+
 test('the project zip downloads with the stage files and no answers', async ({page}) => {
   await start(page, {project: 'spring-web-02', stage: 3});
   const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#pj-zip').click()]);
