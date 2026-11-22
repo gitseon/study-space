@@ -29,7 +29,8 @@ NOTES=[("web-concepts","Web 개념","frontend/web개념 요약노트.md","fronte
        ("backend-concepts","Backend 개념","backend/backend개념 요약노트.md","backend"),
        ("db-concepts","DB 개념","DB/DB개념 요약노트.md","backend"),
        ("sqld-concepts","SQLD 개념","sqld/SQLD개념 요약노트.md","sqld"),
-       ("spring-concepts","Spring 개념","Spring/Spring개념 요약노트.md","spring")]
+       ("spring-concepts","Spring 개념","Spring/Spring개념 요약노트.md","spring"),
+       ("spring-cheatsheet","Spring 핵심 요약","Spring/Spring핵심 요약.md","spring")]
 
 class ContentError(ValueError):
     pass

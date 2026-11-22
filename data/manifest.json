@@ -717,6 +717,12 @@
       "title": "Spring 개념",
       "track": "spring",
       "file": "spring-concepts.md"
+    },
+    {
+      "id": "spring-cheatsheet",
+      "title": "Spring 핵심 요약",
+      "track": "spring",
+      "file": "spring-cheatsheet.md"
     }
   ],
   "projectTracks": {
