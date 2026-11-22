@@ -58,7 +58,7 @@ class DisabledTrackTests(unittest.TestCase):
         self.assertEqual(set(self.manifest["tracks"]), {"algorithm", "frontend", "ai", "adsp", "backend", "spring"})
         self.assertEqual(len(self.published), 20)
         notes = {n["id"] for n in self.manifest["notes"] if n["file"]}
-        self.assertEqual(notes, {"web-concepts", "ai-concepts", "backend-concepts", "db-concepts", "spring-concepts"})
+        self.assertEqual(notes, {"web-concepts", "ai-concepts", "backend-concepts", "db-concepts", "spring-concepts", "spring-cheatsheet"})
 
     def test_the_committed_data_has_no_sqld_files(self):
         self.assertFalse([p.name for p in (ROOT / "data").iterdir() if "sqld" in p.name.lower()])
