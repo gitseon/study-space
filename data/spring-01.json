@@ -1210,7 +1210,7 @@
       "group": "security",
       "type": "short",
       "id": "spring-01-q30",
-      "revision": 1,
+      "revision": 2,
       "sourceRefs": [
         "SPR-L10 사용자와 권한 설정 p.35",
         "SPR-L11 사용자 정의 인증 p.10",
@@ -1222,7 +1222,7 @@
         "loadUserByUsername()"
       ],
       "normalization": "caseFold",
-      "stem": "로그인할 때 사용자 이름으로 사용자 정보를 조회하기 위해 `UserDetailsService`에 구현하는 메서드의 이름을 쓰시오.",
+      "stem": "로그인할 때 사용자 이름으로 사용자 정보를 조회하기 위해, Spring Security의 `UserDetailsService` 인터페이스가 구현하도록 정해 둔 메서드의 이름을 쓰시오.",
       "solution": "정답: loadUserByUsername. 허용 표기: 괄호를 붙인 `loadUserByUsername()`도 정답이며 대소문자는 구분하지 않는다. 근거: 이 메서드는 사용자 이름으로 `UserDetails`를 조회해 돌려주고 사용자가 없으면 `UsernameNotFoundException`을 던진다. 비밀번호 비교는 이 메서드가 아니라 Provider가 `PasswordEncoder`로 한다.",
       "choices": [],
       "choiceExplanations": {}
@@ -1505,5 +1505,5 @@
       "d"
     ]
   },
-  "contentVersion": "2c8ad07e18b21b0f"
+  "contentVersion": "bdc3281c4053e928"
 }

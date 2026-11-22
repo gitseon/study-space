@@ -228,7 +228,7 @@
   },
   {
     "questionId": "spring-01-q30",
-    "revision": 1,
+    "revision": 2,
     "cases": {
       "sec-login-logout": "302->/ 302->/login?error 302->/login?error 403 200 403 302->/"
     },

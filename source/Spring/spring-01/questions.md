@@ -1116,7 +1116,7 @@ scope를 지정하지 않은 빈은 컨테이너에 인스턴스가 하나만 �
   "group": "security",
   "type": "short",
   "id": "spring-01-q30",
-  "revision": 1,
+  "revision": 2,
   "sourceRefs": [
     "SPR-L10 사용자와 권한 설정 p.35",
     "SPR-L11 사용자 정의 인증 p.10",
@@ -1131,7 +1131,7 @@ scope를 지정하지 않은 빈은 컨테이너에 인스턴스가 하나만 �
 }
 ```
 ### stem
-로그인할 때 사용자 이름으로 사용자 정보를 조회하기 위해 `UserDetailsService`에 구현하는 메서드의 이름을 쓰시오.
+로그인할 때 사용자 이름으로 사용자 정보를 조회하기 위해, Spring Security의 `UserDetailsService` 인터페이스가 구현하도록 정해 둔 메서드의 이름을 쓰시오.
 
 ## question: spring-01-q31
 ```json
